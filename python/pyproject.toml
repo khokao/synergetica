@@ -1,0 +1,86 @@
+[tool.poetry]
+name = "gene-circuit-ide-python"
+version = "0.0.0"
+description = "Python API for Gene Circuit IDE"
+authors = ["Koki Hokao", "Kanta Suga", "Sota Okuda"]
+license = "MIT"
+readme = "README.md"
+packages = [
+    { include = "generator"},
+    { include = "simulator"},
+]
+
+[tool.poetry.dependencies]
+python = ">=3.12,<4"
+
+[tool.poetry.group.dev.dependencies]
+coverage = { version = "*", extras = ["toml"] }
+mypy = "*"
+pytest = "*"
+pytest-cov = "*"
+ruff = "*"
+
+[tool.ruff]
+line-length = 120
+
+exclude = [
+    "*/__init__.py",
+]
+
+[tool.ruff.lint]
+# All rules are listed on https://docs.astral.sh/ruff/rules/
+select = [
+    "E",  # pycodestyle errors
+    "W",  # pycodestyle warnings
+    "F",  # pyflakes
+    "I",  # isort
+    "C",  # flake8-comprehensions
+    "B",  # flake8-bugbear
+    "UP", # pyupgrade
+]
+
+[tool.ruff.lint.isort]
+known-first-party = ["generator", "simulator"]
+known-third-party = []
+
+[tool.ruff.format]
+quote-style = "single"
+
+[tool.mypy]
+files = ["generator/", "simulator", "tests/"]
+strict = true
+ignore_missing_imports = true
+pretty = true
+disallow_untyped_calls = false
+implicit_reexport = true
+
+[[tool.mypy.overrides]]
+module = "tests.*"
+disallow_untyped_defs = false
+
+[tool.pytest.ini_options]
+testpaths = "tests"
+console_output_style = "progress"
+
+addopts = [
+    "--cov",
+    "--cov-report=term-missing:skip-covered",
+]
+
+[tool.coverage.run]
+parallel = true
+data_file = "coverage/.coverage"
+source = ["generator/", "simulator"]
+omit = []
+context = '${CONTEXT}'
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    'if __name__ == "__main__":',
+    "if TYPE_CHECKING:",
+]
+
+[build-system]
+requires = ["poetry"]
+build-backend = "poetry.masonry.api"
