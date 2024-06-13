@@ -18,6 +18,7 @@ fastapi-cli = "*"
 loguru = "*"
 pydantic = "*"
 uvicorn = "*"
+scipy = "^1.13.1"
 
 [tool.poetry.group.dev.dependencies]
 coverage = { version = "*", extras = ["toml"] }
@@ -25,6 +26,7 @@ mypy = "*"
 pytest = "*"
 pytest-cov = "*"
 ruff = "*"
+jupyterlab = "^4.2.2"
 
 [tool.ruff]
 line-length = 120
@@ -48,6 +50,9 @@ select = [
 [tool.ruff.lint.isort]
 known-first-party = ["generator", "simulator"]
 known-third-party = []
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
 
 [tool.ruff.format]
 quote-style = "single"
