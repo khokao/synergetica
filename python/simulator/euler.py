@@ -1,25 +1,21 @@
+from typing import Any
 import numpy as np
 from scipy.integrate import odeint
 
 
-def euler(function, times: list, var_init: list, args: tuple = None) -> np.ndarray:
-    """
-    Solve a system of ordinary differential equations using the Euler method.
+def euler(function, times: list[float], var_init: list[float], args: tuple[Any, ...] | None) -> np.ndarray:
+    """Solve ODEs using Euler's method.
 
-    Parameters
-    ----------
-    function : callable
-        The right-hand side of the differential equation.
-    times : list
-        The time points at which the solution is computed.
-    args : tuple
-        The parameters of the differential equation.
+    Args:
+        function (callable): callable function to solve
+        times (list[float]): list of time steps
+        var_init (list[float]): initial values for variables
+        args (tuple[Any, ...] | None): optional arguments for the function
 
-    Returns
-    -------
-    numpy.ndarray
-        The solution of the differential equation at each time point.
+    Returns:
+        np.ndarray: calculated values with np.ndarray. shape: (len(times), len(var_init))
     """
+    
     # Initialize the solution array
     solution = odeint(function, var_init, times, args=args)
 
