@@ -1,3 +1,6 @@
+from http import HTTPStatus
+
+import pytest
 from fastapi.testclient import TestClient
 
 from generator.api.main import app
@@ -5,37 +8,64 @@ from generator.api.main import app
 client = TestClient(app)
 
 
-def test_run_rbs_with_valid_param():
-    data = {'parameter': 4.2}
+def test_generator_api_with_valid_input():
+    data = {
+        'rbs_parameter': 4.2,
+        'rbs_upstream': 'ATG',
+        'rbs_downstream': 'GGG',
+        'promoter_parameter': 3.1,
+        'promoter_upstream': 'TATA',
+    }
 
-    response = client.post('/generate-rbs', json=data)
+    response = client.post('/generate', json=data)
 
-    assert response.status_code == 200
-    assert 'sequence' in response.json()
-    assert isinstance(response.json()['sequence'], str)
-
-
-def test_run_rbs_with_invalid_param():
-    data = {'parameter': 'foobar'}
-
-    response = client.post('/generate-rbs', json=data)
-
-    assert response.status_code == 422  # Unprocessable Entity
-
-
-def test_run_promoter_with_valid_param():
-    data = {'parameter': 4.2}
-
-    response = client.post('/generate-promoter', json=data)
-
-    assert response.status_code == 200
-    assert 'sequence' in response.json()
-    assert isinstance(response.json()['sequence'], str)
+    assert response.status_code == HTTPStatus.OK
+    json_response = response.json()
+    assert isinstance(json_response['rbs_sequence'], str), 'rbs_sequence should be a string'
+    assert isinstance(json_response['promoter_sequence'], str), 'promoter_sequence should be a string'
 
 
-def test_run_promoter_with_invalid_param():
-    data = {'parameter': 'foobar'}
+@pytest.mark.parametrize(
+    'data',
+    [
+        {
+            'rbs_parameter': 'invalid',  # rbs_parameter should be a float
+            'rbs_upstream': 'ATG',
+            'rbs_downstream': 'GGG',
+            'promoter_parameter': 3.1,
+            'promoter_upstream': 'TATA',
+        },
+        {
+            'rbs_parameter': 'foobar',
+            'rbs_upstream': 123,  # rbs_upstream should be a string
+            'rbs_downstream': 'GGG',
+            'promoter_parameter': 3.1,
+            'promoter_upstream': 'TATA',
+        },
+        {
+            'rbs_parameter': 'foobar',
+            'rbs_upstream': 'ATG',
+            'rbs_downstream': 123,  # rbs_downstream should be a string
+            'promoter_parameter': 3.1,
+            'promoter_upstream': 'TATA',
+        },
+        {
+            'rbs_parameter': 'foobar',
+            'rbs_upstream': 'ATG',
+            'rbs_downstream': 'GGG',
+            'promoter_parameter': 'invalid',  # promoter_parameter should be a float
+            'promoter_upstream': 'TATA',
+        },
+        {
+            'rbs_parameter': 'foobar',
+            'rbs_upstream': 'ATG',
+            'rbs_downstream': 'GGG',
+            'promoter_parameter': 3.1,
+            'promoter_upstream': None,  # promoter_upstream should be a string
+        },
+    ],
+)
+def test_generator_api_with_invalid_input(data):
+    response = client.post('/generate', json=data)
 
-    response = client.post('/generate-promoter', json=data)
-
-    assert response.status_code == 422  # Unprocessable Entity
+    assert response.status_code == HTTPStatus.UNPROCESSABLE_ENTITY

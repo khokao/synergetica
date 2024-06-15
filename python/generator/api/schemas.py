@@ -2,13 +2,18 @@ from pydantic import BaseModel, field_validator
 
 
 class GeneratorInput(BaseModel):
-    parameter: float
+    rbs_parameter: float
+    rbs_upstream: str
+    rbs_downstream: str
+    promoter_parameter: float
+    promoter_upstream: str
 
 
 class GeneratorOutput(BaseModel):
-    sequence: str
+    rbs_sequence: str
+    promoter_sequence: str
 
-    @field_validator('sequence')
+    @field_validator('rbs_sequence', 'promoter_sequence')
     @classmethod
     def validate_sequence(cls, v: str) -> str:
         valid_nucleotides = {'A', 'T', 'G', 'C'}
