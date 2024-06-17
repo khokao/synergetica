@@ -1,6 +1,4 @@
-# with-electron-typescript
-main
-dist
+# Next.js build output
 renderer/.next
 renderer/out
 

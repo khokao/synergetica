@@ -1,7 +1,7 @@
 {
   "$schema": "https://biomejs.dev/schemas/1.8.1/schema.json",
   "files": {
-    "ignore": ["main", "dist", "renderer/.next", "renderer/out"]
+    "ignore": ["src-tauri/target", "renderer/.next", "renderer/out"]
   },
   "organizeImports": {
     "enabled": true
