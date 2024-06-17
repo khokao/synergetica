@@ -1,0 +1,57 @@
+name: "Python pytest"
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "python/**"
+  pull_request:
+    types:
+      - opened
+      - synchronize
+    paths:
+      - "python/**"
+
+permissions:
+  contents: read
+  checks: write
+  pull-requests: write
+
+defaults:
+  run:
+    working-directory: ./python
+
+jobs:
+  pytest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: ./.github/composite/setup-python
+        with:
+          python_version: "3.12"
+          poetry_version: "1.8"
+          working_dir: python
+
+      - name: pytest
+        run: | # set -o pipefail is required to propagate pytest exit code
+          set -o pipefail
+          poetry run pytest --junitxml=pytest.xml | tee pytest-coverage.txt
+
+      # When pytest fails, this step will still run to comment on the PR
+      - name: Pytest coverage comment
+        if: always() && github.event_name == 'pull_request'
+        uses: MishaKav/pytest-coverage-comment@main
+        with:
+          pytest-coverage-path: pytest-coverage.txt
+          junitxml-path: pytest.xml
+
+      - name: Upload pytest coverage
+        uses: actions/upload-artifact@v4
+        with:
+          name: pytest-coverage
+          path: pytest-coverage.txt

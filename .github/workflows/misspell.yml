@@ -1,0 +1,34 @@
+name: "Misspell"
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types:
+      - opened
+      - synchronize
+
+permissions:
+  contents: read
+  checks: write
+  pull-requests: write
+
+jobs:
+  misspell:
+    name: misspell
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: misspell
+        uses: reviewdog/action-misspell@v1
+        with:
+          github_token: ${{ secrets.github_token }}
+          locale: "US"
+          reporter: "github-pr-review"
+          fail_on_error: "true"
+          filter_mode: "nofilter"
+          level: "warning"
