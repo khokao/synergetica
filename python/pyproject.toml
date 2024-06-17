@@ -6,12 +6,18 @@ authors = ["Koki Hokao", "Kanta Suga", "Sota Okuda"]
 license = "MIT"
 readme = "README.md"
 packages = [
+    { include = "common"},
     { include = "generator"},
     { include = "simulator"},
 ]
 
 [tool.poetry.dependencies]
 python = ">=3.12,<4"
+fastapi = "*"
+fastapi-cli = "*"
+loguru = "*"
+pydantic = "*"
+uvicorn = "*"
 
 [tool.poetry.group.dev.dependencies]
 coverage = { version = "*", extras = ["toml"] }
