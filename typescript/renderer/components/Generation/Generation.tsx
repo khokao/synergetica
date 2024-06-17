@@ -1,6 +1,6 @@
-import type { GeneratorResponseData } from "@electron/interfaces/generatorAPI";
+import { useResponse } from "@/context/GeneratorResponseContext";
+import type { GeneratorResponseData } from "@/interfaces/generatorAPI";
 import type React from "react";
-import { useResponse } from "../../context/GeneratorResponseContext";
 
 export const Generation: React.FC = () => {
   const { response } = useResponse();

@@ -1,8 +1,8 @@
+import { FileSidebar } from "@/components/FileSidebar/FileSidebar";
+import { GUI } from "@/components/GUI/GUI";
+import { Generation } from "@/components/Generation/Generation";
+import { Simulation } from "@/components/Simulation/Simulation";
 import { Resizable } from "re-resizable";
-import { FileSidebar } from "../components/FileSidebar/FileSidebar";
-import { GUI } from "../components/GUI/GUI";
-import { Generation } from "../components/Generation/Generation";
-import { Simulation } from "../components/Simulation/Simulation";
 
 const Home = () => {
   return (
