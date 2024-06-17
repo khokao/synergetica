@@ -1,30 +1,18 @@
+import { useResponse } from "@/context/GeneratorResponseContext";
 import type React from "react";
-import { useEffect } from "react";
-import { useResponse } from "../../context/GeneratorResponseContext";
 
 export const Simulation: React.FC = () => {
-  const { setResponse } = useResponse();
-
-  useEffect(() => {
-    const handleRBSGeneratorAPIResponse = (_event, args) => setResponse(args);
-
-    window.electron.onGeneratorAPIResponse(handleRBSGeneratorAPIResponse);
-
-    return () => {
-      window.electron.removeGeneratorAPIResponse(handleRBSGeneratorAPIResponse);
-    };
-  }, [setResponse]);
+  const { callGeneratorAPI } = useResponse();
 
   const onCallGeneratorAPIClick = () => {
     const generatorRequestData = {
-      // Dummy data
       rbs_parameter: 0.5,
       rbs_upstream: "ATG",
       rbs_downstream: "TAA",
       promoter_parameter: 0.5,
       promoter_upstream: "TATA",
     };
-    window.electron.callGeneratorAPI(generatorRequestData);
+    callGeneratorAPI(generatorRequestData);
   };
 
   return (
