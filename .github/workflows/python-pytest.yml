@@ -49,8 +49,8 @@ jobs:
         with:
           # This is a workaround for the following.
           # issue: https://github.com/MishaKav/pytest-coverage-comment/issues/161
-          pytest-coverage-path: ../pytest-coverage.txt
-          junitxml-path: ../pytest.xml
+          pytest-coverage-path: python/pytest-coverage.txt
+          junitxml-path: python/pytest.xml
 
       - name: Upload pytest coverage
         uses: actions/upload-artifact@v4
