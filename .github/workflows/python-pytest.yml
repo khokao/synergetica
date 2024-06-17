@@ -47,8 +47,10 @@ jobs:
         if: always() && github.event_name == 'pull_request'
         uses: MishaKav/pytest-coverage-comment@main
         with:
-          pytest-coverage-path: pytest-coverage.txt
-          junitxml-path: pytest.xml
+          # This is a workaround for the following.
+          # issue: https://github.com/MishaKav/pytest-coverage-comment/issues/161
+          pytest-coverage-path: ../pytest-coverage.txt
+          junitxml-path: ../pytest.xml
 
       - name: Upload pytest coverage
         uses: actions/upload-artifact@v4
