@@ -4,14 +4,14 @@ on:
   push:
     branches:
       - main
-    paths:
-      - "python/**"
+    # paths:
+    #   - "python/**"
   pull_request:
     types:
       - opened
       - synchronize
-    paths:
-      - "python/**"
+    # paths:
+    #   - "python/**"
 
 permissions:
   contents: read
