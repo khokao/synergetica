@@ -1,0 +1,50 @@
+name: "Python ruff check"
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "python/**"
+  pull_request:
+    types:
+      - opened
+      - synchronize
+    paths:
+      - "python/**"
+
+permissions:
+  contents: read
+  checks: write
+  pull-requests: write
+
+defaults:
+  run:
+    working-directory: ./python
+
+jobs:
+  ruff-check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: ./.github/composite/setup-python
+        with:
+          python_version: "3.12"
+          poetry_version: "1.8"
+          working_dir: python
+
+      - name: ruff linter
+        env:
+          REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          poetry run ruff check . \
+            | reviewdog -efm="%f:%l:%c: %m" \
+            -name="ruff check" \
+            -reporter="github-pr-review" \
+            -fail-on-error="true" \
+            -filter-mode="nofilter" \
+            -level="warning"
