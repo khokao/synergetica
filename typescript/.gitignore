@@ -1,11 +1,8 @@
-# This file is part of the GitHub gitignore repository.
-#
-# (c) 2024 GitHub, Inc.
-#
-# This source file is made available under the terms of the CC0 1.0 Universal license.
-# To view a copy of this license, visit http://creativecommons.org/publicdomain/zero/1.0/
-
-# ref: https://github.com/github/gitignore/blob/main/Node.gitignore
+# with-electron-typescript
+main
+dist
+renderer/.next
+renderer/out
 
 # Logs
 logs
