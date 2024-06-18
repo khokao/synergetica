@@ -1,7 +1,3 @@
-# Next.js build output
-renderer/.next
-renderer/out
-
 # Logs
 logs
 *.log
