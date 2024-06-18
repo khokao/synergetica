@@ -1,0 +1,42 @@
+name: "Set up Python"
+description: "Set up Python environment for Poetry project"
+inputs:
+  python_version:
+    required: true
+    description: "Python version"
+  poetry_version:
+    required: true
+    description: "Poetry version"
+  working_dir:
+    required: true
+    description: "pyproject.toml directory path"
+
+runs:
+  using: "composite"
+  steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Install Poetry
+      shell: bash
+      run: |
+        pipx install poetry==${{ inputs.poetry_version }}
+        echo "$HOME/.local/bin" >> $GITHUB_PATH
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ inputs.python_version }}
+        cache: "poetry"
+
+    - name: Install dependencies
+      shell: bash
+      run: |
+        poetry env use ${{ inputs.python_version }}
+        poetry install
+      working-directory: ${{ inputs.working_dir }}
+
+    - name: Set up Reviewdog
+      uses: reviewdog/action-setup@v1
+      with:
+        reviewdog_version: latest

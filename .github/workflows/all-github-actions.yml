@@ -1,0 +1,24 @@
+name: "GitHub Actions"
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types:
+      - opened
+      - synchronize
+
+permissions:
+  checks: read
+
+jobs:
+  all-checks:
+    runs-on: ubuntu-latest
+    steps:
+      - name: GitHub Checks
+        uses: poseidon/wait-for-status-checks@v0.4.1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          interval: "10s"
+          timeout: "300s"
