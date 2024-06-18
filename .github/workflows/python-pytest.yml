@@ -5,13 +5,13 @@ on:
     branches:
       - main
     paths:
-      - "python/**"
+      - "backend/**"
   pull_request:
     types:
       - opened
       - synchronize
     paths:
-      - "python/**"
+      - "backend/**"
 
 permissions:
   contents: read
@@ -20,7 +20,7 @@ permissions:
 
 defaults:
   run:
-    working-directory: ./python
+    working-directory: ./backend
 
 jobs:
   pytest:
@@ -35,7 +35,7 @@ jobs:
         with:
           python_version: "3.12"
           poetry_version: "1.8"
-          working_dir: python
+          working_dir: backend
 
       - name: pytest
         run: | # set -o pipefail is required to propagate pytest exit code
@@ -49,8 +49,8 @@ jobs:
         with:
           # This is a workaround for the following.
           # issue: https://github.com/MishaKav/pytest-coverage-comment/issues/161
-          pytest-coverage-path: python/pytest-coverage.txt
-          junitxml-path: python/pytest.xml
+          pytest-coverage-path: backend/pytest-coverage.txt
+          junitxml-path: backend/pytest.xml
 
       - name: Upload pytest coverage
         uses: actions/upload-artifact@v4

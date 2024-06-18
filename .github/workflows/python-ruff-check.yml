@@ -5,13 +5,13 @@ on:
     branches:
       - main
     paths:
-      - "python/**"
+      - "backend/**"
   pull_request:
     types:
       - opened
       - synchronize
     paths:
-      - "python/**"
+      - "backend/**"
 
 permissions:
   contents: read
@@ -20,7 +20,7 @@ permissions:
 
 defaults:
   run:
-    working-directory: ./python
+    working-directory: ./backend
 
 jobs:
   ruff-check:
@@ -35,7 +35,7 @@ jobs:
         with:
           python_version: "3.12"
           poetry_version: "1.8"
-          working_dir: python
+          working_dir: backend
 
       - name: ruff linter
         env:
