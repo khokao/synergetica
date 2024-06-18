@@ -5,13 +5,13 @@
   "description": "Desktop app for gene circuit design",
   "private": true,
   "scripts": {
-    "clean": "rimraf  src-tauri/target renderer/out renderer/.next",
-    "next-dev": "cross-env BROWSER=none next dev renderer",
-    "next-build": "next build renderer",
+    "clean": "rimraf  src-tauri/target out .next",
+    "next-dev": "cross-env BROWSER=none next dev",
+    "next-build": "next build",
     "tauri": "tauri",
     "dev": "tauri dev",
     "build": "tauri build",
-    "type-check": "tsc -p ./renderer/tsconfig.json",
+    "type-check": "tsc",
     "lint": "biome lint --write",
     "format": "biome format --write",
     "check": "biome check --write"
