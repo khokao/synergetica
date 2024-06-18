@@ -1,4 +1,5 @@
 from typing import Any
+
 import numpy as np
 from scipy.integrate import odeint
 
@@ -15,7 +16,7 @@ def euler(function, times: list[float], var_init: list[float], args: tuple[Any, 
     Returns:
         np.ndarray: calculated values with np.ndarray. shape: (len(times), len(var_init))
     """
-    
+
     # Initialize the solution array
     solution = odeint(function, var_init, times, args=args)
 
