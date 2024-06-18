@@ -1,21 +1,26 @@
-# TypeScript
+# Frontend
+The frontend is developed with Next.js and packaged as a desktop application using Tauri.
 
-## Install dependencies
+## Installation
+First, install the necessary dependencies:
 ```zsh
 npm install
 ```
 
-## Running the Application in Development Mode
+## Development
+To run the application in development mode, use the following command:
 ```zsh
 npm run dev
 ```
 
-## Creating a Production Build
+## Production
+To create a production build, use the command below:
 ```zsh
-npm run dist
+npm run build
 ```
 
-## Running Formatter, Linter and Analyzer
+## Code Inspection
+To run the formatter, linter, and analyzer, execute:
 ```zsh
 npm run check
 ```
