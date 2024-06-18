@@ -46,19 +46,22 @@ select = [
 ]
 
 [tool.ruff.lint.isort]
-known-first-party = ["generator", "simulator"]
+known-first-party = ["common", "generator", "simulator"]
 known-third-party = []
 
 [tool.ruff.format]
 quote-style = "single"
 
 [tool.mypy]
-files = ["generator/", "simulator", "tests/"]
-strict = true
-ignore_missing_imports = true
+files = ["common/", "generator/", "simulator", "tests/"]
+disallow_untyped_defs = true
+disallow_any_unimported = true
+no_implicit_optional = true
+check_untyped_defs = true
+warn_return_any = true
+show_error_codes = true
+warn_unused_ignores = true
 pretty = true
-disallow_untyped_calls = false
-implicit_reexport = true
 
 [[tool.mypy.overrides]]
 module = "tests.*"
@@ -76,7 +79,7 @@ addopts = [
 [tool.coverage.run]
 parallel = true
 data_file = "coverage/.coverage"
-source = ["generator/", "simulator"]
+source = ["common", "generator/", "simulator"]
 omit = []
 context = '${CONTEXT}'
 
