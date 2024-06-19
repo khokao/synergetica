@@ -17,6 +17,8 @@
     "check": "biome check --write"
   },
   "dependencies": {
+    "@emotion/react": "^11.11.4",
+    "package": "^1.0.1",
     "re-resizable": "^6.9.17",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
@@ -34,7 +36,6 @@
     "npm-check-updates": "^16.14.20",
     "postcss": "^8.4.38",
     "rimraf": "^5.0.7",
-    "tailwindcss": "^3.4.4",
     "typescript": "^5.4.5"
   }
 }

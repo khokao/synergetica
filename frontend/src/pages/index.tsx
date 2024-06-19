@@ -1,41 +1,31 @@
-import { FileSidebar } from "@/components/FileSidebar/FileSidebar";
+/** @jsxImportSource @emotion/react */
+/* import { FileSidebar } from "@/components/FileSidebar/FileSidebar"; */
+import { css } from "@emotion/react";
 import { GUI } from "@/components/GUI/GUI";
 import { Generation } from "@/components/Generation/Generation";
 import { Simulation } from "@/components/Simulation/Simulation";
 import { Resizable } from "re-resizable";
 
+
 const Home = () => {
   return (
-    <div className="flex h-screen">
+    <div css={flexContainer}>
       <Resizable
-        className="border-r-2 border-black-500"
+        css={resizableBorderRight}
         defaultSize={{
-          width: "20%",
-          height: "100%",
-        }}
-        minWidth={"10%"}
-        maxWidth={"30%"}
-        enable={{ right: true }}
-      >
-        <FileSidebar />
-      </Resizable>
-
-      <Resizable
-        className="border-r-2 border-black-500"
-        defaultSize={{
-          width: "40%",
+          width: "80%",
           height: "100%",
         }}
         minWidth={"30%"}
-        maxWidth={"50%"}
+        maxWidth={"80%"}
         enable={{ right: true }}
       >
         <GUI />
       </Resizable>
 
-      <div className="flex flex-col flex-grow">
+      <div css={flexGrowContainer}>
         <Resizable
-          className="border-b-2 border-black-500"
+          css={resizableBorderBottom}
           defaultSize={{
             width: "100%",
             height: "70%",
@@ -53,3 +43,23 @@ const Home = () => {
 };
 
 export default Home;
+
+/* styles */
+const flexContainer = css`
+  display: flex;
+  height: 100vh;
+`;
+
+const resizableBorderRight = css`
+  border-right: 2px solid #808080;
+`;
+
+const flexGrowContainer = css`
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+`;
+
+const resizableBorderBottom = css`
+  border-bottom: 2px solid #808080;
+`;

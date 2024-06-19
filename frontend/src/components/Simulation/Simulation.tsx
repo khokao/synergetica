@@ -1,5 +1,7 @@
+/** @jsxImportSource @emotion/react */
 import { useResponse } from "@/context/GeneratorResponseContext";
 import type React from "react";
+import { css } from "@emotion/react";
 
 export const Simulation: React.FC = () => {
   const { callGeneratorAPI } = useResponse();
@@ -16,13 +18,34 @@ export const Simulation: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col h-full">
-      <div className="flex-grow">Simulation Section</div>
-      <div className="flex justify-center mb-4">
-        <button type="button" onClick={onCallGeneratorAPIClick} className="px-4 py-1 border-2 border-black rounded">
+    <div css={styles.container}>
+      <div css={styles.grow}>Simulation Section</div>
+      <div css={styles.buttonContainer}>
+        <button type="button" onClick={onCallGeneratorAPIClick} css={styles.button}>
           Generate
         </button>
       </div>
     </div>
   );
+};
+
+const styles = {
+  container: css`
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  `,
+  grow: css`
+    flex-grow: 1;
+  `,
+  buttonContainer: css`
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1rem;
+  `,
+  button: css`
+    padding: 0.25rem 1rem;
+    border: 2px solid black;
+    border-radius: 0.25rem;
+  `,
 };
