@@ -40,19 +40,21 @@ jobs:
         env:
           REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          npx biome check --write --config-path ./biome.json . \
-            | reviewdog \
-            -efm="%-G%f ci ━%#" \
-            -efm="%-G%f lint ━%#" \
-            -efm="%-Gci ━%#" \
-            -efm="%E%f:%l:%c %.%#" \
-            -efm="%E%f %.%#" \
-            -efm="%C" \
-            -efm="%C  × %m" \
-            -efm="%C  %m" \
-            -efm="%-G%.%#" \
-            -name="biome lint" \
-            -reporter="github-pr-review" \
-            -fail-on-error="true" \
-            -filter-mode="nofilter" \
-            -level="warning"
+          "$(npm root)"/.bin/biome check --write . 2>&1 1>/dev/null |
+            sed 's/ *$//' |
+            awk 'BEGIN { RS=""; ORS="\n\n" } { if (index($0, "│") > 0) { print "  ```\n" }' |
+            reviewdog \
+              -efm="%-G%f ci ━%#" \
+              -efm="%-G%f lint ━%#" \
+              -efm="%-Gci ━%#" \
+              -efm="%E%f:%l:%c %.%#" \
+              -efm="%E%f %.%#" \
+              -efm="%C" \
+              -efm="%C  × %m" \
+              -efm="%C  %m" \
+              -efm="%-G%.%#" \
+              -name="biome lint" \
+              -reporter="github-pr-review" \
+              -fail-on-error="true" \
+              -filter-mode="nofilter" \
+              -level="warning"
