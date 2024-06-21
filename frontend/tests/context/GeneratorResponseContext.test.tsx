@@ -1,4 +1,5 @@
-import { randomFillSync } from "node:crypto";
+// import { randomFillSync } from "node:crypto";
+import { randomFillSync } from "crypto";
 import { ResponseProvider, useResponse } from "@/context/GeneratorResponseContext";
 import { clearMocks, mockIPC } from "@tauri-apps/api/mocks";
 import { act, renderHook } from "@testing-library/react";
