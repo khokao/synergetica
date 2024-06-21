@@ -40,7 +40,7 @@ jobs:
         env:
           REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          npx biome check --write . \
+          npx biome check --write --config-path ./frontend/biome.json . \
             | reviewdog \
             -efm="%-G%f ci ━%#" \
             -efm="%-G%f lint ━%#" \
