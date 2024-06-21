@@ -53,17 +53,17 @@ jobs:
             -efm="%C  × %m" \
             -efm="%C  %m" \
             -efm="%-G%.%#" \
-            -name="biome lint" \
+            -name="Biome check" \
             -reporter="github-pr-review" \
             -fail-on-error="true" \
             -filter-mode="nofilter" \
             -level="warning"
 
-      # - name: Reviewdog suggester
-      #   if: always() && github.event_name == 'pull_request'
-      #   uses: reviewdog/action-suggester@v1
-      #   with:
-      #     tool_name: Biome
-      #     fail_on_error: true
-      #     filter_mode: nofilter
-      #     level: warning
+      - name: Reviewdog suggester
+        if: always() && github.event_name == 'pull_request'
+        uses: reviewdog/action-suggester@v1
+        with:
+          tool_name: Biome
+          fail_on_error: true
+          filter_mode: nofilter
+          level: warning
