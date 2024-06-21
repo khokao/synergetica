@@ -1,0 +1,48 @@
+name: "Node biome check"
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "frontend/**"
+  pull_request:
+    types:
+      - opened
+      - synchronize
+    paths:
+      - "frontend/**"
+
+permissions:
+  contents: read
+  checks: write
+  pull-requests: write
+
+defaults:
+  run:
+    working-directory: ./frontend
+
+jobs:
+  biome-format:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: ./.github/composite/setup-node
+        with:
+          node_version: "21"
+          working_dir: frontend
+
+      - name: biome check
+        uses: mongolyy/reviewdog-action-biome@v1
+        with:
+          github_token: ${{ secrets.github_token }}
+          workdir: ./frontend
+          biome_flags: ./frontend
+          reporter: github-pr-review
+          fail_on_error: true
+          filter_mode: nofilter
+          level: warning
