@@ -23,7 +23,7 @@ defaults:
     working-directory: ./frontend
 
 jobs:
-  biome-format:
+  biome-check:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
@@ -37,12 +37,33 @@ jobs:
           working_dir: frontend
 
       - name: biome check
-        uses: mongolyy/reviewdog-action-biome@v1
-        with:
-          github_token: ${{ secrets.github_token }}
-          workdir: ./frontend
-          biome_flags: ./frontend
-          reporter: github-pr-review
-          fail_on_error: true
-          filter_mode: nofilter
-          level: warning
+        env:
+          REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          npx biome check --write --config-path ./frontend/biome.json . \
+            | reviewdog \
+            -efm="%-G%f ci ━%#" \
+            -efm="%-G%f lint ━%#" \
+            -efm="%-Gci ━%#" \
+            -efm="%E%f:%l:%c %.%#" \
+            -efm="%E%f %.%#" \
+            -efm="%C" \
+            -efm="%C  × %m" \
+            -efm="%C  %m" \
+            -efm="%-G%.%#" \
+            -name="biome lint" \
+            -reporter="github-pr-review" \
+            -fail-on-error="true" \
+            -filter-mode="nofilter" \
+            -level="warning"
+
+      # - name: biome check
+      #   uses: mongolyy/reviewdog-action-biome@v1
+      #   with:
+      #     github_token: ${{ secrets.github_token }}
+      #     workdir: ./frontend
+      #     biome_flags: ./frontend
+      #     reporter: github-pr-review
+      #     fail_on_error: true
+      #     filter_mode: nofilter
+      #     level: warning
