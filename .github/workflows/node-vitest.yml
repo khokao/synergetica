@@ -44,4 +44,5 @@ jobs:
         uses: davelosert/vitest-coverage-report-action@v2
         with:
           json-summary-path: ./frontend/coverage/coverage-summary.json
+          vite-config-path: ./frontend/vitest.config.mts
           file-coverage-mode: all
