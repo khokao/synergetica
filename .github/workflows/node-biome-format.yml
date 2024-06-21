@@ -53,6 +53,15 @@ jobs:
             -efm="%-G%.%#" \
             -name="biome lint" \
             -reporter="github-pr-review" \
-            -fail-on-error="true" \
+            -fail-on-error="false" \
             -filter-mode="nofilter" \
             -level="warning"
+
+      - name: Suggest changes
+        if: always() && github.event_name == 'pull_request'
+        uses: reviewdog/action-suggester@v1
+        with:
+          tool_name: "Biome formatter"
+          level: warning
+          filter_mode: nofilter
+          fail_on_error: true
