@@ -69,7 +69,8 @@ warn_unused_ignores = true
 pretty = true
 
 [[tool.mypy.overrides]]
-module = "tests.*"
+module = ["tests.*","scipy.integrate.*"]
+ignore_missing_imports = true
 disallow_untyped_defs = false
 
 [tool.pytest.ini_options]
