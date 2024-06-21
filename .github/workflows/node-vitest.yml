@@ -1,0 +1,46 @@
+name: "Node vitest"
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "frontend/**"
+  pull_request:
+    types:
+      - opened
+      - synchronize
+    paths:
+      - "frontend/**"
+
+permissions:
+  contents: read
+  checks: write
+  pull-requests: write
+
+defaults:
+  run:
+    working-directory: ./frontend
+
+jobs:
+  vitest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: ./.github/composite/setup-node
+        with:
+          node_version: "21"
+          working_dir: frontend
+
+      - name: vitest
+        run: npm run coverage
+
+      - name: Vitest coverage comment
+        if: always()
+        uses: davelosert/vitest-coverage-report-action@v2
+        with:
+          json-summary-path: ./frontend/coverage/coverage-summary.json

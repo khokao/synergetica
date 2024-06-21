@@ -1,0 +1,32 @@
+name: "Set up Node"
+description: "Set up Node environment for Node project"
+inputs:
+  node_version:
+    required: true
+    description: "Node version"
+  working_dir:
+    required: true
+    description: "package.json directory path"
+
+runs:
+  using: "composite"
+  steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Install
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ inputs.node_version }}
+        cache: "npm"
+        cache-dependency-path: frontend/package-lock.json
+
+    - name: Install dependencies
+      shell: bash
+      run: npm install
+      working-directory: ${{ inputs.working_dir }}
+
+    - name: Set up Reviewdog
+      uses: reviewdog/action-setup@v1
+      with:
+        reviewdog_version: latest
