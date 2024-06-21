@@ -2,14 +2,9 @@ import "tailwindcss/tailwind.css";
 import "../styles/globals.css";
 
 import type { AppProps } from "next/app";
-import { ResponseProvider } from "../context/GeneratorResponseContext";
 
 const App = ({ Component, pageProps }: AppProps) => {
-  return (
-    <ResponseProvider>
-      <Component {...pageProps} />
-    </ResponseProvider>
-  );
+  return <Component {...pageProps} />;
 };
 
 export default App;

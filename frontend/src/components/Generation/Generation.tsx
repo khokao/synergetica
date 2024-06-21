@@ -1,9 +1,9 @@
-import { useResponse } from "@/context/GeneratorResponseContext";
 import type { GeneratorResponseData } from "@/interfaces/generatorAPI";
 import type React from "react";
+import useSWR from "swr";
 
 export const Generation: React.FC = () => {
-  const { response } = useResponse();
+  const { data } = useSWR<GeneratorResponseData>("call_generator_api");
 
   const formatResponse = (response: GeneratorResponseData) => {
     return (
@@ -17,10 +17,7 @@ export const Generation: React.FC = () => {
   return (
     <div className="">
       Generation Section
-      {response &&
-        "rbs_sequence" in response &&
-        "promoter_sequence" in response &&
-        formatResponse(response as GeneratorResponseData)}
+      {data && formatResponse(data)}
     </div>
   );
 };

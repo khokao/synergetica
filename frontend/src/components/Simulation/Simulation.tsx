@@ -1,10 +1,11 @@
-import { useResponse } from "@/context/GeneratorResponseContext";
+import { callGeneratorAPI } from "@/hooks/useGeneratorAPI";
 import type React from "react";
+import useSWR from "swr";
 
 export const Simulation: React.FC = () => {
-  const { callGeneratorAPI } = useResponse();
+  const { mutate } = useSWR("call_generator_api");
 
-  const onCallGeneratorAPIClick = () => {
+  const onCallGeneratorAPIClick = async () => {
     const generatorRequestData = {
       rbs_parameter: 0.5,
       rbs_upstream: "ATG",
@@ -12,7 +13,9 @@ export const Simulation: React.FC = () => {
       promoter_parameter: 0.5,
       promoter_upstream: "TATA",
     };
-    callGeneratorAPI(generatorRequestData);
+
+    const response = await callGeneratorAPI(generatorRequestData);
+    await mutate(response, false);
   };
 
   return (
