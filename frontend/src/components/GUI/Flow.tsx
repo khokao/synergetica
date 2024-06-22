@@ -15,13 +15,15 @@ import ReactFlow, {
 let id = 0;
 const getId = () => `node_${id++}`;
 
+const nodeTypes = { custom: CustomNode };
+
 export const Flow: React.FC = () => {
   const reactFlowWrapper = useRef(null);
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
   const { screenToFlowPosition } = useReactFlow();
 
-  const onConnect = useCallback((params) => setEdges((eds) => addEdge(params, eds)), []);
+  const onConnect = useCallback((params) => setEdges((eds) => addEdge(params, eds)), [setEdges]);
 
   const onDragOver = useCallback((event) => {
     event.preventDefault();
@@ -47,18 +49,13 @@ export const Flow: React.FC = () => {
         id: getId(),
         type: "custom",
         position,
-        data: { nodeType: nodeType, iconUrl: iconUrl },
+        data: { nodeType: nodeType, iconUrl: iconUrl},
       };
 
       setNodes((nds) => nds.concat(newNode));
     },
-    [screenToFlowPosition],
+    [screenToFlowPosition, setNodes],
   );
-
-  const nodeTypes = { custom: CustomNode };
-  const proOptions = { hideAttribution: true }; // discussion: https://github.com/xyflow/xyflow/discussions/2961
-  const controlPosition = "top-right";
-  const backgroundVariant = BackgroundVariant.Dots;
 
   return (
     <div className="flex-grow h-full" ref={reactFlowWrapper}>
@@ -71,11 +68,11 @@ export const Flow: React.FC = () => {
         onDrop={onDrop}
         onDragOver={onDragOver}
         fitView
-        proOptions={proOptions}
+        proOptions={{ hideAttribution: true }} // discussion: https://github.com/xyflow/xyflow/discussions/2961
         nodeTypes={nodeTypes}
       >
-        <Controls position={controlPosition} />
-        <Background variant={backgroundVariant} />
+        <Controls position={"top-right"} />
+        <Background variant={BackgroundVariant.Dots} />
         <Panel
           position="bottom-right"
           className="px-2 py-1 text-center border-2 border-black rounded bg-white cursor-pointer"
