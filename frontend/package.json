@@ -25,6 +25,7 @@
     "re-resizable": "^6.9.17",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "reactflow": "^11.11.4",
     "swr": "^2.2.5"
   },
   "devDependencies": {
