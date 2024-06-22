@@ -49,7 +49,7 @@ export const Flow: React.FC = () => {
         id: getId(),
         type: "custom",
         position,
-        data: { nodeType: nodeType, iconUrl: iconUrl},
+        data: { nodeType: nodeType, iconUrl: iconUrl },
       };
 
       setNodes((nds) => nds.concat(newNode));
