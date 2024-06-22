@@ -4,6 +4,9 @@
   "author": "Koki Hokao",
   "description": "Desktop app for gene circuit design",
   "private": true,
+  "engines": {
+    "node": "21.x.x"
+  },
   "scripts": {
     "clean": "rimraf  src-tauri/target out .next",
     "next-dev": "cross-env BROWSER=none next dev",
@@ -14,7 +17,9 @@
     "type-check": "tsc",
     "lint": "biome lint --write",
     "format": "biome format --write",
-    "check": "biome check --write"
+    "check": "biome check --write",
+    "test": "vitest",
+    "coverage": "vitest run --coverage"
   },
   "dependencies": {
     "re-resizable": "^6.9.17",
@@ -25,16 +30,23 @@
     "@biomejs/biome": "1.8.1",
     "@tauri-apps/api": "^1.5.6",
     "@tauri-apps/cli": "^1.5.14",
+    "@testing-library/jest-dom": "^6.4.6",
+    "@testing-library/react": "^16.0.0",
     "@types/node": "^20.14.2",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
+    "@vitejs/plugin-react": "^4.3.1",
+    "@vitest/coverage-v8": "^1.6.0",
     "autoprefixer": "^10.4.19",
     "cross-env": "^7.0.3",
+    "jsdom": "^24.1.0",
     "next": "^14.2.0",
+    "next-router-mock": "^0.9.13",
     "npm-check-updates": "^16.14.20",
     "postcss": "^8.4.38",
     "rimraf": "^5.0.7",
     "tailwindcss": "^3.4.4",
-    "typescript": "^5.4.5"
+    "typescript": "^5.4.5",
+    "vitest": "^1.6.0"
   }
 }
