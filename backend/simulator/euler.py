@@ -1,10 +1,10 @@
-from typing import Any, Callable, List
+from typing import Callable, List, Tuple
 
 import numpy as np
 from scipy.integrate import odeint
 
 
-def euler(function: Callable, times: np.ndarray, var_init: List[float], args: tuple[Any, ...] | None) -> np.ndarray:
+def euler(function: Callable, times: np.ndarray, var_init: List[float], args: Tuple[float, ...] | None) -> np.ndarray:
     """Solve ODEs using Euler's method.
 
     Args:
@@ -32,7 +32,7 @@ def toggle_example(var: List[float], t: float, a1: float, a2: float, n: float, m
         a1 (float): parameter of a1
         a2 (float): parameter of a2
         n (float): parameter of n
-        m (float): paramter of m
+        m (float): parameter of m
 
     Returns:
         List[float]: cauculated values of the equation
