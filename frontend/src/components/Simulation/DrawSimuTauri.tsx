@@ -40,7 +40,7 @@ export const Graph: React.FC = () => {
 	
 	useEffect(() => {
 		fetchData(param1, param2);
-	  }, [param1, param2]);
+	  }, [fetchData, param1, param2]);
 
 	const handleParam1Change = (event) => {
 		setParam1(parseFloat(event.target.value));

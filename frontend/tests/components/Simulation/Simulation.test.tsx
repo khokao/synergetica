@@ -7,6 +7,10 @@ vi.mock("@/hooks/useGeneratorAPI", () => ({
   callGeneratorAPI: vi.fn(),
 }));
 
+vi.mock("@/hooks/useSimulatorAPI", () => ({
+  callSimulatorAPI: vi.fn(),
+}));
+
 describe("Simulation Component", () => {
   afterEach(() => {
     cleanup();
