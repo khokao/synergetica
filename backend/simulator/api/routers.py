@@ -16,15 +16,8 @@ async def run_simulation(input: SimulatorInput) -> SimulatorOutput:
     return simulator_result  # Dummy code. (TODO: Replace)
 
 
-@router.get('/graph', response_model=Dict[str, List[float]])
-async def get_data():
-    solution = run_euler_example()
-    time = [str(t) for t in np.arange(0, len(solution)).tolist()]
-    return {'data1': solution[:, 0].tolist(), 'data2': solution[:, 1].tolist(), 'time': time}
-
-
 @router.get('/graph_interact', response_model=Dict[str, List[float]])
-async def get_data_param(param1: float = Query(1.0), param2: float = Query(1.0)):
+async def get_data_param(param1: float = Query(1.0), param2: float = Query(1.0)) -> Dict[str, List[float]]:
     solution = run_euler_example(alpha1=param1, alpha2=param2)
     time = [str(t) for t in np.arange(0, len(solution)).tolist()]
     return {'data1': solution[:, 0].tolist(), 'data2': solution[:, 1].tolist(), 'time': time}
