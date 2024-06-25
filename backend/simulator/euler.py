@@ -18,7 +18,7 @@ def euler(function: Callable, times: Any, var_init: List[float], args: Tuple[flo
     """
 
     # Initialize the solution array
-    solution: np.ndarray = odeint(function, var_init, times, args=args)
+    solution: Any = odeint(function, var_init, times, args=args)
 
     return solution
 
