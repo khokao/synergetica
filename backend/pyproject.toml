@@ -18,6 +18,8 @@ fastapi-cli = "*"
 loguru = "*"
 pydantic = "*"
 uvicorn = "*"
+numpy = "^2.0.0"
+scipy = "^1.14.0"
 
 [tool.poetry.group.dev.dependencies]
 coverage = { version = "*", extras = ["toml"] }
@@ -53,7 +55,7 @@ known-third-party = []
 quote-style = "single"
 
 [tool.mypy]
-files = ["common/", "generator/", "simulator", "tests/"]
+files = ["common/", "generator/", "simulator/", "tests/"]
 disallow_untyped_defs = true
 disallow_any_unimported = true
 no_implicit_optional = true

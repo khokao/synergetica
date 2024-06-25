@@ -1,4 +1,5 @@
-import React, { useState, useEffect,useCallback } from "react";
+import React, { useState, useEffect, useCallback } from "react";
+import { callSimulatorAPI } from "@/hooks/useSimulatorAPI";
 import axios from "axios";
 import {
   Chart as ChartJS,
@@ -29,16 +30,13 @@ export const Graph: React.FC = () => {
 	const [param1, setParam1] = useState(1);
 	const [param2, setParam2] = useState(5);
 
-	const fetchData = useCallback((param1, param2) => {
-    axios.get("http://127.0.0.1:8000/graph_interact", {
-      params: { param1, param2 }
-    })
-    .then(response => {
-      setGraphdata(response.data.data1);
-      setGraphdata2(response.data.data2);
-      setTimes(response.data.time);
-    });
-  }, []);
+	const fetchData = useCallback(async (param1, param2) => {
+	  const param_set = {'param1':param1, 'param2':param2};
+	  const response =  await callSimulatorAPI(param_set);
+	  setGraphdata(response.data1);
+	  setGraphdata2(response.data2);
+	  setTimes(response.time);
+	}, []);
 	
 	useEffect(() => {
 		fetchData(param1, param2);

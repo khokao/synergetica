@@ -1,7 +1,7 @@
 import { callGeneratorAPI } from "@/hooks/useGeneratorAPI";
 import type React from "react";
 import useSWR from "swr";
-import { Graph } from "./DrawSimuInteract";
+import { Graph } from "./DrawSimuTauri";
 
 export const Simulation: React.FC = () => {
   const { mutate } = useSWR("call_generator_api");

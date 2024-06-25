@@ -7,7 +7,7 @@ mod schemas;
 use clients::APIClient;
 use errors::{handle_request_error, handle_response_error};
 use tauri::Builder;
-use schemas::GeneratorResponseData;
+use schemas::{GeneratorResponseData,SimulatorResponseData};
 
 #[tauri::command]
 async fn call_generator_api(
@@ -37,6 +37,31 @@ async fn call_generator_api(
         Err(e) => Err(handle_request_error(e)),
     }
 }
+
+#[tauri::command]
+async fn call_simulator_api(
+    param1: f64,
+    param2: f64,
+) -> Result<SimulatorResponseData, String> {
+    let response = APIClient::send_request_simulation(
+        param1,
+        param2,
+    )
+    .await;
+
+    match response {
+        Ok(resp) => {
+            if resp.status().is_success() {
+                APIClient::parse_response_simulator(resp).await
+            } else {
+                Err(handle_response_error(resp.status()))
+            }
+        }
+        Err(e) => Err(handle_request_error(e)),
+    }
+}
+
+
 
 #[tokio::main]
 async fn main() {
