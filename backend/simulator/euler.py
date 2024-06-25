@@ -1,10 +1,10 @@
-from typing import Callable, List, Tuple
+from typing import Any, Callable, List, Tuple
 
 import numpy as np
 from scipy.integrate import odeint
 
 
-def euler(function: Callable, times: np.ndarray, var_init: List[float], args: Tuple[float, ...] | None) -> np.ndarray:
+def euler(function: Callable, times: Any, var_init: List[float], args: Tuple[float, ...] | None) -> np.ndarray:
     """Solve ODEs using Euler's method.
 
     Args:
