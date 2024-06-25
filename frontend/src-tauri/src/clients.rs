@@ -32,11 +32,11 @@ impl APIClient {
     ) -> Result<reqwest::Response, reqwest::Error> {
         let client = reqwest::Client::new();
         client
-            .post("http://127.0.0.1:8000/graph_interact")
-            .json(&json!({
-                "param1": param1,
-                "param2": param2,
-            }))
+            .get("http://127.0.0.1:8000/graph_interact")
+            .query(&[
+                ("param1", param1),
+                ("param2", param2)
+            ])
             .send()
             .await
     }
@@ -49,9 +49,10 @@ impl APIClient {
     }
 
     pub async fn parse_response_simulator(response: reqwest::Response) -> Result<SimulatorResponseData, String> {
+        
         match response.json::<SimulatorResponseData>().await {
             Ok(data) => Ok(data),
-            Err(e) => Err(format!("Failed to parse response: {}", e)),
+            Err(e) => Err(format!("Failed to parse response sim: {}", e)),
         }
     }
 }

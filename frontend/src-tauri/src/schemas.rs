@@ -6,9 +6,9 @@ pub struct GeneratorResponseData {
     pub promoter_sequence: String,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize,Deserialize)]
 pub struct SimulatorResponseData {
     pub data1: Vec<f64>,
     pub data2: Vec<f64>,
-    pub time: Vec<String>
+    pub time: Vec<f64>,
 }

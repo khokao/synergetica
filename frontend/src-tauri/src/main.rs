@@ -66,7 +66,7 @@ async fn call_simulator_api(
 #[tokio::main]
 async fn main() {
     Builder::default()
-        .invoke_handler(tauri::generate_handler![call_generator_api])
+        .invoke_handler(tauri::generate_handler![call_generator_api, call_simulator_api])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }

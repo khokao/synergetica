@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { callSimulatorAPI } from "@/hooks/useSimulatorAPI";
-import axios from "axios";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -28,26 +27,27 @@ export const Graph: React.FC = () => {
 	const [graphdata2, setGraphdata2] = useState([]);
 	const [times, setTimes] = useState([]);
 	const [param1, setParam1] = useState(1);
-	const [param2, setParam2] = useState(5);
+	const [param2, setParam2] = useState(1.5);
 
 	const fetchData = useCallback(async (param1, param2) => {
-	  const param_set = {'param1':param1, 'param2':param2};
-	  const response =  await callSimulatorAPI(param_set);
+	  const param_set = { 'param1': param1, 'param2': param2 };
+	  const response = await callSimulatorAPI(param_set);
+	
 	  setGraphdata(response.data1);
 	  setGraphdata2(response.data2);
 	  setTimes(response.time);
-	}, []);
+	},[]);
 	
 	useEffect(() => {
 		fetchData(param1, param2);
-	  }, [fetchData,param1, param2]);
+	  }, [param1, param2]);
 
 	const handleParam1Change = (event) => {
-		setParam1(event.target.value);
+		setParam1(parseFloat(event.target.value));
 	};
 	
 	const handleParam2Change = (event) => {
-		setParam2(event.target.value);
+		setParam2(parseFloat(event.target.value));
 	  };
 
 	const options = {
@@ -119,7 +119,7 @@ export const Graph: React.FC = () => {
 				  onChange={handleParam2Change}
 						/>
 				<span>  {param2}   </span>
-			  </label>
+					</label>
 			</div>
 		  </div>
 		</>
