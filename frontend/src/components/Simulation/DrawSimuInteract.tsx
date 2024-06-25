@@ -29,14 +29,20 @@ const Graph: React.FC = () => {
 	const [param1, setParam1] = useState(1);
 	const [param2, setParam2] = useState(5);
 
-	useEffect(() => {
-		axios.get('http://127.0.0.1:8000/graph')
+	const fetchData = (param1, param2) => {
+		axios.get(`http://127.0.0.1:8000/graph_interact`, {
+		  params: { param1, param2 }
+		})
 		  .then(response => {
-			  setGraphdata(response.data.data1);
-			  setGraphdata2(response.data.data2)
-			  setTimes(response.data.time);
+			setGraphdata(response.data.data1);
+			setGraphdata2(response.data.data2);
+			setTimes(response.data.time);
 		  });
-	  }, []);
+	  };
+	
+	useEffect(() => {
+		fetchData(param1, param2);
+	  }, [param1, param2]);
 
 	const handleParam1Change = (event) => {
 		setParam1(event.target.value);
@@ -54,7 +60,13 @@ const Graph: React.FC = () => {
 		  display: true,
 		  text: "Simulation Result",
 		},
-	  },
+		},
+		scales: {
+			y: {
+				min: 0, // y軸の最小値を指定
+				max: 2.5, // y軸の最大値を指定
+			},
+			},
 	};
   
 	
@@ -85,9 +97,9 @@ const Graph: React.FC = () => {
 			<div className="h-full">
 			  <Line options={options} data={data} />
 			</div>
-			<div className="flex flex-col ml-5">
+			<div className="flex flex-col ml-5 mb-2">
 			  <label>
-				Parameter α1   
+				 α1
 				<input
 				  type="range"
 				  min="0"
@@ -99,7 +111,7 @@ const Graph: React.FC = () => {
 				<span>  {param1}   </span> 
 			  </label>
 			  <label>
-				Parameter α2   
+				 α2   
 				<input
 				  type="range"
 				  min="0"
