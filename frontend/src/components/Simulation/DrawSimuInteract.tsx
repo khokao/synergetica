@@ -22,7 +22,7 @@ ChartJS.register(
   Legend
 );
 
-const Graph: React.FC = () => {
+export const Graph: React.FC = () => {
 	const [graphdata, setGraphdata] = useState([]);
 	const [graphdata2, setGraphdata2] = useState([]);
 	const [times, setTimes] = useState([]);
@@ -30,7 +30,7 @@ const Graph: React.FC = () => {
 	const [param2, setParam2] = useState(5);
 
 	const fetchData = (param1, param2) => {
-		axios.get(`http://127.0.0.1:8000/graph_interact`, {
+		axios.get("http://127.0.0.1:8000/graph_interact", {
 		  params: { param1, param2 }
 		})
 		  .then(response => {
@@ -42,7 +42,7 @@ const Graph: React.FC = () => {
 	
 	useEffect(() => {
 		fetchData(param1, param2);
-	  }, [param1, param2]);
+	  }, [fetchData,param1, param2]);
 
 	const handleParam1Change = (event) => {
 		setParam1(event.target.value);
@@ -127,6 +127,4 @@ const Graph: React.FC = () => {
 		</>
 	  );
 	};
-  
-  export default Graph;
   
