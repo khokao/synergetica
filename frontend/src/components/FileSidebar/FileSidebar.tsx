@@ -1,5 +1,12 @@
-import type React from "react";
+import React from "react";
+import { DispDirTree } from "./LoadFileStructOpen";
 
 export const FileSidebar: React.FC = () => {
-  return <div className="">FileSidebar Section</div>;
+  return (
+    <div>
+      <div>
+        <DispDirTree />
+      </div>
+    </div>
+  );
 };
