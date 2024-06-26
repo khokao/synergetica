@@ -53,25 +53,21 @@ export const DispDirTree: React.FC = () => {
     }
   };
 
-  useEffect(() => {
-    const selectDirectory = async () => {
-      try {
-        const selectedPath = await open({
-          directory: true,
-          multiple: false,
-          title: 'Select a Directory',
-        }) as string;
+  const selectDirectory = async () => {
+    try {
+      const selectedPath = await open({
+        directory: true,
+        multiple: false,
+        title: 'Select a Directory',
+      }) as string;
 
-        if (selectedPath) {
-          setPath(selectedPath);
-        }
-      } catch (err) {
-        console.error(err);
+      if (selectedPath) {
+        setPath(selectedPath);
       }
-    };
-
-    selectDirectory();
-  }, []);
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   useEffect(() => {
     if (path) {
@@ -80,15 +76,27 @@ export const DispDirTree: React.FC = () => {
   }, [path]);
 
   return (
-    <div className="bg-gray-100 min-h-screen">
-      <div className="bg-gray-300">
+    <div className="bg-gray-100  min-h-screen">
+      <div className="text-black">
+      <div className="bg-gray-300 flex-grow flex justify-between items-center">
         <h1>File Explorer</h1>
+        </div>
+        <div className='px-2 py-4'>
+        <button
+          onClick={selectDirectory}
+          className="bg-green-500 hover:bg-green-700 justify-center text-white font-bold py-2 px-2 rounded flex-shrink flex-grow-0 flex-auto"
+        >
+          Open Folder
+          </button>
+          </div>
       </div>
+      <div className="overflow-y-auto h-[calc(100vh-56px)] mt-2">
       {directory && (
         <ul className="list-none p-0">
           <DirectoryTree entry={directory} />
         </ul>
-      )}
+        )}
+        </div>
     </div>
   );
 };
