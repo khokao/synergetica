@@ -20,7 +20,7 @@ def euler(function: Callable, times: Any, var_init: List[float], args: Tuple[flo
     # Initialize the solution array
     solution: Any = odeint(function, var_init, times, args=args)
 
-    return solution
+    return solution  # type: ignore
 
 
 def toggle_example(var: List[float], t: float, a1: float, a2: float, n: float, m: float) -> List[float]:
