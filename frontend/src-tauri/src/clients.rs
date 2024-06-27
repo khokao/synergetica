@@ -33,10 +33,10 @@ impl APIClient {
         let client = reqwest::Client::new();
         client
             .get("http://127.0.0.1:8000/simulate-with-euler")
-            .query(&[
-                ("param1", param1),
-                ("param2", param2)
-            ])
+            .query(&json!({
+                "param1":param1,
+                "param2":param2
+            }))
             .send()
             .await
     }
