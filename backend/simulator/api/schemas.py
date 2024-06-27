@@ -1,11 +1,12 @@
-from typing import Dict, List
-
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 
 class SimulatorInput(BaseModel):
-    graph: Dict[str, List[int]]
+    param1: float = Field(1.0, description='Parameter 1')
+    param2: float = Field(1.0, description='Parameter 2')
 
 
 class SimulatorOutput(BaseModel):
-    parameters: List[float]
+    data1: list[float]
+    data2: list[float]
+    time: list[float]
