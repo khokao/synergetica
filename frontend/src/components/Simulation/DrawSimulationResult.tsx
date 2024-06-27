@@ -31,7 +31,6 @@ const getGraphOptions = () => ({
   },
 });
 
-// グラフデータの設定
 const getGraphData = (times, graphdata, graphdata2) => ({
   labels: times,
   datasets: [
@@ -52,7 +51,6 @@ const getGraphData = (times, graphdata, graphdata2) => ({
   ],
 });
 
-// データの取得
 const useFetchData = (param1, param2) => {
   const [graphdata, setGraphdata] = useState([]);
   const [graphdata2, setGraphdata2] = useState([]);
@@ -74,7 +72,6 @@ const useFetchData = (param1, param2) => {
   return { graphdata, graphdata2, times };
 };
 
-// パラメータ入力コンポーネント
 const ParamInput = ({ label, value, onChange }) => (
   <label>
     {label}
@@ -83,7 +80,6 @@ const ParamInput = ({ label, value, onChange }) => (
   </label>
 );
 
-// メインのグラフコンポーネント
 export const Graph: React.FC = () => {
   const [param1, setParam1] = useState(1);
   const [param2, setParam2] = useState(1.5);

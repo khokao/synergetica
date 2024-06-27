@@ -21,8 +21,7 @@ def euler(
             shape: (len(times), len(var_init))
     """
 
-    solution = odeint(function, var_init, times, args=args)
-
+    solution: NDArray[np.float64] = odeint(function, var_init, times, args=args)
     return solution
 
 
@@ -43,7 +42,7 @@ def toggle_example(var: list[float], t: float, a1: float, a2: float, n: float, m
     dudt = a1 / (1 + var[1] ** n) - var[0]
     dvdt = a2 / (1 + var[0] ** m) - var[1]
 
-    return [dudt, dvdt]
+    return (dudt, dvdt)
 
 
 def run_euler_example(alpha1: float = 1.0, alpha2: float = 1) -> NDArray[np.float64]:
