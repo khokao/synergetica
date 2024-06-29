@@ -8,9 +8,11 @@ import { wrapHeadNode } from "@/components/GUI/nodes/wrapHeadNode";
 import { wrapTailNode } from "@/components/GUI/nodes/wrapTailNode";
 import type React from "react";
 
-export const onDragStart = (event, nodeType, iconUrl) => {
+export const onDragStart = (event, nodeType, iconUrl, leftHandleStyle, rightHandleStyle) => {
   event.dataTransfer.setData("application/reactflow-node-type", nodeType);
   event.dataTransfer.setData("application/reactflow-icon-url", iconUrl);
+  event.dataTransfer.setData("application/reactflow-left-handle-style", JSON.stringify(leftHandleStyle));
+  event.dataTransfer.setData("application/reactflow-right-handle-style", JSON.stringify(rightHandleStyle));
   event.dataTransfer.effectAllowed = "move";
 };
 
