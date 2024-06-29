@@ -3,7 +3,7 @@
  */
 const nextConfig = {
   output: "export",
-  reactStrictMode: true,
+  reactStrictMode: false,
 };
 
 module.exports = nextConfig;
