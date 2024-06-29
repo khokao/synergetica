@@ -5,6 +5,8 @@ import React from "react";
 
 const nodeType = "meta";
 const iconUrl = "/images/node-meta.svg";
+const leftHandleStyle = { top: 15, left: 8 };
+const rightHandleStyle = { top: 15, left: 178 };
 
 /*
   Since dragging and dropping icons in Tauri apps can trigger file operations,
@@ -18,7 +20,7 @@ const enableDragging = (event) => {
 export const metaNode = (
   <div
     className="cursor-pointer flex items-end justify-center"
-    onDragStart={(event) => onDragStart(event, nodeType, iconUrl)}
+    onDragStart={(event) => onDragStart(event, nodeType, iconUrl, leftHandleStyle, rightHandleStyle)}
     draggable
     onMouseDown={enableDragging}
   >

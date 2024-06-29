@@ -5,6 +5,8 @@ import React from "react";
 
 const nodeType = "recombinaseRecognitionSeq";
 const iconUrl = "/images/node-recombinase-recognition-seq.svg";
+const leftHandleStyle = { top: 45, left: 4 };
+const rightHandleStyle = { top: 45, left: 127 };
 
 /*
   Since dragging and dropping icons in Tauri apps can trigger file operations,
@@ -18,7 +20,7 @@ const enableDragging = (event) => {
 export const recombinaseRecognitionSeqNode = (
   <div
     className="cursor-pointer flex items-end justify-center"
-    onDragStart={(event) => onDragStart(event, nodeType, iconUrl)}
+    onDragStart={(event) => onDragStart(event, nodeType, iconUrl, leftHandleStyle, rightHandleStyle)}
     draggable
     onMouseDown={enableDragging}
   >

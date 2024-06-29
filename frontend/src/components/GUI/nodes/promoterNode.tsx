@@ -5,6 +5,8 @@ import React from "react";
 
 const nodeType = "promoter";
 const iconUrl = "/images/node-promoter.svg";
+const leftHandleStyle = { top: 68, left: 5 };
+const rightHandleStyle = { top: 68, left: 180 };
 
 /*
   Since dragging and dropping icons in Tauri apps can trigger file operations,
@@ -18,7 +20,7 @@ const enableDragging = (event) => {
 export const promoterNode = (
   <div
     className="cursor-pointer flex items-end justify-center"
-    onDragStart={(event) => onDragStart(event, nodeType, iconUrl)}
+    onDragStart={(event) => onDragStart(event, nodeType, iconUrl, leftHandleStyle, rightHandleStyle)}
     draggable
     onMouseDown={enableDragging}
   >

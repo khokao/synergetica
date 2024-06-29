@@ -5,6 +5,8 @@ import React from "react";
 
 const nodeType = "wrapTail";
 const iconUrl = "/images/node-wrap-tail.svg";
+const leftHandleStyle = { top: 15, left: 5 };
+const rightHandleStyle = { top: 15, left: 16 };
 
 /*
   Since dragging and dropping icons in Tauri apps can trigger file operations,
@@ -18,7 +20,7 @@ const enableDragging = (event) => {
 export const wrapTailNode = (
   <div
     className="cursor-pointer flex items-end justify-center"
-    onDragStart={(event) => onDragStart(event, nodeType, iconUrl)}
+    onDragStart={(event) => onDragStart(event, nodeType, iconUrl, leftHandleStyle, rightHandleStyle)}
     draggable
     onMouseDown={enableDragging}
   >
