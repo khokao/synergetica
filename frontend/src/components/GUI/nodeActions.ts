@@ -1,5 +1,5 @@
 import { adjustSourceNodePosition, adjustTargetNodePosition } from "@/components/GUI/utils/adjustNodePosition";
-import { animateConnectedEdges } from "@/components/GUI/utils/animateConnectedEdges";
+import { activateConnectedEdgesAnimation, deactivateConnectedEdgesAnimation } from "@/components/GUI/utils/animateConnectedEdges";
 import { addNearestEdge, createNearestEdge } from "@/components/GUI/utils/createNearestEdge";
 import { divideNodesByEdges } from "@/components/GUI/utils/divideNodesByEdges";
 import { groupNodes, ungroupNodes } from "@/components/GUI/utils/groupNodes";
@@ -25,10 +25,10 @@ export const dragChildNode = (node, setEdges, store) => {
   const storeNodes = Array.from(nodeInternals.values());
 
   if (node.parentId) {
-    setEdges((edges) => animateConnectedEdges(edges, node.id));
+    setEdges((edges) => activateConnectedEdgesAnimation(edges, node.id));
   } else {
     setEdges((edges) => {
-      return animateConnectedEdges(
+      return activateConnectedEdgesAnimation(
         addNearestEdge(
           node,
           storeNodes,
@@ -49,44 +49,41 @@ export const stopDragChildNode = (node, storeNodes, setEdges, setNodes, dragStar
 };
 
 const stopDragNodeWithoutParent = (node, storeNodes, setEdges, setNodes) => {
-  setEdges((edges) => {
-    const nextEdges = edges.filter((e) => !e.animated);
-    const nearestEdge = createNearestEdge(node, storeNodes);
+  const nearestEdge = createNearestEdge(node, storeNodes);
 
-    if (!nearestEdge) {
-      return nextEdges;
-    }
+  if (!nearestEdge) {
+    return;
+  }
 
-    nextEdges.push(nearestEdge);
+  setEdges((edges) => deactivateConnectedEdgesAnimation(edges, node.id))
+
+  setNodes((nodes) => {
     const draggedNodeIsTarget = nearestEdge.data.draggedNodeIsTarget;
 
-    setNodes((nodes) => {
-      const sourceNode = nodes.find((n) => n.id === nearestEdge.source);
-      const targetNode = nodes.find((n) => n.id === nearestEdge.target);
-      const parentNode = draggedNodeIsTarget
-        ? nodes.find((n) => n.id === sourceNode.parentId)
-        : nodes.find((n) => n.id === targetNode.parentId);
-      const siblingNodes = parentNode ? nodes.filter((n) => n.parentId === parentNode.id) : [];
+    const sourceNode = nodes.find((n) => n.id === nearestEdge.source);
+    const targetNode = nodes.find((n) => n.id === nearestEdge.target);
+    const parentNode = draggedNodeIsTarget
+      ? nodes.find((n) => n.id === sourceNode.parentId)
+      : nodes.find((n) => n.id === targetNode.parentId);
+    const siblingNodes = parentNode ? nodes.filter((n) => n.parentId === parentNode.id) : [];
 
-      if (draggedNodeIsTarget) {
-        targetNode.position = adjustTargetNodePosition(sourceNode, targetNode, parentNode);
-      } else {
-        sourceNode.position = adjustSourceNodePosition(sourceNode, targetNode, parentNode);
-      }
+    if (draggedNodeIsTarget) {
+      targetNode.position = adjustTargetNodePosition(sourceNode, targetNode, parentNode);
+    } else {
+      sourceNode.position = adjustSourceNodePosition(sourceNode, targetNode, parentNode);
+    }
 
-      targetNode.data.leftHandleConnected = true;
-      sourceNode.data.rightHandleConnected = true;
+    targetNode.data.leftHandleConnected = true;
+    sourceNode.data.rightHandleConnected = true;
 
-      const nodesToChange = Array.from(new Set([sourceNode, targetNode, parentNode, ...siblingNodes])).filter(Boolean);
-      const unchangedNodes = nodes.filter((n) => !nodesToChange.includes(n));
+    const nodesToChange = Array.from(new Set([sourceNode, targetNode, parentNode, ...siblingNodes])).filter(Boolean);
+    const unchangedNodes = nodes.filter((n) => !nodesToChange.includes(n));
 
-      const changedNodes = groupNodes(ungroupNodes(nodesToChange));
+    const changedNodes = groupNodes(ungroupNodes(nodesToChange));
 
-      return [...unchangedNodes, ...changedNodes];
-    });
-
-    return nextEdges;
+    return [...unchangedNodes, ...changedNodes];
   });
+
 };
 
 const stopDragNodeWithParent = (node, storeNodes, setEdges, setNodes, dragStartNode) => {
@@ -94,6 +91,7 @@ const stopDragNodeWithParent = (node, storeNodes, setEdges, setNodes, dragStartN
 
   if (!isNodeOutsideParent(node, parentNode)) {
     setNodes((nodes) => nodes.map((n) => (n.id === node.id ? dragStartNode.current : n)));
+    setEdges((edges) => deactivateConnectedEdgesAnimation(edges, node.id));
     return;
   }
 
