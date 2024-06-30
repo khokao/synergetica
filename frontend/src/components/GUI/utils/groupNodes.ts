@@ -1,6 +1,7 @@
 import { nanoid } from "nanoid";
+import { Edge, type Node } from "reactflow";
 
-export const ungroupNodes = (nds) => {
+export const ungroupNodes = (nds: Node[]): Node[] => {
   return nds
     .map((n) => {
       if (n.type === "parent") {
@@ -24,7 +25,7 @@ export const ungroupNodes = (nds) => {
     .filter(Boolean);
 };
 
-export const groupNodes = (nds) => {
+export const groupNodes = (nds: Node[]): Node[] => {
   if (nds.length < 2) {
     return nds;
   }

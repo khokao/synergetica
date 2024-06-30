@@ -1,12 +1,23 @@
 import { adjustSourceNodePosition, adjustTargetNodePosition } from "@/components/GUI/utils/adjustNodePosition";
-import { activateConnectedEdgesAnimation, deactivateConnectedEdgesAnimation } from "@/components/GUI/utils/animateConnectedEdges";
+import {
+  activateConnectedEdgesAnimation,
+  deactivateConnectedEdgesAnimation,
+} from "@/components/GUI/utils/animateConnectedEdges";
 import { addNearestEdge, createNearestEdge } from "@/components/GUI/utils/createNearestEdge";
 import { divideNodesByEdges } from "@/components/GUI/utils/divideNodesByEdges";
 import { groupNodes, ungroupNodes } from "@/components/GUI/utils/groupNodes";
 import { isNodeOutsideParent } from "@/components/GUI/utils/isNodeOutsideParent";
 import { nanoid } from "nanoid";
+import type { Edge, Node, ReactFlowState, XYPosition } from "reactflow";
+import type { StoreApi } from "zustand";
 
-export const createChildNode = (nodeType, iconUrl, leftHandleStyle, rightHandleStyle, position) => ({
+export const createChildNode = (
+  nodeType: string,
+  iconUrl: string,
+  leftHandleStyle: React.CSSProperties,
+  rightHandleStyle: React.CSSProperties,
+  position: XYPosition,
+): Node => ({
   id: nanoid(),
   type: "child",
   position,
@@ -20,42 +31,70 @@ export const createChildNode = (nodeType, iconUrl, leftHandleStyle, rightHandleS
   },
 });
 
-export const dragChildNode = (node, setEdges, store) => {
+export const dragChildNode = (
+  node: Node,
+  setEdges: (payload: Edge[] | ((edges: Edge[]) => Edge[])) => void,
+  store: StoreApi<ReactFlowState>,
+  dragStartConnectedEdges: React.MutableRefObject<Edge[] | null>,
+): void => {
   const { nodeInternals } = store.getState();
   const storeNodes = Array.from(nodeInternals.values());
 
   if (node.parentId) {
-    setEdges((edges) => activateConnectedEdgesAnimation(edges, node.id));
-  } else {
-    setEdges((edges) => {
-      return activateConnectedEdgesAnimation(
-        addNearestEdge(
-          node,
-          storeNodes,
-          edges.filter((e) => !e.animated),
-        ),
-        node.id,
-      );
-    });
+    const parentNode = storeNodes.find((n) => n.id === node.parentId);
+    if (!isNodeOutsideParent(node, parentNode)) {
+      setEdges((edges) => {
+        return [
+          ...edges.filter((e) => e.source !== node.id && e.target !== node.id),
+          ...activateConnectedEdgesAnimation(dragStartConnectedEdges.current, node.id),
+        ];
+      });
+      return;
+    }
+    setEdges((edges) => edges.filter((e) => e.source !== node.id && e.target !== node.id));
+    return;
   }
+
+  setEdges((edges) => {
+    return activateConnectedEdgesAnimation(
+      addNearestEdge(
+        node,
+        storeNodes,
+        edges.filter((e) => !e.animated),
+      ),
+      node.id,
+    );
+  });
 };
 
-export const stopDragChildNode = (node, storeNodes, setEdges, setNodes, dragStartNode) => {
+export const stopDragChildNode = (
+  node: Node,
+  storeNodes: Node[],
+  setEdges: (payload: Edge[] | ((edges: Edge[]) => Edge[])) => void,
+  setNodes: (payload: Node[] | ((nodes: Node[]) => Node[])) => void,
+  dragStartNode: React.MutableRefObject<Node | null>,
+  dragStartConnectedEdges: React.MutableRefObject<Edge[] | null>,
+): void => {
   if (!node.parentId) {
     stopDragNodeWithoutParent(node, storeNodes, setEdges, setNodes);
   } else {
-    stopDragNodeWithParent(node, storeNodes, setEdges, setNodes, dragStartNode);
+    stopDragNodeWithParent(node, storeNodes, setEdges, setNodes, dragStartNode, dragStartConnectedEdges);
   }
 };
 
-const stopDragNodeWithoutParent = (node, storeNodes, setEdges, setNodes) => {
+const stopDragNodeWithoutParent = (
+  node: Node,
+  storeNodes: Node[],
+  setEdges: (payload: Edge[] | ((edges: Edge[]) => Edge[])) => void,
+  setNodes: (payload: Node[] | ((nodes: Node[]) => Node[])) => void,
+): void => {
   const nearestEdge = createNearestEdge(node, storeNodes);
 
   if (!nearestEdge) {
     return;
   }
 
-  setEdges((edges) => deactivateConnectedEdgesAnimation(edges, node.id))
+  setEdges((edges) => deactivateConnectedEdgesAnimation(edges, node.id));
 
   setNodes((nodes) => {
     const draggedNodeIsTarget = nearestEdge.data.draggedNodeIsTarget;
@@ -83,10 +122,16 @@ const stopDragNodeWithoutParent = (node, storeNodes, setEdges, setNodes) => {
 
     return [...unchangedNodes, ...changedNodes];
   });
-
 };
 
-const stopDragNodeWithParent = (node, storeNodes, setEdges, setNodes, dragStartNode) => {
+const stopDragNodeWithParent = (
+  node: Node,
+  storeNodes: Node[],
+  setEdges: (payload: Edge[] | ((edges: Edge[]) => Edge[])) => void,
+  setNodes: (payload: Node[] | ((nodes: Node[]) => Node[])) => void,
+  dragStartNode: React.MutableRefObject<Node | null>,
+  dragStartConnectedEdges: React.MutableRefObject<Edge[] | null>,
+): void => {
   const parentNode = storeNodes.find((n) => n.id === node.parentId);
 
   if (!isNodeOutsideParent(node, parentNode)) {
@@ -96,8 +141,8 @@ const stopDragNodeWithParent = (node, storeNodes, setEdges, setNodes, dragStartN
   }
 
   setEdges((edges) => {
-    const nextEdges = edges.filter((e) => e.source !== node.id && e.target !== node.id);
-    const removedEdges = edges.filter((e) => e.source === node.id || e.target === node.id);
+    const removedEdges = dragStartConnectedEdges.current;
+    const nextEdges = edges.filter((e) => !removedEdges.includes(e));
 
     setNodes((nodes) => {
       for (const edge of removedEdges) {

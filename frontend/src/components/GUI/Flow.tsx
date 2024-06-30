@@ -11,25 +11,31 @@ import ReactFlow, {
   BackgroundVariant,
   Panel,
   useStoreApi,
+  type ReactFlowState,
+  type NodeTypes,
+  type Node,
+  type Edge,
 } from "reactflow";
+import type { StoreApi } from "zustand";
 
-const nodeTypes = { child: CustomChildNode, parent: CustomParentNode };
+const nodeTypes: NodeTypes = { child: CustomChildNode, parent: CustomParentNode };
 
 export const Flow: React.FC = () => {
-  const [nodes, setNodes, onNodesChange] = useNodesState([]);
-  const [edges, setEdges, onEdgesChange] = useEdgesState([]);
+  const [nodes, setNodes, onNodesChange] = useNodesState<Node[]>([]);
+  const [edges, setEdges, onEdgesChange] = useEdgesState<Edge[]>([]);
   const store = useStoreApi();
   const { screenToFlowPosition } = useReactFlow();
   const reactFlowWrapper = useRef(null);
-  const dragStartNode = useRef(null);
+  const dragStartNode = useRef<Node | null>(null);
+  const dragStartConnectedEdges = useRef<Edge[] | null>(null);
 
-  const onDragOver = useCallback((event) => {
+  const onDragOver = useCallback((event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault();
     event.dataTransfer.dropEffect = "move";
   }, []);
 
   const onDrop = useCallback(
-    (event) => {
+    (event: React.DragEvent<HTMLDivElement>) => {
       event.preventDefault();
 
       const nodeType = event.dataTransfer.getData("application/reactflow-node-type");
@@ -54,25 +60,31 @@ export const Flow: React.FC = () => {
   );
 
   const onNodeDrag = useCallback(
-    (_, node) => {
+    (_, node: Node) => {
       if (node.type === "child") {
-        dragChildNode(node, setEdges, store);
+        dragChildNode(node, setEdges, store as StoreApi<ReactFlowState>, dragStartConnectedEdges);
       }
     },
     [setEdges, store],
   );
 
-  const onNodeDragStart = useCallback((_, node) => {
-    dragStartNode.current = node;
-  }, []);
+  const onNodeDragStart = useCallback(
+    (_, node: Node) => {
+      dragStartNode.current = node;
+
+      const edges = store.getState().edges;
+      dragStartConnectedEdges.current = edges.filter((e) => e.source === node.id || e.target === node.id);
+    },
+    [store],
+  );
 
   const onNodeDragStop = useCallback(
-    (_, node) => {
+    (_, node: Node) => {
       const { nodeInternals } = store.getState();
       const storeNodes = Array.from(nodeInternals.values());
 
       if (node.type === "child") {
-        stopDragChildNode(node, storeNodes, setEdges, setNodes, dragStartNode);
+        stopDragChildNode(node, storeNodes, setEdges, setNodes, dragStartNode, dragStartConnectedEdges);
       }
     },
     [setEdges, setNodes, store],

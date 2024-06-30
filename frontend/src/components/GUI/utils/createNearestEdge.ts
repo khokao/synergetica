@@ -1,13 +1,19 @@
 import { getLeftHandlePosition, getRightHandlePosition } from "@/components/GUI/utils/getHandlePosition";
 import { nanoid } from "nanoid";
+import type { Edge, Node, XYPosition } from "reactflow";
 
-const calculateDistance = (position1, position2) => {
+const calculateDistance = (position1: XYPosition, position2: XYPosition): number => {
   const dx = position1.x - position2.x;
   const dy = position1.y - position2.y;
   return Math.sqrt(dx * dx + dy * dy);
 };
 
-const calculateDistanceBetweenHandles = (sourceNode, targetNode, sourceParentNode, targetParentNode) => {
+const calculateDistanceBetweenHandles = (
+  sourceNode: Node,
+  targetNode: Node,
+  sourceParentNode: Node,
+  targetParentNode: Node,
+): number => {
   if (sourceNode.data.rightHandleConnected || targetNode.data.leftHandleConnected) {
     return Number.MAX_VALUE;
   }
@@ -17,7 +23,11 @@ const calculateDistanceBetweenHandles = (sourceNode, targetNode, sourceParentNod
   return calculateDistance(sourceNodeRightHandlePosition, targetNodeLeftHandlePosition);
 };
 
-const findNearestNode = (node, nds, isFromLeftHandle) => {
+const findNearestNode = (
+  node: Node,
+  nds: Node[],
+  isFromLeftHandle: boolean,
+): { nearestNode: Node | null; nearestNodeDistance: number } => {
   const MIN_DISTANCE = 150;
 
   const parentNode = nds.find((n) => n.id === node.parentId);
@@ -42,7 +52,7 @@ const findNearestNode = (node, nds, isFromLeftHandle) => {
   return { nearestNode, nearestNodeDistance };
 };
 
-export const createNearestEdge = (node, nds) => {
+export const createNearestEdge = (node: Node, nds: Node[]): Edge => {
   const nearestSource = findNearestNode(node, nds, true);
   const nearestTarget = findNearestNode(node, nds, false);
 
@@ -71,7 +81,7 @@ export const createNearestEdge = (node, nds) => {
   return null;
 };
 
-export const addNearestEdge = (node, nds, eds) => {
+export const addNearestEdge = (node: Node, nds: Node[], eds: Edge[]): Edge[] => {
   const nearestEdge = createNearestEdge(node, nds);
   if (nearestEdge) {
     return [...eds, nearestEdge];

@@ -1,4 +1,6 @@
-const createAdjacencyList = (nds, eds) => {
+import { type Edge, type Node, XYPosition } from "reactflow";
+
+const createAdjacencyList = (nds: Node[], eds: Edge[]): Record<string, string[]> => {
   const adjacencyList = {};
 
   const nodeSet = new Set(nds.map((n) => n.id));
@@ -17,7 +19,13 @@ const createAdjacencyList = (nds, eds) => {
   return adjacencyList;
 };
 
-const dfs = (nodeId, adjacencyList, visited, group, nodeMap) => {
+const dfs = (
+  nodeId: string,
+  adjacencyList: Record<string, string[]>,
+  visited: Set<string>,
+  group: Array<Node>,
+  nodeMap: Record<string, Node>,
+): void => {
   visited.add(nodeId);
   group.push(nodeMap[nodeId]);
 
@@ -28,9 +36,9 @@ const dfs = (nodeId, adjacencyList, visited, group, nodeMap) => {
   }
 };
 
-export const divideNodesByEdges = (nds, eds) => {
+export const divideNodesByEdges = (nds: Node[], eds: Edge[]): Array<Array<Node>> => {
   const adjacencyList = createAdjacencyList(nds, eds);
-  const visited = new Set();
+  const visited: Set<string> = new Set();
   const groups = [];
 
   const nodeMap = {};

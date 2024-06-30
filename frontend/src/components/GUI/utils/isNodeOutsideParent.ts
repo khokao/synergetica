@@ -1,4 +1,6 @@
-export const isNodeOutsideParent = (childNode, parentNode) => {
+import type { Node } from "reactflow";
+
+export const isNodeOutsideParent = (childNode: Node, parentNode: Node): boolean => {
   const px = parentNode.position.x;
   const py = parentNode.position.y;
   const pw = Number(parentNode.style.width);

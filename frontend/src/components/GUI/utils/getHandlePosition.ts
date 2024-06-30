@@ -1,4 +1,6 @@
-export const getLeftHandlePosition = (childNode, parentNode) => {
+import type { Node, XYPosition } from "reactflow";
+
+export const getLeftHandlePosition = (childNode: Node, parentNode: Node): XYPosition => {
   if (!parentNode) {
     return {
       x: childNode.position.x + childNode.data.leftHandleStyle.left,
@@ -11,7 +13,7 @@ export const getLeftHandlePosition = (childNode, parentNode) => {
   };
 };
 
-export const getRightHandlePosition = (childNode, parentNode) => {
+export const getRightHandlePosition = (childNode: Node, parentNode: Node): XYPosition => {
   if (!parentNode) {
     return {
       x: childNode.position.x + childNode.data.rightHandleStyle.left,
