@@ -53,6 +53,7 @@ export const createNearestEdge = (node, nds) => {
       target: node.id,
       style: { strokeWidth: 4 },
       data: { draggedNodeIsTarget: true },
+      animated: false,
     };
   }
 
@@ -63,6 +64,7 @@ export const createNearestEdge = (node, nds) => {
       target: nearestTarget.nearestNode.id,
       style: { strokeWidth: 4 },
       data: { draggedNodeIsTarget: false },
+      animated: false,
     };
   }
 
