@@ -43,24 +43,24 @@ export const dragChildNode = (
   if (node.parentId) {
     const parentNode = storeNodes.find((n) => n.id === node.parentId);
     if (!isNodeOutsideParent(node, parentNode)) {
-      setEdges((edges) => {
+      setEdges((eds) => {
         return [
-          ...edges.filter((e) => e.source !== node.id && e.target !== node.id),
+          ...eds.filter((e) => e.source !== node.id && e.target !== node.id),
           ...activateConnectedEdgesAnimation(dragStartConnectedEdges.current, node.id),
         ];
       });
       return;
     }
-    setEdges((edges) => edges.filter((e) => e.source !== node.id && e.target !== node.id));
+    setEdges((eds) => eds.filter((e) => e.source !== node.id && e.target !== node.id));
     return;
   }
 
-  setEdges((edges) => {
+  setEdges((eds) => {
     return activateConnectedEdgesAnimation(
       addNearestEdge(
         node,
         storeNodes,
-        edges.filter((e) => !e.animated),
+        eds.filter((e) => !e.animated),
       ),
       node.id,
     );
@@ -94,17 +94,17 @@ const stopDragNodeWithoutParent = (
     return;
   }
 
-  setEdges((edges) => deactivateConnectedEdgesAnimation(edges, node.id));
+  setEdges((eds) => deactivateConnectedEdgesAnimation(eds, node.id));
 
-  setNodes((nodes) => {
+  setNodes((nds) => {
     const draggedNodeIsTarget = nearestEdge.data.draggedNodeIsTarget;
 
-    const sourceNode = nodes.find((n) => n.id === nearestEdge.source);
-    const targetNode = nodes.find((n) => n.id === nearestEdge.target);
+    const sourceNode = nds.find((n) => n.id === nearestEdge.source);
+    const targetNode = nds.find((n) => n.id === nearestEdge.target);
     const parentNode = draggedNodeIsTarget
-      ? nodes.find((n) => n.id === sourceNode.parentId)
-      : nodes.find((n) => n.id === targetNode.parentId);
-    const siblingNodes = parentNode ? nodes.filter((n) => n.parentId === parentNode.id) : [];
+      ? nds.find((n) => n.id === sourceNode.parentId)
+      : nds.find((n) => n.id === targetNode.parentId);
+    const siblingNodes = parentNode ? nds.filter((n) => n.parentId === parentNode.id) : [];
 
     if (draggedNodeIsTarget) {
       targetNode.position = adjustTargetNodePosition(sourceNode, targetNode, parentNode);
@@ -116,7 +116,7 @@ const stopDragNodeWithoutParent = (
     sourceNode.data.rightHandleConnected = true;
 
     const nodesToChange = Array.from(new Set([sourceNode, targetNode, parentNode, ...siblingNodes])).filter(Boolean);
-    const unchangedNodes = nodes.filter((n) => !nodesToChange.includes(n));
+    const unchangedNodes = nds.filter((n) => !nodesToChange.includes(n));
 
     const changedNodes = groupNodes(ungroupNodes(nodesToChange));
 
@@ -135,8 +135,8 @@ const stopDragNodeWithParent = (
   const parentNode = storeNodes.find((n) => n.id === node.parentId);
 
   if (!isNodeOutsideParent(node, parentNode)) {
-    setNodes((nodes) => nodes.map((n) => (n.id === node.id ? dragStartNode.current : n)));
-    setEdges((edges) => deactivateConnectedEdgesAnimation(edges, node.id));
+    setNodes((nds) => nds.map((n) => (n.id === node.id ? dragStartNode.current : n)));
+    setEdges((eds) => deactivateConnectedEdgesAnimation(eds, node.id));
     return;
   }
 
@@ -144,10 +144,10 @@ const stopDragNodeWithParent = (
     const removedEdges = dragStartConnectedEdges.current;
     const nextEdges = edges.filter((e) => !removedEdges.includes(e));
 
-    setNodes((nodes) => {
+    setNodes((nds) => {
       for (const edge of removedEdges) {
-        const sourceNode = nodes.find((n) => n.id === edge.source);
-        const targetNode = nodes.find((n) => n.id === edge.target);
+        const sourceNode = nds.find((n) => n.id === edge.source);
+        const targetNode = nds.find((n) => n.id === edge.target);
 
         if (sourceNode) {
           sourceNode.data.rightHandleConnected = false;
@@ -157,8 +157,8 @@ const stopDragNodeWithParent = (
         }
       }
 
-      const nodesToChange = nodes.filter((n) => n.id === parentNode.id || n.parentId === parentNode.id);
-      const unchangedNodes = nodes.filter((n) => !nodesToChange.includes(n));
+      const nodesToChange = nds.filter((n) => n.id === parentNode.id || n.parentId === parentNode.id);
+      const unchangedNodes = nds.filter((n) => !nodesToChange.includes(n));
 
       const ungroupedNodes = ungroupNodes(nodesToChange);
       const groupedNodes = divideNodesByEdges(ungroupedNodes, nextEdges).flatMap((group) => groupNodes(group));
