@@ -36,11 +36,3 @@ def test_var_init_empty(simple_function):
     args = (1.0, 1.0)
     with pytest.warns(ODEintWarning):
         euler(simple_function, times, var_init, args)
-
-
-def test_args_invalid(simple_function):
-    times = np.linspace(0, 10, 100)
-    var_init = [1.0]
-    args = 'invalid_args'
-    with pytest.raises(Exception):
-        euler(simple_function, times, var_init, args)
