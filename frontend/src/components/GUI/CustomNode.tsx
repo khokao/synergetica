@@ -17,13 +17,7 @@ export const CustomChildNode = ({ data }: NodeProps<CustomChildNodeData>) => {
   return (
     <div className="relative">
       <img src={data.iconUrl} alt={data.nodeType} className="" />
-      <Handle
-        type="target"
-        position={Position.Left}
-        id="left"
-        style={data.leftHandleStyle}
-        data-testid="handle-left"
-      />
+      <Handle type="target" position={Position.Left} id="left" style={data.leftHandleStyle} data-testid="handle-left" />
       <Handle
         type="source"
         position={Position.Right}
