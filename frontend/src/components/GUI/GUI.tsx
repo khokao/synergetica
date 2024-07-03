@@ -8,10 +8,10 @@ export const GUI: React.FC = () => {
   return (
     <ReactFlowProvider>
       <div className="flex flex-col flex-grow h-full">
-        <div data-testid="flow-component">
+        <div className="flex-grow" data-testid="flow-component">
           <Flow />
         </div>
-        <div data-testid="bottombar-component">
+        <div className="h-20" data-testid="bottombar-component">
           <Bottombar />
         </div>
       </div>
