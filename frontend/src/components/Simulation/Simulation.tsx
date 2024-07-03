@@ -1,6 +1,7 @@
 import { callGeneratorAPI } from "@/hooks/useGeneratorAPI";
 import type React from "react";
 import useSWR from "swr";
+import { Graph } from "@/components/Simulation/DrawSimulationResult";
 
 export const Simulation: React.FC = () => {
   const { mutate } = useSWR("call_generator_api");
@@ -21,6 +22,9 @@ export const Simulation: React.FC = () => {
   return (
     <div className="flex flex-col h-full">
       <div className="flex-grow">Simulation Section</div>
+      <div className="flex justify-center h-full">
+        <Graph />
+      </div>
       <div className="flex justify-center mb-4">
         <button type="button" onClick={onCallGeneratorAPIClick} className="px-4 py-1 border-2 border-black rounded">
           Generate
