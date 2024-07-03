@@ -50,6 +50,6 @@ def test_euler_errors(euler_inputs):
 
     try:
         euler(simple_function, times, var_init, args)
-        assert False, 'Expected an error due to empty times, but no error was raised.'
+        raise AssertionError('Expected an error due to empty times, but no error was raised.')
     except Exception:
         assert True
