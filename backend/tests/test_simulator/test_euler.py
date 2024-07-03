@@ -1,5 +1,3 @@
-import warnings
-
 import numpy as np
 import pytest
 from scipy.integrate import ODEintWarning
@@ -7,15 +5,16 @@ from scipy.integrate import ODEintWarning
 from simulator.euler import euler
 
 
-def simple_function(y, t, a, b):
-    dydt = -a * y + b
-    return dydt
+@pytest.fixture()
+def simple_function():
+    return lambda y, t, a, b: -a * y + b
 
 
-def test_euler():
+def test_euler(simple_function):
     times = np.linspace(0, 10, 100)
     var_init = [1.0]
     args = (1.0, 1.0)
+
     result = euler(simple_function, times, var_init, args)
 
     assert isinstance(result, np.ndarray)
@@ -23,38 +22,25 @@ def test_euler():
     assert result.dtype == np.float64
 
 
-@pytest.mark.parametrize(
-    'euler_inputs',
-    [
-        {
-            'function': simple_function,
-            'times': np.array([]),
-            'var_init': [1.0],
-            'args': (1.0, 1.0),
-        },
-        {
-            'function': simple_function,
-            'times': np.linspace(0, 10, 100),
-            'var_init': [],
-            'args': (1.0, 1.0),
-        },
-        {
-            'function': simple_function,
-            'times': np.linspace(0, 10, 100),
-            'var_init': [1.0],
-            'args': 'invalid_args',
-        },
-    ],
-)
-def test_euler_errors(euler_inputs):
-    times = euler_inputs['times']
-    var_init = euler_inputs['var_init']
-    args = euler_inputs['args']
+def test_time_empty(simple_function):
+    times = np.array([])
+    var_init = [1.0]
+    args = (1.0, 1.0)
+    with pytest.raises(AssertionError):
+        euler(simple_function, times, var_init, args)
 
-    with warnings.catch_warnings():
-        warnings.simplefilter('ignore', ODEintWarning)
-        try:
-            euler(simple_function, times, var_init, args)
-            raise AssertionError('Expected an error due to empty times, but no error was raised.')
-        except Exception:
-            assert True
+
+def test_var_init_empty(simple_function):
+    times = np.linspace(0, 10, 100)
+    var_init = []
+    args = (1.0, 1.0)
+    with pytest.warns(ODEintWarning):
+        euler(simple_function, times, var_init, args)
+
+
+def test_args_invalid(simple_function):
+    times = np.linspace(0, 10, 100)
+    var_init = [1.0]
+    args = 'invalid_args'
+    with pytest.raises(Exception):
+        euler(simple_function, times, var_init, args)
