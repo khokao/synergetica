@@ -104,6 +104,9 @@ export const Flow: React.FC = () => {
         onDragOver={onDragOver}
         proOptions={{ hideAttribution: true }} // discussion: https://github.com/xyflow/xyflow/discussions/2961
         nodeTypes={nodeTypes}
+        defaultViewport={{ x: 0, y: 0, zoom: 0.5 }}
+        minZoom={0.1}
+        maxZoom={2.0}
       >
         <Controls position="top-right" />
         <Background variant={BackgroundVariant.Dots} />
