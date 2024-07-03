@@ -1,5 +1,3 @@
-// tests/components/GUI/Bottombar.test.tsx
-
 import { Bottombar } from "@/components/GUI/Bottombar";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { vi } from "vitest";
@@ -10,12 +8,7 @@ describe("Bottombar", () => {
 
     expect(screen.getByAltText("promoter")).toBeInTheDocument();
     expect(screen.getByAltText("visible")).toBeInTheDocument();
-    expect(screen.getByAltText("control")).toBeInTheDocument();
     expect(screen.getByAltText("terminator")).toBeInTheDocument();
-    expect(screen.getByAltText("meta")).toBeInTheDocument();
-    expect(screen.getByAltText("recombinaseRecognitionSeq")).toBeInTheDocument();
-    expect(screen.getByAltText("wrapHead")).toBeInTheDocument();
-    expect(screen.getByAltText("wrapTail")).toBeInTheDocument();
   });
 
   it("should start dragging with correct data on drag start", () => {

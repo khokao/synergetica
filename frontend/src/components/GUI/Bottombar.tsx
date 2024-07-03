@@ -1,11 +1,6 @@
-import { controlNode } from "@/components/GUI/nodes/controlNode";
-import { metaNode } from "@/components/GUI/nodes/metaNode";
 import { promoterNode } from "@/components/GUI/nodes/promoterNode";
-import { recombinaseRecognitionSeqNode } from "@/components/GUI/nodes/recombinaseRecognitionSeqNode";
 import { terminatorNode } from "@/components/GUI/nodes/terminatorNode";
 import { visibleNode } from "@/components/GUI/nodes/visibleNode";
-import { wrapHeadNode } from "@/components/GUI/nodes/wrapHeadNode";
-import { wrapTailNode } from "@/components/GUI/nodes/wrapTailNode";
 import type React from "react";
 
 export const onDragStart = (
@@ -27,12 +22,7 @@ export const Bottombar: React.FC = () => {
     <aside className="w-full p-4 bg-gray-100 border-t border-gray-300 grid grid-cols-4 gap-4">
       {promoterNode}
       {visibleNode}
-      {controlNode}
       {terminatorNode}
-      {metaNode}
-      {recombinaseRecognitionSeqNode}
-      {wrapHeadNode}
-      {wrapTailNode}
     </aside>
   );
 };
