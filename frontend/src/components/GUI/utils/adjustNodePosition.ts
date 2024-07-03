@@ -1,7 +1,11 @@
 import { getLeftHandlePosition, getRightHandlePosition } from "@/components/GUI/utils/getHandlePosition";
 import type { Node, XYPosition } from "reactflow";
 
-export const adjustTargetNodePosition = (sourceNode: Node, targetNode: Node, sourceParentNode: Node): XYPosition => {
+export const adjustTargetNodePosition = (
+  sourceNode: Node,
+  targetNode: Node,
+  sourceParentNode: Node | null,
+): XYPosition => {
   const sourceNodeRightHandlePosition = getRightHandlePosition(sourceNode, sourceParentNode);
   const position = {
     x: sourceNodeRightHandlePosition.x - targetNode.data.leftHandleStyle.left,
@@ -10,7 +14,11 @@ export const adjustTargetNodePosition = (sourceNode: Node, targetNode: Node, sou
   return position;
 };
 
-export const adjustSourceNodePosition = (sourceNode: Node, targetNode: Node, targetParentNode: Node): XYPosition => {
+export const adjustSourceNodePosition = (
+  sourceNode: Node,
+  targetNode: Node,
+  targetParentNode: Node | null,
+): XYPosition => {
   const targetNodeLeftHandlePosition = getLeftHandlePosition(targetNode, targetParentNode);
   const position = {
     x: targetNodeLeftHandlePosition.x - sourceNode.data.rightHandleStyle.left,
