@@ -14,6 +14,11 @@ export default defineConfig({
     coverage: {
       provider: "v8",
       include: ["src/**/*"],
+      exclude: [
+        // GUI testing is excluded from coverage due to high cost and low value
+        "src/components/GUI/Flow.tsx",
+        "src/components/GUI/nodeActions.ts"
+      ],
       reportsDirectory: "./coverage",
       reporter: ["text", "json", "json-summary"],
       reportOnFailure: true,
