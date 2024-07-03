@@ -1,5 +1,8 @@
+import warnings
+
 import numpy as np
 import pytest
+from scipy.integrate import ODEintWarning
 
 from simulator.euler import euler
 
@@ -48,8 +51,10 @@ def test_euler_errors(euler_inputs):
     var_init = euler_inputs['var_init']
     args = euler_inputs['args']
 
-    try:
-        euler(simple_function, times, var_init, args)
-        raise AssertionError('Expected an error due to empty times, but no error was raised.')
-    except Exception:
-        assert True
+    with warnings.catch_warnings():
+        warnings.simplefilter('ignore', ODEintWarning)
+        try:
+            euler(simple_function, times, var_init, args)
+            raise AssertionError('Expected an error due to empty times, but no error was raised.')
+        except Exception:
+            assert True
