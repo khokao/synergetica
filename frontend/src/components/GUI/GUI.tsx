@@ -11,7 +11,7 @@ export const GUI: React.FC = () => {
         <div className="flex-grow" data-testid="flow-component">
           <Flow />
         </div>
-        <div className="h-20" data-testid="bottombar-component">
+        <div data-testid="bottombar-component">
           <Bottombar />
         </div>
       </div>
