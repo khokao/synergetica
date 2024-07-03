@@ -6,12 +6,11 @@ mod schemas;
 
 use clients::APIClient;
 use errors::{handle_request_error, handle_response_error};
-use tauri::Builder;
-use schemas::{GeneratorResponseData,SimulatorResponseData};
+use schemas::{GeneratorResponseData, SimulatorResponseData};
+use serde::Serialize;
 use std::fs;
 use std::path::Path;
-use serde::Serialize;
-
+use tauri::Builder;
 
 #[tauri::command]
 async fn call_generator_api(
@@ -43,15 +42,8 @@ async fn call_generator_api(
 }
 
 #[tauri::command]
-async fn call_simulator_api(
-    param1: f64,
-    param2: f64,
-) -> Result<SimulatorResponseData, String> {
-    let response = APIClient::send_request_simulation(
-        param1,
-        param2,
-    )
-    .await;
+async fn call_simulator_api(param1: f64, param2: f64) -> Result<SimulatorResponseData, String> {
+    let response = APIClient::send_request_simulation(param1, param2).await;
 
     match response {
         Ok(resp) => {
@@ -84,9 +76,7 @@ fn read_dir_recursive(path: &Path) -> Result<FileEntry, String> {
         let children = fs::read_dir(path)
             .map_err(|err| err.to_string())?
             .filter_map(|entry| entry.ok())
-            .map(|entry| {
-                read_dir_recursive(&entry.path())
-            })
+            .map(|entry| read_dir_recursive(&entry.path()))
             .collect::<Result<Vec<_>, _>>()?;
         entry.children = Some(children);
     }
@@ -100,12 +90,14 @@ fn read_dir(path: String) -> Result<FileEntry, String> {
     read_dir_recursive(path)
 }
 
-
-
 #[tokio::main]
 async fn main() {
     Builder::default()
-        .invoke_handler(tauri::generate_handler![call_generator_api, call_simulator_api,read_dir])
+        .invoke_handler(tauri::generate_handler![
+            call_generator_api,
+            call_simulator_api,
+            read_dir
+        ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
