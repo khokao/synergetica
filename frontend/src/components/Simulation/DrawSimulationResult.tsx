@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { callSimulatorAPI } from "@/hooks/useSimulatorAPI";
+import { callSimulatorAPI } from "@/hooks/useSimulatorAPI"
 import {
   Chart as ChartJS,
   CategoryScale,

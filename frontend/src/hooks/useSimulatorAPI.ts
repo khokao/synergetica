@@ -1,4 +1,4 @@
-import type { SimulatorResponseData, SimulatorRequestData } from "@/interfaces/simulatorAPI";
+import type { SimulatorResponseData, SimulatorRequestData } from "@/interfaces/simulatorAPI"
 import { invoke } from "@tauri-apps/api/tauri";
 
 export const callSimulatorAPI = async  (data: SimulatorRequestData) => {

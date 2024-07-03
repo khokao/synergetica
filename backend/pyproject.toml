@@ -19,7 +19,6 @@ loguru = "*"
 numpy = "^2.0.0"
 pydantic = "*"
 scipy = "^1.14.0"
-uvicorn = "*"
 
 [tool.poetry.group.dev.dependencies]
 coverage = { version = "*", extras = ["toml"] }
