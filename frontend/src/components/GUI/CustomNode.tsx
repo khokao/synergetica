@@ -17,12 +17,30 @@ export const CustomChildNode = ({ data }: NodeProps<CustomChildNodeData>) => {
   return (
     <div className="relative">
       <img src={data.iconUrl} alt={data.nodeType} className="" />
-      <Handle type="target" position={Position.Left} id="left" style={data.leftHandleStyle} />
-      <Handle type="source" position={Position.Right} id="right" style={data.rightHandleStyle} />
+      <Handle
+        type="target"
+        position={Position.Left}
+        id="left"
+        style={data.leftHandleStyle}
+        data-testid="handle-left"
+      />
+      <Handle
+        type="source"
+        position={Position.Right}
+        id="right"
+        style={data.rightHandleStyle}
+        data-testid="handle-right"
+      />
     </div>
   );
 };
 
 export const CustomParentNode = ({ data }: NodeProps<CustomParentNodeData>) => {
-  return <div className="border-2 border-gray-500 rounded-xl" style={{ width: data.width, height: data.height }} />;
+  return (
+    <div
+      className="border-2 border-gray-500 rounded-xl"
+      style={{ width: data.width, height: data.height }}
+      data-testid="parent-node"
+    />
+  );
 };
