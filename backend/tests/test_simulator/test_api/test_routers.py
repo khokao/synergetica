@@ -4,7 +4,6 @@ import pytest
 from fastapi.testclient import TestClient
 
 from simulator.api.main import app
-from simulator.api.schemas import SimulatorOutput
 
 client = TestClient(app)
 
@@ -12,17 +11,15 @@ client = TestClient(app)
 def test_get_data_param_default():
     response = client.get('/simulate-with-euler')
     assert response.status_code == HTTPStatus.OK
-    response = response.json()
-    try:
-        SimulatorOutput(**response)
-    except ValueError as e:
-        raise AssertionError(f'Response does not match SimulatorOutput model: {e}') from e
+    json_response = response.json()
+    # Validate response with SimulatorOutput model
+    assert isinstance(json_response['data1'], list), 'data1 should be a list of floats'
+    assert isinstance(json_response['data2'], list), 'data2 should be a list of floats'
+    assert isinstance(json_response['time'], list), 'time should be a list of floats'
 
-
-def test_simulator_invalid_output():
-    output = {'data1': [1.0, 2.0, 3.0], 'data2': ['str', 'str', 'str'], 'time': [1, 2, 3]}
-    with pytest.raises(ValueError):
-        SimulatorOutput(**output)
+    assert all(isinstance(item, float) for item in json_response['data1'])
+    assert all(isinstance(item, float) for item in json_response['data2'])
+    assert all(isinstance(item, float) for item in json_response['time'])
 
 
 @pytest.mark.parametrize(

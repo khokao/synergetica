@@ -32,7 +32,7 @@ def test_time_empty(simple_function):
 
 def test_var_init_empty(simple_function):
     times = np.linspace(0, 10, 100)
-    var_init = []
+    var_init: list = []
     args = (1.0, 1.0)
     with pytest.warns(ODEintWarning):
         euler(simple_function, times, var_init, args)
