@@ -32,7 +32,7 @@ impl APIClient {
     ) -> Result<reqwest::Response, reqwest::Error> {
         let client = reqwest::Client::new();
         client
-            .get("http://127.0.0.1:8000/simulate-with-euler")
+            .post("http://127.0.0.1:8000/simulate-with-euler")
             .query(&json!({
                 "param1":param1,
                 "param2":param2
@@ -49,7 +49,7 @@ impl APIClient {
     }
 
     pub async fn parse_response_simulator(response: reqwest::Response) -> Result<SimulatorResponseData, String> {
-        
+
         match response.json::<SimulatorResponseData>().await {
             Ok(data) => Ok(data),
             Err(e) => Err(format!("Failed to parse response sim: {}", e)),
