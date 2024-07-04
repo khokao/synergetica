@@ -6,7 +6,7 @@ from simulator.api.routers import router
 app = FastAPI()
 
 
-@app.get('/healthcheck_simulator', include_in_schema=False)
+@app.get('/healthcheck-simulator', include_in_schema=False)
 async def healthcheck() -> dict[str, str]:
     return {'status': 'ok'}
 
