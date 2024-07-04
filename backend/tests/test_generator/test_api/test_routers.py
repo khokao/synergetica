@@ -36,28 +36,28 @@ def test_generator_api_with_valid_input():
             'promoter_upstream': 'TATA',
         },
         {
-            'rbs_parameter': 'foobar',
+            'rbs_parameter': 1.2,
             'rbs_upstream': 123,  # rbs_upstream should be a string
             'rbs_downstream': 'GGG',
             'promoter_parameter': 3.1,
             'promoter_upstream': 'TATA',
         },
         {
-            'rbs_parameter': 'foobar',
+            'rbs_parameter': 1.2,
             'rbs_upstream': 'ATG',
             'rbs_downstream': 123,  # rbs_downstream should be a string
             'promoter_parameter': 3.1,
             'promoter_upstream': 'TATA',
         },
         {
-            'rbs_parameter': 'foobar',
+            'rbs_parameter': 1.2,
             'rbs_upstream': 'ATG',
             'rbs_downstream': 'GGG',
             'promoter_parameter': 'invalid',  # promoter_parameter should be a float
             'promoter_upstream': 'TATA',
         },
         {
-            'rbs_parameter': 'foobar',
+            'rbs_parameter': 1.2,
             'rbs_upstream': 'ATG',
             'rbs_downstream': 'GGG',
             'promoter_parameter': 3.1,
