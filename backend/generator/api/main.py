@@ -6,7 +6,7 @@ from generator.api.routers import router
 app = FastAPI()
 
 
-@app.get('/healthcheck', include_in_schema=False)
+@app.get('/healthcheck-generator', include_in_schema=False)
 async def healthcheck() -> dict[str, str]:
     return {'status': 'ok'}
 
