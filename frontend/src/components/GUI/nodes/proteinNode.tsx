@@ -1,10 +1,10 @@
 import { onDragStart } from "@/components/GUI/Bottombar";
-import icon from "@public/images/node-visible.svg";
+import icon from "@public/images/node-protein.svg";
 import Image from "next/image";
 import React from "react";
 
-const nodeType = "visible";
-const iconUrl = "/images/node-visible.svg";
+const nodeType = "protein";
+const iconUrl = "/images/node-protein.svg";
 const leftHandleStyle = { top: 15, left: 6 };
 const rightHandleStyle = { top: 15, left: 178 };
 
@@ -17,7 +17,7 @@ const enableDragging = (event) => {
   event.currentTarget.draggable = true;
 };
 
-export const visibleNode = (
+export const proteinNode = (
   <div
     className="cursor-pointer flex items-end justify-center"
     onDragStart={(event) => onDragStart(event, nodeType, iconUrl, leftHandleStyle, rightHandleStyle)}

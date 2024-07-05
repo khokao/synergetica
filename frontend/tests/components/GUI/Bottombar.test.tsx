@@ -7,7 +7,7 @@ describe("Bottombar", () => {
     render(<Bottombar />);
 
     expect(screen.getByAltText("promoter")).toBeInTheDocument();
-    expect(screen.getByAltText("visible")).toBeInTheDocument();
+    expect(screen.getByAltText("protein")).toBeInTheDocument();
     expect(screen.getByAltText("terminator")).toBeInTheDocument();
   });
 

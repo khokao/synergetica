@@ -1,6 +1,6 @@
 import { promoterNode } from "@/components/GUI/nodes/promoterNode";
 import { terminatorNode } from "@/components/GUI/nodes/terminatorNode";
-import { visibleNode } from "@/components/GUI/nodes/visibleNode";
+import { proteinNode } from "@/components/GUI/nodes/proteinNode";
 import type React from "react";
 
 export const onDragStart = (
@@ -21,7 +21,7 @@ export const Bottombar: React.FC = () => {
   return (
     <aside className="w-full p-4 bg-gray-100 border-t border-gray-300 grid grid-cols-4 gap-4">
       {promoterNode}
-      {visibleNode}
+      {proteinNode}
       {terminatorNode}
     </aside>
   );
