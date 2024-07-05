@@ -9,14 +9,14 @@ def solve_ode_with_euler(
     derivative_function: Callable[..., tuple[float, ...]],
     times: list[float] | npt.NDArray[np.float64],
     var_init: list[float] | npt.NDArray[np.float64],
-    args: tuple[float, ...] | None,
+    args: tuple[float, ...],
 ) -> npt.NDArray[np.float64]:
     """
     Args:
         derivative_function (Callable): Function to solve, which requires the following arguments:
             y0 (array): Initial values for variables.
             t (array): A sequence of time points for which to solve for y.
-            args (tuple | None): Extra arguments to pass to function.
+            args (tuple): Extra arguments to pass to function.
         times (list[float] | npt.NDArray[np.float64]): A sequence of time points.
         var_init (list[float]): Initial values for variables.
         args (tuple[float, ...] | None): Extra arguments to pass to function.
