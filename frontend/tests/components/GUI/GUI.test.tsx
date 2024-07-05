@@ -4,6 +4,8 @@ import React from "react";
 import { ReactFlowProvider } from "reactflow";
 import { describe, expect, it, vi } from "vitest";
 
+
+// Required to temporarily render the GUI section during testing.
 vi.stubGlobal(
   "ResizeObserver",
   class {
