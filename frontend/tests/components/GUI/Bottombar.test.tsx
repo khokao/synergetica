@@ -30,10 +30,14 @@ describe("Bottombar", () => {
       fireEvent.dragStart(nodeElement, mockDragEvent);
 
       // Assert
-      expect(mockDataTransfer.setData).toHaveBeenCalledWith("application/reactflow-node-type", "promoter");
       expect(mockDataTransfer.setData).toHaveBeenCalledWith(
         "application/reactflow-icon-url",
         "/images/node-promoter.svg",
+      );
+      expect(mockDataTransfer.setData).toHaveBeenCalledWith("application/reactflow-node-category", "promoter");
+      expect(mockDataTransfer.setData).toHaveBeenCalledWith(
+        "application/reactflow-node-subcategory",
+        expect.anything(),
       );
       expect(mockDataTransfer.setData).toHaveBeenCalledWith(
         "application/reactflow-left-handle-style",
@@ -42,6 +46,18 @@ describe("Bottombar", () => {
       expect(mockDataTransfer.setData).toHaveBeenCalledWith(
         "application/reactflow-right-handle-style",
         JSON.stringify({ top: 68, left: 180 }),
+      );
+      expect(mockDataTransfer.setData).toHaveBeenCalledWith(
+        "application/reactflow-select-menu-style",
+        JSON.stringify({ top: 47, left: 11, right: 10 }),
+      );
+      expect(mockDataTransfer.setData).toHaveBeenCalledWith(
+        "application/reactflow-select-menu-options",
+        JSON.stringify([
+          { name: "promoter subtype 1", description: "promoter subtype 1 description" },
+          { name: "promoter subtype 2", description: "promoter subtype 2 description" },
+          { name: "promoter subtype 3", description: "promoter subtype 3 description" },
+        ]),
       );
       expect(mockDataTransfer.effectAllowed).toBe("move");
     } else {

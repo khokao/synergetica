@@ -3,14 +3,30 @@ import { render, screen } from "@testing-library/react";
 import { ReactFlowProvider } from "reactflow";
 import { describe, expect, it } from "vitest";
 
+// Required to temporarily render the GUI section during testing.
+vi.stubGlobal(
+  "ResizeObserver",
+  class {
+    observe() {}
+    unobserve() {}
+    disconnect() {}
+  },
+);
+
 describe("CustomChildNode", () => {
   it("renders correctly with provided data", () => {
     // Arrange
     const data = {
       iconUrl: "/images/node-test-icon.svg",
-      nodeType: "testNode",
+      nodeCategory: "testNode",
+      nodeSubcategory: "testSubcategory",
       leftHandleStyle: { top: 15, left: 7 },
       rightHandleStyle: { top: 15, left: 178 },
+      selectMenuStyle: { top: -6, left: 12, right: 30 },
+      selectMenuOptions: [
+        { name: "testSubcategory 1", description: "testSubcategory 1 description" },
+        { name: "testSubcategory 2", description: "testSubcategory 2 description" },
+      ],
     };
     const defaultProps = {
       id: "1",
@@ -28,7 +44,7 @@ describe("CustomChildNode", () => {
     // Act
     render(
       <ReactFlowProvider>
-        <CustomChildNode {...defaultProps} />
+        <CustomChildNode id={defaultProps.id} {...defaultProps} />
       </ReactFlowProvider>,
     );
 
@@ -44,6 +60,14 @@ describe("CustomChildNode", () => {
     const rightHandle = screen.getByTestId("handle-right");
     expect(rightHandle).toBeInTheDocument();
     expect(rightHandle).toHaveStyle({ top: `${data.rightHandleStyle.top}px`, left: `${data.rightHandleStyle.left}px` });
+
+    const selectMenu = screen.getByTestId("select-menu");
+    expect(selectMenu).toBeInTheDocument();
+    expect(selectMenu).toHaveStyle({
+      top: `${data.selectMenuStyle.top}px`,
+      left: `${data.selectMenuStyle.left}px`,
+      right: `${data.selectMenuStyle.right}px`,
+    });
   });
 });
 

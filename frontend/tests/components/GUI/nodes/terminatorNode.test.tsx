@@ -22,10 +22,17 @@ describe("terminatorNode", () => {
     fireEvent.dragStart(div, mockDragEvent);
 
     expect(div).toHaveAttribute("draggable", "true");
-    expect(mockDragEvent.dataTransfer.setData).toHaveBeenCalledWith("application/reactflow-node-type", "terminator");
     expect(mockDragEvent.dataTransfer.setData).toHaveBeenCalledWith(
       "application/reactflow-icon-url",
       "/images/node-terminator.svg",
+    );
+    expect(mockDragEvent.dataTransfer.setData).toHaveBeenCalledWith(
+      "application/reactflow-node-category",
+      "terminator",
+    );
+    expect(mockDragEvent.dataTransfer.setData).toHaveBeenCalledWith(
+      "application/reactflow-node-subcategory",
+      expect.anything(),
     );
     expect(mockDragEvent.dataTransfer.setData).toHaveBeenCalledWith(
       "application/reactflow-left-handle-style",
@@ -34,6 +41,17 @@ describe("terminatorNode", () => {
     expect(mockDragEvent.dataTransfer.setData).toHaveBeenCalledWith(
       "application/reactflow-right-handle-style",
       JSON.stringify({ top: 63, left: 180 }),
+    );
+    expect(mockDragEvent.dataTransfer.setData).toHaveBeenCalledWith(
+      "application/reactflow-select-menu-style",
+      JSON.stringify({ top: 42, left: 11, right: 10 }),
+    );
+    expect(mockDragEvent.dataTransfer.setData).toHaveBeenCalledWith(
+      "application/reactflow-select-menu-options",
+      JSON.stringify([
+        { name: "terminator subtype 1", description: "terminator subtype 1 description" },
+        { name: "terminator subtype 2", description: "terminator subtype 2 description" },
+      ]),
     );
     expect(mockDragEvent.dataTransfer.effectAllowed).toBe("move");
   });

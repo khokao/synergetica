@@ -22,10 +22,14 @@ describe("promoterNode", () => {
     fireEvent.dragStart(div, mockDragEvent);
 
     expect(div).toHaveAttribute("draggable", "true");
-    expect(mockDragEvent.dataTransfer.setData).toHaveBeenCalledWith("application/reactflow-node-type", "promoter");
     expect(mockDragEvent.dataTransfer.setData).toHaveBeenCalledWith(
       "application/reactflow-icon-url",
       "/images/node-promoter.svg",
+    );
+    expect(mockDragEvent.dataTransfer.setData).toHaveBeenCalledWith("application/reactflow-node-category", "promoter");
+    expect(mockDragEvent.dataTransfer.setData).toHaveBeenCalledWith(
+      "application/reactflow-node-subcategory",
+      expect.anything(),
     );
     expect(mockDragEvent.dataTransfer.setData).toHaveBeenCalledWith(
       "application/reactflow-left-handle-style",
@@ -34,6 +38,18 @@ describe("promoterNode", () => {
     expect(mockDragEvent.dataTransfer.setData).toHaveBeenCalledWith(
       "application/reactflow-right-handle-style",
       JSON.stringify({ top: 68, left: 180 }),
+    );
+    expect(mockDragEvent.dataTransfer.setData).toHaveBeenCalledWith(
+      "application/reactflow-select-menu-style",
+      JSON.stringify({ top: 47, left: 11, right: 10 }),
+    );
+    expect(mockDragEvent.dataTransfer.setData).toHaveBeenCalledWith(
+      "application/reactflow-select-menu-options",
+      JSON.stringify([
+        { name: "promoter subtype 1", description: "promoter subtype 1 description" },
+        { name: "promoter subtype 2", description: "promoter subtype 2 description" },
+        { name: "promoter subtype 3", description: "promoter subtype 3 description" },
+      ]),
     );
     expect(mockDragEvent.dataTransfer.effectAllowed).toBe("move");
   });

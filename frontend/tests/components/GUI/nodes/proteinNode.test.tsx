@@ -22,10 +22,14 @@ describe("proteinNode", () => {
     fireEvent.dragStart(div, mockDragEvent);
 
     expect(div).toHaveAttribute("draggable", "true");
-    expect(mockDragEvent.dataTransfer.setData).toHaveBeenCalledWith("application/reactflow-node-type", "protein");
     expect(mockDragEvent.dataTransfer.setData).toHaveBeenCalledWith(
       "application/reactflow-icon-url",
       "/images/node-protein.svg",
+    );
+    expect(mockDragEvent.dataTransfer.setData).toHaveBeenCalledWith("application/reactflow-node-category", "protein");
+    expect(mockDragEvent.dataTransfer.setData).toHaveBeenCalledWith(
+      "application/reactflow-node-subcategory",
+      expect.anything(),
     );
     expect(mockDragEvent.dataTransfer.setData).toHaveBeenCalledWith(
       "application/reactflow-left-handle-style",
@@ -34,6 +38,17 @@ describe("proteinNode", () => {
     expect(mockDragEvent.dataTransfer.setData).toHaveBeenCalledWith(
       "application/reactflow-right-handle-style",
       JSON.stringify({ top: 15, left: 178 }),
+    );
+    expect(mockDragEvent.dataTransfer.setData).toHaveBeenCalledWith(
+      "application/reactflow-select-menu-style",
+      JSON.stringify({ top: -6, left: 12, right: 30 }),
+    );
+    expect(mockDragEvent.dataTransfer.setData).toHaveBeenCalledWith(
+      "application/reactflow-select-menu-options",
+      JSON.stringify([
+        { name: "protein subtype 1", description: "protein subtype 1 description" },
+        { name: "protein subtype 2", description: "protein subtype 2 description" },
+      ]),
     );
     expect(mockDragEvent.dataTransfer.effectAllowed).toBe("move");
   });
