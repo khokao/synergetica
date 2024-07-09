@@ -1,15 +1,16 @@
-import React, { useState, useEffect, useCallback } from "react";
-import { callSimulatorAPI } from "@/hooks/useSimulatorAPI"
+import { callSimulatorAPI } from "@/hooks/useSimulatorAPI";
 import {
-  Chart as ChartJS,
   CategoryScale,
+  Chart as ChartJS,
+  Legend,
+  LineElement,
   LinearScale,
   PointElement,
-  LineElement,
   Title,
   Tooltip,
-  Legend,
 } from "chart.js";
+import type React from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Line } from "react-chartjs-2";
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
@@ -87,11 +88,11 @@ export const Graph: React.FC = () => {
   const { graphdata, graphdata2, times } = useFetchData(param1, param2);
 
   const handleParam1Change = (event) => {
-    setParam1(parseFloat(event.target.value));
+    setParam1(Number.parseFloat(event.target.value));
   };
 
   const handleParam2Change = (event) => {
-    setParam2(parseFloat(event.target.value));
+    setParam2(Number.parseFloat(event.target.value));
   };
 
   const options = getGraphOptions();

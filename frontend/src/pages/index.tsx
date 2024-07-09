@@ -10,11 +10,11 @@ const Home = () => {
       <Resizable
         className="border-r-2 border-black-500"
         defaultSize={{
-          width: "20%",
+          width: "10%",
           height: "100%",
         }}
-        minWidth={"10%"}
-        maxWidth={"30%"}
+        minWidth={"5%"}
+        maxWidth={"20%"}
         enable={{ right: true }}
       >
         <FileSidebar />

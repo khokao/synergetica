@@ -12,7 +12,12 @@
   },
   "tauri": {
     "allowlist": {
-      "all": false
+      "all": false,
+      "dialog": {
+        "all": true,
+        "open": true,
+        "save": true
+      }
     },
     "bundle": {
       "active": true,
@@ -59,7 +64,8 @@
         "height": 600,
         "resizable": true,
         "title": "Gene Circuit IDE",
-        "width": 800
+        "width": 800,
+        "fileDropEnabled": false
       }
     ]
   }

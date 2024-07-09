@@ -6,6 +6,6 @@ describe("FileSidebar", () => {
   // Temporary test, will be unnecessary as development progresses.
   it("renders FileSidebar section", () => {
     render(<FileSidebar />);
-    expect(screen.getByText("FileSidebar Section")).toBeInTheDocument();
+    expect(screen.getByText("File Explorer")).toBeInTheDocument();
   });
 });
