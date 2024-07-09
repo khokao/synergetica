@@ -12,20 +12,26 @@ import type { Edge, Node, ReactFlowState, XYPosition } from "reactflow";
 import type { StoreApi } from "zustand";
 
 export const createChildNode = (
-  nodeType: string,
+  position: XYPosition,
   iconUrl: string,
+  nodeCategory: string,
+  nodeSubcategory: string,
   leftHandleStyle: React.CSSProperties,
   rightHandleStyle: React.CSSProperties,
-  position: XYPosition,
+  selectMenuStyle: React.CSSProperties,
+  selectMenuOptions: Array<Record<string, string>>,
 ): Node => ({
   id: nanoid(),
   type: "child",
   position,
   data: {
-    nodeType,
     iconUrl,
+    nodeCategory,
+    nodeSubcategory,
     leftHandleStyle,
     rightHandleStyle,
+    selectMenuStyle,
+    selectMenuOptions,
     leftHandleConnected: false,
     rightHandleConnected: false,
   },

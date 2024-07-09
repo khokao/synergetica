@@ -3,10 +3,16 @@ import icon from "@public/images/node-protein.svg";
 import Image from "next/image";
 import React from "react";
 
-const nodeType = "protein";
 const iconUrl = "/images/node-protein.svg";
+const nodeCategory = "protein";
+const nodeSubcategory = "protein subtype 1";
 const leftHandleStyle = { top: 15, left: 6 };
 const rightHandleStyle = { top: 15, left: 178 };
+const selectMenuStyle = { top: -6, left: 12, right: 30 };
+const selectMenuOptions = [
+  { name: "protein subtype 1", description: "protein subtype 1 description" },
+  { name: "protein subtype 2", description: "protein subtype 2 description" },
+];
 
 /*
   Since dragging and dropping icons in Tauri apps can trigger file operations,
@@ -20,10 +26,21 @@ const enableDragging = (event) => {
 export const proteinNode = (
   <div
     className="cursor-pointer flex items-end justify-center"
-    onDragStart={(event) => onDragStart(event, nodeType, iconUrl, leftHandleStyle, rightHandleStyle)}
+    onDragStart={(event) =>
+      onDragStart(
+        event,
+        iconUrl,
+        nodeCategory,
+        nodeSubcategory,
+        leftHandleStyle,
+        rightHandleStyle,
+        selectMenuStyle,
+        selectMenuOptions,
+      )
+    }
     draggable
     onMouseDown={enableDragging}
   >
-    <Image src={icon} alt={nodeType} draggable={false} />
+    <Image src={icon} alt={nodeCategory} draggable={false} />
   </div>
 );
