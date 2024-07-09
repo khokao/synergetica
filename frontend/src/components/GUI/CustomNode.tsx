@@ -1,11 +1,15 @@
+import { NodeSelectMenu } from "@/components/GUI/NodeSelectMenu";
 import type React from "react";
 import { Handle, type NodeProps, Position } from "reactflow";
 
 interface CustomChildNodeData {
   iconUrl: string;
-  nodeType: string;
+  nodeCategory: string;
+  nodeSubcategory: string;
   leftHandleStyle: React.CSSProperties;
   rightHandleStyle: React.CSSProperties;
+  selectMenuStyle: React.CSSProperties;
+  selectMenuOptions: Array<Record<string, string>>;
 }
 
 interface CustomParentNodeData {
@@ -13,10 +17,10 @@ interface CustomParentNodeData {
   height: number;
 }
 
-export const CustomChildNode = ({ data }: NodeProps<CustomChildNodeData>) => {
+export const CustomChildNode = ({ id, data }: NodeProps<CustomChildNodeData>) => {
   return (
     <div className="relative">
-      <img src={data.iconUrl} alt={data.nodeType} className="" />
+      <img src={data.iconUrl} alt={data.nodeCategory} className="" />
       <Handle type="target" position={Position.Left} id="left" style={data.leftHandleStyle} data-testid="handle-left" />
       <Handle
         type="source"
@@ -25,6 +29,9 @@ export const CustomChildNode = ({ data }: NodeProps<CustomChildNodeData>) => {
         style={data.rightHandleStyle}
         data-testid="handle-right"
       />
+      <div className="absolute" style={data.selectMenuStyle} data-testid="select-menu">
+        <NodeSelectMenu options={data.selectMenuOptions} id={id} />
+      </div>
     </div>
   );
 };
