@@ -5,7 +5,7 @@ import { CheckIcon, ChevronDownIcon } from "@heroicons/react/20/solid";
 import { useState } from "react";
 import { type Node, useReactFlow } from "reactflow";
 
-const updateNodeSubcategory = (nds: Node[], nodeId: string, subcategory: string): Node[] => {
+export const updateNodeSubcategory = (nds: Node[], nodeId: string, subcategory: string): Node[] => {
   return nds.map((n) => {
     if (n.id === nodeId) {
       return {

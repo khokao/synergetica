@@ -1,4 +1,4 @@
-import { NodeSelectMenu } from "@/components/GUI/NodeSelectMenu";
+import { NodeSelectMenu, updateNodeSubcategory } from "@/components/GUI/NodeSelectMenu";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { useReactFlow } from "reactflow";
 import { type Mock, describe, expect, it, vi } from "vitest";
@@ -15,6 +15,26 @@ vi.stubGlobal(
     disconnect() {}
   },
 );
+
+describe("updateNodeSubcategory", () => {
+  const nodes = [
+    { id: "node-1", data: { nodeSubcategory: "oldSubcategory" }, position: { x: 0, y: 0 } },
+    { id: "node-2", data: { nodeSubcategory: "oldSubcategory" }, position: { x: 0, y: 0 } },
+  ];
+
+  it("updates the node subcategory for the matching node id", () => {
+    const updatedNodes = updateNodeSubcategory(nodes, "node-1", "newSubcategory");
+
+    expect(updatedNodes[0].data.nodeSubcategory).toBe("newSubcategory");
+    expect(updatedNodes[1].data.nodeSubcategory).toBe("oldSubcategory");
+  });
+
+  it("does not update nodes if the id does not match", () => {
+    const updatedNodes = updateNodeSubcategory(nodes, "non-existing-node", "newSubcategory");
+
+    expect(updatedNodes).toEqual(nodes);
+  });
+});
 
 describe("NodeSelectMenu Component", () => {
   const options = [
