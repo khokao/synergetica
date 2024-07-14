@@ -1,15 +1,24 @@
-import { NodeSelectMenu } from "@/components/GUI/NodeSelectMenu";
+import { NodeCommandPalette } from "@/components/GUI/NodeCommandPalette";
 import type React from "react";
 import { Handle, type NodeProps, Position } from "reactflow";
+
+export interface OptionData {
+  name: string;
+  description: string;
+  subcategory: string;
+  repressedBy: string;
+  repressTo: string;
+}
 
 interface CustomChildNodeData {
   iconUrl: string;
   nodeCategory: string;
   nodeSubcategory: string;
+  nodePartsName: string;
   leftHandleStyle: React.CSSProperties;
   rightHandleStyle: React.CSSProperties;
-  selectMenuStyle: React.CSSProperties;
-  selectMenuOptions: Array<Record<string, string>>;
+  commandPaletteButtonStyle: React.CSSProperties;
+  commandPaletteOptions: Array<OptionData>;
 }
 
 interface CustomParentNodeData {
@@ -29,8 +38,8 @@ export const CustomChildNode = ({ id, data }: NodeProps<CustomChildNodeData>) =>
         style={data.rightHandleStyle}
         data-testid="handle-right"
       />
-      <div className="absolute" style={data.selectMenuStyle} data-testid="select-menu">
-        <NodeSelectMenu options={data.selectMenuOptions} id={id} />
+      <div className="absolute" style={data.commandPaletteButtonStyle} data-testid="command-palette-button">
+        <NodeCommandPalette options={data.commandPaletteOptions} id={id} />
       </div>
     </div>
   );
