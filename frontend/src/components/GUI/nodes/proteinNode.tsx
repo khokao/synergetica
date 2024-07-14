@@ -5,13 +5,94 @@ import React from "react";
 
 const iconUrl = "/images/node-protein.svg";
 const nodeCategory = "protein";
-const nodeSubcategory = "protein subtype 1";
 const leftHandleStyle = { top: 15, left: 6 };
 const rightHandleStyle = { top: 15, left: 178 };
-const selectMenuStyle = { top: -6, left: 12, right: 30 };
-const selectMenuOptions = [
-  { name: "protein subtype 1", description: "protein subtype 1 description" },
-  { name: "protein subtype 2", description: "protein subtype 2 description" },
+const commandPaletteButtonStyle = { top: -6, left: 12, right: 30 };
+const commandPaletteOptions = [
+  {
+    name: "AmeR",
+    description: "Repressor Protein of PameR",
+    subcategory: "RepressorProtein",
+    repressedBy: undefined,
+    repressTo: "PameR",
+  },
+  {
+    name: "AmtR",
+    description: "Repressor Protein of PamtR",
+    subcategory: "RepressorProtein",
+    repressedBy: undefined,
+    repressTo: "PamtR",
+  },
+  {
+    name: "BetI",
+    description: "Repressor Protein of Betl",
+    subcategory: "RepressorProtein",
+    repressedBy: undefined,
+    repressTo: "Pbetl",
+  },
+  {
+    name: "BM3R1",
+    description: "Repressor Protein of Pbm3R1",
+    subcategory: "RepressorProtein",
+    repressedBy: undefined,
+    repressTo: "Pbm3r1",
+  },
+  {
+    name: "HlyIIR",
+    description: "Repressor Protein of PhyllR",
+    subcategory: "RepressorProtein",
+    repressedBy: undefined,
+    repressTo: "PhyllR",
+  },
+  {
+    name: "IcaRA",
+    description: "Repressor Protein of PlcaRA",
+    subcategory: "RepressorProtein",
+    repressedBy: undefined,
+    repressTo: "PlcaRA",
+  },
+  {
+    name: "LitR",
+    description: "Repressor Protein of PlitR",
+    subcategory: "RepressorProtein",
+    repressedBy: undefined,
+    repressTo: "PlitR",
+  },
+  {
+    name: "LmrA",
+    description: "Repressor Protein of PlmrA",
+    subcategory: "RepressorProtein",
+    repressedBy: undefined,
+    repressTo: "PlmrA",
+  },
+  {
+    name: "PhlF",
+    description: "Repressor Protein of PphlF",
+    subcategory: "RepressorProtein",
+    repressedBy: undefined,
+    repressTo: "PphlF",
+  },
+  {
+    name: "PsrA",
+    description: "Repressor Protein of PpsrA",
+    subcategory: "RepressorProtein",
+    repressedBy: undefined,
+    repressTo: "PpsrA",
+  },
+  {
+    name: "QacR",
+    description: "Repressor Protein of PqacR",
+    subcategory: "RepressorProtein",
+    repressedBy: undefined,
+    repressTo: "PqacR",
+  },
+  {
+    name: "SrpR",
+    description: "Repressor Protein of PsrpR",
+    subcategory: "RepressorProtein",
+    repressedBy: undefined,
+    repressTo: "PsrpR",
+  },
 ];
 
 /*
@@ -31,11 +112,10 @@ export const proteinNode = (
         event,
         iconUrl,
         nodeCategory,
-        nodeSubcategory,
         leftHandleStyle,
         rightHandleStyle,
-        selectMenuStyle,
-        selectMenuOptions,
+        commandPaletteButtonStyle,
+        commandPaletteOptions,
       )
     }
     draggable

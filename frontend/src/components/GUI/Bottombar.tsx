@@ -1,3 +1,4 @@
+import type { OptionData } from "@/components/GUI/CustomNode";
 import { promoterNode } from "@/components/GUI/nodes/promoterNode";
 import { proteinNode } from "@/components/GUI/nodes/proteinNode";
 import { terminatorNode } from "@/components/GUI/nodes/terminatorNode";
@@ -7,19 +8,20 @@ export const onDragStart = (
   event: React.DragEvent,
   iconUrl: string,
   nodeCategory: string,
-  nodeSubcategory: string,
   leftHandleStyle: Record<string, number>,
   rightHandleStyle: Record<string, number>,
-  selectMenuStyle: Record<string, number>,
-  selectMenuOptions: Array<Record<string, string>>,
+  commandPaletteButtonStyle: Record<string, number>,
+  commandPaletteOptions: Array<OptionData>,
 ): void => {
   event.dataTransfer.setData("application/reactflow-icon-url", iconUrl);
   event.dataTransfer.setData("application/reactflow-node-category", nodeCategory);
-  event.dataTransfer.setData("application/reactflow-node-subcategory", nodeSubcategory);
   event.dataTransfer.setData("application/reactflow-left-handle-style", JSON.stringify(leftHandleStyle));
   event.dataTransfer.setData("application/reactflow-right-handle-style", JSON.stringify(rightHandleStyle));
-  event.dataTransfer.setData("application/reactflow-select-menu-style", JSON.stringify(selectMenuStyle));
-  event.dataTransfer.setData("application/reactflow-select-menu-options", JSON.stringify(selectMenuOptions));
+  event.dataTransfer.setData(
+    "application/reactflow-command-palette-button-style",
+    JSON.stringify(commandPaletteButtonStyle),
+  );
+  event.dataTransfer.setData("application/reactflow-command-palette-options", JSON.stringify(commandPaletteOptions));
   event.dataTransfer.effectAllowed = "move";
 };
 

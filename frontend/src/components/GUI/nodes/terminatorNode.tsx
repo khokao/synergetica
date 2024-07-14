@@ -5,13 +5,17 @@ import React from "react";
 
 const iconUrl = "/images/node-terminator.svg";
 const nodeCategory = "terminator";
-const nodeSubcategory = "terminator subtype 1";
 const leftHandleStyle = { top: 63, left: 5 };
 const rightHandleStyle = { top: 63, left: 180 };
-const selectMenuStyle = { top: 42, left: 11, right: 10 };
-const selectMenuOptions = [
-  { name: "terminator subtype 1", description: "terminator subtype 1 description" },
-  { name: "terminator subtype 2", description: "terminator subtype 2 description" },
+const commandPaletteButtonStyle = { top: 42, left: 11, right: 10 };
+const commandPaletteOptions = [
+  {
+    name: "L3S3P31",
+    description: "Standard Terminator",
+    subcategory: "StandardTerminator",
+    repressedBy: undefined,
+    repressTo: undefined,
+  },
 ];
 
 /*
@@ -31,11 +35,10 @@ export const terminatorNode = (
         event,
         iconUrl,
         nodeCategory,
-        nodeSubcategory,
         leftHandleStyle,
         rightHandleStyle,
-        selectMenuStyle,
-        selectMenuOptions,
+        commandPaletteButtonStyle,
+        commandPaletteOptions,
       )
     }
     draggable

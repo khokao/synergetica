@@ -5,14 +5,94 @@ import React from "react";
 
 const iconUrl = "/images/node-promoter.svg";
 const nodeCategory = "promoter";
-const nodeSubcategory = "promoter subtype 1";
 const leftHandleStyle = { top: 68, left: 5 };
 const rightHandleStyle = { top: 68, left: 180 };
-const selectMenuStyle = { top: 47, left: 11, right: 10 };
-const selectMenuOptions = [
-  { name: "promoter subtype 1", description: "promoter subtype 1 description" },
-  { name: "promoter subtype 2", description: "promoter subtype 2 description" },
-  { name: "promoter subtype 3", description: "promoter subtype 3 description" },
+const commandPaletteButtonStyle = { top: 47, left: 11, right: 10 };
+const commandPaletteOptions = [
+  {
+    name: "PameR",
+    description: "Regulated Promoter repressed by AmeR",
+    subcategory: "RepressivePromoter",
+    repressedBy: "AmeR",
+    repressTo: undefined,
+  },
+  {
+    name: "PamtR",
+    description: "Regulated Promoter repressed by AmtR",
+    subcategory: "RepressivePromoter",
+    repressedBy: "AmtR",
+    repressTo: undefined,
+  },
+  {
+    name: "Pbetl",
+    description: "Regulated Promoter repressed by BetI",
+    subcategory: "RepressivePromoter",
+    repressedBy: "BetI",
+    repressTo: undefined,
+  },
+  {
+    name: "Pbm3r1",
+    description: "Regulated Promoter repressed by BM3R1",
+    subcategory: "RepressivePromoter",
+    repressedBy: "BM3R1",
+    repressTo: undefined,
+  },
+  {
+    name: "PhyllR",
+    description: "Regulated Promoters repressed by HylIR",
+    subcategory: "RepressivePromoter",
+    repressedBy: "HlyIIR",
+    repressTo: undefined,
+  },
+  {
+    name: "PlcaRA",
+    description: "Regulated Promoters repressed by LcaRA",
+    subcategory: "RepressivePromoter",
+    repressedBy: "IcaRA",
+    repressTo: undefined,
+  },
+  {
+    name: "PlitR",
+    description: "Regulated Promoter repressed by LitR",
+    subcategory: "RepressivePromoter",
+    repressedBy: "LitR",
+    repressTo: undefined,
+  },
+  {
+    name: "PlmrA",
+    description: "Regulated Promoter repressed by LmrA",
+    subcategory: "RepressivePromoter",
+    repressedBy: "LmrA",
+    repressTo: undefined,
+  },
+  {
+    name: "PphlF",
+    description: "Regulated Promoter repressed by PhlF",
+    subcategory: "RepressivePromoter",
+    repressedBy: "PhlF",
+    repressTo: undefined,
+  },
+  {
+    name: "PpsrA",
+    description: "Regulated Promoter repressed by PsrA",
+    subcategory: "RepressivePromoter",
+    repressedBy: "PsrA",
+    repressTo: undefined,
+  },
+  {
+    name: "PqacR",
+    description: "Regulated Promoter repressed by QacR",
+    subcategory: "RepressivePromoter",
+    repressedBy: "QacR",
+    repressTo: undefined,
+  },
+  {
+    name: "PsrpR",
+    description: "Regulated Promoter repressed by SrpR",
+    subcategory: "RepressivePromoter",
+    repressedBy: "SrpR",
+    repressTo: undefined,
+  },
 ];
 
 /*
@@ -32,11 +112,10 @@ export const promoterNode = (
         event,
         iconUrl,
         nodeCategory,
-        nodeSubcategory,
         leftHandleStyle,
         rightHandleStyle,
-        selectMenuStyle,
-        selectMenuOptions,
+        commandPaletteButtonStyle,
+        commandPaletteOptions,
       )
     }
     draggable

@@ -45,21 +45,23 @@ export const Flow: React.FC = () => {
 
       const iconUrl = event.dataTransfer.getData("application/reactflow-icon-url");
       const nodeCategory = event.dataTransfer.getData("application/reactflow-node-category");
-      const nodeSubcategory = event.dataTransfer.getData("application/reactflow-node-subcategory");
       const leftHandleStyle = JSON.parse(event.dataTransfer.getData("application/reactflow-left-handle-style"));
       const rightHandleStyle = JSON.parse(event.dataTransfer.getData("application/reactflow-right-handle-style"));
-      const selectMenuStyle = JSON.parse(event.dataTransfer.getData("application/reactflow-select-menu-style"));
-      const selectMenuOptions = JSON.parse(event.dataTransfer.getData("application/reactflow-select-menu-options"));
+      const commandPaletteButtonStyle = JSON.parse(
+        event.dataTransfer.getData("application/reactflow-command-palette-button-style"),
+      );
+      const commandPaletteOptions = JSON.parse(
+        event.dataTransfer.getData("application/reactflow-command-palette-options"),
+      );
 
       const newNode = createChildNode(
         position,
         iconUrl,
         nodeCategory,
-        nodeSubcategory,
         leftHandleStyle,
         rightHandleStyle,
-        selectMenuStyle,
-        selectMenuOptions,
+        commandPaletteButtonStyle,
+        commandPaletteOptions,
       );
 
       setNodes((nodes) => nodes.concat(newNode));
