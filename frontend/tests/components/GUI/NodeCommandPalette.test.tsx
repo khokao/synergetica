@@ -26,6 +26,11 @@ describe("updateNodeMetadata", () => {
         position: { x: 0, y: 0 },
         data: { nodeSubcategory: "", nodePartsName: "", repressedBy: "", repressTo: "" },
       },
+      {
+        id: "another-node-id",
+        position: { x: 0, y: 0 },
+        data: { nodeSubcategory: "", nodePartsName: "", repressedBy: "", repressTo: "" },
+      },
     ];
     const option = {
       subcategory: "newCategory",
@@ -41,6 +46,12 @@ describe("updateNodeMetadata", () => {
       nodePartsName: "newName",
       repressedBy: "newRepressedBy",
       repressTo: "newRepressTo",
+    });
+    expect(updatedNodes[1].data).toEqual({
+      nodeSubcategory: "",
+      nodePartsName: "",
+      repressedBy: "",
+      repressTo: "",
     });
   });
 });
