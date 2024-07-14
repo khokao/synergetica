@@ -28,10 +28,6 @@ describe("proteinNode", () => {
     );
     expect(mockDragEvent.dataTransfer.setData).toHaveBeenCalledWith("application/reactflow-node-category", "protein");
     expect(mockDragEvent.dataTransfer.setData).toHaveBeenCalledWith(
-      "application/reactflow-node-subcategory",
-      expect.anything(),
-    );
-    expect(mockDragEvent.dataTransfer.setData).toHaveBeenCalledWith(
       "application/reactflow-left-handle-style",
       JSON.stringify({ top: 15, left: 6 }),
     );
@@ -40,16 +36,99 @@ describe("proteinNode", () => {
       JSON.stringify({ top: 15, left: 178 }),
     );
     expect(mockDragEvent.dataTransfer.setData).toHaveBeenCalledWith(
-      "application/reactflow-select-menu-style",
+      "application/reactflow-command-palette-button-style",
       JSON.stringify({ top: -6, left: 12, right: 30 }),
     );
     expect(mockDragEvent.dataTransfer.setData).toHaveBeenCalledWith(
-      "application/reactflow-select-menu-options",
+      "application/reactflow-command-palette-options",
       JSON.stringify([
-        { name: "protein subtype 1", description: "protein subtype 1 description" },
-        { name: "protein subtype 2", description: "protein subtype 2 description" },
+        {
+          name: "AmeR",
+          description: "Repressor Protein of PameR",
+          subcategory: "RepressorProtein",
+          repressedBy: undefined,
+          repressTo: "PameR",
+        },
+        {
+          name: "AmtR",
+          description: "Repressor Protein of PamtR",
+          subcategory: "RepressorProtein",
+          repressedBy: undefined,
+          repressTo: "PamtR",
+        },
+        {
+          name: "BetI",
+          description: "Repressor Protein of Betl",
+          subcategory: "RepressorProtein",
+          repressedBy: undefined,
+          repressTo: "Pbetl",
+        },
+        {
+          name: "BM3R1",
+          description: "Repressor Protein of Pbm3R1",
+          subcategory: "RepressorProtein",
+          repressedBy: undefined,
+          repressTo: "Pbm3r1",
+        },
+        {
+          name: "HlyIIR",
+          description: "Repressor Protein of PhyllR",
+          subcategory: "RepressorProtein",
+          repressedBy: undefined,
+          repressTo: "PhyllR",
+        },
+        {
+          name: "IcaRA",
+          description: "Repressor Protein of PlcaRA",
+          subcategory: "RepressorProtein",
+          repressedBy: undefined,
+          repressTo: "PlcaRA",
+        },
+        {
+          name: "LitR",
+          description: "Repressor Protein of PlitR",
+          subcategory: "RepressorProtein",
+          repressedBy: undefined,
+          repressTo: "PlitR",
+        },
+        {
+          name: "LmrA",
+          description: "Repressor Protein of PlmrA",
+          subcategory: "RepressorProtein",
+          repressedBy: undefined,
+          repressTo: "PlmrA",
+        },
+        {
+          name: "PhlF",
+          description: "Repressor Protein of PphlF",
+          subcategory: "RepressorProtein",
+          repressedBy: undefined,
+          repressTo: "PphlF",
+        },
+        {
+          name: "PsrA",
+          description: "Repressor Protein of PpsrA",
+          subcategory: "RepressorProtein",
+          repressedBy: undefined,
+          repressTo: "PpsrA",
+        },
+        {
+          name: "QacR",
+          description: "Repressor Protein of PqacR",
+          subcategory: "RepressorProtein",
+          repressedBy: undefined,
+          repressTo: "PqacR",
+        },
+        {
+          name: "SrpR",
+          description: "Repressor Protein of PsrpR",
+          subcategory: "RepressorProtein",
+          repressedBy: undefined,
+          repressTo: "PsrpR",
+        },
       ]),
     );
+
     expect(mockDragEvent.dataTransfer.effectAllowed).toBe("move");
   });
 });

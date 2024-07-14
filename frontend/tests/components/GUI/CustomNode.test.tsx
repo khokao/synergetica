@@ -22,10 +22,22 @@ describe("CustomChildNode", () => {
       nodeSubcategory: "testSubcategory",
       leftHandleStyle: { top: 15, left: 7 },
       rightHandleStyle: { top: 15, left: 178 },
-      selectMenuStyle: { top: -6, left: 12, right: 30 },
-      selectMenuOptions: [
-        { name: "testSubcategory 1", description: "testSubcategory 1 description" },
-        { name: "testSubcategory 2", description: "testSubcategory 2 description" },
+      commandPaletteButtonStyle: { top: -6, left: 12, right: 30 },
+      commandPaletteOptions: [
+        {
+          name: "testSubcategory 1",
+          description: "testSubcategory 1 description",
+          subcategory: "testSubcategory 1",
+          repressedBy: "testRepressedBy 1",
+          repressTo: "testRepressTo 1",
+        },
+        {
+          name: "testSubcategory 2",
+          description: "testSubcategory 2 description",
+          subcategory: "testSubcategory 2",
+          repressedBy: "testRepressedBy 2",
+          repressTo: "testRepressTo 2",
+        },
       ],
     };
     const defaultProps = {
@@ -44,7 +56,8 @@ describe("CustomChildNode", () => {
     // Act
     render(
       <ReactFlowProvider>
-        <CustomChildNode id={defaultProps.id} {...defaultProps} />
+        {/* @ts-ignore */}
+        <CustomChildNode options={data.commandPaletteOptions} id={defaultProps.id} {...defaultProps} />
       </ReactFlowProvider>,
     );
 
@@ -61,12 +74,12 @@ describe("CustomChildNode", () => {
     expect(rightHandle).toBeInTheDocument();
     expect(rightHandle).toHaveStyle({ top: `${data.rightHandleStyle.top}px`, left: `${data.rightHandleStyle.left}px` });
 
-    const selectMenu = screen.getByTestId("select-menu");
-    expect(selectMenu).toBeInTheDocument();
-    expect(selectMenu).toHaveStyle({
-      top: `${data.selectMenuStyle.top}px`,
-      left: `${data.selectMenuStyle.left}px`,
-      right: `${data.selectMenuStyle.right}px`,
+    const commandPaletteButton = screen.getByTestId("command-palette-button");
+    expect(commandPaletteButton).toBeInTheDocument();
+    expect(commandPaletteButton).toHaveStyle({
+      top: `${data.commandPaletteButtonStyle.top}px`,
+      left: `${data.commandPaletteButtonStyle.left}px`,
+      right: `${data.commandPaletteButtonStyle.right}px`,
     });
   });
 });

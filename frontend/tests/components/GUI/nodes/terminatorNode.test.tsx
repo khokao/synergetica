@@ -31,10 +31,6 @@ describe("terminatorNode", () => {
       "terminator",
     );
     expect(mockDragEvent.dataTransfer.setData).toHaveBeenCalledWith(
-      "application/reactflow-node-subcategory",
-      expect.anything(),
-    );
-    expect(mockDragEvent.dataTransfer.setData).toHaveBeenCalledWith(
       "application/reactflow-left-handle-style",
       JSON.stringify({ top: 63, left: 5 }),
     );
@@ -43,14 +39,19 @@ describe("terminatorNode", () => {
       JSON.stringify({ top: 63, left: 180 }),
     );
     expect(mockDragEvent.dataTransfer.setData).toHaveBeenCalledWith(
-      "application/reactflow-select-menu-style",
+      "application/reactflow-command-palette-button-style",
       JSON.stringify({ top: 42, left: 11, right: 10 }),
     );
     expect(mockDragEvent.dataTransfer.setData).toHaveBeenCalledWith(
-      "application/reactflow-select-menu-options",
+      "application/reactflow-command-palette-options",
       JSON.stringify([
-        { name: "terminator subtype 1", description: "terminator subtype 1 description" },
-        { name: "terminator subtype 2", description: "terminator subtype 2 description" },
+        {
+          name: "L3S3P31",
+          description: "Standard Terminator",
+          subcategory: "StandardTerminator",
+          repressedBy: undefined,
+          repressTo: undefined,
+        },
       ]),
     );
     expect(mockDragEvent.dataTransfer.effectAllowed).toBe("move");
