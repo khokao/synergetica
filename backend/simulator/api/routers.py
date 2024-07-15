@@ -9,7 +9,7 @@ from .schemas import SimulatorOutput
 router = APIRouter()
 
 
-@router.get('/simulate-with-euler', response_model=SimulatorOutput)
+@router.post('/simulate-with-euler', response_model=SimulatorOutput)
 async def get_data_param(param1: float = Query(1.0), param2: float = Query(1.0)) -> SimulatorOutput:
     logger.info(f'Simulating with parameters: {param1}, {param2}')
     solution = run_euler_example(alpha1=param1, alpha2=param2)

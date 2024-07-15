@@ -29,7 +29,7 @@ impl APIClient {
     pub async fn send_request_simulation(param1: f64, param2: f64) -> Result<reqwest::Response, reqwest::Error> {
         let client = reqwest::Client::new();
         client
-            .get("http://127.0.0.1:8000/simulate-with-euler")
+            .post("http://127.0.0.1:8000/simulate-with-euler")
             .query(&json!({
                 "param1":param1,
                 "param2":param2
