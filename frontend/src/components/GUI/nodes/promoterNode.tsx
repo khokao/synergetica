@@ -14,6 +14,7 @@ export const promoterCommandPaletteOptions = [
     name: "PameR",
     description: "Regulated Promoter repressed by AmeR",
     subcategory: "RepressivePromoter",
+    sequence: "gatagtgacaaacttgacaactcatcacttcctaggtataatgctagc",
     controlBy: {
       AmeR: {
         controlType: "Repression",
@@ -26,6 +27,7 @@ export const promoterCommandPaletteOptions = [
     name: "PamtR",
     description: "Regulated Promoter repressed by AmtR",
     subcategory: "RepressivePromoter",
+    sequence: "gattcgttaccaattgacagtttctatcgatctatagataatgctagc",
     controlBy: {
       AmtR: {
         controlType: "Repression",
@@ -38,6 +40,7 @@ export const promoterCommandPaletteOptions = [
     name: "Pbetl",
     description: "Regulated Promoter repressed by BetI",
     subcategory: "RepressivePromoter",
+    sequence: "agcgcgggtgagagggattcgttaccaattgacaattgattggacgttcaatataatgctagc",
     controlBy: {
       BetI: {
         controlType: "Repression",
@@ -50,6 +53,7 @@ export const promoterCommandPaletteOptions = [
     name: "Pbm3r1",
     description: "Regulated Promoter repressed by BM3R1",
     subcategory: "RepressivePromoter",
+    sequence: "tctgattcgttaccaattgacggaatgaacgttcattccgataatgctagc",
     controlBy: {
       BM3R1: {
         controlType: "Repression",
@@ -62,6 +66,7 @@ export const promoterCommandPaletteOptions = [
     name: "PhyllR",
     description: "Regulated Promoters repressed by HylIR",
     subcategory: "RepressivePromoter",
+    sequence: "gattcgttaccaattgacatatttaaaattcttgtttaaaatgctagc",
     controlBy: {
       HlyIIR: {
         controlType: "Repression",
@@ -74,6 +79,7 @@ export const promoterCommandPaletteOptions = [
     name: "PlcaRA",
     description: "Regulated Promoters repressed by LcaRA",
     subcategory: "RepressivePromoter",
+    sequence: "tctgattcgttaccaattgacaattcacctacctttcgttaggttaggttgt",
     controlBy: {
       IcaRA: {
         controlType: "Repression",
@@ -86,6 +92,7 @@ export const promoterCommandPaletteOptions = [
     name: "PlitR",
     description: "Regulated Promoter repressed by LitR",
     subcategory: "RepressivePromoter",
+    sequence: "gattcgttaccaattgacaaatttataaattgtcagtataatgctagc",
     controlBy: {
       LitR: {
         controlType: "Repression",
@@ -98,6 +105,7 @@ export const promoterCommandPaletteOptions = [
     name: "PlmrA",
     description: "Regulated Promoter repressed by LmrA",
     subcategory: "RepressivePromoter",
+    sequence: "tctgattcgttaccaattgacaactggtggtcgaatcaagataatagaccagtcactatattt",
     controlBy: {
       LmrA: {
         controlType: "Repression",
@@ -110,6 +118,7 @@ export const promoterCommandPaletteOptions = [
     name: "PphlF",
     description: "Regulated Promoter repressed by PhlF",
     subcategory: "RepressivePromoter",
+    sequence: "tctgattcgttaccaattgacatgatacgaaacgtaccgtatcgttaaggt",
     controlBy: {
       PhlF: {
         controlType: "Repression",
@@ -122,6 +131,7 @@ export const promoterCommandPaletteOptions = [
     name: "PpsrA",
     description: "Regulated Promoter repressed by PsrA",
     subcategory: "RepressivePromoter",
+    sequence: "aggaacaaacgtttgattgacagctagctcagtcctaggtataatgctagc",
     controlBy: {
       PsrA: {
         controlType: "Repression",
@@ -134,6 +144,7 @@ export const promoterCommandPaletteOptions = [
     name: "PqacR",
     description: "Regulated Promoter repressed by QacR",
     subcategory: "RepressivePromoter",
+    sequence: "cgttaccaattgacagctagctcagtcctactttagtatatagaccgtgcgatcggtctata",
     controlBy: {
       QacR: {
         controlType: "Repression",
@@ -146,6 +157,7 @@ export const promoterCommandPaletteOptions = [
     name: "PsrpR",
     description: "Regulated Promoter repressed by SrpR",
     subcategory: "RepressivePromoter",
+    sequence: "gattcgttaccaattgacagctagctcagtcctaggtatatacatacatgcttgtttgtttgtaaac",
     controlBy: {
       SrpR: {
         controlType: "Repression",

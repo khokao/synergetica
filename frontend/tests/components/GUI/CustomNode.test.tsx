@@ -21,6 +21,7 @@ describe("CustomChildNode", () => {
       nodeCategory: "promoter",
       nodeSubcategory: undefined,
       nodePartsName: undefined,
+      sequence: undefined,
       controlBy: null,
       controlTo: null,
       meta: null,

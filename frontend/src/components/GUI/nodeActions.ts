@@ -27,6 +27,7 @@ export const createChildNode = (
     nodeCategory: nodeCategory,
     nodeSubcategory: undefined,
     nodePartsName: undefined,
+    sequence: undefined,
     controlBy: null,
     controlTo: null,
     meta: null,

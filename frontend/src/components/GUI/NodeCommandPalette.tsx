@@ -24,6 +24,7 @@ export const updateNodeMetadata = (nds: Node[], nodeId: string, option: OptionDa
           ...n.data,
           nodeSubcategory: option.subcategory,
           nodePartsName: option.name,
+          sequence: option.sequence,
           controlBy: option.controlBy,
           controlTo: option.controlTo,
           meta: option.meta,

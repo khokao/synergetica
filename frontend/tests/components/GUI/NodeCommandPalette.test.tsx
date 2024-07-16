@@ -21,18 +21,33 @@ describe("updateNodeMetadata", () => {
       {
         id: nodeId,
         position: { x: 0, y: 0 },
-        data: { nodeSubcategory: undefined, nodePartsName: undefined, controlBy: null, controlTo: null, meta: null },
+        data: {
+          nodeSubcategory: undefined,
+          nodePartsName: undefined,
+          sequence: undefined,
+          controlBy: null,
+          controlTo: null,
+          meta: null,
+        },
       },
       {
         id: "another-node-id",
         position: { x: 0, y: 0 },
-        data: { nodeSubcategory: undefined, nodePartsName: undefined, controlBy: null, controlTo: null, meta: null },
+        data: {
+          nodeSubcategory: undefined,
+          nodePartsName: undefined,
+          sequence: undefined,
+          controlBy: null,
+          controlTo: null,
+          meta: null,
+        },
       },
     ];
     const option = {
       name: "newName",
       description: "newDescription",
       subcategory: "newCategory",
+      sequence: "newSequence",
       controlBy: {
         newControlBy: {
           controlType: "newControlType",
@@ -47,6 +62,7 @@ describe("updateNodeMetadata", () => {
     expect(updatedNodes[0].data).toEqual({
       nodeSubcategory: "newCategory",
       nodePartsName: "newName",
+      sequence: "newSequence",
       controlBy: {
         newControlBy: {
           controlType: "newControlType",
@@ -58,6 +74,7 @@ describe("updateNodeMetadata", () => {
     expect(updatedNodes[1].data).toEqual({
       nodeSubcategory: undefined,
       nodePartsName: undefined,
+      sequence: undefined,
       controlBy: null,
       controlTo: null,
       meta: null,
