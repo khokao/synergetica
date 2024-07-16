@@ -42,18 +42,7 @@ describe("terminatorNode", () => {
       "application/reactflow-command-palette-button-style",
       JSON.stringify({ top: 42, left: 11, right: 10 }),
     );
-    expect(mockDragEvent.dataTransfer.setData).toHaveBeenCalledWith(
-      "application/reactflow-command-palette-options",
-      JSON.stringify([
-        {
-          name: "L3S3P31",
-          description: "Standard Terminator",
-          subcategory: "StandardTerminator",
-          repressedBy: undefined,
-          repressTo: undefined,
-        },
-      ]),
-    );
+
     expect(mockDragEvent.dataTransfer.effectAllowed).toBe("move");
   });
 });

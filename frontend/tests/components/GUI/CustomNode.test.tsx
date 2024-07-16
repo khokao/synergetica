@@ -18,27 +18,15 @@ describe("CustomChildNode", () => {
     // Arrange
     const data = {
       iconUrl: "/images/node-test-icon.svg",
-      nodeCategory: "testNode",
-      nodeSubcategory: "testSubcategory",
+      nodeCategory: "promoter",
+      nodeSubcategory: undefined,
+      nodePartsName: undefined,
+      controlBy: null,
+      controlTo: null,
+      meta: null,
       leftHandleStyle: { top: 15, left: 7 },
       rightHandleStyle: { top: 15, left: 178 },
       commandPaletteButtonStyle: { top: -6, left: 12, right: 30 },
-      commandPaletteOptions: [
-        {
-          name: "testSubcategory 1",
-          description: "testSubcategory 1 description",
-          subcategory: "testSubcategory 1",
-          repressedBy: "testRepressedBy 1",
-          repressTo: "testRepressTo 1",
-        },
-        {
-          name: "testSubcategory 2",
-          description: "testSubcategory 2 description",
-          subcategory: "testSubcategory 2",
-          repressedBy: "testRepressedBy 2",
-          repressTo: "testRepressTo 2",
-        },
-      ],
     };
     const defaultProps = {
       id: "1",
@@ -57,12 +45,12 @@ describe("CustomChildNode", () => {
     render(
       <ReactFlowProvider>
         {/* @ts-ignore */}
-        <CustomChildNode options={data.commandPaletteOptions} id={defaultProps.id} {...defaultProps} />
+        <CustomChildNode nodeCategory={data.nodeCategory} id={defaultProps.id} {...defaultProps} />
       </ReactFlowProvider>,
     );
 
     // Assert
-    const image = screen.getByAltText("testNode");
+    const image = screen.getByAltText("promoter");
     expect(image).toBeInTheDocument();
     expect(image).toHaveAttribute("src", data.iconUrl);
 

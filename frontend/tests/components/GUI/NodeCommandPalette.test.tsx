@@ -1,19 +1,16 @@
 import { NodeCommandPalette, updateNodeMetadata } from "@/components/GUI/NodeCommandPalette";
+import { promoterCommandPaletteOptions } from "@/components/GUI/nodes/promoterNode";
 import { fireEvent, render, screen, within } from "@testing-library/react";
 import { ReactFlowProvider } from "reactflow";
 import { describe, expect, it } from "vitest";
 
-const options = [
-  { name: "Option1", description: "Description1", subcategory: "Category1", repressedBy: "None", repressTo: "None" },
-  { name: "Option2", description: "Description2", subcategory: "Category1", repressedBy: "None", repressTo: "None" },
-  { name: "Option3", description: "Description3", subcategory: "Category2", repressedBy: "None", repressTo: "None" },
-];
+const nodeCategory = "promoter";
 const nodeId = "test-node-id";
 
 const renderComponent = () => {
   return render(
     <ReactFlowProvider>
-      <NodeCommandPalette options={options} id={nodeId} />
+      <NodeCommandPalette nodeCategory={nodeCategory} nodeId={nodeId} />
     </ReactFlowProvider>,
   );
 };
@@ -24,19 +21,25 @@ describe("updateNodeMetadata", () => {
       {
         id: nodeId,
         position: { x: 0, y: 0 },
-        data: { nodeSubcategory: "", nodePartsName: "", repressedBy: "", repressTo: "" },
+        data: { nodeSubcategory: undefined, nodePartsName: undefined, controlBy: null, controlTo: null, meta: null },
       },
       {
         id: "another-node-id",
         position: { x: 0, y: 0 },
-        data: { nodeSubcategory: "", nodePartsName: "", repressedBy: "", repressTo: "" },
+        data: { nodeSubcategory: undefined, nodePartsName: undefined, controlBy: null, controlTo: null, meta: null },
       },
     ];
     const option = {
-      subcategory: "newCategory",
       name: "newName",
-      repressedBy: "newRepressedBy",
-      repressTo: "newRepressTo",
+      description: "newDescription",
+      subcategory: "newCategory",
+      controlBy: {
+        newControlBy: {
+          controlType: "newControlType",
+        },
+      },
+      controlTo: null,
+      meta: null,
     };
 
     const updatedNodes = updateNodeMetadata(nodes, nodeId, option);
@@ -44,25 +47,25 @@ describe("updateNodeMetadata", () => {
     expect(updatedNodes[0].data).toEqual({
       nodeSubcategory: "newCategory",
       nodePartsName: "newName",
-      repressedBy: "newRepressedBy",
-      repressTo: "newRepressTo",
+      controlBy: {
+        newControlBy: {
+          controlType: "newControlType",
+        },
+      },
+      controlTo: null,
+      meta: null,
     });
     expect(updatedNodes[1].data).toEqual({
-      nodeSubcategory: "",
-      nodePartsName: "",
-      repressedBy: "",
-      repressTo: "",
+      nodeSubcategory: undefined,
+      nodePartsName: undefined,
+      controlBy: null,
+      controlTo: null,
+      meta: null,
     });
   });
 });
 
 describe("NodeCommandPalette", () => {
-  it("should display the selected option name", () => {
-    renderComponent();
-
-    expect(screen.getByText("Option1")).toBeInTheDocument();
-  });
-
   it("should open the dialog when the button is clicked", () => {
     renderComponent();
     const button = screen.getByRole("button");
@@ -78,12 +81,12 @@ describe("NodeCommandPalette", () => {
     fireEvent.click(button);
     const searchInput = screen.getByPlaceholderText("Search...");
 
-    fireEvent.change(searchInput, { target: { value: "Option3" } });
+    fireEvent.change(searchInput, { target: { value: promoterCommandPaletteOptions[3].name } });
 
     const dialog = screen.getByRole("dialog");
-    expect(within(dialog).getByText("Option3")).toBeInTheDocument();
-    expect(within(dialog).queryByText("Option1")).toBeNull();
-    expect(within(dialog).queryByText("Option2")).toBeNull();
+    expect(within(dialog).getByText(promoterCommandPaletteOptions[3].name)).toBeInTheDocument();
+    expect(within(dialog).queryByText(promoterCommandPaletteOptions[1].name)).toBeNull();
+    expect(within(dialog).queryByText(promoterCommandPaletteOptions[2].name)).toBeNull();
   });
 
   it("should select an option when clicked", () => {
@@ -92,9 +95,9 @@ describe("NodeCommandPalette", () => {
     fireEvent.click(button);
 
     const dialog = screen.getByRole("dialog");
-    const option2Button = within(dialog).getByText("Option2");
+    const option2Button = within(dialog).getByText(promoterCommandPaletteOptions[2].name);
     fireEvent.click(option2Button);
 
-    expect(button).toHaveTextContent("Option2");
+    expect(button).toHaveTextContent(promoterCommandPaletteOptions[2].name);
   });
 });
