@@ -54,6 +54,7 @@ known-third-party = []
 quote-style = "single"
 
 [tool.mypy]
+plugins = ["numpy.typing.mypy_plugin"]
 files = ["common/", "generator/", "simulator/", "tests/"]
 disallow_untyped_defs = true
 disallow_any_unimported = true
