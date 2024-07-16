@@ -8,90 +8,151 @@ const nodeCategory = "promoter";
 const leftHandleStyle = { top: 68, left: 5 };
 const rightHandleStyle = { top: 68, left: 180 };
 const commandPaletteButtonStyle = { top: 47, left: 11, right: 10 };
-const commandPaletteOptions = [
+
+export const promoterCommandPaletteOptions = [
   {
     name: "PameR",
     description: "Regulated Promoter repressed by AmeR",
     subcategory: "RepressivePromoter",
-    repressedBy: "AmeR",
-    repressTo: undefined,
+    controlBy: {
+      AmeR: {
+        controlType: "Repression",
+      },
+    },
+    controlTo: null,
+    meta: null,
   },
   {
     name: "PamtR",
     description: "Regulated Promoter repressed by AmtR",
     subcategory: "RepressivePromoter",
-    repressedBy: "AmtR",
-    repressTo: undefined,
+    controlBy: {
+      AmtR: {
+        controlType: "Repression",
+      },
+    },
+    controlTo: null,
+    meta: null,
   },
   {
     name: "Pbetl",
     description: "Regulated Promoter repressed by BetI",
     subcategory: "RepressivePromoter",
-    repressedBy: "BetI",
-    repressTo: undefined,
+    controlBy: {
+      BetI: {
+        controlType: "Repression",
+      },
+    },
+    controlTo: null,
+    meta: null,
   },
   {
     name: "Pbm3r1",
     description: "Regulated Promoter repressed by BM3R1",
     subcategory: "RepressivePromoter",
-    repressedBy: "BM3R1",
-    repressTo: undefined,
+    controlBy: {
+      BM3R1: {
+        controlType: "Repression",
+      },
+    },
+    controlTo: null,
+    meta: null,
   },
   {
     name: "PhyllR",
     description: "Regulated Promoters repressed by HylIR",
     subcategory: "RepressivePromoter",
-    repressedBy: "HlyIIR",
-    repressTo: undefined,
+    controlBy: {
+      HlyIIR: {
+        controlType: "Repression",
+      },
+    },
+    controlTo: null,
+    meta: null,
   },
   {
     name: "PlcaRA",
     description: "Regulated Promoters repressed by LcaRA",
     subcategory: "RepressivePromoter",
-    repressedBy: "IcaRA",
-    repressTo: undefined,
+    controlBy: {
+      IcaRA: {
+        controlType: "Repression",
+      },
+    },
+    controlTo: null,
+    meta: null,
   },
   {
     name: "PlitR",
     description: "Regulated Promoter repressed by LitR",
     subcategory: "RepressivePromoter",
-    repressedBy: "LitR",
-    repressTo: undefined,
+    controlBy: {
+      LitR: {
+        controlType: "Repression",
+      },
+    },
+    controlTo: null,
+    meta: null,
   },
   {
     name: "PlmrA",
     description: "Regulated Promoter repressed by LmrA",
     subcategory: "RepressivePromoter",
-    repressedBy: "LmrA",
-    repressTo: undefined,
+    controlBy: {
+      LmrA: {
+        controlType: "Repression",
+      },
+    },
+    controlTo: null,
+    meta: null,
   },
   {
     name: "PphlF",
     description: "Regulated Promoter repressed by PhlF",
     subcategory: "RepressivePromoter",
-    repressedBy: "PhlF",
-    repressTo: undefined,
+    controlBy: {
+      PhlF: {
+        controlType: "Repression",
+      },
+    },
+    controlTo: null,
+    meta: null,
   },
   {
     name: "PpsrA",
     description: "Regulated Promoter repressed by PsrA",
     subcategory: "RepressivePromoter",
-    repressedBy: "PsrA",
-    repressTo: undefined,
+    controlBy: {
+      PsrA: {
+        controlType: "Repression",
+      },
+    },
+    controlTo: null,
+    meta: null,
   },
   {
     name: "PqacR",
     description: "Regulated Promoter repressed by QacR",
     subcategory: "RepressivePromoter",
-    repressedBy: "QacR",
-    repressTo: undefined,
+    controlBy: {
+      QacR: {
+        controlType: "Repression",
+      },
+    },
+    controlTo: null,
+    meta: null,
   },
   {
     name: "PsrpR",
     description: "Regulated Promoter repressed by SrpR",
     subcategory: "RepressivePromoter",
-    repressedBy: "SrpR",
-    repressTo: undefined,
+    controlBy: {
+      SrpR: {
+        controlType: "Repression",
+      },
+    },
+    controlTo: null,
+    meta: null,
   },
 ];
 
@@ -108,15 +169,7 @@ export const promoterNode = (
   <div
     className="cursor-pointer flex items-end justify-center"
     onDragStart={(event) =>
-      onDragStart(
-        event,
-        iconUrl,
-        nodeCategory,
-        leftHandleStyle,
-        rightHandleStyle,
-        commandPaletteButtonStyle,
-        commandPaletteOptions,
-      )
+      onDragStart(event, iconUrl, nodeCategory, leftHandleStyle, rightHandleStyle, commandPaletteButtonStyle)
     }
     draggable
     onMouseDown={enableDragging}

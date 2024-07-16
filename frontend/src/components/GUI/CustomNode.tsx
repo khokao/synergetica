@@ -2,23 +2,32 @@ import { NodeCommandPalette } from "@/components/GUI/NodeCommandPalette";
 import type React from "react";
 import { Handle, type NodeProps, Position } from "reactflow";
 
+interface ControlData {
+  [key: string]: {
+    [key: string]: string | number;
+  };
+}
+
 export interface OptionData {
   name: string;
   description: string;
   subcategory: string;
-  repressedBy: string;
-  repressTo: string;
+  controlBy: ControlData | null;
+  controlTo: ControlData | null;
+  meta: Record<string, unknown> | null;
 }
 
 interface CustomChildNodeData {
   iconUrl: string;
   nodeCategory: string;
-  nodeSubcategory: string;
-  nodePartsName: string;
+  nodeSubcategory: string | undefined;
+  nodePartsName: string | undefined;
+  controlBy: ControlData | null;
+  controlTo: ControlData | null;
+  meta: Record<string, unknown> | null;
   leftHandleStyle: React.CSSProperties;
   rightHandleStyle: React.CSSProperties;
   commandPaletteButtonStyle: React.CSSProperties;
-  commandPaletteOptions: Array<OptionData>;
 }
 
 interface CustomParentNodeData {
@@ -39,7 +48,7 @@ export const CustomChildNode = ({ id, data }: NodeProps<CustomChildNodeData>) =>
         data-testid="handle-right"
       />
       <div className="absolute" style={data.commandPaletteButtonStyle} data-testid="command-palette-button">
-        <NodeCommandPalette options={data.commandPaletteOptions} id={id} />
+        <NodeCommandPalette nodeCategory={data.nodeCategory} nodeId={id} />
       </div>
     </div>
   );

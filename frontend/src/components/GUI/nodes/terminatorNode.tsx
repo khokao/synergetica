@@ -8,13 +8,15 @@ const nodeCategory = "terminator";
 const leftHandleStyle = { top: 63, left: 5 };
 const rightHandleStyle = { top: 63, left: 180 };
 const commandPaletteButtonStyle = { top: 42, left: 11, right: 10 };
-const commandPaletteOptions = [
+
+export const terminatorCommandPaletteOptions = [
   {
     name: "L3S3P31",
     description: "Standard Terminator",
     subcategory: "StandardTerminator",
-    repressedBy: undefined,
-    repressTo: undefined,
+    controlBy: null,
+    controlTo: null,
+    meta: null,
   },
 ];
 
@@ -31,15 +33,7 @@ export const terminatorNode = (
   <div
     className="cursor-pointer flex items-end justify-center"
     onDragStart={(event) =>
-      onDragStart(
-        event,
-        iconUrl,
-        nodeCategory,
-        leftHandleStyle,
-        rightHandleStyle,
-        commandPaletteButtonStyle,
-        commandPaletteOptions,
-      )
+      onDragStart(event, iconUrl, nodeCategory, leftHandleStyle, rightHandleStyle, commandPaletteButtonStyle)
     }
     draggable
     onMouseDown={enableDragging}

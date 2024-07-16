@@ -1,4 +1,3 @@
-import type { OptionData } from "@/components/GUI/CustomNode";
 import { adjustSourceNodePosition, adjustTargetNodePosition } from "@/components/GUI/utils/adjustNodePosition";
 import {
   activateConnectedEdgesAnimation,
@@ -19,7 +18,6 @@ export const createChildNode = (
   leftHandleStyle: React.CSSProperties,
   rightHandleStyle: React.CSSProperties,
   commandPaletteButtonStyle: React.CSSProperties,
-  commandPaletteOptions: Array<OptionData>,
 ): Node => ({
   id: nanoid(),
   type: "child",
@@ -27,14 +25,14 @@ export const createChildNode = (
   data: {
     iconUrl: iconUrl,
     nodeCategory: nodeCategory,
-    nodeSubcategory: commandPaletteOptions[0].subcategory,
-    nodePartsName: commandPaletteOptions[0].name,
-    repressedBy: commandPaletteOptions[0].repressedBy,
-    repressTo: commandPaletteOptions[0].repressTo,
+    nodeSubcategory: undefined,
+    nodePartsName: undefined,
+    controlBy: null,
+    controlTo: null,
+    meta: null,
     leftHandleStyle: leftHandleStyle,
     rightHandleStyle: rightHandleStyle,
     commandPaletteButtonStyle: commandPaletteButtonStyle,
-    commandPaletteOptions: commandPaletteOptions,
     leftHandleConnected: false,
     rightHandleConnected: false,
   },

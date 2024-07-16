@@ -8,90 +8,151 @@ const nodeCategory = "protein";
 const leftHandleStyle = { top: 15, left: 6 };
 const rightHandleStyle = { top: 15, left: 178 };
 const commandPaletteButtonStyle = { top: -6, left: 12, right: 30 };
-const commandPaletteOptions = [
+
+export const proteinCommandPaletteOptions = [
   {
     name: "AmeR",
     description: "Repressor Protein of PameR",
     subcategory: "RepressorProtein",
-    repressedBy: undefined,
-    repressTo: "PameR",
+    controlBy: null,
+    controlTo: {
+      PameR: {
+        controlType: "Repression",
+      },
+    },
+    meta: null,
   },
   {
     name: "AmtR",
     description: "Repressor Protein of PamtR",
     subcategory: "RepressorProtein",
-    repressedBy: undefined,
-    repressTo: "PamtR",
+    controlBy: null,
+    controlTo: {
+      PamtR: {
+        controlType: "Repression",
+      },
+    },
+    meta: null,
   },
   {
     name: "BetI",
     description: "Repressor Protein of Betl",
     subcategory: "RepressorProtein",
-    repressedBy: undefined,
-    repressTo: "Pbetl",
+    controlBy: null,
+    controlTo: {
+      Pbetl: {
+        controlType: "Repression",
+      },
+    },
+    meta: null,
   },
   {
     name: "BM3R1",
     description: "Repressor Protein of Pbm3R1",
     subcategory: "RepressorProtein",
-    repressedBy: undefined,
-    repressTo: "Pbm3r1",
+    controlBy: null,
+    controlTo: {
+      Pbm3r1: {
+        controlType: "Repression",
+      },
+    },
+    meta: null,
   },
   {
     name: "HlyIIR",
     description: "Repressor Protein of PhyllR",
     subcategory: "RepressorProtein",
-    repressedBy: undefined,
-    repressTo: "PhyllR",
+    controlBy: null,
+    controlTo: {
+      PhyllR: {
+        controlType: "Repression",
+      },
+    },
+    meta: null,
   },
   {
     name: "IcaRA",
     description: "Repressor Protein of PlcaRA",
     subcategory: "RepressorProtein",
-    repressedBy: undefined,
-    repressTo: "PlcaRA",
+    controlBy: null,
+    controlTo: {
+      PlcaRA: {
+        controlType: "Repression",
+      },
+    },
+    meta: null,
   },
   {
     name: "LitR",
     description: "Repressor Protein of PlitR",
     subcategory: "RepressorProtein",
-    repressedBy: undefined,
-    repressTo: "PlitR",
+    controlBy: null,
+    controlTo: {
+      PlitR: {
+        controlType: "Repression",
+      },
+    },
+    meta: null,
   },
   {
     name: "LmrA",
     description: "Repressor Protein of PlmrA",
     subcategory: "RepressorProtein",
-    repressedBy: undefined,
-    repressTo: "PlmrA",
+    controlBy: null,
+    controlTo: {
+      PlmrA: {
+        controlType: "Repression",
+      },
+    },
+    meta: null,
   },
   {
     name: "PhlF",
     description: "Repressor Protein of PphlF",
     subcategory: "RepressorProtein",
-    repressedBy: undefined,
-    repressTo: "PphlF",
+    controlBy: null,
+    controlTo: {
+      PphlF: {
+        controlType: "Repression",
+      },
+    },
+    meta: null,
   },
   {
     name: "PsrA",
     description: "Repressor Protein of PpsrA",
     subcategory: "RepressorProtein",
-    repressedBy: undefined,
-    repressTo: "PpsrA",
+    controlBy: null,
+    controlTo: {
+      PpsrA: {
+        controlType: "Repression",
+      },
+    },
+    meta: null,
   },
   {
     name: "QacR",
     description: "Repressor Protein of PqacR",
     subcategory: "RepressorProtein",
-    repressedBy: undefined,
-    repressTo: "PqacR",
+    controlBy: null,
+    controlTo: {
+      PqacR: {
+        controlType: "Repression",
+      },
+    },
+    meta: null,
   },
   {
     name: "SrpR",
     description: "Repressor Protein of PsrpR",
     subcategory: "RepressorProtein",
-    repressedBy: undefined,
-    repressTo: "PsrpR",
+    controlBy: null,
+    controlTo: {
+      PsrpR: {
+        controlType: "Repression",
+      },
+    },
+    meta: null,
   },
 ];
 
@@ -108,15 +169,7 @@ export const proteinNode = (
   <div
     className="cursor-pointer flex items-end justify-center"
     onDragStart={(event) =>
-      onDragStart(
-        event,
-        iconUrl,
-        nodeCategory,
-        leftHandleStyle,
-        rightHandleStyle,
-        commandPaletteButtonStyle,
-        commandPaletteOptions,
-      )
+      onDragStart(event, iconUrl, nodeCategory, leftHandleStyle, rightHandleStyle, commandPaletteButtonStyle)
     }
     draggable
     onMouseDown={enableDragging}

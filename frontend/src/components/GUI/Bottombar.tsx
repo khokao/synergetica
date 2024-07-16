@@ -1,4 +1,3 @@
-import type { OptionData } from "@/components/GUI/CustomNode";
 import { promoterNode } from "@/components/GUI/nodes/promoterNode";
 import { proteinNode } from "@/components/GUI/nodes/proteinNode";
 import { terminatorNode } from "@/components/GUI/nodes/terminatorNode";
@@ -11,7 +10,6 @@ export const onDragStart = (
   leftHandleStyle: Record<string, number>,
   rightHandleStyle: Record<string, number>,
   commandPaletteButtonStyle: Record<string, number>,
-  commandPaletteOptions: Array<OptionData>,
 ): void => {
   event.dataTransfer.setData("application/reactflow-icon-url", iconUrl);
   event.dataTransfer.setData("application/reactflow-node-category", nodeCategory);
@@ -21,7 +19,6 @@ export const onDragStart = (
     "application/reactflow-command-palette-button-style",
     JSON.stringify(commandPaletteButtonStyle),
   );
-  event.dataTransfer.setData("application/reactflow-command-palette-options", JSON.stringify(commandPaletteOptions));
   event.dataTransfer.effectAllowed = "move";
 };
 

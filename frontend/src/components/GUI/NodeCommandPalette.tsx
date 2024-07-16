@@ -1,11 +1,21 @@
 "use client";
 
+import type { OptionData } from "@/components/GUI/CustomNode";
+import { promoterCommandPaletteOptions } from "@/components/GUI/nodes/promoterNode";
+import { proteinCommandPaletteOptions } from "@/components/GUI/nodes/proteinNode";
+import { terminatorCommandPaletteOptions } from "@/components/GUI/nodes/terminatorNode";
 import { Dialog, DialogPanel, Transition, TransitionChild } from "@headlessui/react";
 import { CheckCircleIcon, ChevronUpDownIcon, MagnifyingGlassIcon } from "@heroicons/react/20/solid";
 import { Fragment, useState } from "react";
 import { type Node, useReactFlow } from "reactflow";
 
-export const updateNodeMetadata = (nds: Node[], nodeId: string, option: Record<string, string>): Node[] => {
+const commandPaletteOptions: Record<string, OptionData[]> = {
+  promoter: promoterCommandPaletteOptions,
+  protein: proteinCommandPaletteOptions,
+  terminator: terminatorCommandPaletteOptions,
+};
+
+export const updateNodeMetadata = (nds: Node[], nodeId: string, option: OptionData): Node[] => {
   return nds.map((n) => {
     if (n.id === nodeId) {
       return {
@@ -14,8 +24,9 @@ export const updateNodeMetadata = (nds: Node[], nodeId: string, option: Record<s
           ...n.data,
           nodeSubcategory: option.subcategory,
           nodePartsName: option.name,
-          repressedBy: option.repressedBy,
-          repressTo: option.repressTo,
+          controlBy: option.controlBy,
+          controlTo: option.controlTo,
+          meta: option.meta,
         },
       };
     }
@@ -23,21 +34,17 @@ export const updateNodeMetadata = (nds: Node[], nodeId: string, option: Record<s
   });
 };
 
-export const NodeCommandPalette = ({
-  options,
-  id,
-}: {
-  options: Array<{ name: string; description: string; subcategory: string; repressedBy: string; repressTo: string }>;
-  id: string;
-}) => {
-  const [selected, setSelected] = useState<Record<string, string>>(options[0]);
+export const NodeCommandPalette = ({ nodeCategory, nodeId }: { nodeCategory: string; nodeId: string }) => {
+  const options = commandPaletteOptions[nodeCategory];
+
+  const [selected, setSelected] = useState<OptionData>(null);
   const [isOpen, setIsOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const reactFlow = useReactFlow();
 
-  const onOptionSelect = (option: Record<string, string>) => {
+  const onOptionSelect = (option: OptionData) => {
     setSelected(option);
-    reactFlow.setNodes((nds) => updateNodeMetadata(nds, id, option));
+    reactFlow.setNodes((nds) => updateNodeMetadata(nds, nodeId, option));
     setIsOpen(false);
   };
 
@@ -56,7 +63,7 @@ export const NodeCommandPalette = ({
       acc[subcategory].push(option);
       return acc;
     },
-    {} as Record<string, Array<{ name: string; description: string; subcategory: string }>>,
+    {} as Record<string, OptionData[]>,
   );
 
   return (
@@ -67,7 +74,7 @@ export const NodeCommandPalette = ({
         onClick={() => setIsOpen(true)}
       >
         <span className="flex items-center">
-          <span className="ml-3 block truncate">{selected.name}</span>
+          <span className="ml-3 block truncate min-h-[1.6rem]">{selected ? selected.name : ""}</span>
         </span>
         <span className="pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2">
           <ChevronUpDownIcon aria-hidden="true" className="h-6 w-6 text-white" />
@@ -125,18 +132,18 @@ export const NodeCommandPalette = ({
                           >
                             <div className="flex items-center">
                               <span
-                                className={`ml-3 block truncate font-bold ${selected.name === option.name ? "text-indigo-600" : ""}`}
+                                className={`ml-3 block truncate font-bold ${selected?.name === option.name ? "text-indigo-600" : ""}`}
                               >
                                 {option.name}
                               </span>
                             </div>
                             <div
-                              className={`ml-3 text-sm ${selected.name === option.name ? "text-indigo-600" : "text-gray-500"}`}
+                              className={`ml-3 text-sm ${selected?.name === option.name ? "text-indigo-600" : "text-gray-500"}`}
                             >
                               {option.description}
                             </div>
                             <span
-                              className={`absolute inset-y-0 right-0 flex items-center pr-4 ${selected.name === option.name ? "text-indigo-600" : "hidden"}`}
+                              className={`absolute inset-y-0 right-0 flex items-center pr-4 ${selected?.name === option.name ? "text-indigo-600" : "hidden"}`}
                             >
                               <CheckCircleIcon aria-hidden="true" className="h-5 w-5" />
                             </span>

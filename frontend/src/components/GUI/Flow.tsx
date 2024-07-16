@@ -50,9 +50,6 @@ export const Flow: React.FC = () => {
       const commandPaletteButtonStyle = JSON.parse(
         event.dataTransfer.getData("application/reactflow-command-palette-button-style"),
       );
-      const commandPaletteOptions = JSON.parse(
-        event.dataTransfer.getData("application/reactflow-command-palette-options"),
-      );
 
       const newNode = createChildNode(
         position,
@@ -61,7 +58,6 @@ export const Flow: React.FC = () => {
         leftHandleStyle,
         rightHandleStyle,
         commandPaletteButtonStyle,
-        commandPaletteOptions,
       );
 
       setNodes((nodes) => nodes.concat(newNode));
