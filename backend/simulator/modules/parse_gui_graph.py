@@ -16,11 +16,11 @@ def parse_all_nodes(nodes: list[dict[str, str]]) -> (dict[str, GUINode], dict[st
             dict: {node_category: [node_id]}.
             node_category: 'protein', 'promoter', 'terminator'
     """
-    node_category_dict: dict[str, list] = {'protein': [], 'promoter': [], 'terminator': []}
-    all_nodes: dict = {}
+    node_category_dict = {'protein': [], 'promoter': [], 'terminator': []}
+    all_nodes = {}
     for node in nodes:
         if node['type'] == 'child':
-            node_info: dict = {
+            node_info = {
                 'id': node.id,
                 'nodeCategory': node.data.nodeCategory,
                 'nodeSubcategory': node.data.nodeSubcategory,
@@ -44,10 +44,10 @@ def create_partsName_nodeId_table(all_nodes: dict[str, GUINode]) -> dict[str, li
         partsName_to_nodeId: dict[str, list[str]]: dict of node_id for each partsName.
             dict: {nodePartsName: [node_id]}
     """
-    partsName_to_nodeId: dict = {}
+    partsName_to_nodeId = {}
     for node in all_nodes.values():
-        partsName: str = node.nodePartsName
-        nodeId_list: list[str] | None = partsName_to_nodeId.get(partsName)
+        partsName = node.nodePartsName
+        nodeId_list = partsName_to_nodeId.get(partsName)
         if nodeId_list:
             partsName_to_nodeId[partsName].append(node.id)
         else:  # partsName not in partsName_to_nodeId dict
@@ -63,7 +63,7 @@ def dfs(node: int, visited: set, adj_matrix: np.ndarray) -> None:
         visited (set): set of log visited node index.
         adj_matrix (np.ndarray): adjacency matrix of the GUI graph.
     """
-    num_nodes: int = len(adj_matrix)
+    num_nodes = len(adj_matrix)
     for j in range(num_nodes):
         if adj_matrix[node][j] != 0 and j not in visited:
             visited.add(j)
@@ -80,7 +80,7 @@ def get_all_connected_nodes(adj_matrix: np.ndarray) -> list[list[int]]:
         all_connected_node_idx (list[list[int]]): list of connected nodes idx for each node.
             len(all_connected_nodes) = num_nodes
     """
-    num_nodes: int = len(adj_matrix)
+    num_nodes = len(adj_matrix)
     all_connected_node_idx: list = []
 
     for i in range(num_nodes):
@@ -106,11 +106,11 @@ def extract_promoter_nodes(
         promoter_controlling_proteins (dict[str, list[str]]): dict of connected protein node id for each promoter node.
             dict: {promoter_node_id: [protein_node_id]}
     """
-    promoter_controlling_proteins: dict = {}
+    promoter_controlling_proteins = {}
     for idx, connected_nodes in enumerate(all_connected_node_idx):
-        node_id: str = idx_to_nodeId_table[idx]
+        node_id = idx_to_nodeId_table[idx]
         if all_nodes[node_id].nodeCategory == 'promoter':
-            controlled_protein: list = []
+            controlled_protein = []
             for idx in connected_nodes:
                 if all_nodes[idx_to_nodeId_table[idx]].nodeCategory == 'protein':
                     controlled_protein.append(idx_to_nodeId_table[idx])
@@ -128,16 +128,16 @@ def parse_edge_connection(edges: list[dict], all_nodes: dict[str, GUINode]) -> d
     Returns:
         dict[str, list[str]]: dict of connected protein node id for each promoter node.
     """
-    nodeId_to_idx_table: dict = {node: idx for idx, node in enumerate(all_nodes)}
-    idx_to_nodeId_table: dict[int, str] = dict(enumerate(all_nodes))
+    nodeId_to_idx_table = {node: idx for idx, node in enumerate(all_nodes)}
+    idx_to_nodeId_table = dict(enumerate(all_nodes))
     graph: np.ndarray = np.zeros((len(all_nodes), len(all_nodes)))
 
     # create all GUI node graph as a first step.
     # graph G[i][j]=1 means i->j edge exists.
     for edge in edges:
-        source_idx: int = nodeId_to_idx_table[edge.source]
-        target_idx: int = nodeId_to_idx_table[edge.target]
+        source_idx = nodeId_to_idx_table[edge.source]
+        target_idx = nodeId_to_idx_table[edge.target]
         graph[source_idx, target_idx] = 1
 
-    all_connected_node_idx: list[list[int]] = get_all_connected_nodes(graph)
+    all_connected_node_idx = get_all_connected_nodes(graph)
     return extract_promoter_nodes(all_connected_node_idx, all_nodes, idx_to_nodeId_table)

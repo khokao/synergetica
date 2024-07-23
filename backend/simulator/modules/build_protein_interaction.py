@@ -2,7 +2,7 @@ import numpy as np
 from omegaconf import OmegaConf
 
 from simulator.core.schema import GUINode
-from simulator.modules.interpret_gui_circuit import (
+from simulator.modules.parse_gui_graph import (
     create_partsName_nodeId_table,
     parse_all_nodes,
     parse_edge_connection,
@@ -11,7 +11,7 @@ from simulator.modules.interpret_gui_circuit import (
 
 def get_protein_interaction(
     control_info: dict[str, dict[str, str]], promoter_controling_proteins, partsName_to_nodeId
-) -> dict[str, list[int]]:
+) -> dict[str, int]:
     """get interacting infomation in between protein nodes with promoter controling information.
 
     Args:
@@ -24,9 +24,9 @@ def get_protein_interaction(
     Returns:
         protein_interaction (dict[str,int]): {protein_id:1 or -1}
     """
-    protein_interaction: dict = {}
+    protein_interaction = {}
     for promoter_name, how_control in control_info.items():
-        promoter_nodeIds: list = partsName_to_nodeId[promoter_name]
+        promoter_nodeIds = partsName_to_nodeId[promoter_name]
         for promoter_nodeId in promoter_nodeIds:
             for controlled_protein_id in promoter_controling_proteins[promoter_nodeId]:
                 if how_control.controlType == 'Repression':
@@ -57,17 +57,15 @@ def build_protein_interact_graph(
             value=1: activation, value=-1: repression, value=0: no interaction
         proteinIn_to_idx: dict[str, int]: relation between idx and protein node in protein_interact_graph.
     """
-    partsName_to_nodeId: dict[str, list[str]] = create_partsName_nodeId_table(all_nodes)
-    proteinId_to_idx: dict[str, int] = {node_id: idx for idx, node_id in enumerate(node_category_dict['protein'])}
+    partsName_to_nodeId = create_partsName_nodeId_table(all_nodes)
+    proteinId_to_idx = {node_id: idx for idx, node_id in enumerate(node_category_dict['protein'])}
     protein_interaction_graph: np.ndarray = np.zeros(
         (len(node_category_dict['protein']), len(node_category_dict['protein']))
     )
 
     for idx, protein_nodeId in enumerate(node_category_dict['protein']):
-        control_info: dict[str, dict[str, str]] = all_nodes[protein_nodeId].controlTo
-        protein_interactions: dict[str, int] = get_protein_interaction(
-            control_info, promoter_controling_proteins, partsName_to_nodeId
-        )
+        control_info = all_nodes[protein_nodeId].controlTo
+        protein_interactions = get_protein_interaction(control_info, promoter_controling_proteins, partsName_to_nodeId)
         for interact_protein_id, interaction_type in protein_interactions.items():
             protein_interaction_graph[idx, proteinId_to_idx[interact_protein_id]] = interaction_type
 
@@ -77,6 +75,6 @@ def build_protein_interact_graph(
 def run_interpret():
     circuit = OmegaConf.load('toggle_output_test.json')  # TODO: change to take from simulator API.
     all_nodes, node_category_dict = parse_all_nodes(circuit.nodes)
-    promoter_controlling_proteins: dict[str, list[str]] = parse_edge_connection(circuit.edges, all_nodes)
+    promoter_controlling_proteins = parse_edge_connection(circuit.edges, all_nodes)
 
     return build_protein_interact_graph(all_nodes, node_category_dict, promoter_controlling_proteins)
