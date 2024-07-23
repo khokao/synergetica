@@ -22,11 +22,11 @@ describe("proteinNode", () => {
     fireEvent.dragStart(div, mockDragEvent);
 
     expect(div).toHaveAttribute("draggable", "true");
-    expect(mockDragEvent.dataTransfer.setData).toHaveBeenCalledWith("application/reactflow-node-type", "protein");
     expect(mockDragEvent.dataTransfer.setData).toHaveBeenCalledWith(
       "application/reactflow-icon-url",
       "/images/node-protein.svg",
     );
+    expect(mockDragEvent.dataTransfer.setData).toHaveBeenCalledWith("application/reactflow-node-category", "protein");
     expect(mockDragEvent.dataTransfer.setData).toHaveBeenCalledWith(
       "application/reactflow-left-handle-style",
       JSON.stringify({ top: 15, left: 6 }),
@@ -35,6 +35,11 @@ describe("proteinNode", () => {
       "application/reactflow-right-handle-style",
       JSON.stringify({ top: 15, left: 178 }),
     );
+    expect(mockDragEvent.dataTransfer.setData).toHaveBeenCalledWith(
+      "application/reactflow-command-palette-button-style",
+      JSON.stringify({ top: -6, left: 12, right: 30 }),
+    );
+
     expect(mockDragEvent.dataTransfer.effectAllowed).toBe("move");
   });
 });
