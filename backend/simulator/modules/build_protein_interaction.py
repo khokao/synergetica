@@ -65,8 +65,8 @@ def build_protein_interact_graph(
 
     for idx, protein_nodeId in enumerate(node_category_dict['protein']):
         control_info = all_nodes[protein_nodeId].controlTo
-        protein_interactions = get_protein_interaction(control_info, promoter_controling_proteins, partsName_to_nodeId)
-        for interact_protein_id, interaction_type in protein_interactions.items():
+        protein_interaction = get_protein_interaction(control_info, promoter_controling_proteins, partsName_to_nodeId)
+        for interact_protein_id, interaction_type in protein_interaction.items():
             protein_interaction_graph[idx, proteinId_to_idx[interact_protein_id]] = interaction_type
 
     return protein_interaction_graph, proteinId_to_idx
