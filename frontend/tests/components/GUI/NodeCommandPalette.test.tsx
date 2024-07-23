@@ -25,6 +25,7 @@ describe("updateNodeMetadata", () => {
           nodeSubcategory: undefined,
           nodePartsName: undefined,
           sequence: undefined,
+          partsId: undefined,
           controlBy: null,
           controlTo: null,
           meta: null,
@@ -37,6 +38,7 @@ describe("updateNodeMetadata", () => {
           nodeSubcategory: undefined,
           nodePartsName: undefined,
           sequence: undefined,
+          partsId: undefined,
           controlBy: null,
           controlTo: null,
           meta: null,
@@ -48,11 +50,13 @@ describe("updateNodeMetadata", () => {
       description: "newDescription",
       subcategory: "newCategory",
       sequence: "newSequence",
-      controlBy: {
-        newControlBy: {
+      partsId: "newPartsId",
+      controlBy: [
+        {
+          partsId: "otherPartsId",
           controlType: "newControlType",
         },
-      },
+      ],
       controlTo: null,
       meta: null,
     };
@@ -63,11 +67,13 @@ describe("updateNodeMetadata", () => {
       nodeSubcategory: "newCategory",
       nodePartsName: "newName",
       sequence: "newSequence",
-      controlBy: {
-        newControlBy: {
+      partsId: "newPartsId",
+      controlBy: [
+        {
+          partsId: "otherPartsId",
           controlType: "newControlType",
         },
-      },
+      ],
       controlTo: null,
       meta: null,
     });
@@ -75,6 +81,7 @@ describe("updateNodeMetadata", () => {
       nodeSubcategory: undefined,
       nodePartsName: undefined,
       sequence: undefined,
+      partsId: undefined,
       controlBy: null,
       controlTo: null,
       meta: null,

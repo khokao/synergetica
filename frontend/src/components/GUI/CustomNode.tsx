@@ -12,6 +12,7 @@ export interface OptionData {
   description: string;
   subcategory: string;
   sequence: string;
+  partsId: string;
   controlBy: ControlData[] | null;
   controlTo: ControlData[] | null;
   meta: Record<string, unknown> | null;
@@ -23,6 +24,7 @@ interface CustomChildNodeData {
   nodeSubcategory: string | undefined;
   nodePartsName: string | undefined;
   sequence: string | undefined;
+  partsId: string | undefined;
   controlBy: ControlData[] | null;
   controlTo: ControlData[] | null;
   meta: Record<string, unknown> | null;
