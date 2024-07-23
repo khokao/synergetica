@@ -3,9 +3,8 @@ import type React from "react";
 import { Handle, type NodeProps, Position } from "reactflow";
 
 interface ControlData {
-  [key: string]: {
-    [key: string]: string | number;
-  };
+  partsId: string;
+  controlType: string;
 }
 
 export interface OptionData {
@@ -13,8 +12,8 @@ export interface OptionData {
   description: string;
   subcategory: string;
   sequence: string;
-  controlBy: ControlData | null;
-  controlTo: ControlData | null;
+  controlBy: ControlData[] | null;
+  controlTo: ControlData[] | null;
   meta: Record<string, unknown> | null;
 }
 
@@ -24,8 +23,8 @@ interface CustomChildNodeData {
   nodeSubcategory: string | undefined;
   nodePartsName: string | undefined;
   sequence: string | undefined;
-  controlBy: ControlData | null;
-  controlTo: ControlData | null;
+  controlBy: ControlData[] | null;
+  controlTo: ControlData[] | null;
   meta: Record<string, unknown> | null;
   leftHandleStyle: React.CSSProperties;
   rightHandleStyle: React.CSSProperties;

@@ -15,6 +15,7 @@ export const terminatorCommandPaletteOptions = [
     description: "Standard Terminator",
     subcategory: "StandardTerminator",
     sequence: "ccaattattgaacaccctaacgggtgtttttttttttttggtctacc",
+    partsId: "8a714a91168b796a27d449aae65d3b3bdffee30d737b94fb255e710e2b0427b4",
     controlBy: null,
     controlTo: null,
     meta: null,
