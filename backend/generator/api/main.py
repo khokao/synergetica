@@ -7,7 +7,7 @@ app = FastAPI()
 
 
 @app.get('/healthcheck-generator', include_in_schema=False)
-async def healthcheck() -> dict[str, int]:
+async def healthcheck() -> dict[str, str]:
     return {'status': 'ok'}
 
 
