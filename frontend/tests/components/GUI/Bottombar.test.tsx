@@ -30,11 +30,11 @@ describe("Bottombar", () => {
       fireEvent.dragStart(nodeElement, mockDragEvent);
 
       // Assert
-      expect(mockDataTransfer.setData).toHaveBeenCalledWith("application/reactflow-node-type", "promoter");
       expect(mockDataTransfer.setData).toHaveBeenCalledWith(
         "application/reactflow-icon-url",
         "/images/node-promoter.svg",
       );
+      expect(mockDataTransfer.setData).toHaveBeenCalledWith("application/reactflow-node-category", "promoter");
       expect(mockDataTransfer.setData).toHaveBeenCalledWith(
         "application/reactflow-left-handle-style",
         JSON.stringify({ top: 68, left: 5 }),
@@ -43,6 +43,11 @@ describe("Bottombar", () => {
         "application/reactflow-right-handle-style",
         JSON.stringify({ top: 68, left: 180 }),
       );
+      expect(mockDataTransfer.setData).toHaveBeenCalledWith(
+        "application/reactflow-command-palette-button-style",
+        JSON.stringify({ top: 47, left: 11, right: 10 }),
+      );
+
       expect(mockDataTransfer.effectAllowed).toBe("move");
     } else {
       throw new Error("Node element not found");
