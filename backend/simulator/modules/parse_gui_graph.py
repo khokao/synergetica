@@ -103,7 +103,7 @@ def extract_promoter_nodes(
         idx_to_nodeId_table (dict[int, str]): dict to convert idx to node_id.
 
     Returns:
-        promoter_controlling_proteins (dict[str, list[str]]): dict of connected protein node id for each promoter node.
+        promoter_controlling_proteins (dict[str, list[str]]): dict of connected protein node_id for each promoter node.
             dict: {promoter_node_id: [protein_node_id]}
     """
     promoter_controlling_proteins = {}
