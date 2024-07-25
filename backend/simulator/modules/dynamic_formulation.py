@@ -15,7 +15,7 @@ def generate_term(how_interact: int, params: dict[str, float], j: int, first_ter
         ValueError: _description_
 
     Returns:
-        str: _description_
+        str: each term for the interaction.
     """
     term = ''
     if how_interact == 1:
@@ -87,6 +87,7 @@ def build_function_as_str(protein_interact_graph: np.ndarray) -> str:
     """
 
     function_str = 'def ODEstoSolve(var:list[float],t:float) \n'
+    # TODO:可変パラメータはこの段階で変数として定義して受け取れるようにする。
     return_values = 'return ('
     for idx, protein_entry in enumerate(protein_interact_graph):
         ode_str = make_ode(protein_entry, idx)
