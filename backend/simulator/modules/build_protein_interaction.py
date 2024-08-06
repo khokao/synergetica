@@ -62,7 +62,9 @@ def search_interaction_through_promoter(
 
 
 def get_protein_interaction(
-    controlTo_info: dict[str, dict[str, str]] | None, promoter_controlling_proteins, partsName_to_nodeId
+    controlTo_info: dict[str, dict[str, str]],
+    promoter_controlling_proteins: dict[str, list[str]],
+    partsName_to_nodeId: dict[str, list[str]],
 ) -> dict[str, int]:
     """get all interacting protein_nodes and how interact for the given protein.
 

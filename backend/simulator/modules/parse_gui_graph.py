@@ -1,9 +1,10 @@
 import numpy as np
+from omegaconf.listconfig import ListConfig
 
 from simulator.core.schema import GUINode
 
 
-def parse_all_nodes(nodes: list[dict[str, str]]) -> tuple[dict[str, GUINode], dict[str, list[str]]]:
+def parse_all_nodes(nodes: ListConfig) -> tuple[dict[str, GUINode], dict[str, list[str]]]:
     """Parse and convert all nodes from GUI into GUINode.
 
     Args:
@@ -119,7 +120,7 @@ def extract_promoter_nodes(
     return promoter_controlling_proteins
 
 
-def parse_edge_connection(edges: list[dict], all_nodes: dict[str, GUINode]) -> dict[str, list[str]]:
+def parse_edge_connection(edges: ListConfig, all_nodes: dict[str, GUINode]) -> dict[str, list[str]]:
     """list up under controlled proteins for each promoter
 
     Args:
