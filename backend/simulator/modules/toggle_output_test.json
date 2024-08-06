@@ -1,0 +1,375 @@
+{
+  "nodes": [
+    {
+      "id": "U7kh0bibAVATuefh-jGE5",
+      "type": "parent",
+      "position": {
+        "x": 91.40625,
+        "y": 102
+      },
+      "style": {
+        "width": 571,
+        "height": 123
+      },
+      "data": {
+        "width": 571,
+        "height": 123
+      },
+      "width": 571,
+      "height": 123,
+      "positionAbsolute": {
+        "x": 91.40625,
+        "y": 102
+      }
+    },
+    {
+      "id": "BuXgViYjdIeaGrpOz49ec",
+      "type": "child",
+      "position": {
+        "x": 194,
+        "y": 73
+      },
+      "data": {
+        "iconUrl": "/images/node-protein.svg",
+        "nodeCategory": "protein",
+        "nodeSubcategory": "RepressorProtein",
+        "nodePartsName": "BM3R1",
+        "parts_id": "BM3R1",
+        "sequence": "atggaaagcaccccgaccaaacagaaagcaatttttagcgcaagcctgctgctgtttgcagaacgtggttttgatgcaaccaccatgccgatgattgcagaaaatgcaaaagttggtgcaggcaccatttatcgctatttcaaaaacaaagaaagcctggtgaacgaactgtttcagcagcatgttaatgaatttctgcagtgtattgaaagcggtctggcaaatgaacgtgatggttatcgtgatggctttcatcacatttttgaaggtatggtgacctttaccaaaaatcatccgcgtgcactgggttttatcaaaacccatagccagggcacctttctgaccgaagaaagccgtctggcatatcagaaactggttgaatttgtgtgcaccttttttcgtgaaggtcagaaacagggtgtgattcgtaatctgccggaaaatgcactgattgcaattctgtttggcagctttatggaagtgtatgaaatgatcgagaacgattatctgagcctgaccgatgaactgctgaccggtgttgaagaaagcctgtgggcagcactgagccgtcagagctaa",
+        "controlBy": null,
+        "controlTo": {
+          "Pbm3r1": {
+            "controlType": "Repression"
+          }
+        },
+        "meta": null,
+        "leftHandleStyle": {
+          "top": 15,
+          "left": 6
+        },
+        "rightHandleStyle": {
+          "top": 15,
+          "left": 178
+        },
+        "commandPaletteButtonStyle": {
+          "top": -6,
+          "left": 12,
+          "right": 30
+        },
+        "leftHandleConnected": true,
+        "rightHandleConnected": true
+      },
+      "width": 184,
+      "height": 30,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 285.40625,
+        "y": 175
+      },
+      "dragging": false,
+      "parentId": "U7kh0bibAVATuefh-jGE5"
+    },
+    {
+      "id": "mjGz5zISCu317ysvV0FqI",
+      "type": "child",
+      "position": {
+        "x": 367,
+        "y": 25
+      },
+      "data": {
+        "iconUrl": "/images/node-terminator.svg",
+        "nodeCategory": "terminator",
+        "nodeSubcategory": "StandardTerminator",
+        "nodePartsName": "L3S3P31",
+        "parts_id": "L3S3P31",
+        "sequence": "ccaattattgaacaccctaacgggtgtttttttttttttggtctacc",
+        "controlBy": null,
+        "controlTo": null,
+        "meta": null,
+        "leftHandleStyle": {
+          "top": 63,
+          "left": 5
+        },
+        "rightHandleStyle": {
+          "top": 63,
+          "left": 180
+        },
+        "commandPaletteButtonStyle": {
+          "top": 42,
+          "left": 11,
+          "right": 10
+        },
+        "leftHandleConnected": true,
+        "rightHandleConnected": false
+      },
+      "width": 184,
+      "height": 78,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 458.40625,
+        "y": 127
+      },
+      "dragging": false,
+      "parentId": "U7kh0bibAVATuefh-jGE5"
+    },
+    {
+      "id": "8xhKQErYeIKcDzDTY0M7d",
+      "type": "child",
+      "position": {
+        "x": 20,
+        "y": 20
+      },
+      "data": {
+        "iconUrl": "/images/node-promoter.svg",
+        "nodeCategory": "promoter",
+        "nodeSubcategory": "RepressivePromoter",
+        "nodePartsName": "PameR",
+        "parts_id": "PameR",
+        "sequence": "gatagtgacaaacttgacaactcatcacttcctaggtataatgctagc",
+        "controlBy": {
+          "AmeR": {
+            "controlType": "Repression"
+          }
+        },
+        "controlTo": null,
+        "meta": null,
+        "leftHandleStyle": {
+          "top": 68,
+          "left": 5
+        },
+        "rightHandleStyle": {
+          "top": 68,
+          "left": 180
+        },
+        "commandPaletteButtonStyle": {
+          "top": 47,
+          "left": 11,
+          "right": 10
+        },
+        "leftHandleConnected": false,
+        "rightHandleConnected": true
+      },
+      "width": 184,
+      "height": 83,
+      "parentId": "U7kh0bibAVATuefh-jGE5",
+      "positionAbsolute": {
+        "x": 111.40625,
+        "y": 122
+      },
+      "selected": false
+    },
+    {
+      "id": "gouzTt0AL5XcSzihvDkBo",
+      "type": "parent",
+      "position": {
+        "x": 153.40625,
+        "y": 360
+      },
+      "style": {
+        "width": 571,
+        "height": 123
+      },
+      "data": {
+        "width": 571,
+        "height": 123
+      },
+      "width": 571,
+      "height": 123,
+      "positionAbsolute": {
+        "x": 153.40625,
+        "y": 360
+      }
+    },
+    {
+      "id": "K53xw4s_sa8_0T_QyX_GY",
+      "type": "child",
+      "position": {
+        "x": 194,
+        "y": 73
+      },
+      "data": {
+        "iconUrl": "/images/node-protein.svg",
+        "nodeCategory": "protein",
+        "nodeSubcategory": "RepressorProtein",
+        "nodePartsName": "AmeR",
+        "parts_id": "AmeR",
+        "sequence": "atgaacaaaaccattgatcaggtgcgtaaaggtgatcgtaaaagcgatctgccggttcgtcgtcgtccgcgtcgtagtgccgaagaaacccgtcgtgatattctggcaaaagccgaagaactgtttcgtgaacgtggttttaatgcagttgccattgcagatattgcaagcgcactgaatatgagtccggcaaatgtgtttaaacattttagcagcaaaaacgcactggttgatgcaattggttttggtcagattggtgtttttgaacgtcagatttgtccgctggataaaagccatgcaccgctggatcgtctgcgtcatctggcacgtaatctgatggaacagcatcatcaggatcatttcaaacacatacgggtttttattcagatcctgatgaccgccaaacaggatatgaaatgtggcgattattacaaaagcgtgattgcaaaactgctggccgaaattattcgtgatggtgttgaagcaggtctgtatattgcaaccgatattccggttctggcagaaaccgttctgcatgcactgaccagcgttattcatccggttctgattgcacaagaagatattggtaatctggcaacccgttgtgatcagctggttgatctgattgatgcaggtctgcgtaatccgctggcaaaataa",
+        "controlBy": null,
+        "controlTo": {
+          "PameR": {
+            "controlType": "Repression"
+          }
+        },
+        "meta": null,
+        "leftHandleStyle": {
+          "top": 15,
+          "left": 6
+        },
+        "rightHandleStyle": {
+          "top": 15,
+          "left": 178
+        },
+        "commandPaletteButtonStyle": {
+          "top": -6,
+          "left": 12,
+          "right": 30
+        },
+        "leftHandleConnected": true,
+        "rightHandleConnected": true
+      },
+      "width": 184,
+      "height": 30,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 347.40625,
+        "y": 433
+      },
+      "dragging": false,
+      "parentId": "gouzTt0AL5XcSzihvDkBo"
+    },
+    {
+      "id": "vAaFzchBIsXQTejFITjmL",
+      "type": "child",
+      "position": {
+        "x": 367,
+        "y": 25
+      },
+      "data": {
+        "iconUrl": "/images/node-terminator.svg",
+        "nodeCategory": "terminator",
+        "nodeSubcategory": "StandardTerminator",
+        "nodePartsName": "L3S3P31",
+        "parts_id": "L3S3P31",
+        "sequence": "ccaattattgaacaccctaacgggtgtttttttttttttggtctacc",
+        "controlBy": null,
+        "controlTo": null,
+        "meta": null,
+        "leftHandleStyle": {
+          "top": 63,
+          "left": 5
+        },
+        "rightHandleStyle": {
+          "top": 63,
+          "left": 180
+        },
+        "commandPaletteButtonStyle": {
+          "top": 42,
+          "left": 11,
+          "right": 10
+        },
+        "leftHandleConnected": true,
+        "rightHandleConnected": false
+      },
+      "width": 184,
+      "height": 78,
+      "selected": true,
+      "positionAbsolute": {
+        "x": 520.40625,
+        "y": 385
+      },
+      "dragging": false,
+      "parentId": "gouzTt0AL5XcSzihvDkBo"
+    },
+    {
+      "id": "3H2tt8h6mXyBdbCh2zTv0",
+      "type": "child",
+      "position": {
+        "x": 20,
+        "y": 20
+      },
+      "data": {
+        "iconUrl": "/images/node-promoter.svg",
+        "nodeCategory": "promoter",
+        "nodeSubcategory": "RepressivePromoter",
+        "nodePartsName": "Pbm3r1",
+        "parts_id": "Pbm3r1",
+        "sequence": "tctgattcgttaccaattgacggaatgaacgttcattccgataatgctagc",
+        "controlBy": {
+          "BM3R1": {
+            "controlType": "Repression"
+          }
+        },
+        "controlTo": null,
+        "meta": null,
+        "leftHandleStyle": {
+          "top": 68,
+          "left": 5
+        },
+        "rightHandleStyle": {
+          "top": 68,
+          "left": 180
+        },
+        "commandPaletteButtonStyle": {
+          "top": 47,
+          "left": 11,
+          "right": 10
+        },
+        "leftHandleConnected": false,
+        "rightHandleConnected": true
+      },
+      "width": 184,
+      "height": 83,
+      "parentId": "gouzTt0AL5XcSzihvDkBo",
+      "positionAbsolute": {
+        "x": 173.40625,
+        "y": 380
+      },
+      "selected": false
+    }
+  ],
+  "edges": [
+    {
+      "id": "3775hVmPWQ3cZEY5QPDFo",
+      "source": "8xhKQErYeIKcDzDTY0M7d",
+      "target": "BuXgViYjdIeaGrpOz49ec",
+      "style": {
+        "strokeWidth": 4
+      },
+      "data": {
+        "draggedNodeIsTarget": true
+      },
+      "animated": false
+    },
+    {
+      "id": "K23nctc9SDYm6ebiry8Sp",
+      "source": "BuXgViYjdIeaGrpOz49ec",
+      "target": "mjGz5zISCu317ysvV0FqI",
+      "style": {
+        "strokeWidth": 4
+      },
+      "data": {
+        "draggedNodeIsTarget": true
+      },
+      "animated": false
+    },
+    {
+      "id": "EjcQmZsQ8jF5FSZf7tRUx",
+      "source": "3H2tt8h6mXyBdbCh2zTv0",
+      "target": "K53xw4s_sa8_0T_QyX_GY",
+      "style": {
+        "strokeWidth": 4
+      },
+      "data": {
+        "draggedNodeIsTarget": true
+      },
+      "animated": false
+    },
+    {
+      "id": "D0W6D7gHXck4CJyjH5U4B",
+      "source": "K53xw4s_sa8_0T_QyX_GY",
+      "target": "vAaFzchBIsXQTejFITjmL",
+      "style": {
+        "strokeWidth": 4
+      },
+      "data": {
+        "draggedNodeIsTarget": true
+      },
+      "animated": false
+    }
+  ],
+  "viewport": {
+    "x": 0,
+    "y": 0,
+    "zoom": 0.5
+  }
+}

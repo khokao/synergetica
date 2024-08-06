@@ -37,6 +37,7 @@ def generate_interact_terms(interact_infos: np.ndarray) -> str:
         if interact_info is None:
             continue
         else:
+            # interact_info: (1 or -1, dict{param_name: value})
             how_interact = interact_info[0]
             params = interact_info[1]
             term = generate_term(how_interact, params, j, first_term_flag)
@@ -45,7 +46,7 @@ def generate_interact_terms(interact_infos: np.ndarray) -> str:
     return interact_term
 
 
-def make_ode(interact_infos: np.ndarray, i: int, params) -> str:
+def make_ode(interact_infos: np.ndarray, i: int) -> str:
     """
     Args:
         interact_info (np.ndarray): interaction info for the target protein. shape=(num_protein,)

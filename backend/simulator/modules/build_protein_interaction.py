@@ -11,7 +11,7 @@ from simulator.modules.parse_gui_graph import (
 )
 
 
-def get_how_interact(how_control: str, controlled_protein_id: str) -> tuple(int, dict[str, float]):
+def get_how_interact(how_control: str, controlled_protein_id: str) -> tuple[int, dict[str, float]]:
     """
     Determine the interaction parameters based on the type of control.
 
