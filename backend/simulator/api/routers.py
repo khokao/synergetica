@@ -2,7 +2,7 @@ import numpy as np
 from fastapi import APIRouter, Query
 from loguru import logger
 
-from simulator.euler import run_euler_example
+from simulator.modules.euler import run_euler_example
 
 from .schemas import SimulatorOutput
 

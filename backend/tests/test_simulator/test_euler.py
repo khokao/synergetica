@@ -1,7 +1,7 @@
 import numpy as np
 import pytest
 
-from simulator.euler import solve_ode_with_euler
+from simulator.modules.euler import solve_ode_with_euler
 
 
 @pytest.fixture()

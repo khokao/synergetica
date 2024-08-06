@@ -46,7 +46,7 @@ def search_interaction_through_promoter(
     Args:
         promoter_name (str): Name of the promoter.
         how_control (dict[str, str]): Control information for the promoter.
-        promoter_controlling_proteins (dict[str, List[str]]): Dictionary of connected protein node_ids for each promoter.
+        promoter_controlling_proteins (dict[str, List[str]]): Dictionary of connected protein node_ids for each promoter
         partsName_to_nodeId (dict[str, List[str]]): Dictionary to convert parts names to node IDs.
 
     Returns:
@@ -62,7 +62,7 @@ def search_interaction_through_promoter(
 
 
 def get_protein_interaction(
-    controlTo_info: dict[str, dict[str, str]], promoter_controlling_proteins, partsName_to_nodeId
+    controlTo_info: dict[str, dict[str, str]] | None, promoter_controlling_proteins, partsName_to_nodeId
 ) -> dict[str, int]:
     """get all interacting protein_nodes and how interact for the given protein.
 
@@ -90,7 +90,7 @@ def build_protein_interact_graph(
     all_nodes: dict[str, GUINode],
     node_category_dict: dict[str, list[str]],
     promoter_controlling_proteins: dict[str, list[str]],
-) -> (np.ndarray, bidict):
+) -> tuple[np.ndarray, bidict]:
     """Build protein interaction graph from GUI circuit with promoter controlling information.
 
     Args:
@@ -124,7 +124,7 @@ def build_protein_interact_graph(
     return protein_interaction_graph, proteinId_idx_bidict
 
 
-def run_interpret():
+def run_interpret() -> tuple[np.ndarray, bidict, dict[str, GUINode]]:
     circuit = OmegaConf.load('toggle_output_test.json')  # TODO: change to take from simulator API.
     all_nodes, node_category_dict = parse_all_nodes(circuit.nodes)
     promoter_controlling_proteins = parse_edge_connection(circuit.edges, all_nodes)

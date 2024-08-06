@@ -13,7 +13,7 @@ class ODEBuilder:
         self.Emrna = 1  # transcription rate or mRNA. unknown # TODO: determine thie value
         self.Erpu = 1  # TODO: determine thie value
 
-    def PRS_str(self, params: dict[str, float], var_idx: int, control_type: int) -> str:
+    def PRS_str(self, params: dict[str, float] | None, var_idx: int, control_type: int) -> str:
         """build PRS equation as a string.
         Args:
             params (dict[str, float]): parameters for PRS equation.
@@ -53,7 +53,7 @@ class ODEBuilder:
             if interact_info == 0:
                 continue
             else:
-                interact_params: dict[str, float] = all_nodes[proteinId_idx_bidict.inverse[j]].meta
+                interact_params = all_nodes[proteinId_idx_bidict.inverse[j]].meta
                 protein_idx = 2 * j + 1
                 prs += self.PRS_str(interact_params, var_idx=protein_idx, control_type=interact_info)
                 prs += ' * '
