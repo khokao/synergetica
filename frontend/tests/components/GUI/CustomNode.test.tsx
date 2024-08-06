@@ -3,14 +3,31 @@ import { render, screen } from "@testing-library/react";
 import { ReactFlowProvider } from "reactflow";
 import { describe, expect, it } from "vitest";
 
+// Required to temporarily render the GUI section during testing.
+vi.stubGlobal(
+  "ResizeObserver",
+  class {
+    observe() {}
+    unobserve() {}
+    disconnect() {}
+  },
+);
+
 describe("CustomChildNode", () => {
   it("renders correctly with provided data", () => {
     // Arrange
     const data = {
       iconUrl: "/images/node-test-icon.svg",
-      nodeType: "testNode",
+      nodeCategory: "promoter",
+      nodeSubcategory: undefined,
+      nodePartsName: undefined,
+      sequence: undefined,
+      controlBy: null,
+      controlTo: null,
+      meta: null,
       leftHandleStyle: { top: 15, left: 7 },
       rightHandleStyle: { top: 15, left: 178 },
+      commandPaletteButtonStyle: { top: -6, left: 12, right: 30 },
     };
     const defaultProps = {
       id: "1",
@@ -28,12 +45,13 @@ describe("CustomChildNode", () => {
     // Act
     render(
       <ReactFlowProvider>
-        <CustomChildNode {...defaultProps} />
+        {/* @ts-ignore */}
+        <CustomChildNode nodeCategory={data.nodeCategory} id={defaultProps.id} {...defaultProps} />
       </ReactFlowProvider>,
     );
 
     // Assert
-    const image = screen.getByAltText("testNode");
+    const image = screen.getByAltText("promoter");
     expect(image).toBeInTheDocument();
     expect(image).toHaveAttribute("src", data.iconUrl);
 
@@ -44,6 +62,14 @@ describe("CustomChildNode", () => {
     const rightHandle = screen.getByTestId("handle-right");
     expect(rightHandle).toBeInTheDocument();
     expect(rightHandle).toHaveStyle({ top: `${data.rightHandleStyle.top}px`, left: `${data.rightHandleStyle.left}px` });
+
+    const commandPaletteButton = screen.getByTestId("command-palette-button");
+    expect(commandPaletteButton).toBeInTheDocument();
+    expect(commandPaletteButton).toHaveStyle({
+      top: `${data.commandPaletteButtonStyle.top}px`,
+      left: `${data.commandPaletteButtonStyle.left}px`,
+      right: `${data.commandPaletteButtonStyle.right}px`,
+    });
   });
 });
 

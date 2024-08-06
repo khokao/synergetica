@@ -22,10 +22,13 @@ describe("terminatorNode", () => {
     fireEvent.dragStart(div, mockDragEvent);
 
     expect(div).toHaveAttribute("draggable", "true");
-    expect(mockDragEvent.dataTransfer.setData).toHaveBeenCalledWith("application/reactflow-node-type", "terminator");
     expect(mockDragEvent.dataTransfer.setData).toHaveBeenCalledWith(
       "application/reactflow-icon-url",
       "/images/node-terminator.svg",
+    );
+    expect(mockDragEvent.dataTransfer.setData).toHaveBeenCalledWith(
+      "application/reactflow-node-category",
+      "terminator",
     );
     expect(mockDragEvent.dataTransfer.setData).toHaveBeenCalledWith(
       "application/reactflow-left-handle-style",
@@ -35,6 +38,11 @@ describe("terminatorNode", () => {
       "application/reactflow-right-handle-style",
       JSON.stringify({ top: 63, left: 180 }),
     );
+    expect(mockDragEvent.dataTransfer.setData).toHaveBeenCalledWith(
+      "application/reactflow-command-palette-button-style",
+      JSON.stringify({ top: 42, left: 11, right: 10 }),
+    );
+
     expect(mockDragEvent.dataTransfer.effectAllowed).toBe("move");
   });
 });

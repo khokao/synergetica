@@ -38,21 +38,27 @@ export const Flow: React.FC = () => {
     (event: React.DragEvent<HTMLDivElement>) => {
       event.preventDefault();
 
-      const nodeType = event.dataTransfer.getData("application/reactflow-node-type");
-      const iconUrl = event.dataTransfer.getData("application/reactflow-icon-url");
-      const leftHandleStyle = JSON.parse(event.dataTransfer.getData("application/reactflow-left-handle-style"));
-      const rightHandleStyle = JSON.parse(event.dataTransfer.getData("application/reactflow-right-handle-style"));
-
-      if (!nodeType) {
-        return;
-      }
-
       const position = screenToFlowPosition({
         x: event.clientX,
         y: event.clientY,
       });
 
-      const newNode = createChildNode(nodeType, iconUrl, leftHandleStyle, rightHandleStyle, position);
+      const iconUrl = event.dataTransfer.getData("application/reactflow-icon-url");
+      const nodeCategory = event.dataTransfer.getData("application/reactflow-node-category");
+      const leftHandleStyle = JSON.parse(event.dataTransfer.getData("application/reactflow-left-handle-style"));
+      const rightHandleStyle = JSON.parse(event.dataTransfer.getData("application/reactflow-right-handle-style"));
+      const commandPaletteButtonStyle = JSON.parse(
+        event.dataTransfer.getData("application/reactflow-command-palette-button-style"),
+      );
+
+      const newNode = createChildNode(
+        position,
+        iconUrl,
+        nodeCategory,
+        leftHandleStyle,
+        rightHandleStyle,
+        commandPaletteButtonStyle,
+      );
 
       setNodes((nodes) => nodes.concat(newNode));
     },
