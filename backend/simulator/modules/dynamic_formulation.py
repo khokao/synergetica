@@ -1,101 +1,119 @@
 # ruff: noqa: F821
 import numpy as np
+from bidict import bidict
+
+from simulator.core.schema import GUINode
 
 
-def generate_term(how_interact: int, params: dict[str, float], j: int, first_term_flag: bool) -> str:
-    """generate each term based on the interaction information.
+class ODEBuilder:
+    def __init__(self):
+        self.PCN = 15  # plasmid copy number. unit = [copy/cell]
+        self.Dmrna = 0.012  # mRNA degradation rate. unit = [1/s]
+        self.Emrna = 1  # transcription rate or mRNA. unknown # TODO: determine thie value
+        self.Erpu = 1  # TODO: determine thie value
+        self.TIR = 1  # TODO: determine thie value
 
-    Args:
-        how_interact (int): 1 or -1. 1 means activation, -1 means repression.
-        params (dict[str,float]): interaction parameters. {param_name: value}
-        j (int): index of the given protein.
-        first_term_flag (bool): flag to determine whether the term is the first in the equation.
+    def PRS_str(self, params: dict[str, float], var_idx: int, control_type: int):
+        if control_type == 1:
+            prs = f"""(({params['Ymax']} + (({params['Ymax']}-{params['Ymin']}) *  var[{var_idx}] ** {params['n']}) / ( var[{var_idx}] ** {params['n']} + {params['K']} ** {params['n']})) / {params['Ymax']})"""  # noqa: E501
+        elif control_type == -1:
+            prs = f"""(({params['Ymax']} + (({params['Ymax']}-{params['Ymin']}) * {params['K']} ** {params['n']}) / ( var[{var_idx}] ** {params['n']} + {params['K']} ** {params['n']})) / {params['Ymax']})"""  # noqa: E501
+        return prs.replace('\n', '')
 
-    Raises:
-        ValueError: _description_
+    def make_mrna_ode(
+        self,
+        idx: int,
+        interact_infos: np.ndarray,
+        proteinId_idx_bidict: bidict[str, int],
+        all_nodes: dict[str, GUINode],
+    ) -> str:
+        prs = ''
+        for j, interact_info in enumerate(interact_infos):
+            if interact_info == 0:
+                continue
+            else:
+                interact_params = all_nodes[proteinId_idx_bidict.inverse[j]].meta
+                protein_idx = 2 * j + 1
+                prs += self.PRS_str(interact_params, var_idx=protein_idx, control_type=interact_info)
+                prs += ' * '
 
-    Returns:
-        str: each term for the interaction.
-    """
-    term = ''
-    if how_interact == 1:
-        term += f"({params['a']} * var[{j}]/({params['K']} + var[{j}]**{params['n']})"
-    elif how_interact == -1:
-        term += f"({params['a']}/({params['K']} + var[{j}]**{params['n']})"
-    else:
-        raise ValueError(f'Control type {how_interact} not recognized for protein {j}')
+        own_params = all_nodes[proteinId_idx_bidict.inverse[idx]].meta
+        mrna_ode_right = f'{self.Emrna} * {own_params['Pmax']} * {prs} {self.PCN} - {self.Dmrna} * var[{idx*2}]'
+        mrna_ode_left = f'd{idx*2}dt'
+        mrna_ode_str = f'{mrna_ode_left} = {mrna_ode_right}'
+        return mrna_ode_str
 
-    if not first_term_flag:
-        term = '*' + ode
-    return term
+    def make_protein_ode(self, idx: int, proteinId_idx_bidict: bidict[str, int], all_nodes: dict[str, GUINode]) -> str:
+        own_params = all_nodes[proteinId_idx_bidict.inverse[idx]].meta
+        protein_ode_left = f'd{idx*2+1}dt'
+        protein_ode_right = f'{self.Erpu} * {self.TIR} * var[{idx*2}] - {own_params['Dp']} * var[{idx*2+1}]'
+        protein_ode_str = f'{protein_ode_left} = {protein_ode_right}'
 
+        return protein_ode_str
 
-def generate_interact_terms(interact_infos: np.ndarray) -> str:
-    interact_term = ''
-    first_term_flag = True
-    for j, interact_info in enumerate(interact_infos):
-        if interact_info is None:
-            continue
+    def make_each_ode(
+        self,
+        interact_infos: np.ndarray,
+        idx: int,
+        proteinId_idx_bidict: bidict[str, int],
+        all_nodes: dict[str, GUINode],
+    ) -> str:
+        """
+        Args:
+            interact_info (np.ndarray): interaction info for the target protein. shape=(num_protein,)
+                value: (1 or -1)
+
+        Returns:
+            ode (str): ode for the target protein entry.
+                e.g) dudt = a1 / (1 + var[1] ** n) - var[0]
+        """
+
+        if np.all(interact_infos == 0):
+            # if there is no interaction for the protein,
+            # the ode for the protein is "d[x]/dt = α_x - d_x * [x]"
+            ode = f'{params['a']} - {params['d']}*var[{i}]'  ## TODO: interactionがない場合の式を考える。
         else:
-            # interact_info: (1 or -1, dict{param_name: value})
-            how_interact = interact_info[0]
-            params = interact_info[1]
-            term = generate_term(how_interact, params, j, first_term_flag)
-            interact_term += term
-            first_term_flag = False
-    return interact_term
+            # if there is interaction for the protein,
+            # the ode for the protein becomes like "d[x]/dt = f(x1,x2,...,xn) - d_x * [x]".abs
+            # the first term "f(x1,x2,...,xn)"" is the interaction term.
+            # the second term "- d_x * [x]" is the degradation term.
+            ode = ''
+            mrna_ode_str = self.make_mrna_ode(idx, interact_infos, proteinId_idx_bidict, all_nodes)
+            protein_ode_str = self.make_protein_ode(idx, proteinId_idx_bidict, all_nodes)
+
+            ode += f'\t{mrna_ode_str}\n'
+            ode += f'\t{protein_ode_str}\n'
+
+        return ode
 
 
-def make_ode(interact_infos: np.ndarray, i: int) -> str:
-    """
-    Args:
-        interact_info (np.ndarray): interaction info for the target protein. shape=(num_protein,)
-            value: (1 or -1, dict{param_name: value})
-
-    Returns:
-        ode (str): ode for the target protein entry.
-            e.g) dudt = a1 / (1 + var[1] ** n) - var[0]
-    """
-
-    if np.all(interact_infos is None):
-        # if there is no interaction for the protein,
-        # the ode for the protein is "d[x]/dt = α_x - d_x * [x]"
-        ode = f'{params['a']} - {params['d']}*var[{i}]'  ## TODO:自分自身に関するパラメタをどうやって取得するか考える。
-    else:
-        # if there is interaction for the protein,
-        # the ode for the protein becomes like "d[x]/dt = f(x1,x2,...,xn) - d_x * [x]".abs
-        # the first term "f(x1,x2,...,xn)"" is the interaction term.
-        # the second term "- d_x * [x]" is the degradation term.
-        ode = ''
-        interact_term = generate_interact_terms(interact_infos)
-        ode += interact_term
-
-        degradation_term = f"-{params['d']}*var[{i}]"
-        ode += degradation_term
-
-    return ode
-
-
-def build_function_as_str(protein_interact_graph: np.ndarray) -> str:
-    """construct ODE function as str to be defined by exec().
+def build_function_as_str(
+    protein_interact_graph: np.ndarray, proteinId_idx_bidict: bidict[str, int], all_nodes: dict[str, GUINode]
+) -> str:
+    """Build ODE function as a string to be defined by exec().
 
     Args:
-        protein_graph (np.ndarray): protein_interaction_graph, shape=(n_proteins,n_proteins)
-            object: (1 or -1,{param_name: value})
+        protein_interact_graph (np.ndarray): directed graph of protein interaction converted from GUI circuit.
+            protein_interact_graph[i][j] = 1 or -1. how control protein-i to protein-j
+        proteinId_idx_bidict (bidict.bidict[str,int]):
+            relation between idx and protein node in protein_interact_graph with bidict.
+        all_nodes (dict[str, GUINode]):  all_nodes (dict[str,GUINode]): all nodes in the GUI circuit converted to GUINode format.
 
     Returns:
-        function_str (str): ODE function as str to be defined.
+        functino_str (str): ODE function as a string.
     """
+    ode_builder = ODEBuilder()
 
-    function_str = 'def ODEstoSolve(var:list[float],t:float) \n'
+    def_str = 'def ODEstoSolve(var:list[float],t:float): \n'
     # TODO:可変パラメータはこの段階で変数として定義して受け取れるようにする。
-    return_values = 'return ('
-    for idx, protein_entry in enumerate(protein_interact_graph):
-        ode_str = make_ode(protein_entry, idx)
-        function_str += f'd{idx}dt = {ode_str}\n'
-        return_values += f'd{idx}dt,'
+    all_ode_str = ''
+    return_str = 'return ('
+    for idx, interact_infos in enumerate(protein_interact_graph):
+        ode_str = ode_builder.make_each_ode(interact_infos, idx, proteinId_idx_bidict, all_nodes)
+        all_ode_str += ode_str
+        return_str += f'd{idx*2}dt, d{idx*2+1}dt,'
 
-    return_values = return_values[:-1] + ')'
-    function_str += return_values
+    return_str = return_str[:-1] + ')'
+    function_str = def_str + all_ode_str + f'\t{return_str}'
 
     return function_str

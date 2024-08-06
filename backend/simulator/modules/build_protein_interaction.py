@@ -1,6 +1,7 @@
 from typing import List
 
 import numpy as np
+from bidict import bidict
 from omegaconf import OmegaConf
 
 from simulator.core.schema import GUINode
@@ -11,7 +12,7 @@ from simulator.modules.parse_gui_graph import (
 )
 
 
-def get_how_interact(how_control: str, controlled_protein_id: str) -> tuple[int, dict[str, float]]:
+def get_how_interact(how_control: str, controlled_protein_id: str) -> int:
     """
     Determine the interaction parameters based on the type of control.
 
@@ -20,12 +21,15 @@ def get_how_interact(how_control: str, controlled_protein_id: str) -> tuple[int,
         controlled_protein_id (str): ID of the controlled protein.
 
     Returns:
-        tuple(int, dict[str, float]): Interaction parameters, or None if the control type is not recognized.
+        control_type (int): Interaction parameters.
+
+    Raises:
+        ValueError: If the control type is not recognized.
     """
     if how_control == 'Repression':
-        return (-1, {'param1': 1.0, 'param2': 2.0})
+        return -1
     elif how_control == 'Activation':
-        return (1, {'param1': 2.0, 'param2': 1.0})
+        return 1
     else:
         raise ValueError(f'Control type {how_control} not recognized for protein {controlled_protein_id}')
 
@@ -46,7 +50,7 @@ def search_interaction_through_promoter(
         partsName_to_nodeId (dict[str, List[str]]): Dictionary to convert parts names to node IDs.
 
     Returns:
-        dict[str, tuple[int, dict[str, float]]]: Interactions for controlled proteins.
+        protein_interaction (dict[str, tuple[int, dict[str, float]]]): Interactions for controlled proteins.
     """
     protein_interaction = {}
     promoter_nodeIds = partsName_to_nodeId.get(promoter_name, [])
@@ -59,7 +63,7 @@ def search_interaction_through_promoter(
 
 def get_protein_interaction(
     controlTo_info: dict[str, dict[str, str]], promoter_controling_proteins, partsName_to_nodeId
-) -> dict[str, tuple[int, dict[str, float]]]:
+) -> dict[str, int]:
     """get all interacting protein_nodes and how interact for the given protein.
 
     Args:
@@ -71,7 +75,7 @@ def get_protein_interaction(
             dict: {nodePartsName:list[node_id]}
 
     Returns:
-        protein_interaction (dict[str,tuple[int,dict[str,float]]]): {protein_id:(1,{'param1':2,'param2':1)})}
+        protein_interaction (dict[str,int]): {protein_id: 1 or -1)}
     """
     protein_interaction = {}
     for promoter_name, how_control in controlTo_info.items():
@@ -86,7 +90,7 @@ def build_protein_interact_graph(
     all_nodes: dict[str, GUINode],
     node_category_dict: dict[str, list[str]],
     promoter_controling_proteins: dict[str, list[str]],
-) -> (np.ndarray, dict[str, int]):
+) -> (np.ndarray, bidict[str, int]):
     """Build protein interaction graph from GUI circuit with promoter controling information.
 
     Args:
@@ -98,28 +102,32 @@ def build_protein_interact_graph(
 
     Returns:
         protein_interact_graph: np.ndarray: directed graph of protein interaction converted from GUI circuit.
-            protein_interact_graph[i][j] = (1 or -1, {param:value}). how control protein-i to protein-j
+            protein_interact_graph[i][j] = 1 or -1. how control protein-i to protein-j
             shape=(num_protein, num_protein)
-        proteinIn_to_idx: dict[str, int]: relation between idx and protein node in protein_interact_graph.
+        proteinIn_idx_bidict: bidict[str, int]:
+            relation between idx and protein node in protein_interact_graph with bidict.
     """
     partsName_to_nodeId = create_partsName_nodeId_table(all_nodes)
-    proteinId_to_idx = {node_id: idx for idx, node_id in enumerate(node_category_dict['protein'])}
+    proteinId_idx_bidict = bidict({node_id: idx for idx, node_id in enumerate(node_category_dict['protein'])})
     protein_interaction_graph: np.ndarray = np.empty(
-        (len(node_category_dict['protein']), len(node_category_dict['protein'])), dtype=object
+        (len(node_category_dict['protein']), len(node_category_dict['protein']))
     )
 
     for idx, protein_nodeId in enumerate(node_category_dict['protein']):
-        controlTo_info = all_nodes[protein_nodeId].controlTo  # TODO: check schema of controlTo_info
+        controlTo_info = all_nodes[protein_nodeId].controlTo
         protein_interaction = get_protein_interaction(controlTo_info, promoter_controling_proteins, partsName_to_nodeId)
         for interact_protein_id, interaction_info in protein_interaction.items():
-            protein_interaction_graph[idx, proteinId_to_idx[interact_protein_id]] = interaction_info
+            protein_interaction_graph[idx, proteinId_idx_bidict[interact_protein_id]] = interaction_info
 
-    return protein_interaction_graph, proteinId_to_idx
+    return protein_interaction_graph, proteinId_idx_bidict
 
 
 def run_interpret():
     circuit = OmegaConf.load('toggle_output_test.json')  # TODO: change to take from simulator API.
     all_nodes, node_category_dict = parse_all_nodes(circuit.nodes)
     promoter_controlling_proteins = parse_edge_connection(circuit.edges, all_nodes)
+    protein_interact_graph, proteinId_idx_bidict = build_protein_interact_graph(
+        all_nodes, node_category_dict, promoter_controlling_proteins
+    )
 
-    return build_protein_interact_graph(all_nodes, node_category_dict, promoter_controlling_proteins)
+    return protein_interact_graph, proteinId_idx_bidict, all_nodes

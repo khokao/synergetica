@@ -9,3 +9,4 @@ class GUINode(BaseModel):
     sequence: str
     controlTo: dict | None
     controlBy: dict | None
+    meta: dict | None

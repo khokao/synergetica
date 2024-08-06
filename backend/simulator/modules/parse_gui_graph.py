@@ -28,6 +28,7 @@ def parse_all_nodes(nodes: list[dict[str, str]]) -> (dict[str, GUINode], dict[st
                 'sequence': node.data.sequence,
                 'controlTo': node.data.controlTo,
                 'controlBy': node.data.controlBy,
+                'meta': node.data.meta,
             }
             all_nodes[node.id] = GUINode(**node_info)
             node_category_dict[node.data.nodeCategory].append(node.id)

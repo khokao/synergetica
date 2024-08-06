@@ -42,7 +42,14 @@
             "controlType": "Repression"
           }
         },
-        "meta": null,
+        "meta": {
+          "Pmax": 0.5,
+          "Ymax": 1,
+          "Ymin": 0.2,
+          "K": 3,
+          "n": 2,
+          "Dp": 0.1
+        },
         "leftHandleStyle": {
           "top": 15,
           "left": 6
@@ -200,7 +207,14 @@
             "controlType": "Repression"
           }
         },
-        "meta": null,
+        "meta": {
+          "Pmax": 0.5,
+          "Ymax": 1,
+          "Ymin": 0.2,
+          "K": 3,
+          "n": 2,
+          "Dp": 0.1
+        },
         "leftHandleStyle": {
           "top": 15,
           "left": 6
