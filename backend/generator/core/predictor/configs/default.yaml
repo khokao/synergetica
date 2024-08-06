@@ -25,7 +25,7 @@ datamodule:
   sequence_col: RBS
   target_col: ActiveMean
   save_disk_dir: datasets/cache
-  batch_size: 64
+  batch_size: 512
   num_workers: 4
   tokenize_kwargs:
     padding: max_length
@@ -43,7 +43,7 @@ model:
   dim_feedforward: 128
   dropout: 0.1
   lr: 0.001
-  num_warmup_steps: 1000
+  num_warmup_steps: 100
 
 trainer: # ref: https://lightning.ai/docs/pytorch/stable/common/trainer.html#trainer-class-api
   _target_: lightning.pytorch.trainer.Trainer
@@ -68,8 +68,6 @@ trainer: # ref: https://lightning.ai/docs/pytorch/stable/common/trainer.html#tra
       filename: "epoch{epoch:03d}-R2Score{val_R2Score:.2f}"
     - _target_: lightning.pytorch.callbacks.LearningRateMonitor
       logging_interval: step
-    - _target_: lightning.pytorch.callbacks.DeviceStatsMonitor
-      cpu_stats: True
   logger:
     _target_: lightning.pytorch.loggers.TensorBoardLogger
     save_dir: ${hydra:run.dir}
