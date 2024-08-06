@@ -7,6 +7,11 @@
 
 # ref: https://github.com/github/gitignore/blob/main/Python.gitignore
 
+# generator specific
+datasets/cache/**
+!datasets/cache/.gitkeep
+generator/outputs/**
+!generator/outputs/.gitkeep
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
