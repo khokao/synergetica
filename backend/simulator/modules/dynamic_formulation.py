@@ -1,4 +1,5 @@
 # ruff: noqa: F821
+# skip undefined name error for dynamic function generation.
 import numpy as np
 from bidict import bidict
 
