@@ -3,7 +3,7 @@ import numpy as np
 from simulator.core.schema import GUINode
 
 
-def parse_all_nodes(nodes: list[dict[str, str]]) -> (dict[str, GUINode], dict[str, list[str]]):
+def parse_all_nodes(nodes: list[dict[str, str]]) -> tuple[dict[str, GUINode], dict[str, list[str]]]:
     """Parse and convert all nodes from GUI into GUINode.
 
     Args:
@@ -16,7 +16,7 @@ def parse_all_nodes(nodes: list[dict[str, str]]) -> (dict[str, GUINode], dict[st
             dict: {node_category: [node_id]}.
             node_category: 'protein', 'promoter', 'terminator'
     """
-    node_category_dict = {'protein': [], 'promoter': [], 'terminator': []}
+    node_category_dict: dict[str, list[str]] = {'protein': [], 'promoter': [], 'terminator': []}
     all_nodes = {}
     for node in nodes:
         if node['type'] == 'child':
@@ -45,7 +45,7 @@ def create_partsName_nodeId_table(all_nodes: dict[str, GUINode]) -> dict[str, li
         partsName_to_nodeId: dict[str, list[str]]: dict of node_id for each partsName.
             dict: {nodePartsName: [node_id]}
     """
-    partsName_to_nodeId = {}
+    partsName_to_nodeId: dict[str, list[str]] = {}
     for node in all_nodes.values():
         partsName = node.nodePartsName
         nodeId_list = partsName_to_nodeId.get(partsName)
@@ -85,7 +85,7 @@ def get_all_connected_nodes(adj_matrix: np.ndarray) -> list[list[int]]:
     all_connected_node_idx: list = []
 
     for i in range(num_nodes):
-        visited = set()
+        visited: set[int] = set()
         dfs(i, visited, adj_matrix)
         all_connected_node_idx.append(list(visited))
 
@@ -120,7 +120,7 @@ def extract_promoter_nodes(
 
 
 def parse_edge_connection(edges: list[dict], all_nodes: dict[str, GUINode]) -> dict[str, list[str]]:
-    """list up under controled proteins for each promoter
+    """list up under controlled proteins for each promoter
 
     Args:
         edges (list[dict]): edge info POST from GUI section.

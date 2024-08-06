@@ -37,39 +37,39 @@ def get_how_interact(how_control: str, controlled_protein_id: str) -> int:
 def search_interaction_through_promoter(
     promoter_name: str,
     how_control: dict[str, str],
-    promoter_controling_proteins: dict[str, List[str]],
+    promoter_controlling_proteins: dict[str, List[str]],
     partsName_to_nodeId: dict[str, list[str]],
-) -> dict[str, tuple[int, dict[str, float]]]:
+) -> dict[str, int]:
     """
     Process the interactions for a given promoter.
 
     Args:
         promoter_name (str): Name of the promoter.
         how_control (dict[str, str]): Control information for the promoter.
-        promoter_controling_proteins (dict[str, List[str]]): Dictionary of connected protein node_ids for each promoter.
+        promoter_controlling_proteins (dict[str, List[str]]): Dictionary of connected protein node_ids for each promoter.
         partsName_to_nodeId (dict[str, List[str]]): Dictionary to convert parts names to node IDs.
 
     Returns:
-        protein_interaction (dict[str, tuple[int, dict[str, float]]]): Interactions for controlled proteins.
+        protein_interaction (dict[str, int]): Interactions for controlled proteins.
     """
     protein_interaction = {}
     promoter_nodeIds = partsName_to_nodeId.get(promoter_name, [])
     for promoter_nodeId in promoter_nodeIds:
-        for controlled_protein_id in promoter_controling_proteins.get(promoter_nodeId, []):
+        for controlled_protein_id in promoter_controlling_proteins.get(promoter_nodeId, []):
             interaction = get_how_interact(how_control.get('controlType', ''), controlled_protein_id)
             protein_interaction[controlled_protein_id] = interaction
     return protein_interaction
 
 
 def get_protein_interaction(
-    controlTo_info: dict[str, dict[str, str]], promoter_controling_proteins, partsName_to_nodeId
+    controlTo_info: dict[str, dict[str, str]], promoter_controlling_proteins, partsName_to_nodeId
 ) -> dict[str, int]:
     """get all interacting protein_nodes and how interact for the given protein.
 
     Args:
         controlTo_info (dict[str,dict[str,str]]): Information on which promoters the protein controls.
             dict: {part_name:{controlType:controlType}}
-        promoter_controling_proteins (dict[str, list[str]]): dict of connected protein node_id for each promoter node.
+        promoter_controlling_proteins (dict[str, list[str]]): dict of connected protein node_id for each promoter node.
         partsName_to_nodeId (dict[str,list[str]]): dict to convert parts_name to node_id.
                                                    There can be multiple node_id for one parts_name.
             dict: {nodePartsName:list[node_id]}
@@ -80,7 +80,7 @@ def get_protein_interaction(
     protein_interaction = {}
     for promoter_name, how_control in controlTo_info.items():
         interaction = search_interaction_through_promoter(
-            promoter_name, how_control, promoter_controling_proteins, partsName_to_nodeId
+            promoter_name, how_control, promoter_controlling_proteins, partsName_to_nodeId
         )
         protein_interaction.update(interaction)
     return protein_interaction
@@ -89,16 +89,16 @@ def get_protein_interaction(
 def build_protein_interact_graph(
     all_nodes: dict[str, GUINode],
     node_category_dict: dict[str, list[str]],
-    promoter_controling_proteins: dict[str, list[str]],
-) -> (np.ndarray, bidict[str, int]):
-    """Build protein interaction graph from GUI circuit with promoter controling information.
+    promoter_controlling_proteins: dict[str, list[str]],
+) -> (np.ndarray, bidict):
+    """Build protein interaction graph from GUI circuit with promoter controlling information.
 
     Args:
         all_nodes (dict[str, GUINode]): all nodes in the circuit converted to GUINode format.
         node_category_dict (dict[str, list[str]]): dict of nodes for each node category.
             dict: {node_category: [node_id]}.
             node_category: 'protein', 'promoter', 'terminator'
-        promoter_controling_proteins (dict[str, list[str]]): dict of connected protein node id for each promoter node.
+        promoter_controlling_proteins (dict[str, list[str]]): dict of connected protein node id for each promoter node.
 
     Returns:
         protein_interact_graph: np.ndarray: directed graph of protein interaction converted from GUI circuit.
@@ -115,7 +115,9 @@ def build_protein_interact_graph(
 
     for idx, protein_nodeId in enumerate(node_category_dict['protein']):
         controlTo_info = all_nodes[protein_nodeId].controlTo
-        protein_interaction = get_protein_interaction(controlTo_info, promoter_controling_proteins, partsName_to_nodeId)
+        protein_interaction = get_protein_interaction(
+            controlTo_info, promoter_controlling_proteins, partsName_to_nodeId
+        )
         for interact_protein_id, interaction_info in protein_interaction.items():
             protein_interaction_graph[idx, proteinId_idx_bidict[interact_protein_id]] = interaction_info
 

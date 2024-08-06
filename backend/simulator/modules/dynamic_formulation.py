@@ -7,13 +7,23 @@ from simulator.core.schema import GUINode
 
 
 class ODEBuilder:
-    def __init__(self):
+    def __init__(self) -> None:
         self.PCN = 15  # plasmid copy number. unit = [copy/cell]
         self.Dmrna = 0.012  # mRNA degradation rate. unit = [1/s]
         self.Emrna = 1  # transcription rate or mRNA. unknown # TODO: determine thie value
         self.Erpu = 1  # TODO: determine thie value
 
-    def PRS_str(self, params: dict[str, float], var_idx: int, control_type: int):
+    def PRS_str(self, params: dict[str, float], var_idx: int, control_type: int) -> str:
+        """build PRS equation as a string.
+        Args:
+            params (dict[str, float]): parameters for PRS equation.
+                e.g) {'Ymax': 1, 'Ymin': 0, 'n': 2, 'K': 0.5, 'Pmax': 1}
+            var_idx (int): index of the target protein.
+            control_type (int): control type of the target protein.
+                1: activation, -1: repression
+        Returns:
+            prs (str): PRS equation as a string.
+        """
         if control_type == 1:
             prs = f"""(({params['Ymax']} + (({params['Ymax']}-{params['Ymin']}) *  var[{var_idx}] ** {params['n']}) / ( var[{var_idx}] ** {params['n']} + {params['K']} ** {params['n']})) / {params['Ymax']})"""  # noqa: E501
         elif control_type == -1:
@@ -27,12 +37,23 @@ class ODEBuilder:
         proteinId_idx_bidict: bidict[str, int],
         all_nodes: dict[str, GUINode],
     ) -> str:
+        """build mRNA ODE equation as a string.
+
+        Args:
+            idx (int): protein index in the protein_interaction_graph.
+            interact_infos (np.ndarray): array of interaction info for the target protein. 1 or -1 or 0.
+            proteinId_idx_bidict (bidict[str, int]): bidict of relation between protein node ID and index.
+            all_nodes (dict[str, GUINode]): all node information in the GUI circuit.
+
+        Returns:
+            mrna_ode_str (str): mRNA ODE equation as a string.
+        """
         prs = ''
         for j, interact_info in enumerate(interact_infos):
             if interact_info == 0:
                 continue
             else:
-                interact_params = all_nodes[proteinId_idx_bidict.inverse[j]].meta
+                interact_params: dict[str, float] = all_nodes[proteinId_idx_bidict.inverse[j]].meta
                 protein_idx = 2 * j + 1
                 prs += self.PRS_str(interact_params, var_idx=protein_idx, control_type=interact_info)
                 prs += ' * '
@@ -44,6 +65,16 @@ class ODEBuilder:
         return mrna_ode_str
 
     def make_protein_ode(self, idx: int, proteinId_idx_bidict: bidict[str, int], all_nodes: dict[str, GUINode]) -> str:
+        """build protein ODE equation as a string.
+
+        Args:
+            idx (int): protein index in the protein_interaction_graph.
+            proteinId_idx_bidict (bidict[str, int]): bidict of relation between protein node ID and index.
+            all_nodes (dict[str, GUINode]): all node information in the GUI circuit.
+
+        Returns:
+            protein_ode_str (str): protein ODE equation as a string.
+        """
         own_params = all_nodes[proteinId_idx_bidict.inverse[idx]].meta
         protein_ode_left = f'd{idx*2+1}dt'
         protein_ode_right = f'{self.Erpu} * TIR{2*idx+1} * var[{idx*2}] - {own_params['Dp']} * var[{idx*2+1}]'
@@ -59,19 +90,21 @@ class ODEBuilder:
         all_nodes: dict[str, GUINode],
     ) -> str:
         """
+
         Args:
-            interact_info (np.ndarray): interaction info for the target protein. shape=(num_protein,)
-                value: (1 or -1)
+            interact_infos (np.ndarray):  array of interaction info for the target protein. 1 or -1 or 0.
+            idx (int): protein index in the protein_interaction_graph.
+            proteinId_idx_bidict (bidict[str, int]): bidict of relation between protein node ID and index.
+            all_nodes (dict[str, GUINode]): all node information in the GUI circuit.
 
         Returns:
-            ode (str): ode for the target protein entry.
-                e.g) dudt = a1 / (1 + var[1] ** n) - var[0]
+            ode (str): string ODE equation for the target protein. It contains mRNA and protein equations.
         """
 
         if np.all(interact_infos == 0):
             # if there is no interaction for the protein,
             # the ode for the protein is "d[x]/dt = α_x - d_x * [x]"
-            ode = f'{params['a']} - {params['d']}*var[{i}]'  # TODO: determine the equation when there is no interaction
+            ode = 'None'  # TODO: determine the equation when there is no interaction
         else:
             ode = ''
             mrna_ode_str = self.make_mrna_ode(idx, interact_infos, proteinId_idx_bidict, all_nodes)
@@ -96,7 +129,7 @@ def build_function_as_str(
         all_nodes (dict[str, GUINode]): all nodes in the GUI circuit converted to GUINode format.
 
     Returns:
-        functino_str (str): ODE function as a string.
+        function_str (str): ODE function as a string.
     """
     ode_builder = ODEBuilder()
 
