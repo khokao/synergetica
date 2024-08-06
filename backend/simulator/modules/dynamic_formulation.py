@@ -12,7 +12,6 @@ class ODEBuilder:
         self.Dmrna = 0.012  # mRNA degradation rate. unit = [1/s]
         self.Emrna = 1  # transcription rate or mRNA. unknown # TODO: determine thie value
         self.Erpu = 1  # TODO: determine thie value
-        self.TIR = 1  # TODO: determine thie value
 
     def PRS_str(self, params: dict[str, float], var_idx: int, control_type: int):
         if control_type == 1:
@@ -47,7 +46,7 @@ class ODEBuilder:
     def make_protein_ode(self, idx: int, proteinId_idx_bidict: bidict[str, int], all_nodes: dict[str, GUINode]) -> str:
         own_params = all_nodes[proteinId_idx_bidict.inverse[idx]].meta
         protein_ode_left = f'd{idx*2+1}dt'
-        protein_ode_right = f'{self.Erpu} * {self.TIR} * var[{idx*2}] - {own_params['Dp']} * var[{idx*2+1}]'
+        protein_ode_right = f'{self.Erpu} * TIR{2*idx+1} * var[{idx*2}] - {own_params['Dp']} * var[{idx*2+1}]'
         protein_ode_str = f'{protein_ode_left} = {protein_ode_right}'
 
         return protein_ode_str
@@ -72,12 +71,8 @@ class ODEBuilder:
         if np.all(interact_infos == 0):
             # if there is no interaction for the protein,
             # the ode for the protein is "d[x]/dt = α_x - d_x * [x]"
-            ode = f'{params['a']} - {params['d']}*var[{i}]'  ## TODO: interactionがない場合の式を考える。
+            ode = f'{params['a']} - {params['d']}*var[{i}]'  # TODO: determine the equation when there is no interaction
         else:
-            # if there is interaction for the protein,
-            # the ode for the protein becomes like "d[x]/dt = f(x1,x2,...,xn) - d_x * [x]".abs
-            # the first term "f(x1,x2,...,xn)"" is the interaction term.
-            # the second term "- d_x * [x]" is the degradation term.
             ode = ''
             mrna_ode_str = self.make_mrna_ode(idx, interact_infos, proteinId_idx_bidict, all_nodes)
             protein_ode_str = self.make_protein_ode(idx, proteinId_idx_bidict, all_nodes)
@@ -98,22 +93,24 @@ def build_function_as_str(
             protein_interact_graph[i][j] = 1 or -1. how control protein-i to protein-j
         proteinId_idx_bidict (bidict.bidict[str,int]):
             relation between idx and protein node in protein_interact_graph with bidict.
-        all_nodes (dict[str, GUINode]):  all_nodes (dict[str,GUINode]): all nodes in the GUI circuit converted to GUINode format.
+        all_nodes (dict[str, GUINode]): all nodes in the GUI circuit converted to GUINode format.
 
     Returns:
         functino_str (str): ODE function as a string.
     """
     ode_builder = ODEBuilder()
 
-    def_str = 'def ODEstoSolve(var:list[float],t:float): \n'
-    # TODO:可変パラメータはこの段階で変数として定義して受け取れるようにする。
+    def_str = 'def ODEtoSolve(var:list[float],t:float,'
     all_ode_str = ''
     return_str = 'return ('
+
     for idx, interact_infos in enumerate(protein_interact_graph):
+        def_str += f'TIR{2*idx+1}:float,'
         ode_str = ode_builder.make_each_ode(interact_infos, idx, proteinId_idx_bidict, all_nodes)
         all_ode_str += ode_str
         return_str += f'd{idx*2}dt, d{idx*2+1}dt,'
 
+    def_str = def_str[:-1] + '):\n'
     return_str = return_str[:-1] + ')'
     function_str = def_str + all_ode_str + f'\t{return_str}'
 

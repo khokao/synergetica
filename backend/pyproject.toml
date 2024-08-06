@@ -25,6 +25,7 @@ bidict = "^0.23.1"
 [tool.poetry.group.dev.dependencies]
 coverage = { version = "*", extras = ["toml"] }
 jupyterlab = "^4.2.3"
+matplotlib = "^3.9.0"
 mypy = "*"
 pytest = "*"
 pytest-cov = "*"

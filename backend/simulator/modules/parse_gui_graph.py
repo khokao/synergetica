@@ -120,7 +120,7 @@ def extract_promoter_nodes(
 
 
 def parse_edge_connection(edges: list[dict], all_nodes: dict[str, GUINode]) -> dict[str, list[str]]:
-    """list up under controled protein for each promoter
+    """list up under controled proteins for each promoter
 
     Args:
         edges (list[dict]): edge info POST from GUI section.
