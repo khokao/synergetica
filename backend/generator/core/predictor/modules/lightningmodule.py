@@ -2,7 +2,7 @@ import lightning as L
 import torch
 from torch.optim import AdamW
 from torchmetrics import MetricCollection
-from torchmetrics.regression import MeanSquaredError, R2Score
+from torchmetrics.regression import MeanSquaredError, PearsonCorrCoef, R2Score
 from transformers import get_cosine_schedule_with_warmup
 
 from ..models.transformer_regressor import SimpleTransformerRegressor
@@ -37,8 +37,9 @@ class LightningSimpleTransformer(L.LightningModule):
 
         metrics = MetricCollection(
             [
-                R2Score(),
                 MeanSquaredError(),
+                R2Score(),
+                PearsonCorrCoef(),
             ]
         )
         self.train_metrics = metrics.clone(prefix='train_')
