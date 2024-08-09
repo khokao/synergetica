@@ -7,6 +7,6 @@ class GUINode(BaseModel):
     nodeSubcategory: str
     nodePartsName: str
     sequence: str
-    controlTo: dict[str, dict[str, str]]
-    controlBy: dict[str, dict[str, str]]
-    meta: dict[str, float]
+    controlTo: list[dict[str, str]] | None
+    controlBy: list[dict[str, str]] | None
+    meta: dict[str, float] | None

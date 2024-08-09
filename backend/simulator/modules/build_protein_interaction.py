@@ -62,7 +62,7 @@ def search_interaction_through_promoter(
 
 
 def get_protein_interaction(
-    controlTo_info: dict[str, dict[str, str]],
+    controlTo_info: list[dict[str, str]],
     promoter_controlling_proteins: dict[str, list[str]],
     partsName_to_nodeId: dict[str, list[str]],
 ) -> dict[str, int]:
@@ -80,7 +80,7 @@ def get_protein_interaction(
         protein_interaction (dict[str,int]): {protein_id: 1 or -1)}
     """
     protein_interaction = {}
-    for promoter_name, how_control in controlTo_info.items():
+    for promoter_name, how_control in controlTo_info:
         interaction = search_interaction_through_promoter(
             promoter_name, how_control, promoter_controlling_proteins, partsName_to_nodeId
         )
@@ -126,10 +126,10 @@ def build_protein_interact_graph(
     return protein_interaction_graph, proteinId_idx_bidict
 
 
-def run_interpret() -> tuple[np.ndarray, bidict, dict[str, GUINode]]:
-    circuit = OmegaConf.load('toggle_output_test.json')  # TODO: change to take from simulator API.
-    all_nodes, node_category_dict = parse_all_nodes(circuit.nodes)
-    promoter_controlling_proteins = parse_edge_connection(circuit.edges, all_nodes)
+def run_convert(raw_circuit_data: OmegaConf) -> tuple[np.ndarray, bidict, dict[str, GUINode]]:
+    print(f'Raw circuit data: {raw_circuit_data}')
+    all_nodes, node_category_dict = parse_all_nodes(raw_circuit_data.nodes)
+    promoter_controlling_proteins = parse_edge_connection(raw_circuit_data.edges, all_nodes)
     protein_interact_graph, proteinId_idx_bidict = build_protein_interact_graph(
         all_nodes, node_category_dict, promoter_controlling_proteins
     )

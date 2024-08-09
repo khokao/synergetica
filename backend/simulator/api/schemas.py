@@ -10,3 +10,8 @@ class SimulatorOutput(BaseModel):
     data1: list[float]
     data2: list[float]
     time: list[float]
+
+
+class ConverterOutput(BaseModel):
+    num_protein: int
+    proteins: list[str]

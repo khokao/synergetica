@@ -1,5 +1,6 @@
 import { CustomChildNode, CustomParentNode } from "@/components/GUI/CustomNode";
 import { createChildNode, dragChildNode, stopDragChildNode } from "@/components/GUI/nodeActions";
+import { callCircuitConverterAPI } from "@/hooks/useSimulatorAPI";
 import type React from "react";
 import { useCallback, useRef } from "react";
 import ReactFlow, {
@@ -96,6 +97,17 @@ export const Flow: React.FC = () => {
     [setEdges, setNodes, store],
   );
 
+  const handleButtonClick = () => {
+    const flowData = {
+      nodes,
+      edges,
+    };
+    const flowDataJson = { flow_json: JSON.stringify(flowData, null, 2) };
+    
+    const response = callCircuitConverterAPI(flowDataJson);
+    console.log(response);
+  };
+
   return (
     <div className="flex-grow h-full" ref={reactFlowWrapper}>
       <ReactFlow
@@ -119,6 +131,7 @@ export const Flow: React.FC = () => {
         <Panel
           position="bottom-right"
           className="px-2 py-1 text-center border-2 border-black rounded bg-white cursor-pointer"
+          onClick={handleButtonClick}
         >
           Simulate
         </Panel>
