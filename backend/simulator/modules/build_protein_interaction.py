@@ -63,7 +63,11 @@ def get_protein_interaction(
         protein_interaction (dict[str,int]): {protein_id: 1 or -1)}
     """
     protein_interaction = {}
-    for promoter_name, control_details in controlTo_info.items():
+    for promoter_name, control_details in controlTo_info:
+        # TODO: conrtolTO_info was changed to list[dict[str,str]]].
+        # TODO: so promoter, how_control should be changed appropriately.
+        # TODO: In addition, promoter name was changed to partsId converted from sequence through sequence.
+        # TODO: So, we need to change the way to get search_interactino_through_promoter.
         interaction = search_interaction_through_promoter(
             promoter_name, control_details, promoter_controlling_proteins, partsName_to_nodeId
         )
