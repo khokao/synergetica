@@ -1,10 +1,12 @@
+from typing import Literal
+
 from pydantic import BaseModel
 
 
 class GUINode(BaseModel):
     id: str
-    nodeCategory: str
-    nodeSubcategory: str
+    nodeCategory: Literal['protein', 'promoter', 'terminator']
+    nodeSubcategory: Literal['RepressorProtein', 'RepressivePromoter', 'StandardTerminator']
     nodePartsName: str
     sequence: str
     controlTo: list[dict[str, str]] | None
