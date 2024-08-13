@@ -9,6 +9,7 @@ class GUINode(BaseModel):
     nodeSubcategory: Literal['RepressorProtein', 'RepressivePromoter', 'StandardTerminator']
     nodePartsName: str
     sequence: str
+    partsId: str
     controlTo: list[dict[str, str]] | None
     controlBy: list[dict[str, str]] | None
     meta: dict[str, float] | None

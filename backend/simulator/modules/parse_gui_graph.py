@@ -29,6 +29,7 @@ def parse_all_nodes(nodes: ListConfig) -> tuple[dict[str, GUINode], dict[str, li
                 'nodeSubcategory': node.data.nodeSubcategory,
                 'nodePartsName': node.data.nodePartsName,
                 'sequence': node.data.sequence,
+                'partsId': node.data.partsId,
                 'controlTo': node.data.controlTo,
                 'controlBy': node.data.controlBy,
                 'meta': node.data.meta,
@@ -38,20 +39,20 @@ def parse_all_nodes(nodes: ListConfig) -> tuple[dict[str, GUINode], dict[str, li
     return all_nodes, node_category2ids
 
 
-def create_partsName_nodeId_table(all_nodes: dict[str, GUINode]) -> dict[str, list[str]]:
+def create_partsId_nodeId_table(all_nodes: dict[str, GUINode]) -> dict[str, list[str]]:
     """Create partsName to nodeId table for all nodes in the GUI circuit.
 
     Args:
         all_nodes (dict[str, GUINode]): all nodes in the GUI circuit converted to GUINode format.
 
     Returns:
-        partsName_to_nodeId: dict[str, list[str]]: dict of node_id for each partsName.
+        partsId_to_nodeIds: dict[str, list[str]]: dict of node_id for each partsName.
             dict: {nodePartsName: [node_id]}
     """
-    partsName_to_nodeIds = defaultdict(list)
+    partsId_to_nodeIds = defaultdict(list)
     for node in all_nodes.values():
-        partsName_to_nodeIds[node.nodePartsName].append(node.id)
-    return partsName_to_nodeIds
+        partsId_to_nodeIds[node.partsId].append(node.id)
+    return partsId_to_nodeIds
 
 
 def dfs(node: int, visited: set, adj_matrix: np.ndarray) -> None:

@@ -9,7 +9,6 @@ export const callSimulatorAPI = async (data: SimulatorRequestData) => {
 };
 
 export const callCircuitConverterAPI = async (data: ConverterRequestData) => {
-  console.log(data);
   return await invoke<ConverterResponseData>("call_circuit_converter_api", {
     flowJson: data.flow_json,
   });

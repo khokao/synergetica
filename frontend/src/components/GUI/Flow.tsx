@@ -97,15 +97,14 @@ export const Flow: React.FC = () => {
     [setEdges, setNodes, store],
   );
 
-  const handleButtonClick = () => {
+  const handleButtonClick = async () => {
     const flowData = {
       nodes,
       edges,
     };
     const flowDataJson = { flow_json: JSON.stringify(flowData, null, 2) };
     
-    const response = callCircuitConverterAPI(flowDataJson);
-    console.log(response);
+    const response = await callCircuitConverterAPI(flowDataJson);
   };
 
   return (

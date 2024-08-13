@@ -25,8 +25,6 @@ async def get_data_param(param1: float = Query(1.0), param2: float = Query(1.0))
 async def convert_gui_circuit(flow_data_json: str) -> ConverterOutput:
     logger.info('Converter called !')
     raw_circuit_data: dict = json.loads(flow_data_json)
-    logger.info(f'Raw circuit data: {type(raw_circuit_data)})')
-    logger.info(f'Raw circuit data: {raw_circuit_data}')
     circuit = OmegaConf.create(raw_circuit_data)
     protein_interact_graph, proteinId_idx_bidict, all_nodes = run_convert(circuit)
     num_protein = len(proteinId_idx_bidict)
