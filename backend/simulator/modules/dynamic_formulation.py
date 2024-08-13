@@ -1,5 +1,7 @@
 # ruff: noqa: F821
 # skip undefined name error for dynamic function generation.
+from typing import cast
+
 import numpy as np
 from bidict import bidict
 
@@ -54,11 +56,23 @@ class ODEBuilder:
                 continue
             else:
                 interact_params = all_nodes[proteinId_idx_bidict.inverse[j]].meta
+                if interact_info is None:
+                    partsName = all_nodes[proteinId_idx_bidict.inverse[j]].nodePartsName
+                    raise ValueError(f'interact parameters for {partsName} is not defined !! ')
+                else:
+                    # retyping from dict[str,float]| None to dict[str,float] for mypy type checking.
+                    interact_params = cast(dict[str, float], interact_params)
                 protein_idx = 2 * j + 1
                 prs += self.PRS_str(interact_params, var_idx=protein_idx, control_type=interact_info)
                 prs += ' * '
 
         own_params = all_nodes[proteinId_idx_bidict.inverse[idx]].meta
+        if own_params is None:
+            partsName = all_nodes[proteinId_idx_bidict.inverse[idx]].nodePartsName
+            raise ValueError(f'parts parameters for {partsName} is not defined !! ')
+        else:
+            # retyping from dict[str,float]| None to dict[str,float] for mypy type checking.
+            own_params = cast(dict[str, float], own_params)
         mrna_ode_right = f'{self.Emrna} * {own_params['Pmax']} * {prs} {self.PCN} - {self.Dmrna} * var[{idx*2}]'
         mrna_ode_left = f'd{idx*2}dt'
         mrna_ode_str = f'{mrna_ode_left} = {mrna_ode_right}'
@@ -76,13 +90,19 @@ class ODEBuilder:
             protein_ode_str (str): protein ODE equation as a string.
         """
         own_params = all_nodes[proteinId_idx_bidict.inverse[idx]].meta
+        if own_params is None:
+            partsName = all_nodes[proteinId_idx_bidict.inverse[idx]].nodePartsName
+            raise ValueError(f'parts parameters for {partsName} is not defined !! ')
+        else:
+            # retyping from dict[str,float]| None to dict[str,float] for mypy type checking.
+            own_params = cast(dict[str, float], own_params)
         protein_ode_left = f'd{idx*2+1}dt'
         protein_ode_right = f'{self.Erpu} * TIR{2*idx+1} * var[{idx*2}] - {own_params['Dp']} * var[{idx*2+1}]'
         protein_ode_str = f'{protein_ode_left} = {protein_ode_right}'
 
         return protein_ode_str
 
-    def make_each_ode(
+    def __call__(
         self,
         interact_infos: np.ndarray,
         idx: int,
@@ -139,7 +159,7 @@ def build_function_as_str(
 
     for idx, interact_infos in enumerate(protein_interact_graph):
         def_str += f'TIR{2*idx+1}:float,'
-        ode_str = ode_builder.make_each_ode(interact_infos, idx, proteinId_idx_bidict, all_nodes)
+        ode_str = ode_builder(interact_infos, idx, proteinId_idx_bidict, all_nodes)
         all_ode_str += ode_str
         return_str += f'd{idx*2}dt, d{idx*2+1}dt,'
 
