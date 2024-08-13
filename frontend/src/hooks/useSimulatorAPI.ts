@@ -13,3 +13,7 @@ export const callCircuitConverterAPI = async (data: ConverterRequestData) => {
     flowJson: data.flow_json,
   });
 };
+
+export const callBackendStateAPI = async () => {
+  return await invoke<ConverterResponseData>("call_backend_state_api",{});
+}

@@ -1,4 +1,4 @@
-import { Graph } from "@/components/Simulation/DrawSimulationResult";
+import { Graph } from "@/components/Simulation/DrawSimulationResultCalled";
 import { callGeneratorAPI } from "@/hooks/useGeneratorAPI";
 import type React from "react";
 import useSWR from "swr";

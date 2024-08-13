@@ -73,6 +73,22 @@ async fn call_circuit_converter_api(flow_json: String) -> Result<ConverterRespon
     }
 }
 
+#[tauri::command]
+async fn call_backend_state_api() -> Result<ConverterResponseData,String>{
+    let response = APIClient::send_request_backend_state().await;
+
+    match response {
+        Ok(resp) => {
+            if resp.status().is_success() {
+                APIClient::parse_response_circuit_converter(resp).await
+            } else {
+                Err(handle_response_error(resp.status()))
+            }
+        }
+        Err(e) => Err(handle_request_error(e)),
+    }
+}
+
 #[derive(Serialize)]
 struct FileEntry {
     path: String,
@@ -113,6 +129,7 @@ async fn main() {
             call_generator_api,
             call_simulator_api,
             call_circuit_converter_api,
+            call_backend_state_api,
             read_dir
         ])
         .run(tauri::generate_context!())

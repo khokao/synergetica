@@ -12,6 +12,9 @@ from .schemas import ConverterOutput, SimulatorOutput
 
 router = APIRouter()
 
+NUM_PROTEIN: int = 0
+PROTEINS: list = []
+
 
 @router.post('/simulate-with-euler', response_model=SimulatorOutput)
 async def get_data_param(param1: float = Query(1.0), param2: float = Query(1.0)) -> SimulatorOutput:
@@ -23,10 +26,18 @@ async def get_data_param(param1: float = Query(1.0), param2: float = Query(1.0))
 
 @router.post('/convert-gui-circuit', response_model=ConverterOutput)
 async def convert_gui_circuit(flow_data_json: str) -> ConverterOutput:
-    logger.info('Converter called !')
+    global NUM_PROTEIN, PROTEINS
     raw_circuit_data: dict = json.loads(flow_data_json)
     circuit = OmegaConf.create(raw_circuit_data)
     protein_interact_graph, proteinId_idx_bidict, all_nodes = run_convert(circuit)
     num_protein = len(proteinId_idx_bidict)
     proteins = list(proteinId_idx_bidict.keys())
+    NUM_PROTEIN = num_protein
+    PROTEINS = proteins
     return ConverterOutput(num_protein=num_protein, proteins=proteins)
+
+
+@router.get('/get-backend-state', response_model=ConverterOutput)
+async def get_backend_state() -> ConverterOutput:
+    logger.info('Get backend state called !')
+    return ConverterOutput(num_protein=NUM_PROTEIN, proteins=PROTEINS)
