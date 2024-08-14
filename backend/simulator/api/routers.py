@@ -12,6 +12,7 @@ from .schemas import ConverterOutput, SimulatorOutput
 
 router = APIRouter()
 
+
 NUM_PROTEIN: int = 0
 PROTEINS: list = []
 

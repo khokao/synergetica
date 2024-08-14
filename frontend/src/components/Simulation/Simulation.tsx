@@ -1,9 +1,10 @@
-import { Graph } from "@/components/Simulation/DrawSimulationResultCalled";
+import { Graph } from "@/components/Simulation/DrawSimulationResultSwitch";
 import { callGeneratorAPI } from "@/hooks/useGeneratorAPI";
+import { ConverterResponseData } from "@/interfaces/simulatorAPI";
 import type React from "react";
 import useSWR from "swr";
 
-export const Simulation: React.FC = () => {
+export const Simulation: React.FC<{ result: ConverterResponseData }> = (result) => {
   const { mutate } = useSWR("call_generator_api");
 
   const onCallGeneratorAPIClick = async () => {
@@ -23,7 +24,7 @@ export const Simulation: React.FC = () => {
     <div className="flex flex-col h-full">
       <div className="flex-grow">Simulation Section</div>
       <div className="flex justify-center h-full">
-        <Graph />
+        <Graph {...result} />
       </div>
       <div className="flex justify-center mb-4">
         <button type="button" onClick={onCallGeneratorAPIClick} className="px-4 py-1 border-2 border-black rounded">

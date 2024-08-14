@@ -1,4 +1,5 @@
-import { callSimulatorAPI} from "@/hooks/useSimulatorAPI";
+import { callSimulatorAPI } from "@/hooks/useSimulatorAPI";
+import { ConverterResponseData } from "@/interfaces/simulatorAPI";
 import {
   CategoryScale,
   Chart as ChartJS,
@@ -52,18 +53,19 @@ const getGraphData = (times, graphdata, graphdata2) => ({
   ],
 });
 
-const useFetchData = (params) => {
+const useFetchData = (param1, param2) => {
   const [graphdata, setGraphdata] = useState([]);
   const [graphdata2, setGraphdata2] = useState([]);
   const [times, setTimes] = useState([]);
 
   const fetchData = useCallback(async () => {
-    const response = await callSimulatorAPI(params);
+    const param_set = { param1: param1, param2: param2 };
+    const response = await callSimulatorAPI(param_set);
 
     setGraphdata(response.data1);
     setGraphdata2(response.data2);
     setTimes(response.time);
-  }, [params]);
+  }, [param1, param2]);
 
   useEffect(() => {
     fetchData();
@@ -80,56 +82,38 @@ const ParamInput = ({ label, value, onChange }) => (
   </label>
 );
 
-export const Graph: React.FC = () => {
-  const [paramCount, setParamCount] = useState(null); // State to hold paramCount
-  const [params, setParams] = useState([]);
+export const Graph: React.FC<{ result: ConverterResponseData }> = ({ result }) => {
+  const [param1, setParam1] = useState(1);
+  const [param2, setParam2] = useState(1.5);
+  const { graphdata, graphdata2, times } = useFetchData(param1, param2);
 
-  useEffect(() => {
-    // Fetch paramCount from backend
-    const fetchParamCount = async () => {
-      // Replace with your API call to get paramCount
-      const response = await fetch('/api/getParamCount'); // Example API call
-      const data = await response.json();
-      setParamCount(data.paramCount);
-      setParams(Array(data.paramCount).fill(1)); // Initialize params based on paramCount
-    };
-
-    fetchParamCount();
-  }, []);
-
-  const { graphdata, graphdata2, times } = useFetchData(params);
-
-  const handleParamChange = (index) => (event) => {
-    const newParams = [...params];
-    newParams[index] = Number.parseFloat(event.target.value);
-    setParams(newParams);
+  const handleParam1Change = (event) => {
+    setParam1(Number.parseFloat(event.target.value));
+  };
+  
+  const handleParam2Change = (event) => {
+    setParam2(Number.parseFloat(event.target.value));
   };
 
   const options = getGraphOptions();
   const data = getGraphData(times, graphdata, graphdata2);
 
-  // Render graph and handle bars only if paramCount is fetched
   return (
-    <div className="flex flex-col ml-5 h-full">
-      {paramCount !== null ? (
-        <>
+    <div>
+    {
+      result !== null ?(
+        <div className="flex flex-col ml-5 h-full">
           <div className="h-full">
             <Line options={options} data={data} />
           </div>
           <div className="flex flex-col ml-5 mb-2">
-            {params.map((param, index) => (
-              <ParamInput
-                key={index}
-                label={`α${index + 1}`}
-                value={param}
-                onChange={handleParamChange(index)}
-              />
-            ))}
+            <ParamInput label="α1" value={param1} onChange={handleParam1Change} />
+            <ParamInput label="α2" value={param2} onChange={handleParam2Change} />
           </div>
-        </>
-      ) : (
-        <p>Loading...</p> // Show loading state while fetching paramCount
-      )}
+        </div>
+      ) :( 
+        <div> Build Circuit to Simulate </div>
+    )}
     </div>
   );
 };

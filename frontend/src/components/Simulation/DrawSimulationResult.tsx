@@ -1,4 +1,5 @@
 import { callSimulatorAPI } from "@/hooks/useSimulatorAPI";
+import { ConverterResponseData } from "@/interfaces/simulatorAPI";
 import {
   CategoryScale,
   Chart as ChartJS,
@@ -81,7 +82,7 @@ const ParamInput = ({ label, value, onChange }) => (
   </label>
 );
 
-export const Graph: React.FC = () => {
+export const Graph: React.FC<{ result: ConverterResponseData }> =  (result ) => {
   const [param1, setParam1] = useState(1);
   const [param2, setParam2] = useState(1.5);
 
