@@ -26,7 +26,7 @@ export const proteinCommandPaletteOptions = [
     ],
     meta: {
       Pmax: 0.00008389048759,
-      Ymax: 3.80,
+      Ymax: 3.8,
       Ymin: 0.2,
       K: 0.09,
       n: 1.4,
@@ -49,7 +49,7 @@ export const proteinCommandPaletteOptions = [
     ],
     meta: {
       Pmax: 0.0002378448751,
-      Ymax: 3.80,
+      Ymax: 3.8,
       Ymin: 0.08,
       K: 0.07,
       n: 1.6,
@@ -141,7 +141,7 @@ export const proteinCommandPaletteOptions = [
     ],
     meta: {
       Pmax: 0.000112759796,
-      Ymax: 2.20,
+      Ymax: 2.2,
       Ymin: 0.08,
       K: 0.1,
       n: 1.4,
@@ -187,7 +187,7 @@ export const proteinCommandPaletteOptions = [
     ],
     meta: {
       Pmax: 0.0001025727101,
-      Ymax: 2.20,
+      Ymax: 2.2,
       Ymin: 0.2,
       K: 0.18,
       n: 2.1,
@@ -210,7 +210,7 @@ export const proteinCommandPaletteOptions = [
     ],
     meta: {
       Pmax: 0.0000558171088,
-      Ymax: 3.90,
+      Ymax: 3.9,
       Ymin: 0.01,
       K: 0.03,
       n: 4,
@@ -233,7 +233,7 @@ export const proteinCommandPaletteOptions = [
     ],
     meta: {
       Pmax: 0.00006641137683,
-      Ymax: 5.90,
+      Ymax: 5.9,
       Ymin: 0.2,
       K: 0.19,
       n: 1.8,
@@ -256,7 +256,7 @@ export const proteinCommandPaletteOptions = [
     ],
     meta: {
       Pmax: 0.00004009693434,
-      Ymax: 2.40,
+      Ymax: 2.4,
       Ymin: 0.01,
       K: 0.08,
       n: 2.7,
@@ -279,7 +279,7 @@ export const proteinCommandPaletteOptions = [
     ],
     meta: {
       Pmax: 0.0000304105203,
-      Ymax: 2.10,
+      Ymax: 2.1,
       Ymin: 0.003,
       K: 0.04,
       n: 2.5,
