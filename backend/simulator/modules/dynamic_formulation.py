@@ -12,8 +12,8 @@ class ODEBuilder:
     def __init__(self) -> None:
         self.PCN = 15  # plasmid copy number. unit = [copy/cell]
         self.Dmrna = 0.012145749  # mRNA degradation rate. unit = [1/s]
-        self.Emrna = 300 # transcription coefficient
-        self.Erpu = 0.00001 # translation coefficient
+        self.Emrna = 300  # transcription coefficient
+        self.Erpu = 0.00001  # translation coefficient
 
     def PRS_str(self, params: dict[str, float], var_idx: int, control_type: int) -> str:
         """build PRS equation as a string.
