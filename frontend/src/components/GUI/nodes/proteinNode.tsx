@@ -71,7 +71,7 @@ export const proteinCommandPaletteOptions = [
       },
     ],
     meta: {
-      Pmax: 0.5,
+      Pmax: 0.0004845146566,
       Ymax: 3.8,
       Ymin: 0.07,
       K: 0.41,
