@@ -13,7 +13,7 @@ export interface ConverterRequestData {
   flow_json: string;
 }
 
-export interface ConverterResponseData{
+export interface ConverterResponseData {
   num_protein: number;
   proteins: string[];
 }

@@ -90,7 +90,7 @@ export const Graph: React.FC<{ result: ConverterResponseData }> = ({ result }) =
   const handleParam1Change = (event) => {
     setParam1(Number.parseFloat(event.target.value));
   };
-  
+
   const handleParam2Change = (event) => {
     setParam2(Number.parseFloat(event.target.value));
   };
@@ -100,8 +100,7 @@ export const Graph: React.FC<{ result: ConverterResponseData }> = ({ result }) =
 
   return (
     <div>
-    {
-      result !== null ?(
+      {result !== null ? (
         <div className="flex flex-col ml-5 h-full">
           <div className="h-full">
             <Line options={options} data={data} />
@@ -111,9 +110,9 @@ export const Graph: React.FC<{ result: ConverterResponseData }> = ({ result }) =
             <ParamInput label="α2" value={param2} onChange={handleParam2Change} />
           </div>
         </div>
-      ) :( 
+      ) : (
         <div> Build Circuit to Simulate </div>
-    )}
+      )}
     </div>
   );
 };

@@ -82,7 +82,7 @@ const ParamInput = ({ label, value, onChange }) => (
   </label>
 );
 
-export const Graph: React.FC<{ result: ConverterResponseData }> =  (result ) => {
+export const Graph: React.FC<{ result: ConverterResponseData }> = (result) => {
   const [param1, setParam1] = useState(1);
   const [param2, setParam2] = useState(1.5);
 

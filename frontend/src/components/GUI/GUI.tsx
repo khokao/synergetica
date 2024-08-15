@@ -8,9 +8,8 @@ import "reactflow/dist/style.css";
 type GUIProps = {
   onClickSimulate: (data: ConverterRequestData) => void;
 };
-  
+
 export const GUI: React.FC<GUIProps> = ({ onClickSimulate }) => {
-  
   return (
     <ReactFlowProvider>
       <div className="flex flex-col flex-grow h-full">

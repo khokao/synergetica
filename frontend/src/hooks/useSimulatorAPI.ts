@@ -1,4 +1,9 @@
-import type { SimulatorRequestData, SimulatorResponseData,ConverterRequestData,ConverterResponseData } from "@/interfaces/simulatorAPI";
+import type {
+  SimulatorRequestData,
+  SimulatorResponseData,
+  ConverterRequestData,
+  ConverterResponseData,
+} from "@/interfaces/simulatorAPI";
 import { invoke } from "@tauri-apps/api/tauri";
 import { useState } from "react";
 
@@ -15,10 +20,6 @@ export const callCircuitConverterAPI = async (data: ConverterRequestData) => {
   });
 };
 
-export const callBackendStateAPI = async () => {
-  return await invoke<ConverterResponseData>("call_backend_state_api",{});
-}
-
 export const useConverterAPI = () => {
   const [ConvertResult, setConvertResult] = useState<ConverterResponseData | null>(null);
   const postConverter = async (flowDataJson: ConverterRequestData) => {
@@ -26,5 +27,5 @@ export const useConverterAPI = () => {
     setConvertResult(response);
     return response;
   };
-  return { postConverter,ConvertResult};
+  return { postConverter, ConvertResult };
 };

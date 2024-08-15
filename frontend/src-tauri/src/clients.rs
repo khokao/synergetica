@@ -49,15 +49,6 @@ impl APIClient {
             .await
     }
 
-    pub async fn send_request_backend_state() -> Result<reqwest::Response, reqwest::Error> {
-        let client = reqwest::Client::new();
-        client
-            .get("http://127.0.0.1:8000/get-backend-state")
-            .query(&json!({}))
-            .send()
-            .await
-    }
-
 
     pub async fn parse_response(response: reqwest::Response) -> Result<GeneratorResponseData, String> {
         match response.json::<GeneratorResponseData>().await {

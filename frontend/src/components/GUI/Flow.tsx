@@ -26,7 +26,7 @@ type GUIProps = {
   onClickSimulate: (data: ConverterRequestData) => void;
 };
 
-export const Flow: React.FC<GUIProps> = ({onClickSimulate}) => {
+export const Flow: React.FC<GUIProps> = ({ onClickSimulate }) => {
   const [nodes, setNodes, onNodesChange] = useNodesState<Node[]>([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState<Edge[]>([]);
   const store = useStoreApi();
