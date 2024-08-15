@@ -33,6 +33,7 @@ torch = [
 ]
 torchmetrics = "*"
 transformers = "*"
+typer = "*"
 
 [tool.poetry.group.dev.dependencies]
 coverage = { version = "*", extras = ["toml"] }
