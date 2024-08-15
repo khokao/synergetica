@@ -35,6 +35,8 @@ class LightningSimpleTransformer(L.LightningModule):
         self.lr = lr
         self.num_warmup_steps = num_warmup_steps
 
+        self.save_hyperparameters()
+
         metrics = MetricCollection(
             [
                 MeanSquaredError(),
@@ -57,6 +59,9 @@ class LightningSimpleTransformer(L.LightningModule):
 
         loss = metrics['train_MeanSquaredError']  # type: torch.Tensor
         return loss
+
+    def predict_step(self, batch: dict[str, torch.Tensor], batch_idx: int) -> torch.Tensor:
+        return self(batch['input_ids'])
 
     def configure_optimizers(self):  # type: ignore
         stepping_batches = self.trainer.estimated_stepping_batches
