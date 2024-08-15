@@ -32,6 +32,10 @@ datamodule:
     truncation: True
     max_length: ${model.seq_len}
     return_token_type_ids: False
+  predict_mode: False
+  should_load_csv: True
+  sequences: null
+  targets: null
 
 model:
   _target_: generator.core.predictor.modules.lightningmodule.LightningSimpleTransformer

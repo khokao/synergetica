@@ -3,6 +3,8 @@ from datasets import Dataset, DatasetDict
 from sklearn.preprocessing import StandardScaler
 from transformers import PreTrainedTokenizerFast
 
+from .utils import scaler_params_to_dataset_description
+
 
 def preprocess_sequence(dataset: Dataset, sequence_key: str) -> Dataset:  # type: ignore[no-any-unimported]
     """Converts sequence data in a dataset.
@@ -28,7 +30,12 @@ def preprocess_sequence(dataset: Dataset, sequence_key: str) -> Dataset:  # type
     return dataset
 
 
-def scale_target(dataset: Dataset, target_key: str) -> Dataset:  # type: ignore[no-any-unimported]
+def scale_target(
+    dataset: Dataset,
+    target_key: str,
+    mean: float | None = None,
+    scale: float | None = None,
+) -> Dataset | tuple[Dataset, StandardScaler]:  # type: ignore[no-any-unimported]
     """Scales the target values in a dataset using standard scaling.
 
     Args:
@@ -40,10 +47,21 @@ def scale_target(dataset: Dataset, target_key: str) -> Dataset:  # type: ignore[
     """
     target_values = np.array(dataset[target_key]).reshape(-1, 1)
 
-    scaler = StandardScaler()
-    target_values = scaler.fit_transform(target_values).flatten().tolist()
+    if mean is None and scale is None:
+        scaler = StandardScaler()
+        target_values = scaler.fit_transform(target_values).flatten().tolist()
+    else:
+        if mean is None or scale is None:
+            raise ValueError('Both mean and scale must be provided.')
+
+        scaler = StandardScaler()
+        scaler.mean_ = np.array([mean])
+        scaler.scale_ = np.array([scale])
+        target_values = scaler.transform(target_values).flatten().tolist()
 
     dataset = dataset.remove_columns(target_key).add_column(target_key, target_values)
+
+    dataset.info.description = scaler_params_to_dataset_description(scaler.mean_[0], scaler.scale_[0])
 
     return dataset
 

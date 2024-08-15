@@ -1,10 +1,11 @@
 import lightning as L
-from datasets import load_from_disk
+from datasets import Dataset, DatasetDict, load_from_disk
 from torch.utils.data import DataLoader
 
 from ..datasets.load import load_dataset_from_csv
 from ..datasets.preprocess import preprocess_sequence, scale_target, split_dataset, tokenize_sequence
 from ..datasets.tokenizer import get_tokenizer
+from ..datasets.utils import dataset_description_to_scaler_params
 
 
 class SequenceTargetDataModule(L.LightningDataModule):
@@ -17,6 +18,10 @@ class SequenceTargetDataModule(L.LightningDataModule):
         batch_size: int,
         num_workers: int,
         tokenize_kwargs: dict,
+        predict_mode: bool,
+        should_load_csv: bool,
+        sequences: list[str] | None,
+        targets: list[float] | None,
     ) -> None:
         super().__init__()
         self.csv_path = csv_path
@@ -26,30 +31,59 @@ class SequenceTargetDataModule(L.LightningDataModule):
         self.batch_size = batch_size
         self.num_workers = num_workers
         self.tokenize_kwargs = tokenize_kwargs
+        self.predict_mode = predict_mode
+        self.should_load_csv = should_load_csv
+        self.sequences = sequences
+        self.targets = targets
+
+        self.save_hyperparameters()
+
+        self.scaler_mean = None
+        self.scaler_scale = None
 
     def prepare_data(self) -> None:
-        dataset = load_dataset_from_csv(self.csv_path, self.sequence_col, self.target_col)
+        if self.should_load_csv:
+            dataset = load_dataset_from_csv(self.csv_path, self.sequence_col, self.target_col)
+        else:
+            dataset = Dataset.from_dict({self.sequence_col: self.sequences, self.target_col: self.targets})
 
         dataset = preprocess_sequence(dataset, self.sequence_col)
-        dataset = scale_target(dataset, self.target_col)
+        dataset = scale_target(dataset, self.target_col, mean=self.scaler_mean, scale=self.scaler_scale)
 
         tokenizer = get_tokenizer()
         dataset = tokenize_sequence(dataset, tokenizer, self.sequence_col, self.tokenize_kwargs)
 
-        dataset = split_dataset(dataset)
+        if not self.predict_mode:
+            dataset = split_dataset(dataset)
+        else:
+            assert self.scaler_mean is not None and self.scaler_scale is not None, 'Scaler params must be provided.'
+            dataset = DatasetDict({'predict': dataset})
 
-        dataset = dataset.rename_column(self.target_col, 'target')
+        if self.target_col != 'target':
+            dataset = dataset.rename_column(self.target_col, 'target')
 
-        dataset.save_to_disk(self.save_disk_dir)
+        if not self.predict_mode:
+            dataset.save_to_disk(self.save_disk_dir)
+        else:
+            self._dataset = dataset
 
     def setup(self, stage: str) -> None:
-        dataset = load_from_disk(self.save_disk_dir)
+        if not self.predict_mode:
+            dataset = load_from_disk(self.save_disk_dir)
+        else:
+            dataset = self._dataset
 
         if stage == 'fit':
             self.train_dataset = dataset['train'].with_format('torch')
             self.val_dataset = dataset['val'].with_format('torch')
-        else:
+
+            self.scaler_mean, self.scaler_scale = dataset_description_to_scaler_params(
+                description=self.train_dataset.info.description,
+            )
+        elif stage == 'test':
             self.test_dataset = dataset['test'].with_format('torch')
+        elif stage == 'predict':
+            self.predict_dataset = dataset['predict'].with_format('torch')
 
     def train_dataloader(self) -> DataLoader:
         return DataLoader(
@@ -83,3 +117,25 @@ class SequenceTargetDataModule(L.LightningDataModule):
             drop_last=False,
             persistent_workers=True,
         )
+
+    def predict_dataloader(self) -> DataLoader:
+        return DataLoader(
+            self.predict_dataset,
+            batch_size=self.batch_size,
+            shuffle=False,
+            num_workers=self.num_workers,
+            pin_memory=True,
+            drop_last=False,
+            persistent_workers=True,
+        )
+
+    def state_dict(self):
+        state = {
+            'scaler_mean': self.scaler_mean,
+            'scaler_scale': self.scaler_scale,
+        }
+        return state
+
+    def load_state_dict(self, state_dict):
+        self.scaler_mean = state_dict['scaler_mean']
+        self.scaler_scale = state_dict['scaler_scale']

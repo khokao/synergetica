@@ -48,6 +48,7 @@ def get_tokenizer(  # type: ignore[no-any-unimported]
         tokenizer_object=tokenizer,
         pad_token=pad_token,
         unk_token=unk_token,
+        clean_up_tokenization_spaces=True,
     )
 
     return fast_tokenizer
