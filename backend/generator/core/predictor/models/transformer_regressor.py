@@ -1,6 +1,6 @@
 import torch
 import torch.nn as nn
-from einops import rearrange, reduce, repeat
+from einops import reduce, repeat
 
 from .positional_embeddings import AbsolutePositionalEmbedding
 
@@ -30,7 +30,8 @@ class SimpleTransformerRegressor(nn.Module):
         self.token_emb = nn.Embedding(vocab_size, d_model)
         self.pos_emb = AbsolutePositionalEmbedding(d_model, seq_len)
 
-        encoder_layer = nn.TransformerEncoderLayer(d_model, nhead, dim_feedforward, dropout)
+        # batch_first=True for for better inference performance.
+        encoder_layer = nn.TransformerEncoderLayer(d_model, nhead, dim_feedforward, dropout, batch_first=True)
         self.transformer_encoder = nn.TransformerEncoder(encoder_layer, num_encoder_layers)
 
         self.fc = nn.Linear(d_model, 1)
@@ -43,9 +44,7 @@ class SimpleTransformerRegressor(nn.Module):
         pos_emb = self.pos_emb(x)
         x = x + repeat(pos_emb, 's d -> b s d', b=batch_size)
 
-        x = rearrange(x, 'b s d -> s b d')
         x = self.transformer_encoder(x)
-        x = rearrange(x, 's b d -> b s d')
 
         x = reduce(x, 'b s d -> b d', 'mean')
         x = self.fc(x)
