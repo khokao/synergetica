@@ -27,5 +27,8 @@ export const useConverterAPI = () => {
     setConvertResult(response);
     return response;
   };
-  return { postConverter, ConvertResult };
+  const resetSimulator = async () => {
+    setConvertResult(null);
+  };
+  return { postConverter, ConvertResult, resetSimulator };
 };

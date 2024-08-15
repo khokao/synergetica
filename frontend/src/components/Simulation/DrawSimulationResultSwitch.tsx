@@ -97,9 +97,9 @@ export const Graph: React.FC<{ result: ConverterResponseData }> = ({ result }) =
 
   const options = getGraphOptions();
   const data = getGraphData(times, graphdata, graphdata2);
-
+  console.log("result",result);
   return (
-    <div>
+    <div className="h-full">
       {result !== null ? (
         <div className="flex flex-col ml-5 h-full">
           <div className="h-full">
@@ -109,9 +109,22 @@ export const Graph: React.FC<{ result: ConverterResponseData }> = ({ result }) =
             <ParamInput label="α1" value={param1} onChange={handleParam1Change} />
             <ParamInput label="α2" value={param2} onChange={handleParam2Change} />
           </div>
+          <div className="mt-4">
+            <span>Number of proteins: {result.num_protein}</span><br/>
+            <span>Proteins: {result.proteins }</span>
+        </div>
         </div>
       ) : (
-        <div> Build Circuit to Simulate </div>
+        <div className="flex flex-col justify-center items-center h-full text-center">
+          <span>Build Circuit to Simulate </span>
+            <span>
+            and press
+            <button type="button" className="px-2 py-1 mx-2 border-2 border-black rounded">
+              Simulate
+            </button>
+            button
+          </span>
+        </div>
       )}
     </div>
   );
