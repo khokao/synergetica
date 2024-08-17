@@ -1,6 +1,5 @@
 # ruff: noqa: F821
 # skip undefined name error for dynamic function generation.
-from typing import cast
 
 import numpy as np
 from bidict import bidict
@@ -54,25 +53,17 @@ class ODEBuilder:
         for j, interact_info in enumerate(interact_infos):
             if interact_info == 0:
                 continue
-            else:
-                interact_params = all_nodes[proteinId_idx_bidict.inverse[j]].meta
-                if interact_info is None:
-                    partsName = all_nodes[proteinId_idx_bidict.inverse[j]].nodePartsName
-                    raise ValueError(f'interact parameters for {partsName} is not defined !! ')
-                else:
-                    # retyping from dict[str,float]| None to dict[str,float] for mypy type checking.
-                    interact_params = cast(dict[str, float], interact_params)
-                protein_idx = 2 * j + 1
-                prs += self.PRS_str(interact_params, var_idx=protein_idx, control_type=interact_info)
-                prs += ' * '
+
+            interact_params = all_nodes[proteinId_idx_bidict.inverse[j]].meta
+            # retyping from dict[str,float]| None to dict[str,float] for mypy type checking.
+            assert interact_params is not None, 'interaction is defined but parameters are not defined'
+            # interact_params = cast(dict[str, float], interact_params)
+            protein_idx = 2 * j + 1
+            prs += self.PRS_str(interact_params, var_idx=protein_idx, control_type=interact_info)
+            prs += ' * '
 
         own_params = all_nodes[proteinId_idx_bidict.inverse[idx]].meta
-        if own_params is None:
-            partsName = all_nodes[proteinId_idx_bidict.inverse[idx]].nodePartsName
-            raise ValueError(f'parts parameters for {partsName} is not defined !! ')
-        else:
-            # retyping from dict[str,float]| None to dict[str,float] for mypy type checking.
-            own_params = cast(dict[str, float], own_params)
+        assert own_params is not None, 'protein parameters are not defined'
         mrna_ode_right = f'{self.Emrna} * {own_params['Pmax']} * {prs} {self.PCN} - {self.Dmrna} * var[{idx*2}]'
         mrna_ode_left = f'd{idx*2}dt'
         mrna_ode_str = f'{mrna_ode_left} = {mrna_ode_right}'
@@ -90,12 +81,7 @@ class ODEBuilder:
             protein_ode_str (str): protein ODE equation as a string.
         """
         own_params = all_nodes[proteinId_idx_bidict.inverse[idx]].meta
-        if own_params is None:
-            partsName = all_nodes[proteinId_idx_bidict.inverse[idx]].nodePartsName
-            raise ValueError(f'parts parameters for {partsName} is not defined !! ')
-        else:
-            # retyping from dict[str,float]| None to dict[str,float] for mypy type checking.
-            own_params = cast(dict[str, float], own_params)
+        assert own_params is not None, 'protein parameters are not defined'
         protein_ode_left = f'd{idx*2+1}dt'
         protein_ode_right = f'{self.Erpu} * TIR{2*idx+1} * var[{idx*2}] - {own_params['Dp']} * var[{idx*2+1}]'
         protein_ode_str = f'{protein_ode_left} = {protein_ode_right}'
