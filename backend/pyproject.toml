@@ -23,6 +23,7 @@ hydra-core = "*"
 lightning= { version = "*", extras = ["extra"] }
 loguru = "*"
 numpy = "^1.0.0"
+polars = "*"
 pydantic = "*"
 scipy = "^1.14.0"
 scikit-learn = "*"
