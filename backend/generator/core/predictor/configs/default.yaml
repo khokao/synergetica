@@ -75,6 +75,7 @@ trainer: # ref: https://lightning.ai/docs/pytorch/stable/common/trainer.html#tra
   logger:
     _target_: lightning.pytorch.loggers.TensorBoardLogger
     save_dir: ${hydra:run.dir}
+  fast_dev_run: False
 
 inference:
   output_dir: null
