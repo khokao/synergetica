@@ -18,6 +18,7 @@ datasets = "*"
 einops = "*"
 fastapi = "*"
 fastapi-cli = "*"
+httpx = "*"
 hydra-core = "*"
 lightning= { version = "*", extras = ["extra"] }
 loguru = "*"
@@ -29,7 +30,7 @@ tensorboard = "*"
 tokenizers = "*"
 torch = [
     { version = ">=1.12+cpu", markers = "sys_platform == 'darwin'" },
-    { version = ">=1.12+cu121", markers = "sys_platform == 'linux'" },
+    # { version = ">=1.12+cu121", markers = "sys_platform == 'linux'" },
 ]
 torchmetrics = "*"
 transformers = "*"
