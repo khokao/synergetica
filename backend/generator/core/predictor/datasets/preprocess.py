@@ -49,8 +49,7 @@ def scale_target(  # type: ignore[no-any-unimported]
         scaler = StandardScaler()
         target_values = scaler.fit_transform(target_values).flatten().tolist()
     else:
-        if mean is None or scale is None:
-            raise ValueError('Both mean and scale must be provided.')
+        assert mean is not None and scale is not None, 'Both mean and scale must be provided.'
 
         scaler = StandardScaler()
         scaler.mean_ = np.array([mean])
@@ -112,8 +111,7 @@ def split_dataset(  # type: ignore[no-any-unimported]
     Returns:
         DatasetDict: A dictionary containing the train, val, and test subsets.
     """
-    if (train_ratio + val_ratio + test_ratio) != 1.0:
-        raise ValueError('The sum of train_ratio, val_ratio and test_ratio must be 1.0')
+    assert abs((train_ratio + val_ratio + test_ratio) - 1.0) < 1e-6, 'Ratios must sum to 1.'
 
     val_test_ratio = val_ratio + test_ratio
 
