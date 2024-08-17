@@ -1,11 +1,9 @@
 import lightning as L
-from datasets import Dataset, DatasetDict, load_from_disk
+from datasets import Dataset, DatasetDict, load_dataset, load_from_disk
 from torch.utils.data import DataLoader
 
-from ..datasets.load import load_dataset_from_csv
 from ..datasets.preprocess import preprocess_sequence, scale_target, split_dataset, tokenize_sequence
 from ..datasets.tokenizer import get_tokenizer
-from ..datasets.utils import dataset_description_to_scaler_params
 
 
 class SequenceTargetDataModule(L.LightningDataModule):
@@ -38,12 +36,14 @@ class SequenceTargetDataModule(L.LightningDataModule):
 
         self.save_hyperparameters()
 
-        self.scaler_mean = None
-        self.scaler_scale = None
+        self.scaler_mean = None  # type: float | None
+        self.scaler_scale = None  # type: float | None
 
     def prepare_data(self) -> None:
         if self.should_load_csv:
-            dataset = load_dataset_from_csv(self.csv_path, self.sequence_col, self.target_col)
+            dataset = load_dataset('csv', data_files=self.csv_path, split='train').select_columns(
+                [self.sequence_col, self.target_col]
+            )
         else:
             dataset = Dataset.from_dict({self.sequence_col: self.sequences, self.target_col: self.targets})
 
@@ -62,24 +62,19 @@ class SequenceTargetDataModule(L.LightningDataModule):
         if self.target_col != 'target':
             dataset = dataset.rename_column(self.target_col, 'target')
 
-        if not self.predict_mode:
-            dataset.save_to_disk(self.save_disk_dir)
-        else:
-            self._dataset = dataset
+        dataset.save_to_disk(self.save_disk_dir)
 
     def setup(self, stage: str) -> None:
-        if not self.predict_mode:
-            dataset = load_from_disk(self.save_disk_dir)
-        else:
-            dataset = self._dataset
+        dataset = load_from_disk(self.save_disk_dir)
 
         if stage == 'fit':
             self.train_dataset = dataset['train'].with_format('torch')
             self.val_dataset = dataset['val'].with_format('torch')
 
-            self.scaler_mean, self.scaler_scale = dataset_description_to_scaler_params(
-                description=self.train_dataset.info.description,
-            )
+            # Load the scaling parameters calculated during preprocessing.
+            parts = self.train_dataset.info.description.split(', ')
+            self.scaler_mean = float(parts[0].split(': ')[1])
+            self.scaler_scale = float(parts[1].split(': ')[1])
         elif stage == 'test':
             self.test_dataset = dataset['test'].with_format('torch')
         elif stage == 'predict':
@@ -129,13 +124,14 @@ class SequenceTargetDataModule(L.LightningDataModule):
             persistent_workers=True,
         )
 
-    def state_dict(self):
+    def state_dict(self) -> dict[str, float]:
+        assert self.scaler_mean is not None and self.scaler_scale is not None, 'Scaler params must be provided.'
         state = {
             'scaler_mean': self.scaler_mean,
             'scaler_scale': self.scaler_scale,
         }
         return state
 
-    def load_state_dict(self, state_dict):
+    def load_state_dict(self, state_dict: dict[str, float]) -> None:
         self.scaler_mean = state_dict['scaler_mean']
         self.scaler_scale = state_dict['scaler_scale']

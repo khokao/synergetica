@@ -61,7 +61,7 @@ class LightningSimpleTransformer(L.LightningModule):
         return loss
 
     def predict_step(self, batch: dict[str, torch.Tensor], batch_idx: int) -> torch.Tensor:
-        return self(batch['input_ids'])
+        return self(batch['input_ids'])  # type: ignore
 
     def configure_optimizers(self):  # type: ignore
         stepping_batches = self.trainer.estimated_stepping_batches

@@ -18,39 +18,34 @@ class Predictor:
         ckpt_path: str,
         accelerator: Literal['cpu', 'gpu', 'tpu', 'hpu', 'auto'] = 'cpu',
     ) -> None:
-        self.ckpt_path = ckpt_path
-        self.model = LightningSimpleTransformer.load_from_checkpoint(self.ckpt_path)
+        """
+        Args:
+            ckpt_path (str): The path to the predictor model checkpoint.
+            accelerator (str): The accelerator to use for prediction.
+        """
+        self.model = LightningSimpleTransformer.load_from_checkpoint(ckpt_path)
+        self.datamodule = SequenceTargetDataModule.load_from_checkpoint(
+            ckpt_path,
+            predict_mode=True,
+            should_load_csv=False,
+        )
         self.trainer = L.Trainer(
             accelerator=accelerator,
+            callbacks=None,
             logger=False,
             enable_checkpointing=False,
             enable_progress_bar=False,
         )
 
-        self.scaler_mean = None
-        self.scaler_scale = None
+        self.scaler_mean = self.datamodule.scaler_mean
+        self.scaler_scale = self.datamodule.scaler_scale
 
-    def __call__(
-        self,
-        sequences: list[str],
-        targets: list[float] | None,
-    ) -> list[float]:
-        if targets is None:
-            targets = [None] * len(sequences)
+    def __call__(self, sequences: list[str]) -> list[float]:
+        self.datamodule.sequences = sequences
+        self.datamodule.targets = [None] * len(sequences)  # type: ignore
 
-        datamodule = SequenceTargetDataModule.load_from_checkpoint(
-            self.ckpt_path,
-            predict_mode=True,
-            should_load_csv=False,
-            sequences=sequences,
-            targets=targets,
-        )
-        if self.scaler_mean is None or self.scaler_scale is None:
-            self.scaler_mean = datamodule.scaler_mean
-            self.scaler_scale = datamodule.scaler_scale
-
-        predictions = self.trainer.predict(model=self.model, datamodule=datamodule)[0]
-        rescaled_predictions = self.rescale(predictions)
+        predictions = self.trainer.predict(model=self.model, datamodule=self.datamodule)[0]  # type: ignore
+        rescaled_predictions = self.rescale(predictions)  # type: ignore
 
         return rescaled_predictions.tolist()
 

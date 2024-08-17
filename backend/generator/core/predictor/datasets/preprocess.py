@@ -3,8 +3,6 @@ from datasets import Dataset, DatasetDict
 from sklearn.preprocessing import StandardScaler
 from transformers import PreTrainedTokenizerFast
 
-from .utils import scaler_params_to_dataset_description
-
 
 def preprocess_sequence(dataset: Dataset, sequence_key: str) -> Dataset:  # type: ignore[no-any-unimported]
     """Converts sequence data in a dataset.
@@ -30,12 +28,12 @@ def preprocess_sequence(dataset: Dataset, sequence_key: str) -> Dataset:  # type
     return dataset
 
 
-def scale_target(
+def scale_target(  # type: ignore[no-any-unimported]
     dataset: Dataset,
     target_key: str,
     mean: float | None = None,
     scale: float | None = None,
-) -> Dataset | tuple[Dataset, StandardScaler]:  # type: ignore[no-any-unimported]
+) -> Dataset | tuple[Dataset, StandardScaler]:
     """Scales the target values in a dataset using standard scaling.
 
     Args:
@@ -61,7 +59,8 @@ def scale_target(
 
     dataset = dataset.remove_columns(target_key).add_column(target_key, target_values)
 
-    dataset.info.description = scaler_params_to_dataset_description(scaler.mean_[0], scaler.scale_[0])
+    # Ensure that the scaling parameters calculated during preprocessing are saved along with the dataset.
+    dataset.info.description = f'Mean: {scaler.mean_[0]}, Scale: {scaler.scale_[0]}'
 
     return dataset
 
