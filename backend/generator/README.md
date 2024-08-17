@@ -9,7 +9,10 @@ poetry run fastapi dev generator/api/main.py
 ```
 
 ## 2. Generic Algorithm
-
+Generate optimized sequences using a genetic algorithm with the following command:
+```zsh
+poetry run python generator/core/genetic_algorithm/scripts/generate.py generate-rbs foobar.ckpt TARGET_VALUE
+```
 
 ## 3. Predictor
 ### 3.1. Training the Predictor
