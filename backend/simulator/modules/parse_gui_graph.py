@@ -19,7 +19,7 @@ def parse_all_nodes(nodes: ListConfig) -> tuple[dict[str, GUINode], dict[str, li
             dict: {node_category: [node_id]}.
             node_category: 'protein', 'promoter', 'terminator'
     """
-    node_category2ids = defaultdict(list)
+    node_category2ids_default = defaultdict(list)
     all_nodes = {}
     for node in nodes:
         if node['type'] == 'child':
@@ -35,7 +35,8 @@ def parse_all_nodes(nodes: ListConfig) -> tuple[dict[str, GUINode], dict[str, li
                 'meta': node.data.meta,
             }
             all_nodes[node.id] = GUINode(**node_info)
-            node_category2ids[node.data.nodeCategory].append(node.id)
+            node_category2ids_default[node.data.nodeCategory].append(node.id)
+    node_category2ids = dict(node_category2ids_default)
     return all_nodes, node_category2ids
 
 
@@ -49,10 +50,12 @@ def create_partsId_nodeId_table(all_nodes: dict[str, GUINode]) -> dict[str, list
         partsId_to_nodeIds: dict[str, list[str]]: dict of node_id for each partsName.
             dict: {nodePartsName: [node_id]}
     """
-    partsId_to_nodeIds = defaultdict(list)
+    partsName_to_nodeIds_default = defaultdict(list)
     for node in all_nodes.values():
-        partsId_to_nodeIds[node.partsId].append(node.id)
-    return partsId_to_nodeIds
+        partsName_to_nodeIds_default[node.nodePartsName].append(node.id)
+
+    partsName_to_nodeIds = dict(partsName_to_nodeIds_default)
+    return partsName_to_nodeIds
 
 
 def dfs(node: int, visited: set, adj_matrix: np.ndarray) -> None:
