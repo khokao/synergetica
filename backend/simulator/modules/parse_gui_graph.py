@@ -52,7 +52,7 @@ def create_partsId_nodeId_table(all_nodes: dict[str, GUINode]) -> dict[str, list
     """
     partsName_to_nodeIds_default = defaultdict(list)
     for node in all_nodes.values():
-        partsName_to_nodeIds_default[node.nodePartsName].append(node.id)
+        partsName_to_nodeIds_default[node.partsId].append(node.id)
 
     partsName_to_nodeIds = dict(partsName_to_nodeIds_default)
     return partsName_to_nodeIds

@@ -6,6 +6,7 @@ from loguru import logger
 from omegaconf import OmegaConf
 
 from simulator.modules.build_protein_interaction import get_parts_name_list, run_convert
+from simulator.modules.dynamic_formulation import build_function_as_str
 from simulator.modules.euler import run_euler_example
 
 from .schemas import ConverterOutput, SimulatorOutput
@@ -28,7 +29,9 @@ async def convert_gui_circuit(flow_data_json: str) -> ConverterOutput:
     protein_interact_graph, proteinId_idx_bidict, all_nodes = run_convert(circuit)
     num_protein = len(proteinId_idx_bidict)
     protein_names = get_parts_name_list(proteinId_idx_bidict, all_nodes)
-    return ConverterOutput(num_protein=num_protein, proteins=protein_names)
+    function_str = build_function_as_str(protein_interact_graph, proteinId_idx_bidict, all_nodes)
+    logger.info(f'defined function: {function_str}')
+    return ConverterOutput(num_protein=num_protein, proteins=protein_names, function_str=function_str)
 
 
 functions = {}
@@ -36,6 +39,7 @@ functions = {}
 
 @router.websocket('/ws/define_function')
 async def define_function(websocket: WebSocket):
+    logger.info('Client connected')
     await websocket.accept()
     try:
         while True:
@@ -47,4 +51,4 @@ async def define_function(websocket: WebSocket):
             else:
                 await websocket.send_text('Invalid function definition.')
     except WebSocketDisconnect:
-        print('Client disconnected')
+        logger.info('Client disconnected')

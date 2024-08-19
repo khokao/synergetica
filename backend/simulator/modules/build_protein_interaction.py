@@ -22,7 +22,7 @@ def search_interaction_through_promoter(
     promoter_id: str,
     control_details: str,
     promoter_controlling_proteins: dict[str, List[str]],
-    partsId_to_nodeId: dict[str, list[str]],
+    partsId_to_nodeIds: dict[str, list[str]],
 ) -> dict[str, int]:
     """
     Process the interactions for a given promoter.
@@ -37,7 +37,7 @@ def search_interaction_through_promoter(
         protein_interaction (dict[str, int]): Interactions for controlled proteins.
     """
     protein_interaction = {}
-    promoter_nodeIds = partsId_to_nodeId.get(promoter_id, [])
+    promoter_nodeIds = partsId_to_nodeIds.get(promoter_id, [])
     for promoter_nodeId in promoter_nodeIds:
         for controlled_protein_id in promoter_controlling_proteins.get(promoter_nodeId, []):
             interaction = CONTROL_TYPE_STR2INT[control_details]
@@ -48,7 +48,7 @@ def search_interaction_through_promoter(
 def get_protein_interaction(
     controlTo_info_list: list[dict[str, str]],
     promoter_controlling_proteins: dict[str, list[str]],
-    partsId_to_nodeId: dict[str, list[str]],
+    partsId_to_nodeIds: dict[str, list[str]],
 ) -> dict[str, int]:
     """get all interacting protein_nodes and how interact for the given protein.
 
@@ -56,7 +56,7 @@ def get_protein_interaction(
         controlTo_info (dict[str,dict[str,str]]): Information on which promoters the protein controls.
             dict: {part_name:{controlType:controlType}}
         promoter_controlling_proteins (dict[str, list[str]]): dict of connected protein node_id for each promoter node.
-        partsId_to_nodeId (dict[str,list[str]]): dict to convert parts_name to node_id.
+        partsId_to_nodeIds (dict[str,list[str]]): dict to convert parts_name to node_id.
                                                    There can be multiple node_id for one parts_name.
             dict: {nodePartsName:list[node_id]}
 
@@ -68,7 +68,7 @@ def get_protein_interaction(
         promoter_id = controlTo_info['partsId']
         control_details = controlTo_info['controlType']
         interaction = search_interaction_through_promoter(
-            promoter_id, control_details, promoter_controlling_proteins, partsId_to_nodeId
+            promoter_id, control_details, promoter_controlling_proteins, partsId_to_nodeIds
         )
         protein_interaction.update(interaction)
     return protein_interaction
@@ -95,7 +95,7 @@ def build_protein_interact_graph(
         proteinIn_idx_bidict: bidict[str, int]:
             relation between idx and protein node in protein_interact_graph with bidict.
     """
-    partsId_to_nodeId = create_partsId_nodeId_table(all_nodes)
+    partsId_to_nodeIds = create_partsId_nodeId_table(all_nodes)
     proteinId_idx_bidict = bidict({node_id: idx for idx, node_id in enumerate(node_category2ids['protein'])})
     protein_interaction_graph: np.ndarray = np.empty(
         (len(node_category2ids['protein']), len(node_category2ids['protein']))
@@ -109,7 +109,7 @@ def build_protein_interact_graph(
             # retyping from dict[str,float]| None to dict[str,float] for mypy type checking.
             controlTo_info_list = cast(dict[str, dict[str, str]], controlTo_info_list)
         protein_interaction = get_protein_interaction(
-            controlTo_info_list, promoter_controlling_proteins, partsId_to_nodeId
+            controlTo_info_list, promoter_controlling_proteins, partsId_to_nodeIds
         )
         for interact_protein_id, interaction_info in protein_interaction.items():
             protein_interaction_graph[idx, proteinId_idx_bidict[interact_protein_id]] = interaction_info

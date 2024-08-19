@@ -15,3 +15,4 @@ class SimulatorOutput(BaseModel):
 class ConverterOutput(BaseModel):
     num_protein: int
     proteins: list[str]
+    function_str: str

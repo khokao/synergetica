@@ -16,4 +16,5 @@ export interface ConverterRequestData {
 export interface ConverterResponseData {
   num_protein: number;
   proteins: string[];
+  function_str: string;
 }

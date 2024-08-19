@@ -90,7 +90,7 @@ const ParamInput = ({ label, value, onChange }) => (
 </label>
 );
 
-export const Graph: React.FC<{ result: ConverterResponseData | null }> = ({ result }) => {
+export const Graph: React.FC<{ ConvertResult: ConverterResponseData | null }> = ({ ConvertResult }) => {
   const [param1, setParam1] = useState(1);
   const [param2, setParam2] = useState(1.5);
   const { graphdata, graphdata2, times } = useFetchData(param1, param2);
@@ -98,10 +98,15 @@ export const Graph: React.FC<{ result: ConverterResponseData | null }> = ({ resu
   const [proteinParams, setProteinParams] = useState<number[]>([]);
 
   useEffect(() => {
-    if (result !== null) {
-      setProteinParams(Array(result.num_protein).fill(1));
+    if (ConvertResult !== null) {
+      console.log('result',ConvertResult);
+      setProteinParams(Array(ConvertResult.num_protein).fill(1));
+      const wsDefine = new WebSocket("ws://127.0.0.1/ws/define_function");
+      wsDefine.onopen = () => {
+        wsDefine.send(ConvertResult.function_str);
+      };
     }
-  }, [result]);
+  }, [ConvertResult]);
 
   const handleProteinParamChange = (index: number) => (event) => {
     const newProteinParams = [...proteinParams];
@@ -114,7 +119,7 @@ export const Graph: React.FC<{ result: ConverterResponseData | null }> = ({ resu
 
   return (
     <div className="h-full">
-      {result ? (
+      {ConvertResult ? (
         <div className="flex flex-col ml-5 h-full">
           <div className="h-full">
             <Line options={options} data={data} />
@@ -123,7 +128,7 @@ export const Graph: React.FC<{ result: ConverterResponseData | null }> = ({ resu
             {proteinParams.map((param, index) => (
               <ParamInput
                 key={index}
-                label={result.proteins[index]}
+                label={ConvertResult.proteins[index]}
                 value={param}
                 onChange={handleProteinParamChange(index)}
               />

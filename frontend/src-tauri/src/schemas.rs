@@ -17,4 +17,5 @@ pub struct SimulatorResponseData {
 pub struct ConverterResponseData {
     pub num_protein: i32,
     pub proteins: Vec<String>,
+    pub function_str: String,
 }

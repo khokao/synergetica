@@ -46,7 +46,7 @@ const Home = () => {
           maxHeight={"90%"}
           enable={{ bottom: true }}
         >
-          <Simulation result={ConvertResult} reseter={resetSimulator} />
+          <Simulation ConvertResult={ConvertResult} reseter={resetSimulator} />
         </Resizable>
         <Generation />
       </div>
