@@ -1,3 +1,4 @@
+from collections import defaultdict
 from typing import List, cast
 
 import numpy as np
@@ -89,7 +90,7 @@ def build_protein_interact_graph(
 
     Returns:
         protein_interact_graph: np.ndarray: directed graph of protein interaction converted from GUI circuit.
-            protein_interact_graph[i][j] = 1 or -1 or 0. how control protein-i to protein-j
+            protein_interact_graph[i][j] = 1 or -1 or 0. value means how protein-i control to protein-j
             shape=(num_protein, num_protein)
         proteinIn_idx_bidict: bidict[str, int]:
             relation between idx and protein node in protein_interact_graph with bidict.
@@ -117,6 +118,18 @@ def build_protein_interact_graph(
 
 
 def run_convert(raw_circuit_data: OmegaConf) -> tuple[np.ndarray, bidict, dict[str, GUINode]]:
+    """Convert GUI circuit data to protein interaction graph.
+
+    Args:
+        raw_circuit_data (OmegaConf): circuit data send from GUI frontend. OmegaConf format.
+
+    Returns:
+        protein_interact_graph (np.ndarray): directed graph of protein interaction converted from GUI circuit.
+            protein_interact_graph[i][j] = 1 or -1 or 0. value means how protein-i control to protein-j
+        proteinId_idx_bidict (bidict[str, int]):
+            relation between idx and protein node in protein_interact_graph with bidict.
+        all_nodes (dict[str, GUINode]): all nodes in the circuit converted to GUINode format.
+    """
     all_nodes, node_category2ids = parse_all_nodes(raw_circuit_data.nodes)
     promoter_controlling_proteins = parse_edge_connection(raw_circuit_data.edges, all_nodes)
     protein_interact_graph, proteinId_idx_bidict = build_protein_interact_graph(
@@ -124,3 +137,31 @@ def run_convert(raw_circuit_data: OmegaConf) -> tuple[np.ndarray, bidict, dict[s
     )
 
     return protein_interact_graph, proteinId_idx_bidict, all_nodes
+
+
+def get_parts_name_list(proteinId_idx_bidict: bidict, all_nodes: dict[str, GUINode]) -> list[str]:
+    """Get parts name list to display in the Simulator frontend.
+
+    Args:
+        proteinId_idx_bidict (bidict):
+            relation between idx and protein node in protein_interact_graph with bidict.
+        all_nodes (dict[str, GUINode]):
+            all nodes in the circuit converted to GUINode format.
+
+    Returns:
+        parts_name_list (list[str]): list of parts name. If there are multiple same parts name, add number to the name.
+    """
+    parts_name_count = defaultdict(int)
+    parts_name_list = []
+
+    for protein_id in proteinId_idx_bidict.keys():
+        protein_node = all_nodes.get(protein_id)
+        parts_name = protein_node.nodePartsName
+
+        parts_name_count[parts_name] += 1
+        if parts_name_count[parts_name] > 1:
+            parts_name_list.append(f'{parts_name}_{parts_name_count[parts_name]}')
+        else:
+            parts_name_list.append(parts_name)
+
+    return parts_name_list

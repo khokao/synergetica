@@ -1,4 +1,4 @@
-import { Graph } from "@/components/Simulation/DrawSimulationResultSwitch";
+import { Graph } from "@/components/Simulation/DrawSimulationResultDynamic";
 import { callGeneratorAPI } from "@/hooks/useGeneratorAPI";
 import { ConverterResponseData } from "@/interfaces/simulatorAPI";
 import type React from "react";
