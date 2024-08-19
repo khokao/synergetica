@@ -48,7 +48,34 @@ impl APIClient {
             .send()
             .await
     }
-
+/*
+    async fn define_function() {
+        let (ws_stream, _) = connect_async("ws://127").await.expect("Failed to connect");
+        println!("WebSocket handshake has been successfully completed");
+    
+        let (mut write, mut read) = ws_stream.split();
+    
+        // 送信タスク
+        tokio::spawn(async move {
+            let msg = Message::Text("Hello from Rust!".to_string());
+            write.send(msg).await.expect("Failed to send message");
+        });
+    
+        // 受信タスク
+        while let Some(msg) = read.next().await {
+            match msg {
+                Ok(Message::Text(text)) => {
+                    println!("Received: {}", text);
+                }
+                Ok(_) => (),
+                Err(e) => {
+                    eprintln!("Error: {}", e);
+                    break;
+                }
+            }
+        }
+    }
+*/
 
     pub async fn parse_response(response: reqwest::Response) -> Result<GeneratorResponseData, String> {
         match response.json::<GeneratorResponseData>().await {
