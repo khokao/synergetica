@@ -26,17 +26,6 @@ impl APIClient {
             .await
     }
 
-    pub async fn send_request_simulation(param1: f64, param2: f64) -> Result<reqwest::Response, reqwest::Error> {
-        let client = reqwest::Client::new();
-        client
-            .post("http://127.0.0.1:8000/simulate-with-euler")
-            .query(&json!({
-                "param1":param1,
-                "param2":param2
-            }))
-            .send()
-            .await
-    }
 
     pub async fn send_request_circuit_converter(flow_json:String) -> Result<reqwest::Response, reqwest::Error> {
         let client = reqwest::Client::new();
@@ -48,46 +37,12 @@ impl APIClient {
             .send()
             .await
     }
-/*
-    async fn define_function() {
-        let (ws_stream, _) = connect_async("ws://127").await.expect("Failed to connect");
-        println!("WebSocket handshake has been successfully completed");
-    
-        let (mut write, mut read) = ws_stream.split();
-    
-        // 送信タスク
-        tokio::spawn(async move {
-            let msg = Message::Text("Hello from Rust!".to_string());
-            write.send(msg).await.expect("Failed to send message");
-        });
-    
-        // 受信タスク
-        while let Some(msg) = read.next().await {
-            match msg {
-                Ok(Message::Text(text)) => {
-                    println!("Received: {}", text);
-                }
-                Ok(_) => (),
-                Err(e) => {
-                    eprintln!("Error: {}", e);
-                    break;
-                }
-            }
-        }
-    }
-*/
+
 
     pub async fn parse_response(response: reqwest::Response) -> Result<GeneratorResponseData, String> {
         match response.json::<GeneratorResponseData>().await {
             Ok(data) => Ok(data),
             Err(e) => Err(format!("Failed to parse response: {}", e)),
-        }
-    }
-
-    pub async fn parse_response_simulator(response: reqwest::Response) -> Result<SimulatorResponseData, String> {
-        match response.json::<SimulatorResponseData>().await {
-            Ok(data) => Ok(data),
-            Err(e) => Err(format!("Failed to parse response simulator: {}", e)),
         }
     }
 

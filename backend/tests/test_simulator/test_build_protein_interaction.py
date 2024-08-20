@@ -44,7 +44,12 @@ def test_get_protein_interaction(setup_node_parser):
     all_nodes, node_category2ids, promoter_controlling_proteins = setup_node_parser
     partsId_to_nodeIds = create_partsId_nodeId_table(all_nodes)
     protein_interaction = get_protein_interaction(
-        controlTo_info_list=[{'8e962d8c0de8f20c5dc9047784fc10f3b55053a300cf987bfca6f9c2f3a3d62a': 'Repression'}],
+        controlTo_info_list=[
+            {
+                'partsId': '3aa865db07b14c56e1a95166d36b27819cacf657d350d8b85fb3b88e74d04f3c',
+                'controlType': 'Repression',
+            }
+        ],
         promoter_controlling_proteins=promoter_controlling_proteins,
         partsId_to_nodeIds=partsId_to_nodeIds,
     )

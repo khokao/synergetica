@@ -55,7 +55,8 @@ def get_protein_interaction(
 
     Args:
         controlTo_info (list[dict[str, str]]): Information about which promoters the protein controls.
-            dict: {partsId:{controlType:controlType}}
+            e.g)[{'partsId': '3aa865db07b14c56e1a95166d36b27819cacf657d350d8b85fb3b88e74d04f3c',
+                  'controlType': 'Repression',}]
         promoter_controlling_proteins (dict[str, list[str]]): dict of connected protein node_id for each promoter node.
         partsId_to_nodeIds (dict[str,list[str]]): dict to convert parts_name to node_id.
                                                    There can be multiple node_id for one parts_name.

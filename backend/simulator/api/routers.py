@@ -1,25 +1,17 @@
 import json
 
 import numpy as np
-from fastapi import APIRouter, Query, WebSocket, WebSocketDisconnect
+from fastapi import APIRouter, WebSocket, WebSocketDisconnect
 from loguru import logger
 from omegaconf import OmegaConf
 
 from simulator.modules.build_protein_interaction import get_parts_name_list, run_convert
 from simulator.modules.dynamic_formulation import build_function_as_str
-from simulator.modules.euler import run_euler_example, solve_ode_with_euler
+from simulator.modules.euler import solve_ode_with_euler
 
-from .schemas import ConverterOutput, SimulatorOutput
+from .schemas import ConverterOutput
 
 router = APIRouter()
-
-
-@router.post('/simulate-with-euler', response_model=SimulatorOutput)
-async def get_data_param(param1: float = Query(1.0), param2: float = Query(1.0)) -> SimulatorOutput:
-    logger.info(f'Simulating with parameters: {param1}, {param2}')
-    solution = run_euler_example(alpha1=param1, alpha2=param2)
-    time = np.arange(0, len(solution)).tolist()
-    return SimulatorOutput(data1=solution[:, 0].tolist(), data2=solution[:, 1].tolist(), time=time)
 
 
 @router.post('/convert-gui-circuit', response_model=ConverterOutput)
