@@ -1,4 +1,3 @@
-import { callSimulatorAPI } from "@/hooks/useSimulatorAPI";
 import { ConverterResponseData } from "@/interfaces/simulatorAPI";
 import {
   CategoryScale,
@@ -26,88 +25,128 @@ const getGraphOptions = () => ({
     },
   },
   scales: {
+    x: {
+      display: false
+    },
     y: {
-      min: 0,
-      max: 2.5,
+      title: {
+        display: true,
+        text: "Protein Levels",
+      },
     },
   },
 });
 
-const getGraphData = (times, graphdata, graphdata2) => ({
-  labels: times,
-  datasets: [
-    {
-      label: "Data 1",
-      data: graphdata,
-      borderColor: "rgb(255, 99, 132)",
-      backgroundColor: "rgba(255, 99, 132, 0.5)",
-      pointRadius: 0,
-    },
-    {
-      label: "Data 2",
-      data: graphdata2,
-      borderColor: "rgb(54, 162, 235)",
-      backgroundColor: "rgba(54, 162, 235, 0.5)",
-      pointRadius: 0,
-    },
-  ],
-});
-
-const useFetchData = (param1, param2) => {
-  const [graphdata, setGraphdata] = useState([]);
-  const [graphdata2, setGraphdata2] = useState([]);
-  const [times, setTimes] = useState([]);
-
-  const fetchData = useCallback(async () => {
-    const param_set = { param1: param1, param2: param2 };
-    const response = await callSimulatorAPI(param_set);
-
-    setGraphdata(response.data1);
-    setGraphdata2(response.data2);
-    setTimes(response.time);
-  }, [param1, param2]);
-
-  useEffect(() => {
-    fetchData();
-  }, [fetchData]);
-
-  return { graphdata, graphdata2, times };
-};
-
 const ParamInput = ({ label, value, onChange }) => (
-  <label>
-    {label}
-    <input type="range" min="0" max="2" step="0.01" value={value} onChange={onChange} />
-    <span> {value} </span>
+  <label className="flex items-center mb-2">
+    <span className="inline-block w-16">{label}</span>
+    <input
+      type="range"
+      min="1"
+      max="1000"
+      step="1"
+      value={value}
+      onChange={onChange}
+      className="mx-2"
+    />
+    <span className="w-12 text-right">{value}</span>
   </label>
 );
 
-export const Graph: React.FC<{ result: ConverterResponseData }> = (result) => {
-  const [param1, setParam1] = useState(1);
-  const [param2, setParam2] = useState(1.5);
+export const Graph: React.FC<{ ConvertResult: ConverterResponseData | null }> = ({ ConvertResult }) => {
+  const [proteinParams, setProteinParams] = useState<number[]>([]);
+  const [ws, setWs] = useState<WebSocket | null>(null);
+  const [simOutput, setSimOutput] = useState<number[][] | null>(null);
 
-  const { graphdata, graphdata2, times } = useFetchData(param1, param2);
+  useEffect(() => {
+    if (ConvertResult !== null) {
+      setProteinParams(Array(ConvertResult.num_protein).fill(1));
 
-  const handleParam1Change = (event) => {
-    setParam1(Number.parseFloat(event.target.value));
-  };
+      const wsDefine = new WebSocket("ws://127.0.0.1:8000/ws/simulation");
+      wsDefine.onopen = () => {
+        wsDefine.send(ConvertResult.function_str);
+      };
+      wsDefine.onmessage = (event) => {
+        console.log("Received from server:", event.data);
+      };
+      wsDefine.onerror = (error) => {
+        console.error("WebSocket error:", error);
+      };
 
-  const handleParam2Change = (event) => {
-    setParam2(Number.parseFloat(event.target.value));
+      setWs(wsDefine);
+
+      return () => {
+        wsDefine.close();
+      };
+    }
+  }, [ConvertResult]);
+
+  const handleProteinParamChange = (index: number) => (event: React.ChangeEvent<HTMLInputElement>) => {
+    const newProteinParams = [...proteinParams];
+    newProteinParams[index] = Number.parseFloat(event.target.value);
+    setProteinParams(newProteinParams);
+
+    if (ws && ws.readyState === WebSocket.OPEN) {
+      const params = JSON.stringify({
+        params: newProteinParams,
+      });
+
+      ws.send(params);
+
+      ws.onmessage = (event) => {
+        const receivedData = JSON.parse(event.data);
+        console.log("Received from server:", receivedData);
+        setSimOutput(receivedData);
+      };
+    }
   };
 
   const options = getGraphOptions();
-  const data = getGraphData(times, graphdata, graphdata2);
 
-  return (
-    <div className="flex flex-col ml-5 h-full">
+  const graphData = simOutput
+    ? {
+        labels: simOutput.map(([time]) => time),
+        datasets: Array(ConvertResult!.num_protein)
+          .fill(0)
+          .map((_, i) => ({
+            label: ConvertResult.proteins[i], 
+            data: simOutput.map((row) => row[1 + i]),
+            borderColor: `hsl(${(i * 60) % 360}, 70%, 50%)`,
+            fill: false,
+          })),
+      }
+    : null;
+
+    return (
       <div className="h-full">
-        <Line options={options} data={data} />
+        {ConvertResult ? (
+          <div className="flex flex-row h-full">
+            <div className="h-full w-2/3">
+              {graphData && <Line options={options} data={graphData} />}
+            </div>
+            <div className="flex flex-col justify-center items-center ml-5 mb-4 w-1/3">
+              {proteinParams.map((param, index) => (
+                <ParamInput
+                  key={index}
+                  label={ConvertResult.proteins[index]}
+                  value={param}
+                  onChange={handleProteinParamChange(index)}
+                />
+              ))}
+            </div>
+          </div>
+        ) : (
+          <div className="flex flex-col justify-center items-center h-full text-center">
+            <span>Build Circuit to Simulate</span>
+            <span>
+              and press
+              <button type="button" className="px-2 py-1 mx-2 border-2 border-black rounded">
+                Simulate
+              </button>
+              button
+            </span>
+          </div>
+        )}
       </div>
-      <div className="flex flex-col ml-5 mb-2">
-        <ParamInput label="α1" value={param1} onChange={handleParam1Change} />
-        <ParamInput label="α2" value={param2} onChange={handleParam2Change} />
-      </div>
-    </div>
-  );
-};
+    );
+  };

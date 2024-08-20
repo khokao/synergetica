@@ -19,13 +19,13 @@ CONTROL_TYPE_STR2INT = {
 
 
 def search_interaction_through_promoter(
-    promoter_id: str,
+    promoter_partsId: str,
     control_details: str,
     promoter_controlling_proteins: dict[str, List[str]],
     partsId_to_nodeIds: dict[str, list[str]],
 ) -> dict[str, int]:
     """
-    Process the interactions for a given promoter.
+    assign interactions (int value) for controlled proteins by the given promoter.
 
     Args:
         promoter_id (str): partsId of the promoter.
@@ -34,14 +34,15 @@ def search_interaction_through_promoter(
         partsId_to_nodeId (dict[str, List[str]]): Dictionary to convert parts names to node IDs.
 
     Returns:
-        protein_interaction (dict[str, int]): Interactions for controlled proteins.
+        protein_interaction (dict[str, int]): Interactions for controlled proteins. {protein_id: interaction}
     """
     protein_interaction = {}
-    promoter_nodeIds = partsId_to_nodeIds.get(promoter_id, [])
+    promoter_nodeIds = partsId_to_nodeIds.get(promoter_partsId, [])
     for promoter_nodeId in promoter_nodeIds:
         for controlled_protein_id in promoter_controlling_proteins.get(promoter_nodeId, []):
             interaction = CONTROL_TYPE_STR2INT[control_details]
             protein_interaction[controlled_protein_id] = interaction
+    print(protein_interaction)
     return protein_interaction
 
 
@@ -53,15 +54,15 @@ def get_protein_interaction(
     """get all interacting protein_nodes and how interact for the given protein.
 
     Args:
-        controlTo_info (dict[str,dict[str,str]]): Information on which promoters the protein controls.
-            dict: {part_name:{controlType:controlType}}
+        controlTo_info (list[dict[str, str]]): Information about which promoters the protein controls.
+            dict: {partsId:{controlType:controlType}}
         promoter_controlling_proteins (dict[str, list[str]]): dict of connected protein node_id for each promoter node.
         partsId_to_nodeIds (dict[str,list[str]]): dict to convert parts_name to node_id.
                                                    There can be multiple node_id for one parts_name.
             dict: {nodePartsName:list[node_id]}
 
     Returns:
-        protein_interaction (dict[str,int]): {protein_id: 1 or -1)}
+        protein_interaction (dict[str,int]): {protein_node_id: (1 or -1)}
     """
     protein_interaction = {}
     for controlTo_info in controlTo_info_list:

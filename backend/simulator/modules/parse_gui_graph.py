@@ -10,7 +10,7 @@ def parse_all_nodes(nodes: ListConfig) -> tuple[dict[str, GUINode], dict[str, li
     """Parse and convert all nodes from GUI into GUINode.
 
     Args:
-        nodes (list[dict[str, str]]): node information output from GUI section.
+        nodes (ListConfig): node information output from GUI section.
 
     Returns:
         all_nodes (dict[str,GUINode]): all nodes in the GUI circuit converted to GUINode format.
@@ -75,10 +75,9 @@ def dfs(node: int, visited: set, adj_matrix: np.ndarray) -> None:
 
 def get_all_connected_nodes(adj_matrix: np.ndarray) -> list[list[int]]:
     """get node connection for all nodes in the GUI graph.
-
     Args:
-        adj_matrix (np.ndarray): adjacency matrix of the GUI graph.
-
+        adj_matrix (np.ndarray): adjacency matrix of the GUI graph. values = 0 or 1.
+            shape=(num_nodes, num_nodes)
     Returns:
         all_connected_node_idx (list[list[int]]): list of connected nodes idx for each node.
             len(all_connected_nodes) = num_nodes
@@ -126,7 +125,7 @@ def parse_edge_connection(edges: ListConfig, all_nodes: dict[str, GUINode]) -> d
     """list up under controlled proteins for each promoter
 
     Args:
-        edges (list[dict]): edge info POST from GUI section.
+        edges (list[dict]): edge information of  GUI circuit.
         all_nodes (dict[str, GUINode]): all nodes in the circuit converted to GUINode format.
 
     Returns:
