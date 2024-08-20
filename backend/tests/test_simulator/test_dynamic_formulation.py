@@ -1,3 +1,4 @@
+import numpy as np
 import pytest
 from omegaconf import OmegaConf
 
@@ -10,16 +11,16 @@ from .circuit_for_test import TEST_CIRCUIT
 @pytest.fixture
 def example_data():
     circuit = OmegaConf.create(TEST_CIRCUIT)
-    protein_interact_graph, proteinId_idx_bidict, all_nodes = run_convert(circuit)
-    yield protein_interact_graph, proteinId_idx_bidict, all_nodes
+    _, proteinId_idx_bidict, all_nodes = run_convert(circuit)
+    yield proteinId_idx_bidict, all_nodes
 
 
 def test_mrna_ode_generation(example_data):
     # Arrange
     ode_builder = ODEBuilder()
-    protein_interact_graph, proteinId_idx_bidict, all_nodes = example_data
+    proteinId_idx_bidict, all_nodes = example_data
     idx = 0
-    interact_infos = protein_interact_graph[idx]
+    interact_infos = [0, -1]
 
     # Act
     mrna_ode = ode_builder.make_mrna_ode(idx, interact_infos, proteinId_idx_bidict, all_nodes)
@@ -32,7 +33,7 @@ def test_mrna_ode_generation(example_data):
 def test_protein_ode_generation(example_data):
     # Arrange
     ode_builder = ODEBuilder()
-    protein_interact_graph, proteinId_idx_bidict, all_nodes = example_data
+    proteinId_idx_bidict, all_nodes = example_data
     idx = 0
 
     # Act
@@ -45,8 +46,8 @@ def test_protein_ode_generation(example_data):
 
 def test_build_function_as_str(example_data):
     # Arrange
-    protein_interact_graph, proteinId_idx_bidict, all_nodes = example_data
-
+    proteinId_idx_bidict, all_nodes = example_data
+    protein_interact_graph = np.array([[0, -1], [-1, 0]])
     # Act
     function_str = build_function_as_str(protein_interact_graph, proteinId_idx_bidict, all_nodes)
 

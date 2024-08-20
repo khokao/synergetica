@@ -12,6 +12,10 @@ class SimulatorOutput(BaseModel):
     time: list[float]
 
 
+class ConverterInput(BaseModel):
+    flow_data_json: str
+
+
 class ConverterOutput(BaseModel):
     num_protein: int
     proteins: list[str]

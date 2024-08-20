@@ -42,7 +42,6 @@ def search_interaction_through_promoter(
         for controlled_protein_id in promoter_controlling_proteins.get(promoter_nodeId, []):
             interaction = CONTROL_TYPE_STR2INT[control_details]
             protein_interaction[controlled_protein_id] = interaction
-    print(protein_interaction)
     return protein_interaction
 
 

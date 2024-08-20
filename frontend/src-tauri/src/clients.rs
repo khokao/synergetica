@@ -1,4 +1,4 @@
-use crate::schemas::{GeneratorResponseData, SimulatorResponseData,ConverterResponseData};
+use crate::schemas::{GeneratorResponseData,ConverterResponseData};
 use reqwest;
 use serde_json::json;
 
@@ -31,7 +31,7 @@ impl APIClient {
         let client = reqwest::Client::new();
         client
             .post("http://127.0.0.1:8000/convert-gui-circuit")
-            .query(&json!({
+            .json(&json!({
                 "flow_data_json":flow_json
             }))
             .send()

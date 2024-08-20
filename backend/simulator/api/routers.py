@@ -9,14 +9,14 @@ from simulator.modules.build_protein_interaction import get_parts_name_list, run
 from simulator.modules.dynamic_formulation import build_function_as_str
 from simulator.modules.euler import solve_ode_with_euler
 
-from .schemas import ConverterOutput
+from .schemas import ConverterInput, ConverterOutput
 
 router = APIRouter()
 
 
 @router.post('/convert-gui-circuit', response_model=ConverterOutput)
-async def convert_gui_circuit(flow_data_json: str) -> ConverterOutput:
-    raw_circuit_data: dict = json.loads(flow_data_json)
+async def convert_gui_circuit(data: ConverterInput) -> ConverterOutput:
+    raw_circuit_data: dict = json.loads(data.flow_data_json)
     circuit = OmegaConf.create(raw_circuit_data)
     protein_interact_graph, proteinId_idx_bidict, all_nodes = run_convert(circuit)
     num_protein = len(proteinId_idx_bidict)

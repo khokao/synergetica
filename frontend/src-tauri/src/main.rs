@@ -6,7 +6,7 @@ mod schemas;
 
 use clients::APIClient;
 use errors::{handle_request_error, handle_response_error};
-use schemas::{GeneratorResponseData, SimulatorResponseData,ConverterResponseData};
+use schemas::{GeneratorResponseData,ConverterResponseData};
 use serde::Serialize;
 use std::fs;
 use std::path::Path;
