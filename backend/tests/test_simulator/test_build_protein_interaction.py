@@ -29,7 +29,7 @@ def test_search_interaction_through_promoter(setup_node_parser):
     all_nodes, node_category2ids, promoter_controlling_proteins = setup_node_parser
     partsId_to_nodeIds = create_partsId_nodeId_table(all_nodes)
     protein_interaction = search_interaction_through_promoter(
-        promoter_parts_id='3aa865db07b14c56e1a95166d36b27819cacf657d350d8b85fb3b88e74d04f3c',
+        promoter_partsId='3aa865db07b14c56e1a95166d36b27819cacf657d350d8b85fb3b88e74d04f3c',
         control_details='Repression',
         promoter_controlling_proteins=promoter_controlling_proteins,
         partsId_to_nodeIds=partsId_to_nodeIds,
