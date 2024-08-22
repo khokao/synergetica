@@ -13,6 +13,7 @@ packages = [
 
 [tool.poetry.dependencies]
 python = ">=3.12,<4"
+bidict = "^0.23.1"
 bitsandbytes = "<0.43"  # cannot install 0.43
 datasets = "*"
 einops = "*"
@@ -23,6 +24,7 @@ hydra-core = "*"
 lightning= { version = "*", extras = ["extra"] }
 loguru = "*"
 numpy = "^1.0.0"
+omegaconf = "^2.3.0"
 polars = "*"
 pydantic = "*"
 scipy = "^1.14.0"
@@ -37,8 +39,11 @@ torchmetrics = "*"
 transformers = "*"
 typer = "*"
 
+
 [tool.poetry.group.dev.dependencies]
 coverage = { version = "*", extras = ["toml"] }
+jupyterlab = "^4.2.3"
+matplotlib = "^3.9.0"
 mypy = "*"
 pytest = "*"
 pytest-cov = "*"
