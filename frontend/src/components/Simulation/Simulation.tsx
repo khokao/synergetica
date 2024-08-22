@@ -4,7 +4,10 @@ import { ConverterResponseData } from "@/interfaces/simulatorAPI";
 import type React from "react";
 import useSWR from "swr";
 
-export const Simulation: React.FC<{ ConvertResult: ConverterResponseData, reseter: () => void }> = ({ ConvertResult, reseter }) => {
+export const Simulation: React.FC<{ ConvertResult: ConverterResponseData; reseter: () => void }> = ({
+  ConvertResult,
+  reseter,
+}) => {
   const { mutate } = useSWR("call_generator_api");
 
   const onCallGeneratorAPIClick = async () => {
@@ -29,7 +32,11 @@ export const Simulation: React.FC<{ ConvertResult: ConverterResponseData, resete
         <button type="button" onClick={reseter} className="px-4 py-1 border-2 border-black rounded mr-4">
           Reset
         </button>
-        <button type="button" onClick={onCallGeneratorAPIClick} className="px-4 py-1 border-2 border-black rounded mr-6">
+        <button
+          type="button"
+          onClick={onCallGeneratorAPIClick}
+          className="px-4 py-1 border-2 border-black rounded mr-6"
+        >
           Generate
         </button>
       </div>

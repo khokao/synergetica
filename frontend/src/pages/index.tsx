@@ -6,7 +6,7 @@ import { Resizable } from "re-resizable";
 import { useConverterAPI } from "@/hooks/useSimulatorAPI";
 
 const Home = () => {
-  const { postConverter, ConvertResult,resetSimulator } = useConverterAPI();
+  const { postConverter, ConvertResult, resetSimulator } = useConverterAPI();
   return (
     <div className="flex h-screen">
       <Resizable

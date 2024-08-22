@@ -1,10 +1,6 @@
-import type {
-  ConverterRequestData,
-  ConverterResponseData,
-} from "@/interfaces/simulatorAPI";
+import type { ConverterRequestData, ConverterResponseData } from "@/interfaces/simulatorAPI";
 import { invoke } from "@tauri-apps/api/tauri";
 import { useState } from "react";
-
 
 export const callCircuitConverterAPI = async (data: ConverterRequestData) => {
   return await invoke<ConverterResponseData>("call_circuit_converter_api", {
