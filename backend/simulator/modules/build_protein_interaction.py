@@ -3,7 +3,7 @@ from typing import List, cast
 
 import numpy as np
 from bidict import bidict
-from omegaconf import OmegaConf
+from omegaconf.dictconfig import DictConfig
 
 from simulator.core.schema import GUINode
 from simulator.modules.parse_gui_graph import (
@@ -98,7 +98,7 @@ def build_protein_interact_graph(
     """
     partsId_to_nodeIds = create_partsId_nodeId_table(all_nodes)
     proteinId_idx_bidict = bidict({node_id: idx for idx, node_id in enumerate(node_category2ids['protein'])})
-    protein_interaction_graph: np.ndarray = np.empty(
+    protein_interaction_graph: np.ndarray = np.zeros(
         (len(node_category2ids['protein']), len(node_category2ids['protein']))
     )
 
@@ -108,7 +108,7 @@ def build_protein_interact_graph(
             continue
         else:
             # retyping from dict[str,float]| None to dict[str,float] for mypy type checking.
-            controlTo_info_list = cast(dict[str, dict[str, str]], controlTo_info_list)
+            controlTo_info_list = cast(list[dict[str, str]], controlTo_info_list)
         protein_interaction = get_protein_interaction(
             controlTo_info_list, promoter_controlling_proteins, partsId_to_nodeIds
         )
@@ -118,7 +118,7 @@ def build_protein_interact_graph(
     return protein_interaction_graph, proteinId_idx_bidict
 
 
-def run_convert(raw_circuit_data: OmegaConf) -> tuple[np.ndarray, bidict, dict[str, GUINode]]:
+def run_convert(raw_circuit_data: DictConfig) -> tuple[np.ndarray, bidict, dict[str, GUINode]]:
     """Convert GUI circuit data to protein interaction graph.
 
     Args:
@@ -136,7 +136,6 @@ def run_convert(raw_circuit_data: OmegaConf) -> tuple[np.ndarray, bidict, dict[s
     protein_interact_graph, proteinId_idx_bidict = build_protein_interact_graph(
         all_nodes, node_category2ids, promoter_controlling_proteins
     )
-
     assert protein_interact_graph.shape == (len(proteinId_idx_bidict), len(proteinId_idx_bidict))
     assert np.isin(protein_interact_graph, [0, 1, -1]).all()
 
@@ -155,11 +154,11 @@ def get_parts_name_list(proteinId_idx_bidict: bidict, all_nodes: dict[str, GUINo
     Returns:
         parts_name_list (list[str]): list of parts name. If there are multiple same parts name, add number to the name.
     """
-    parts_name_count = defaultdict(int)
+    parts_name_count: defaultdict[str, int] = defaultdict(int)
     parts_name_list = []
 
     for protein_id in proteinId_idx_bidict.keys():
-        protein_node = all_nodes.get(protein_id)
+        protein_node = all_nodes[protein_id]
         parts_name = protein_node.nodePartsName
 
         parts_name_count[parts_name] += 1

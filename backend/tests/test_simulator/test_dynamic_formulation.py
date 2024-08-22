@@ -20,7 +20,7 @@ def test_mrna_ode_generation(example_data):
     ode_builder = ODEBuilder()
     proteinId_idx_bidict, all_nodes = example_data
     idx = 0
-    interact_infos = [0, -1]
+    interact_infos = np.array([0, -1])
 
     # Act
     mrna_ode = ode_builder.make_mrna_ode(idx, interact_infos, proteinId_idx_bidict, all_nodes)

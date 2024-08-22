@@ -1,4 +1,5 @@
 import json
+from typing import Callable
 
 import numpy as np
 from fastapi import APIRouter, WebSocket, WebSocketDisconnect
@@ -26,11 +27,11 @@ async def convert_gui_circuit(data: ConverterInput) -> ConverterOutput:
     return ConverterOutput(num_protein=num_protein, proteins=protein_names, function_str=function_str)
 
 
-functions = {}
+functions: dict[str, Callable[..., tuple[float, ...]]] = {}
 
 
 @router.websocket('/ws/simulation')
-async def simulation(websocket: WebSocket):
+async def simulation(websocket: WebSocket) -> None:
     logger.info('Client connected')
     await websocket.accept()
     try:

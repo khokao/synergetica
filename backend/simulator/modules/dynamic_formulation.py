@@ -2,6 +2,7 @@
 # skip undefined name error for dynamic function generation.
 
 import numpy as np
+import numpy.typing as npt
 from bidict import bidict
 
 from simulator.core.schema import GUINode
@@ -34,7 +35,7 @@ class ODEBuilder:
     def make_mrna_ode(
         self,
         idx: int,
-        interact_infos: np.ndarray,
+        interact_info_array: npt.NDArray[np.int_],
         proteinId_idx_bidict: bidict[str, int],
         all_nodes: dict[str, GUINode],
     ) -> str:
@@ -50,7 +51,7 @@ class ODEBuilder:
             mrna_ode_str (str): mRNA ODE equation as a string.
         """
         prs = ''
-        for j, interact_info in enumerate(interact_infos):
+        for j, interact_info in enumerate(interact_info_array):
             if interact_info == 0:
                 continue
 
@@ -90,7 +91,7 @@ class ODEBuilder:
 
     def __call__(
         self,
-        interact_infos: np.ndarray,
+        interact_info_array: npt.NDArray[np.int_],
         idx: int,
         proteinId_idx_bidict: bidict[str, int],
         all_nodes: dict[str, GUINode],
@@ -98,7 +99,7 @@ class ODEBuilder:
         """
 
         Args:
-            interact_infos (np.ndarray):  array of interaction info for the target protein. 1 or -1 or 0.
+            interact_info_array (np.ndarray):  array of interaction info for the target protein. 1 or -1 or 0.
             idx (int): protein index in the protein_interaction_graph.
             proteinId_idx_bidict (bidict[str, int]): bidict of relation between protein node ID and index.
             all_nodes (dict[str, GUINode]): all node information in the GUI circuit.
@@ -107,13 +108,13 @@ class ODEBuilder:
             ode (str): string ODE equation for the target protein. It contains mRNA and protein equations.
         """
 
-        if np.all(interact_infos == 0):
+        if np.all(interact_info_array == 0):
             # if there is no interaction for the protein,
             # the ode for the protein is "d[x]/dt = α_x - d_x * [x]"
             ode = 'None'  # TODO: determine the equation when there is no interaction
         else:
             ode = ''
-            mrna_ode_str = self.make_mrna_ode(idx, interact_infos, proteinId_idx_bidict, all_nodes)
+            mrna_ode_str = self.make_mrna_ode(idx, interact_info_array, proteinId_idx_bidict, all_nodes)
             protein_ode_str = self.make_protein_ode(idx, proteinId_idx_bidict, all_nodes)
 
             ode += f'\t{mrna_ode_str}\n'
@@ -143,9 +144,9 @@ def build_function_as_str(
     all_ode_str = ''
     return_str = 'return ('
 
-    for idx, interact_infos in enumerate(protein_interact_graph):
+    for idx, interact_info_array in enumerate(protein_interact_graph):
         def_str += f'TIR{2*idx+1}:float,'
-        ode_str = ode_builder(interact_infos, idx, proteinId_idx_bidict, all_nodes)
+        ode_str = ode_builder(interact_info_array, idx, proteinId_idx_bidict, all_nodes)
         all_ode_str += ode_str
         return_str += f'd{idx*2}dt, d{idx*2+1}dt,'
 
