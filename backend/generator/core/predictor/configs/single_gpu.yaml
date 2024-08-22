@@ -1,0 +1,8 @@
+defaults:
+  - default
+  - _self_
+
+trainer:
+  strategy: auto
+  accelerator: gpu
+  devices: [0]
