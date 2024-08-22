@@ -32,6 +32,7 @@ def generate_rbs(
     batch_size: int = 64,
     num_workers: int = 4,
     init_base_sequences: Annotated[Optional[List[str]], typer.Option()] = None,
+    show_top_k: int = 3,
 ) -> None:
     """
     Args:
@@ -76,8 +77,8 @@ def generate_rbs(
         init_base_sequences=init_base_sequences,
     )
 
-    print(sequences[:3])
-    print(rescaled_predictions[:3])
+    print(sequences[:show_top_k])
+    print(rescaled_predictions[:show_top_k])
 
 
 @app.command()
