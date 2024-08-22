@@ -137,6 +137,9 @@ def run_convert(raw_circuit_data: OmegaConf) -> tuple[np.ndarray, bidict, dict[s
         all_nodes, node_category2ids, promoter_controlling_proteins
     )
 
+    assert protein_interact_graph.shape == (len(proteinId_idx_bidict), len(proteinId_idx_bidict))
+    assert np.isin(protein_interact_graph, [0, 1, -1]).all()
+
     return protein_interact_graph, proteinId_idx_bidict, all_nodes
 
 
