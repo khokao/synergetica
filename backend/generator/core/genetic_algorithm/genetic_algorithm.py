@@ -65,6 +65,8 @@ class FastGeneticAlgorithm:
                 - A list of optimized sequences after the genetic algorithm has run.
                 - A list of corresponding rescaled predictions from the model.
         """
+        assert 0 <= mutation_rate <= 1, 'Mutation rate must be between 0 and 1'
+
         scaled_target_value = (target_value - self.scaler_mean) / self.scaler_scale
 
         # Initialization
