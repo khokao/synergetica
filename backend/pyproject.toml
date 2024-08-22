@@ -14,14 +14,30 @@ packages = [
 [tool.poetry.dependencies]
 python = ">=3.12,<4"
 bidict = "^0.23.1"
+bitsandbytes = "<0.43"  # cannot install 0.43
+datasets = "*"
+einops = "*"
 fastapi = "*"
 fastapi-cli = "*"
+httpx = "*"
+hydra-core = "*"
+lightning= { version = "*", extras = ["extra"] }
 loguru = "*"
-numpy = "^2.0.0"
+numpy = "^1.0.0"
 omegaconf = "^2.3.0"
+polars = "*"
 pydantic = "*"
 scipy = "^1.14.0"
-websockets = "^12.0"
+scikit-learn = "*"
+tensorboard = "*"
+tokenizers = "*"
+torch = [
+    { version = ">=1.12+cpu", markers = "sys_platform == 'darwin'" },
+    # { version = ">=1.12+cu121", markers = "sys_platform == 'linux'" },
+]
+torchmetrics = "*"
+transformers = "*"
+typer = "*"
 
 
 [tool.poetry.group.dev.dependencies]
@@ -54,7 +70,7 @@ select = [
 
 [tool.ruff.lint.isort]
 known-first-party = ["common", "generator", "simulator"]
-known-third-party = []
+known-third-party = ["datasets"]
 
 [tool.ruff.format]
 quote-style = "single"
@@ -75,6 +91,12 @@ ignore_missing_imports = true
 [[tool.mypy.overrides]]
 module = "tests.*"
 disallow_untyped_defs = false
+
+[[tool.mypy.overrides]]
+module = "datasets.*"
+follow_imports = "skip"
+disallow_any_unimported = false
+ignore_missing_imports = true
 
 [tool.pytest.ini_options]
 testpaths = "tests"
