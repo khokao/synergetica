@@ -1,9 +1,9 @@
-import { render, screen, fireEvent } from "@testing-library/react";
-import { type Mock, vi } from "vitest";
 import { Simulation } from "@/components/Simulation/Simulation";
 import { callGeneratorAPI } from "@/hooks/useGeneratorAPI";
-import { ConverterResponseData } from "@/interfaces/simulatorAPI";
+import type { ConverterResponseData } from "@/interfaces/simulatorAPI";
+import { fireEvent, render, screen } from "@testing-library/react";
 import useSWR from "swr";
+import { type Mock, vi } from "vitest";
 
 vi.mock("@/hooks/useGeneratorAPI", () => ({
   callGeneratorAPI: vi.fn(),

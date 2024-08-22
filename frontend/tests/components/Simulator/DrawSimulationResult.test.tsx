@@ -1,7 +1,7 @@
-import { render, screen, fireEvent, within } from "@testing-library/react";
-import { describe, it, expect, vi, beforeEach } from "vitest";
 import { Graph } from "@/components/Simulation/DrawSimulationResult";
-import { ConverterResponseData } from "@/interfaces/simulatorAPI";
+import type { ConverterResponseData } from "@/interfaces/simulatorAPI";
+import { fireEvent, render, screen, within } from "@testing-library/react";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const mockSend = vi.fn();
 const mockClose = vi.fn();
@@ -32,13 +32,13 @@ describe("Graph component", () => {
 
     expect(global.WebSocket).toHaveBeenCalledWith("ws://127.0.0.1:8000/ws/simulation");
 
-    mockConvertResult.proteins.forEach((protein) => {
+    for (const protein of mockConvertResult.proteins) {
       const paramInput = screen.getByText(protein);
       expect(paramInput).toBeInTheDocument();
 
-      const valueDisplay = within(paramInput.closest("label")!).getByText("1");
+      const valueDisplay = within(paramInput.closest("label")).getByText("1");
       expect(valueDisplay).toBeInTheDocument();
-    });
+    }
   });
 
   it("should update protein parameter and send message via WebSocket when slider is changed", () => {

@@ -1,8 +1,8 @@
 import { Bottombar } from "@/components/GUI/Bottombar";
 import { Flow } from "@/components/GUI/Flow";
+import type { ConverterRequestData } from "@/interfaces/simulatorAPI";
 import type React from "react";
 import { ReactFlowProvider } from "reactflow";
-import { ConverterRequestData } from "@/interfaces/simulatorAPI";
 import "reactflow/dist/style.css";
 
 type GUIProps = {

@@ -2,8 +2,8 @@ import { FileSidebar } from "@/components/FileSidebar/FileSidebar";
 import { GUI } from "@/components/GUI/GUI";
 import { Generation } from "@/components/Generation/Generation";
 import { Simulation } from "@/components/Simulation/Simulation";
-import { Resizable } from "re-resizable";
 import { useConverterAPI } from "@/hooks/useSimulatorAPI";
+import { Resizable } from "re-resizable";
 
 const Home = () => {
   const { postConverter, ConvertResult, resetSimulator } = useConverterAPI();

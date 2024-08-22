@@ -1,6 +1,6 @@
 import { Graph } from "@/components/Simulation/DrawSimulationResult";
 import { callGeneratorAPI } from "@/hooks/useGeneratorAPI";
-import { ConverterResponseData } from "@/interfaces/simulatorAPI";
+import type { ConverterResponseData } from "@/interfaces/simulatorAPI";
 import type React from "react";
 import useSWR from "swr";
 

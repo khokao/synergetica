@@ -1,4 +1,4 @@
-import { ConverterResponseData } from "@/interfaces/simulatorAPI";
+import type { ConverterResponseData } from "@/interfaces/simulatorAPI";
 import {
   CategoryScale,
   Chart as ChartJS,
@@ -98,7 +98,7 @@ export const Graph: React.FC<{ ConvertResult: ConverterResponseData | null }> = 
   const graphData = simOutput
     ? {
         labels: simOutput.map(([time]) => time),
-        datasets: Array(ConvertResult!.num_protein)
+        datasets: Array(ConvertResult?.num_protein)
           .fill(0)
           .map((_, i) => ({
             label: ConvertResult.proteins[i],
@@ -117,7 +117,7 @@ export const Graph: React.FC<{ ConvertResult: ConverterResponseData | null }> = 
           <div className="flex flex-col justify-center items-center ml-5 mb-4 w-1/3">
             {proteinParams.map((param, index) => (
               <ParamInput
-                key={index}
+                key={ConvertResult.proteins[index]}
                 label={ConvertResult.proteins[index]}
                 value={param}
                 onChange={handleProteinParamChange(index)}
