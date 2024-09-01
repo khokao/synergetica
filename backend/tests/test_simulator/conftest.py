@@ -1,4 +1,11 @@
-#
+import pytest
+
+
+@pytest.fixture
+def get_test_circuit():
+    return TEST_CIRCUIT
+
+
 TEST_CIRCUIT = {
     'nodes': [
         {

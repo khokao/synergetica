@@ -8,25 +8,23 @@ from simulator.modules.parse_gui_graph import (
     parse_edge_connection,
 )
 
-from .circuit_for_test import TEST_CIRCUIT
 
-
-def test_parse_all_nodes():
-    circuit = OmegaConf.create(TEST_CIRCUIT)
-    all_nodes, node_category2ids = parse_all_nodes(circuit.nodes)
+def test_parse_all_nodes(get_test_circuit):
+    circuit = OmegaConf.create(get_test_circuit)
+    all_nodes = parse_all_nodes(circuit.nodes)
 
     assert len(all_nodes) == 6
-    assert len(node_category2ids) == 3
-    assert len(node_category2ids['protein']) == 2
-    assert len(node_category2ids['promoter']) == 2
-    assert len(node_category2ids['terminator']) == 2
 
 
-def test_create_partsId_nodeId_table():
-    circuit = OmegaConf.create(TEST_CIRCUIT)
+def test_create_partsId_nodeId_table(get_test_circuit):
+    # Arrange
+    circuit = OmegaConf.create(get_test_circuit)
     all_nodes, _ = parse_all_nodes(circuit.nodes)
+
+    # Act
     partsId_to_nodeIds = create_partsId_nodeId_table(all_nodes)
 
+    # Assert
     assert len(partsId_to_nodeIds) == 5
     ## terminator partsId
     assert list(partsId_to_nodeIds.keys())[0] == '8e962d8c0de8f20c5dc9047784fc10f3b55053a300cf987bfca6f9c2f3a3d62a'
@@ -42,8 +40,8 @@ def test_get_all_connected_nodes():
     assert len(connected_nodes[0]) == 3
 
 
-def test_parse_edge_connection():
-    circuit = OmegaConf.create(TEST_CIRCUIT)
+def test_parse_edge_connection(get_test_circuit):
+    circuit = OmegaConf.create(get_test_circuit)
     all_nodes, _ = parse_all_nodes(circuit.nodes)
     promoter_controlling_proteins = parse_edge_connection(circuit.edges, all_nodes)
 

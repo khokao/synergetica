@@ -15,11 +15,7 @@ def parse_all_nodes(nodes: ListConfig) -> tuple[dict[str, GUINode], dict[str, li
     Returns:
         all_nodes (dict[str,GUINode]): all nodes in the GUI circuit converted to GUINode format.
             dict: {node_id: GUINode}
-        node_category2ids (dict[str, list[str]]): dict of nodes for each node category.
-            dict: {node_category: [node_id]}.
-            node_category: 'protein', 'promoter', 'terminator'
     """
-    node_category2ids_default = defaultdict(list)
     all_nodes = {}
     for node in nodes:
         if node['type'] == 'child':
@@ -35,9 +31,8 @@ def parse_all_nodes(nodes: ListConfig) -> tuple[dict[str, GUINode], dict[str, li
                 'meta': node.data.meta,
             }
             all_nodes[node.id] = GUINode(**node_info)
-            node_category2ids_default[node.data.nodeCategory].append(node.id)
-    node_category2ids = dict(node_category2ids_default)
-    return all_nodes, node_category2ids
+
+    return all_nodes
 
 
 def create_partsId_nodeId_table(all_nodes: dict[str, GUINode]) -> dict[str, list[str]]:

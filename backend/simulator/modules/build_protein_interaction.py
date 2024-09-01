@@ -76,16 +76,12 @@ def get_protein_interaction(
 
 def build_protein_interact_graph(
     all_nodes: dict[str, GUINode],
-    node_category2ids: dict[str, list[str]],
     promoter_controlling_proteins: dict[str, list[str]],
 ) -> tuple[np.ndarray, list[str]]:
     """Build protein interaction graph from GUI circuit with promoter controlling information.
 
     Args:
         all_nodes (dict[str, GUINode]): all nodes in the circuit converted to GUINode format.
-        node_category_dict (dict[str, list[str]]): dict of nodes for each node category.
-            dict: {node_category: [node_id]}.
-            node_category: 'protein', 'promoter', 'terminator'
         promoter_controlling_proteins (dict[str, list[str]]): dict of connected protein node id for each promoter node.
 
     Returns:
@@ -95,17 +91,14 @@ def build_protein_interact_graph(
         proteinId_list (list[str]): list of protein Id. idx of the list is the idx of protein in protein_interact_graph.
     """
     partsId_to_nodeIds = create_partsId_nodeId_table(all_nodes)
-    proteinId_list = node_category2ids['protein']
-    protein_interaction_graph: np.ndarray = np.zeros(
-        (len(node_category2ids['protein']), len(node_category2ids['protein']))
-    )
+    proteinId_list = [nodeId for nodeId, node in all_nodes.items() if node.nodeCategory == 'protein']
+    protein_interaction_graph: np.ndarray = np.zeros((len(proteinId_list), len(proteinId_list)))
 
-    for idx, protein_nodeId in enumerate(node_category2ids['protein']):
+    for idx, protein_nodeId in enumerate(proteinId_list):
         controlTo_info_list = all_nodes[protein_nodeId].controlTo
-        if controlTo_info_list is None:  # np.empty asigns 0 to the array defaultly.
+        if controlTo_info_list is None:
             continue
         else:
-            # retyping from dict[str,float]| None to dict[str,float] for mypy type checking.
             controlTo_info_list = cast(list[dict[str, str]], controlTo_info_list)
         protein_interaction = get_protein_interaction(
             controlTo_info_list, promoter_controlling_proteins, partsId_to_nodeIds
@@ -128,11 +121,9 @@ def run_convert(raw_circuit_data: DictConfig) -> tuple[np.ndarray, list[str], di
         proteinId_list (list[str]): list of protein Id. idx of the list is the idx of protein in protein_interact_graph.
         all_nodes (dict[str, GUINode]): all nodes in the circuit converted to GUINode format.
     """
-    all_nodes, node_category2ids = parse_all_nodes(raw_circuit_data.nodes)
+    all_nodes = parse_all_nodes(raw_circuit_data.nodes)
     promoter_controlling_proteins = parse_edge_connection(raw_circuit_data.edges, all_nodes)
-    protein_interact_graph, proteinId_list = build_protein_interact_graph(
-        all_nodes, node_category2ids, promoter_controlling_proteins
-    )
+    protein_interact_graph, proteinId_list = build_protein_interact_graph(all_nodes, promoter_controlling_proteins)
     assert protein_interact_graph.shape == (len(proteinId_list), len(proteinId_list))
     assert np.isin(protein_interact_graph, [0, 1, -1]).all()
 
@@ -144,8 +135,7 @@ def get_parts_name_list(proteinId_list: list[str], all_nodes: dict[str, GUINode]
 
     Args:
         proteinId_list (list[str]): list of protein Id. idx of the list is the idx of protein in protein_interact_graph.
-        all_nodes (dict[str, GUINode]):
-            all nodes in the circuit converted to GUINode format.
+        all_nodes (dict[str, GUINode]): all nodes in the circuit converted to GUINode format.
 
     Returns:
         parts_name_list (list[str]): list of parts name. If there are multiple same parts name, add number to the name.
