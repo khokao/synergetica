@@ -6,7 +6,7 @@ from omegaconf.listconfig import ListConfig
 from simulator.core.schema import GUINode
 
 
-def parse_all_nodes(nodes: ListConfig) -> tuple[dict[str, GUINode], dict[str, list[str]]]:
+def parse_all_nodes(nodes: ListConfig) -> dict[str, GUINode]:
     """Parse and convert all nodes from GUI into GUINode.
 
     Args:

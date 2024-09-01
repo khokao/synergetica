@@ -19,7 +19,7 @@ def test_parse_all_nodes(get_test_circuit):
 def test_create_partsId_nodeId_table(get_test_circuit):
     # Arrange
     circuit = OmegaConf.create(get_test_circuit)
-    all_nodes, _ = parse_all_nodes(circuit.nodes)
+    all_nodes = parse_all_nodes(circuit.nodes)
 
     # Act
     partsId_to_nodeIds = create_partsId_nodeId_table(all_nodes)
@@ -42,7 +42,7 @@ def test_get_all_connected_nodes():
 
 def test_parse_edge_connection(get_test_circuit):
     circuit = OmegaConf.create(get_test_circuit)
-    all_nodes, _ = parse_all_nodes(circuit.nodes)
+    all_nodes = parse_all_nodes(circuit.nodes)
     promoter_controlling_proteins = parse_edge_connection(circuit.edges, all_nodes)
 
     assert isinstance(promoter_controlling_proteins, dict)
