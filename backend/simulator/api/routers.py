@@ -27,24 +27,22 @@ async def convert_gui_circuit(data: ConverterInput) -> ConverterOutput:
     return ConverterOutput(num_protein=num_protein, proteins=protein_names, function_str=function_str)
 
 
-functions: dict[str, Callable[..., tuple[float, ...]]] = {}
-
-
 @router.websocket('/ws/simulation')
 async def simulation(websocket: WebSocket) -> None:
+    functions: dict[str, Callable[..., tuple[float, ...]]] = {}
     logger.info('Client connected')
     await websocket.accept()
     try:
-        while True:
+        while True:  # Perpetuating the connection
             data = await websocket.receive_text()
-            if data.startswith('def '):
+            if data.startswith('def '):  # defining simulation function.
                 exec(data, globals(), functions)
                 function_name = data.split(' ')[1].split('(')[0]
                 times = np.arange(0, 30, 0.1)
                 var_init = [0.5, 1.5, 2.0, 1.0]
                 logger.info(f'Function {function_name} defined.')
                 await websocket.send_text(f"Function '{function_name}' defined.")
-            else:
+            else:  # solving ODE with the given parameters.
                 try:
                     params = json.loads(data)  # params = dict['params':list[float]]
                     logger.info(f'Params: {params}')
@@ -54,9 +52,9 @@ async def simulation(websocket: WebSocket) -> None:
                     logger.info(f'Solution: {solution[:5]}')
                     response_data = json.dumps(solution.tolist())
                     await websocket.send_text(response_data)
-                except Exception as e:
+                except Exception as e:  # When an error occurs
                     logger.error(f'Error processing parameters: {e}')
                     await websocket.send_text(f'Error: {str(e)}')
 
-    except WebSocketDisconnect:
+    except WebSocketDisconnect:  # When the client disconnects
         logger.info('Client disconnected')
