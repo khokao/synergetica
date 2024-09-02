@@ -20,19 +20,16 @@ def test_convert_gui_circuit_returns_correct_output(get_test_circuit, expected_f
     # Arrange
     sample_flow_data_json = json.dumps(get_test_circuit)
     endpoint = '/convert-gui-circuit'
-    data = {'flow_data_json': sample_flow_data_json}
+    data = {'flow_data_json_str': sample_flow_data_json}
 
     # Act
     response = client.post(endpoint, json=data)
+    response_data = response.json()
 
     # Assert
     assert response.status_code == HTTPStatus.OK
-    response_data = response.json()
     ConverterOutput(**response_data)
-
-    expected_output = ConverterOutput(num_protein=2, proteins=['BM3R1', 'AmeR'], function_str=expected_function)
-    assert response_data['num_protein'] == expected_output.num_protein
-    assert response_data['proteins'] == expected_output.proteins
+    assert response_data['proteins'] == ['BM3R1', 'AmeR']
 
 
 def test_websocket_simulation(expected_function):
