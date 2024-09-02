@@ -32,7 +32,7 @@ impl APIClient {
         client
             .post("http://127.0.0.1:8000/convert-gui-circuit")
             .json(&json!({
-                "flow_data_json":flow_json
+                "flow_data_json_str":flow_json
             }))
             .send()
             .await

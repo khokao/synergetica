@@ -17,7 +17,7 @@ router = APIRouter()
 
 @router.post('/convert-gui-circuit', response_model=ConverterOutput)
 async def convert_gui_circuit(data: ConverterInput) -> ConverterOutput:
-    raw_circuit_data: dict = json.loads(data.flow_data_json)
+    raw_circuit_data: dict = json.loads(data.flow_data_json_str)
     circuit = OmegaConf.create(raw_circuit_data)
     protein_interact_graph, proteinId_list, all_nodes = run_convert(circuit)
     num_protein = len(proteinId_list)

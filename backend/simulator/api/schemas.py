@@ -13,7 +13,7 @@ class SimulatorOutput(BaseModel):
 
 
 class ConverterInput(BaseModel):
-    flow_data_json: str
+    flow_data_json_str: str
 
 
 class ConverterOutput(BaseModel):
