@@ -32,19 +32,27 @@ def test_create_partsId_nodeId_table(get_test_circuit):
 
 
 def test_get_all_connected_nodes():
+    # Arrange
     adj_matrix = np.array(([0, 1, 1], [1, 0, 0], [1, 0, 0]))
+
+    # Act
     connected_nodes = get_all_connected_nodes(adj_matrix)
 
+    # Assert
     assert len(connected_nodes) == 3
     assert isinstance(connected_nodes[0], list)
     assert len(connected_nodes[0]) == 3
 
 
 def test_parse_edge_connection(get_test_circuit):
+    # Arrange
     circuit = OmegaConf.create(get_test_circuit)
     all_nodes = parse_all_nodes(circuit.nodes)
+
+    # Act
     promoter_controlling_proteins = parse_edge_connection(circuit.edges, all_nodes)
 
+    # Assert
     assert isinstance(promoter_controlling_proteins, dict)
     assert len(promoter_controlling_proteins) == 2
     assert len(list(promoter_controlling_proteins.values())[0]) == 1
