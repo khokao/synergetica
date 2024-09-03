@@ -13,7 +13,6 @@ packages = [
 
 [tool.poetry.dependencies]
 python = ">=3.12,<4"
-bidict = "^0.23.1"
 bitsandbytes = "<0.43"  # cannot install 0.43
 datasets = "*"
 einops = "*"

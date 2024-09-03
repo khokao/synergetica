@@ -6,7 +6,7 @@ mod schemas;
 
 use clients::APIClient;
 use errors::{handle_request_error, handle_response_error};
-use schemas::{GeneratorResponseData, SimulatorResponseData};
+use schemas::{GeneratorResponseData,ConverterResponseData};
 use serde::Serialize;
 use std::collections::HashMap;
 use std::fs;
@@ -62,13 +62,13 @@ async fn cancel_generator_api(state: tauri::State<'_, Arc<Mutex<AppState>>>) -> 
 }
 
 #[tauri::command]
-async fn call_simulator_api(param1: f64, param2: f64) -> Result<SimulatorResponseData, String> {
-    let response = APIClient::send_request_simulation(param1, param2).await;
+async fn call_circuit_converter_api(flow_json: String) -> Result<ConverterResponseData, String> {
+    let response = APIClient::send_request_circuit_converter(flow_json).await;
 
     match response {
         Ok(resp) => {
             if resp.status().is_success() {
-                APIClient::parse_response_simulator(resp).await
+                APIClient::parse_response_circuit_converter(resp).await
             } else {
                 Err(handle_response_error(resp.status()))
             }
@@ -121,7 +121,7 @@ async fn main() {
         .invoke_handler(tauri::generate_handler![
             call_generator_api,
             cancel_generator_api,
-            call_simulator_api,
+            call_circuit_converter_api,
             read_dir
         ])
         .run(tauri::generate_context!())

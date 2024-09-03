@@ -6,20 +6,16 @@ from omegaconf.listconfig import ListConfig
 from simulator.core.schema import GUINode
 
 
-def parse_all_nodes(nodes: ListConfig) -> tuple[dict[str, GUINode], dict[str, list[str]]]:
+def parse_all_nodes(nodes: ListConfig) -> dict[str, GUINode]:
     """Parse and convert all nodes from GUI into GUINode.
 
     Args:
-        nodes (list[dict[str, str]]): node information output from GUI section.
+        nodes (ListConfig): node information output from GUI section.
 
     Returns:
         all_nodes (dict[str,GUINode]): all nodes in the GUI circuit converted to GUINode format.
             dict: {node_id: GUINode}
-        node_category2ids (dict[str, list[str]]): dict of nodes for each node category.
-            dict: {node_category: [node_id]}.
-            node_category: 'protein', 'promoter', 'terminator'
     """
-    node_category2ids_default = defaultdict(list)
     all_nodes = {}
     for node in nodes:
         if node['type'] == 'child':
@@ -29,29 +25,29 @@ def parse_all_nodes(nodes: ListConfig) -> tuple[dict[str, GUINode], dict[str, li
                 'nodeSubcategory': node.data.nodeSubcategory,
                 'nodePartsName': node.data.nodePartsName,
                 'sequence': node.data.sequence,
+                'partsId': node.data.partsId,
                 'controlTo': node.data.controlTo,
                 'controlBy': node.data.controlBy,
                 'meta': node.data.meta,
             }
             all_nodes[node.id] = GUINode(**node_info)
-            node_category2ids_default[node.data.nodeCategory].append(node.id)
-    node_category2ids = dict(node_category2ids_default)
-    return all_nodes, node_category2ids
+
+    return all_nodes
 
 
-def create_partsName_nodeId_table(all_nodes: dict[str, GUINode]) -> dict[str, list[str]]:
+def create_partsId_nodeId_table(all_nodes: dict[str, GUINode]) -> dict[str, list[str]]:
     """Create partsName to nodeId table for all nodes in the GUI circuit.
 
     Args:
         all_nodes (dict[str, GUINode]): all nodes in the GUI circuit converted to GUINode format.
 
     Returns:
-        partsName_to_nodeId: dict[str, list[str]]: dict of node_id for each partsName.
+        partsId_to_nodeIds: dict[str, list[str]]: dict of node_id for each partsName.
             dict: {nodePartsName: [node_id]}
     """
     partsName_to_nodeIds_default = defaultdict(list)
     for node in all_nodes.values():
-        partsName_to_nodeIds_default[node.nodePartsName].append(node.id)
+        partsName_to_nodeIds_default[node.partsId].append(node.id)
 
     partsName_to_nodeIds = dict(partsName_to_nodeIds_default)
     return partsName_to_nodeIds
@@ -74,10 +70,9 @@ def dfs(node: int, visited: set, adj_matrix: np.ndarray) -> None:
 
 def get_all_connected_nodes(adj_matrix: np.ndarray) -> list[list[int]]:
     """get node connection for all nodes in the GUI graph.
-
     Args:
-        adj_matrix (np.ndarray): adjacency matrix of the GUI graph.
-
+        adj_matrix (np.ndarray): adjacency matrix of the GUI graph. values = 0 or 1.
+            shape=(num_nodes, num_nodes)
     Returns:
         all_connected_node_idx (list[list[int]]): list of connected nodes idx for each node.
             len(all_connected_nodes) = num_nodes
@@ -125,7 +120,7 @@ def parse_edge_connection(edges: ListConfig, all_nodes: dict[str, GUINode]) -> d
     """list up under controlled proteins for each promoter
 
     Args:
-        edges (list[dict]): edge info POST from GUI section.
+        edges (list[dict]): edge information of  GUI circuit.
         all_nodes (dict[str, GUINode]): all nodes in the circuit converted to GUINode format.
 
     Returns:

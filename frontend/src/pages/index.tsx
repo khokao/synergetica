@@ -1,10 +1,12 @@
 import { FileSidebar } from "@/components/FileSidebar/FileSidebar";
 import { GUI } from "@/components/GUI/GUI";
 import { Simulation } from "@/components/Simulation/Simulation";
+import { useConverterAPI } from "@/hooks/useSimulatorAPI";
 import { Resizable } from "re-resizable";
 import { ReactFlowProvider } from "reactflow";
 
 const Home = () => {
+  const { postConverter, ConvertResult, resetSimulator } = useConverterAPI();
   return (
     // Wrap all with ReactFlowProvider to access ReactFlow state globally.
     <ReactFlowProvider>
@@ -32,7 +34,7 @@ const Home = () => {
           maxWidth={"50%"}
           enable={{ right: true }}
         >
-          <GUI />
+          <GUI onClickSimulate={postConverter} />
         </Resizable>
 
         <Resizable
@@ -45,7 +47,7 @@ const Home = () => {
           maxWidth={"50%"}
           enable={{ right: true }}
         >
-          <Simulation />
+          <Simulation ConvertResult={ConvertResult} reseter={resetSimulator} />
         </Resizable>
       </div>
     </ReactFlowProvider>

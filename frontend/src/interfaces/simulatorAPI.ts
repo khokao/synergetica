@@ -8,3 +8,13 @@ export interface SimulatorResponseData {
   data2: number[];
   time: string[];
 }
+
+export interface ConverterRequestData {
+  flow_json: string;
+}
+
+export interface ConverterResponseData {
+  num_protein: number;
+  proteins: string[];
+  function_str: string;
+}
