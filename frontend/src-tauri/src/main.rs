@@ -8,26 +8,39 @@ use clients::APIClient;
 use errors::{handle_request_error, handle_response_error};
 use schemas::{GeneratorResponseData, SimulatorResponseData};
 use serde::Serialize;
+use std::collections::HashMap;
 use std::fs;
 use std::path::Path;
+use std::sync::Arc;
 use tauri::Builder;
+use tokio::sync::Mutex;
+use tokio_util::sync::CancellationToken;
+
+struct AppState {
+    cancellation_token: CancellationToken,
+}
 
 #[tauri::command]
 async fn call_generator_api(
-    rbs_parameter: f64,
-    rbs_upstream: String,
-    rbs_downstream: String,
-    promoter_parameter: f64,
-    promoter_upstream: String,
+    reactflow_object_json_str: String,
+    rbs_target_parameters: HashMap<String, f64>,
+    state: tauri::State<'_, Arc<Mutex<AppState>>>,
 ) -> Result<GeneratorResponseData, String> {
-    let response = APIClient::send_request(
-        rbs_parameter,
-        rbs_upstream,
-        rbs_downstream,
-        promoter_parameter,
-        promoter_upstream,
-    )
-    .await;
+    let token = CancellationToken::new();
+    {
+        let mut state = state.lock().await;
+        state.cancellation_token = token.clone();
+    }
+
+    let response = tokio::select! {
+        resp = APIClient::send_request_generation(
+            reactflow_object_json_str,
+            rbs_target_parameters,
+        ) => resp,
+        _ = token.cancelled() => {
+            return Err("Request was cancelled".into());
+        }
+    };
 
     match response {
         Ok(resp) => {
@@ -39,6 +52,13 @@ async fn call_generator_api(
         }
         Err(e) => Err(handle_request_error(e)),
     }
+}
+
+#[tauri::command]
+async fn cancel_generator_api(state: tauri::State<'_, Arc<Mutex<AppState>>>) -> Result<(), ()> {
+    let state = state.lock().await;
+    state.cancellation_token.cancel();
+    Ok(())
 }
 
 #[tauri::command]
@@ -92,9 +112,15 @@ fn read_dir(path: String) -> Result<FileEntry, String> {
 
 #[tokio::main]
 async fn main() {
+    let state = Arc::new(Mutex::new(AppState {
+        cancellation_token: CancellationToken::new(),
+    }));
+
     Builder::default()
+        .manage(state)
         .invoke_handler(tauri::generate_handler![
             call_generator_api,
+            cancel_generator_api,
             call_simulator_api,
             read_dir
         ])
