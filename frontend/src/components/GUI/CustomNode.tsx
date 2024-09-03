@@ -1,6 +1,7 @@
 import { NodeCommandPalette } from "@/components/GUI/NodeCommandPalette";
 import type React from "react";
 import { Handle, type NodeProps, Position } from "reactflow";
+import type { NodeTypes } from "reactflow";
 
 interface ControlData {
   partsId: string;
@@ -51,18 +52,25 @@ export const CustomChildNode = ({ id, data }: NodeProps<CustomChildNodeData>) =>
         data-testid="handle-right"
       />
       <div className="absolute" style={data.commandPaletteButtonStyle} data-testid="command-palette-button">
-        <NodeCommandPalette nodeCategory={data.nodeCategory} nodeId={id} />
+        <NodeCommandPalette nodeCategory={data.nodeCategory} nodePartsName={data.nodePartsName} nodeId={id} />
       </div>
     </div>
   );
 };
 
-export const CustomParentNode = ({ data }: NodeProps<CustomParentNodeData>) => {
+export const CustomParentNode = ({ id, data }: NodeProps<CustomParentNodeData>) => {
   return (
-    <div
-      className="border-2 border-gray-500 rounded-xl"
-      style={{ width: data.width, height: data.height }}
-      data-testid="parent-node"
-    />
+    <div className="relative" style={{ width: data.width, height: data.height }} data-testid="parent-node">
+      <div
+        className="absolute px-3 py-0 text-lg text-gray-800 bg-gray-100 rounded-lg"
+        style={{ top: "-36px", left: "0px" }}
+      >
+        {id}
+      </div>
+
+      <div className="border-2 border-gray-500 rounded-xl" style={{ width: "100%", height: "100%" }} />
+    </div>
   );
 };
+
+export const flowNodeTypes: NodeTypes = { child: CustomChildNode, parent: CustomParentNode };
