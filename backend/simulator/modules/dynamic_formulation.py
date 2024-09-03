@@ -42,29 +42,31 @@ class ODEBuilder:
 
         Args:
             idx (int): protein index in the protein_interaction_graph.
-            interact_infos (np.ndarray): array of interaction info for the target protein. 1 or -1 or 0.
+            interact_info_array (npt.NDArray[np.int_]): array of interaction info for the target protein. 1 or -1 or 0.
             proteinId_list (list[str]): list of protein Id. idx of the list is the idx of ptn in protein_interact_graph.
             all_nodes (dict[str, GUINode]): all node information in the GUI circuit.
 
         Returns:
             mrna_ode_str (str): mRNA ODE equation as a string.
         """
-        prs = ''
-        for j, interact_info in enumerate(interact_info_array):
-            if interact_info == 0:
-                continue
+        if np.all(interact_info_array == 0):
+            prs = '1'
+        else:
+            prs = ''
+            for j, interact_info in enumerate(interact_info_array):
+                if interact_info == 0:
+                    continue
 
-            interact_params = all_nodes[proteinId_list[j]].meta
-            # retyping from dict[str,float]| None to dict[str,float] for mypy type checking.
-            assert interact_params is not None, 'interaction is defined but parameters are not defined'
-            # interact_params = cast(dict[str, float], interact_params)
-            protein_idx = 2 * j + 1
-            prs += self.PRS_str(interact_params, var_idx=protein_idx, control_type=interact_info)
-            prs += ' * '
+                interact_params = all_nodes[proteinId_list[j]].meta
+                # retyping from dict[str,float]| None to dict[str,float] for mypy type checking.
+                assert interact_params is not None, 'interaction is defined but parameters are not defined'
+                # interact_params = cast(dict[str, float], interact_params)
+                protein_idx = 2 * j + 1
+                prs += self.PRS_str(interact_params, var_idx=protein_idx, control_type=interact_info)
 
         own_params = all_nodes[proteinId_list[idx]].meta
         assert own_params is not None, 'protein parameters are not defined'
-        mrna_ode_right = f'{self.Emrna} * {own_params['Pmax']} * {prs} {self.PCN} - {self.Dmrna} * var[{idx*2}]'
+        mrna_ode_right = f'{self.Emrna} * {own_params['Pmax']} * {prs} * {self.PCN} - {self.Dmrna} * var[{idx*2}]'
         mrna_ode_left = f'd{idx*2}dt'
         mrna_ode_str = f'{mrna_ode_left} = {mrna_ode_right}'
         return mrna_ode_str
@@ -98,7 +100,7 @@ class ODEBuilder:
         """
 
         Args:
-            interact_info_array (np.ndarray):  array of interaction info for the target protein. 1 or -1 or 0.
+            interact_info_array (npt.NDArray[np.int_]):  array of interaction info for the target protein. 1 or -1 or 0.
             idx (int): protein index in the protein_interaction_graph.
             proteinId_list (list[str]): list of protein Id. idx of the list is the idx of ptn in protein_interact_graph.
             all_nodes (dict[str, GUINode]): all node information in the GUI circuit.
@@ -107,17 +109,12 @@ class ODEBuilder:
             ode (str): string ODE equation for the target protein. It contains mRNA and protein equations.
         """
 
-        if np.all(interact_info_array == 0):
-            # if there is no interaction for the protein,
-            # the ode for the protein is "d[x]/dt = α_x - d_x * [x]"
-            ode = 'None'  # TODO: determine the equation when there is no interaction
-        else:
-            ode = ''
-            mrna_ode_str = self.make_mrna_ode(idx, interact_info_array, proteinId_list, all_nodes)
-            protein_ode_str = self.make_protein_ode(idx, proteinId_list, all_nodes)
+        ode = ''
+        mrna_ode_str = self.make_mrna_ode(idx, interact_info_array, proteinId_list, all_nodes)
+        protein_ode_str = self.make_protein_ode(idx, proteinId_list, all_nodes)
 
-            ode += f'\t{mrna_ode_str}\n'
-            ode += f'\t{protein_ode_str}\n'
+        ode += f'\t{mrna_ode_str}\n'
+        ode += f'\t{protein_ode_str}\n'
 
         return ode
 

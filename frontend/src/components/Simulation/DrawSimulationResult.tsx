@@ -56,7 +56,7 @@ export const Graph: React.FC<{ ConvertResult: ConverterResponseData | null }> = 
 
       const wsDefine = new WebSocket("ws://127.0.0.1:8000/ws/simulation");
       wsDefine.onopen = () => {
-        wsDefine.send(ConvertResult.function_str);
+        wsDefine.send(JSON.stringify(ConvertResult));
       };
       wsDefine.onmessage = (event) => {
         console.log("Received from server:", event.data);
@@ -95,7 +95,7 @@ export const Graph: React.FC<{ ConvertResult: ConverterResponseData | null }> = 
 
   const options = getGraphOptions();
 
-  const graphData = simOutput
+  const graphData = simOutput && ConvertResult
     ? {
         labels: simOutput.map(([time]) => time),
         datasets: Array(ConvertResult?.num_protein)

@@ -34,20 +34,22 @@ async def simulation(websocket: WebSocket) -> None:
     await websocket.accept()
     try:
         while True:  # Perpetuating the connection
-            data = await websocket.receive_text()
-            if data.startswith('def '):  # defining simulation function.
-                exec(data, globals(), functions)
-                function_name = data.split(' ')[1].split('(')[0]
+            raw_string_data = await websocket.receive_text()
+            data = json.loads(raw_string_data)
+            logger.info(f'Received data: {data.keys()}')
+            if 'function_str' in data:  # defining simulation function.
+                function_str = data.get('function_str', None)
+                exec(function_str, globals(), functions)
+                function_name = function_str.split(' ')[1].split('(')[0]
                 times = np.arange(0, 30, 0.1)
-                var_init = [0.5, 1.5, 2.0, 1.0]
+                var_init = [0] * (data['num_protein'] * 2)
                 logger.info(f'Function {function_name} defined.')
                 await websocket.send_text(f"Function '{function_name}' defined.")
             else:  # solving ODE with the given parameters.
                 try:
-                    params = json.loads(data)  # params = dict['params':list[float]]
-                    logger.info(f'Params: {params}')
+                    params = data['params']  # params = dict['params':list[float]]
                     solution = solve_ode_with_euler(
-                        functions[function_name], times=times, var_init=var_init, args=tuple(params['params'])
+                        functions[function_name], times=times, var_init=var_init, args=tuple(params)
                     )
                     logger.info(f'Solution: {solution[:5]}')
                     response_data = json.dumps(solution.tolist())
