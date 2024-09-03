@@ -36,10 +36,15 @@ export const updateNodeMetadata = (nds: Node[], nodeId: string, option: OptionDa
   });
 };
 
-export const NodeCommandPalette = ({ nodeCategory, nodeId }: { nodeCategory: string; nodeId: string }) => {
+export const NodeCommandPalette = ({
+  nodeCategory,
+  nodePartsName,
+  nodeId,
+}: { nodeCategory: string; nodePartsName: string; nodeId: string }) => {
   const options = commandPaletteOptions[nodeCategory];
+  const initSelected = options.find((option) => option.name === nodePartsName);
 
-  const [selected, setSelected] = useState<OptionData>(null);
+  const [selected, setSelected] = useState<OptionData>(initSelected);
   const [isOpen, setIsOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const reactFlow = useReactFlow();
