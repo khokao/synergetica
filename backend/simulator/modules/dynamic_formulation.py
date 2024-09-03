@@ -2,7 +2,7 @@
 # skip undefined name error for dynamic function generation.
 
 import numpy as np
-from bidict import bidict
+import numpy.typing as npt
 
 from simulator.core.schema import GUINode
 
@@ -34,8 +34,8 @@ class ODEBuilder:
     def make_mrna_ode(
         self,
         idx: int,
-        interact_infos: np.ndarray,
-        proteinId_idx_bidict: bidict[str, int],
+        interact_info_array: npt.NDArray[np.int_],
+        proteinId_list: list[str],
         all_nodes: dict[str, GUINode],
     ) -> str:
         """build mRNA ODE equation as a string.
@@ -43,18 +43,18 @@ class ODEBuilder:
         Args:
             idx (int): protein index in the protein_interaction_graph.
             interact_infos (np.ndarray): array of interaction info for the target protein. 1 or -1 or 0.
-            proteinId_idx_bidict (bidict[str, int]): bidict of relation between protein node ID and index.
+            proteinId_list (list[str]): list of protein Id. idx of the list is the idx of ptn in protein_interact_graph.
             all_nodes (dict[str, GUINode]): all node information in the GUI circuit.
 
         Returns:
             mrna_ode_str (str): mRNA ODE equation as a string.
         """
         prs = ''
-        for j, interact_info in enumerate(interact_infos):
+        for j, interact_info in enumerate(interact_info_array):
             if interact_info == 0:
                 continue
 
-            interact_params = all_nodes[proteinId_idx_bidict.inverse[j]].meta
+            interact_params = all_nodes[proteinId_list[j]].meta
             # retyping from dict[str,float]| None to dict[str,float] for mypy type checking.
             assert interact_params is not None, 'interaction is defined but parameters are not defined'
             # interact_params = cast(dict[str, float], interact_params)
@@ -62,25 +62,25 @@ class ODEBuilder:
             prs += self.PRS_str(interact_params, var_idx=protein_idx, control_type=interact_info)
             prs += ' * '
 
-        own_params = all_nodes[proteinId_idx_bidict.inverse[idx]].meta
+        own_params = all_nodes[proteinId_list[idx]].meta
         assert own_params is not None, 'protein parameters are not defined'
         mrna_ode_right = f'{self.Emrna} * {own_params['Pmax']} * {prs} {self.PCN} - {self.Dmrna} * var[{idx*2}]'
         mrna_ode_left = f'd{idx*2}dt'
         mrna_ode_str = f'{mrna_ode_left} = {mrna_ode_right}'
         return mrna_ode_str
 
-    def make_protein_ode(self, idx: int, proteinId_idx_bidict: bidict[str, int], all_nodes: dict[str, GUINode]) -> str:
+    def make_protein_ode(self, idx: int, proteinId_list: list[str], all_nodes: dict[str, GUINode]) -> str:
         """build protein ODE equation as a string.
 
         Args:
             idx (int): protein index in the protein_interaction_graph.
-            proteinId_idx_bidict (bidict[str, int]): bidict of relation between protein node ID and index.
+            proteinId_list (list[str]): list of protein Id. idx of the list is the idx of ptn in protein_interact_graph.
             all_nodes (dict[str, GUINode]): all node information in the GUI circuit.
 
         Returns:
             protein_ode_str (str): protein ODE equation as a string.
         """
-        own_params = all_nodes[proteinId_idx_bidict.inverse[idx]].meta
+        own_params = all_nodes[proteinId_list[idx]].meta
         assert own_params is not None, 'protein parameters are not defined'
         protein_ode_left = f'd{idx*2+1}dt'
         protein_ode_right = f'{self.Erpu} * TIR{2*idx+1} * var[{idx*2}] - {own_params['Dp']} * var[{idx*2+1}]'
@@ -90,31 +90,31 @@ class ODEBuilder:
 
     def __call__(
         self,
-        interact_infos: np.ndarray,
+        interact_info_array: npt.NDArray[np.int_],
         idx: int,
-        proteinId_idx_bidict: bidict[str, int],
+        proteinId_list: list[str],
         all_nodes: dict[str, GUINode],
     ) -> str:
         """
 
         Args:
-            interact_infos (np.ndarray):  array of interaction info for the target protein. 1 or -1 or 0.
+            interact_info_array (np.ndarray):  array of interaction info for the target protein. 1 or -1 or 0.
             idx (int): protein index in the protein_interaction_graph.
-            proteinId_idx_bidict (bidict[str, int]): bidict of relation between protein node ID and index.
+            proteinId_list (list[str]): list of protein Id. idx of the list is the idx of ptn in protein_interact_graph.
             all_nodes (dict[str, GUINode]): all node information in the GUI circuit.
 
         Returns:
             ode (str): string ODE equation for the target protein. It contains mRNA and protein equations.
         """
 
-        if np.all(interact_infos == 0):
+        if np.all(interact_info_array == 0):
             # if there is no interaction for the protein,
             # the ode for the protein is "d[x]/dt = α_x - d_x * [x]"
             ode = 'None'  # TODO: determine the equation when there is no interaction
         else:
             ode = ''
-            mrna_ode_str = self.make_mrna_ode(idx, interact_infos, proteinId_idx_bidict, all_nodes)
-            protein_ode_str = self.make_protein_ode(idx, proteinId_idx_bidict, all_nodes)
+            mrna_ode_str = self.make_mrna_ode(idx, interact_info_array, proteinId_list, all_nodes)
+            protein_ode_str = self.make_protein_ode(idx, proteinId_list, all_nodes)
 
             ode += f'\t{mrna_ode_str}\n'
             ode += f'\t{protein_ode_str}\n'
@@ -123,15 +123,14 @@ class ODEBuilder:
 
 
 def build_function_as_str(
-    protein_interact_graph: np.ndarray, proteinId_idx_bidict: bidict[str, int], all_nodes: dict[str, GUINode]
+    protein_interact_graph: np.ndarray, proteinId_list: list[str], all_nodes: dict[str, GUINode]
 ) -> str:
     """Build ODE function as a string to be defined by exec().
 
     Args:
         protein_interact_graph (np.ndarray): directed graph of protein interaction converted from GUI circuit.
             protein_interact_graph[i][j] = 1 or -1. how control protein-i to protein-j
-        proteinId_idx_bidict (bidict.bidict[str,int]):
-            relation between idx and protein node in protein_interact_graph with bidict.
+        proteinId_list (list[str]): list of protein Id. idx of the list is the idx of protein in protein_interact_graph.
         all_nodes (dict[str, GUINode]): all nodes in the GUI circuit converted to GUINode format.
 
     Returns:
@@ -143,9 +142,9 @@ def build_function_as_str(
     all_ode_str = ''
     return_str = 'return ('
 
-    for idx, interact_infos in enumerate(protein_interact_graph):
+    for idx, interact_info_array in enumerate(protein_interact_graph):
         def_str += f'TIR{2*idx+1}:float,'
-        ode_str = ode_builder(interact_infos, idx, proteinId_idx_bidict, all_nodes)
+        ode_str = ode_builder(interact_info_array, idx, proteinId_list, all_nodes)
         all_ode_str += ode_str
         return_str += f'd{idx*2}dt, d{idx*2+1}dt,'
 

@@ -2,9 +2,11 @@ import { FileSidebar } from "@/components/FileSidebar/FileSidebar";
 import { GUI } from "@/components/GUI/GUI";
 import { Generation } from "@/components/Generation/Generation";
 import { Simulation } from "@/components/Simulation/Simulation";
+import { useConverterAPI } from "@/hooks/useSimulatorAPI";
 import { Resizable } from "re-resizable";
 
 const Home = () => {
+  const { postConverter, ConvertResult, resetSimulator } = useConverterAPI();
   return (
     <div className="flex h-screen">
       <Resizable
@@ -30,7 +32,7 @@ const Home = () => {
         maxWidth={"50%"}
         enable={{ right: true }}
       >
-        <GUI />
+        <GUI onClickSimulate={postConverter} />
       </Resizable>
 
       <div className="flex flex-col flex-grow">
@@ -44,7 +46,7 @@ const Home = () => {
           maxHeight={"90%"}
           enable={{ bottom: true }}
         >
-          <Simulation />
+          <Simulation ConvertResult={ConvertResult} reseter={resetSimulator} />
         </Resizable>
         <Generation />
       </div>

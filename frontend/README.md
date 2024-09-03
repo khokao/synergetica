@@ -7,6 +7,10 @@ First, install the necessary dependencies:
 npm install
 ```
 
+if rust/cargo haven't installed, run the following command:
+```zsh
+curl https://sh.rustup.rs -sSf | sh
+```
 ## Development
 To run the application in development mode, use the following command:
 ```zsh

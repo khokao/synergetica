@@ -1,5 +1,7 @@
 import { CustomChildNode, CustomParentNode } from "@/components/GUI/CustomNode";
 import { createChildNode, dragChildNode, stopDragChildNode } from "@/components/GUI/nodeActions";
+import { callCircuitConverterAPI } from "@/hooks/useSimulatorAPI";
+import type { ConverterRequestData } from "@/interfaces/simulatorAPI";
 import type React from "react";
 import { useCallback, useRef } from "react";
 import ReactFlow, {
@@ -20,7 +22,11 @@ import type { StoreApi } from "zustand";
 
 const nodeTypes: NodeTypes = { child: CustomChildNode, parent: CustomParentNode };
 
-export const Flow: React.FC = () => {
+type GUIProps = {
+  onClickSimulate: (data: ConverterRequestData) => void;
+};
+
+export const Flow: React.FC<GUIProps> = ({ onClickSimulate }) => {
   const [nodes, setNodes, onNodesChange] = useNodesState<Node[]>([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState<Edge[]>([]);
   const store = useStoreApi();
@@ -96,6 +102,15 @@ export const Flow: React.FC = () => {
     [setEdges, setNodes, store],
   );
 
+  const handleClickSimulate = async () => {
+    const flowData = {
+      nodes,
+      edges,
+    };
+    const flowDataJson = { flow_json: JSON.stringify(flowData, null, 2) };
+    onClickSimulate(flowDataJson);
+  };
+
   return (
     <div className="flex-grow h-full" ref={reactFlowWrapper}>
       <ReactFlow
@@ -119,6 +134,7 @@ export const Flow: React.FC = () => {
         <Panel
           position="bottom-right"
           className="px-2 py-1 text-center border-2 border-black rounded bg-white cursor-pointer"
+          onClick={handleClickSimulate}
         >
           Simulate
         </Panel>
