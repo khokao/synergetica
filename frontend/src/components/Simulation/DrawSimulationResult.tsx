@@ -10,7 +10,7 @@ import {
   Tooltip,
 } from "chart.js";
 import type React from "react";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState,Dispatch,SetStateAction} from "react";
 import { Line } from "react-chartjs-2";
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
@@ -45,15 +45,14 @@ const ParamInput = ({ label, value, onChange }) => (
   </label>
 );
 
-export const Graph: React.FC<{ ConvertResult: ConverterResponseData | null }> = ({ ConvertResult }) => {
-  const [proteinParams, setProteinParams] = useState<number[]>([]);
+export const Graph: React.FC<{ ConvertResult: ConverterResponseData | null, proteinParameter: number[],setproteinParameter:Dispatch<SetStateAction<number[]>>}> = ({ ConvertResult,proteinParameter,setproteinParameter }) => {
   const [ws, setWs] = useState<WebSocket | null>(null);
   const [simOutput, setSimOutput] = useState<number[][] | null>(null);
 
+
   useEffect(() => {
     if (ConvertResult !== null) {
-      setProteinParams(Array(ConvertResult.num_protein).fill(1));
-
+      setproteinParameter(Array(ConvertResult.num_protein).fill(1));
       const wsDefine = new WebSocket("ws://127.0.0.1:8000/ws/simulation");
       wsDefine.onopen = () => {
         wsDefine.send(JSON.stringify(ConvertResult));
@@ -74,10 +73,10 @@ export const Graph: React.FC<{ ConvertResult: ConverterResponseData | null }> = 
   }, [ConvertResult]);
 
   const handleProteinParamChange = (index: number) => (event: React.ChangeEvent<HTMLInputElement>) => {
-    const newProteinParams = [...proteinParams];
+    const newProteinParams = [...proteinParameter];
     newProteinParams[index] = Number.parseFloat(event.target.value);
-    setProteinParams(newProteinParams);
-
+    setproteinParameter(newProteinParams);
+    console.log(proteinParameter);
     if (ws && ws.readyState === WebSocket.OPEN) {
       const params = JSON.stringify({
         params: newProteinParams,
@@ -115,7 +114,7 @@ export const Graph: React.FC<{ ConvertResult: ConverterResponseData | null }> = 
         <div className="flex flex-row h-full">
           <div className="h-full w-2/3">{graphData && <Line options={options} data={graphData} />}</div>
           <div className="flex flex-col justify-center items-center ml-5 mb-4 w-1/3">
-            {proteinParams.map((param, index) => (
+            {proteinParameter.map((param, index) => (
               <ParamInput
                 key={ConvertResult.proteins[index]}
                 label={ConvertResult.proteins[index]}

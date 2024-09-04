@@ -1,6 +1,5 @@
 import { flowNodeTypes } from "@/components/GUI/CustomNode";
 import { createChildNode, dragChildNode, stopDragChildNode } from "@/components/GUI/nodeActions";
-import { callCircuitConverterAPI } from "@/hooks/useSimulatorAPI";
 import type { ConverterRequestData } from "@/interfaces/simulatorAPI";
 import type React from "react";
 import { useCallback, useRef } from "react";

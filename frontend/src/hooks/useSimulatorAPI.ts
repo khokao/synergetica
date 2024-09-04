@@ -20,3 +20,9 @@ export const useConverterAPI = () => {
   };
   return { postConverter, ConvertResult, resetSimulator };
 };
+
+
+export const useProteinParameter = () => {
+  const [proteinParameter, setproteinParameter] = useState<number[]>([]);
+  return { proteinParameter, setproteinParameter };
+}
