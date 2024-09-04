@@ -18,7 +18,6 @@ import ReactFlow, {
 } from "reactflow";
 import type { StoreApi } from "zustand";
 
-
 type GUIProps = {
   onClickSimulate: (data: ConverterRequestData) => void;
 };

@@ -1,5 +1,4 @@
 export interface generatorRequestData {
-  reactflow_object_json_str: string;
   rbs_target_parameters: { [key: string]: number };
 }
 

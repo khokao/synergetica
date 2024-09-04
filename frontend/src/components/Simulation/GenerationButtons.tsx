@@ -6,13 +6,12 @@ import { useState } from "react";
 import { type Edge, type Node, useReactFlow } from "reactflow";
 import useSWR from "swr";
 
-export const GenerationButtons: React.FC<{ proteinParameter: number[] }> = ({proteinParameter}) => {
+export const GenerationButtons: React.FC<{ SimulatorResult: { [key: string]: number } }> = ({ SimulatorResult }) => {
   const { data, mutate, isValidating } = useSWR(
     "call_generator_api",
     async () => {
       const generatorRequestData = {
-        reactflow_object_json_str: "",
-        rbs_target_parameters: proteinParameter,
+        rbs_target_parameters: SimulatorResult,
       };
       const response = await callGeneratorAPI(generatorRequestData);
       return response;

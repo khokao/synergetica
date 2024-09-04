@@ -21,8 +21,7 @@ export const useConverterAPI = () => {
   return { postConverter, ConvertResult, resetSimulator };
 };
 
-
-export const useProteinParameter = () => {
-  const [proteinParameter, setproteinParameter] = useState<number[]>([]);
-  return { proteinParameter, setproteinParameter };
-}
+export const useSimulatorResult = () => {
+  const [SimulatorResult, setSimulatorResult] = useState<{ [key: string]: number }>({});
+  return { SimulatorResult, setSimulatorResult };
+};

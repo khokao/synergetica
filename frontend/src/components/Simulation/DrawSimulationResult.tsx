@@ -11,7 +11,7 @@ import {
 } from "chart.js";
 import { init } from "next/dist/compiled/webpack/webpack";
 import type React from "react";
-import { useEffect, useState,Dispatch,SetStateAction} from "react";
+import { type Dispatch, type SetStateAction, useEffect, useState } from "react";
 import { Line } from "react-chartjs-2";
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
@@ -46,15 +46,19 @@ const ParamInput = ({ label, value, onChange }) => (
   </label>
 );
 
-const setSimulatorOutput = (ws: WebSocket, newProteinParams: number[], setSimOutput: Dispatch<SetStateAction<number[][] | null>>) => {
+const setSimulatorOutput = (
+  ws: WebSocket,
+  newProteinParams: number[],
+  setSimOutput: Dispatch<SetStateAction<number[][] | null>>,
+) => {
   if (ws && ws.readyState === WebSocket.OPEN) {
     const params = JSON.stringify({
       params: newProteinParams,
     });
-    
+
     ws.send(params);
     ws.onmessage = (event) => {
-      let receivedData;
+      let receivedData: number[][];
       try {
         receivedData = JSON.parse(event.data);
         setSimOutput(receivedData);
@@ -64,17 +68,21 @@ const setSimulatorOutput = (ws: WebSocket, newProteinParams: number[], setSimOut
       }
     };
   }
-}
+};
 
-export const Graph: React.FC<{ ConvertResult: ConverterResponseData | null, proteinParameter: number[],setproteinParameter:Dispatch<SetStateAction<number[]>>}> = ({ ConvertResult,proteinParameter,setproteinParameter }) => {
+export const Graph: React.FC<{
+  ConvertResult: ConverterResponseData | null;
+  setSimulatorResult: Dispatch<SetStateAction<{ [key: string]: number }>>;
+}> = ({ ConvertResult, setSimulatorResult }) => {
   const [ws, setWs] = useState<WebSocket | null>(null);
   const [simOutput, setSimOutput] = useState<number[][] | null>(Array[0]);
+  const [proteinParameter, setproteinParameter] = useState<number[]>([]);
 
   useEffect(() => {
     if (ConvertResult !== null) {
       const initParameter = Array(ConvertResult.num_protein).fill(1);
       setproteinParameter(initParameter);
-      
+
       const wsDefine = new WebSocket("ws://127.0.0.1:8000/ws/simulation");
       wsDefine.onopen = () => {
         wsDefine.send(JSON.stringify(ConvertResult));
@@ -88,10 +96,9 @@ export const Graph: React.FC<{ ConvertResult: ConverterResponseData | null, prot
       wsDefine.onerror = (error) => {
         console.error("WebSocket error:", error);
       };
-      
+
       setWs(wsDefine);
 
-    
       return () => {
         wsDefine.close();
       };
@@ -102,29 +109,35 @@ export const Graph: React.FC<{ ConvertResult: ConverterResponseData | null, prot
     const newProteinParams = [...proteinParameter];
     newProteinParams[index] = Number.parseFloat(event.target.value);
     setproteinParameter(newProteinParams);
-    
+
     const simulation_result: { [key: string]: number } = {};
-    ConvertResult?.proteins.forEach((protein_name, i) => {
-      simulation_result[protein_name] = newProteinParams[i];
-    });
+    const proteinIds = ConvertResult ? Object.keys(ConvertResult.proteins) : [];
+
     setSimulatorOutput(ws, newProteinParams, setSimOutput);
+
+    proteinIds.forEach((proteinId, i) => {
+      simulation_result[proteinId] = newProteinParams[i];
+    });
+
+    setSimulatorResult(simulation_result);
   };
 
   const options = getGraphOptions();
 
-  const graphData = simOutput && ConvertResult
-    ? {
-        labels: simOutput.map(([time]) => time),
-        datasets: Array(ConvertResult?.num_protein)
-          .fill(0)
-          .map((_, i) => ({
-            label: ConvertResult.proteins[i],
-            data: simOutput.map((row) => row[1 + i]),
-            borderColor: `hsl(${(i * 60) % 360}, 70%, 50%)`,
-            fill: false,
-          })),
-      }
-    : null;
+  const graphData =
+    simOutput && ConvertResult
+      ? {
+          labels: simOutput.map(([time]) => time),
+          datasets: Array(ConvertResult?.num_protein)
+            .fill(0)
+            .map((_, i) => ({
+              label: Object.values(ConvertResult.proteins)[i],
+              data: simOutput.map((row) => row[1 + i]),
+              borderColor: `hsl(${(i * 60) % 360}, 70%, 50%)`,
+              fill: false,
+            })),
+        }
+      : null;
 
   return (
     <div className="h-full">
@@ -134,8 +147,8 @@ export const Graph: React.FC<{ ConvertResult: ConverterResponseData | null, prot
           <div className="flex flex-col justify-center items-center ml-5 mb-4 w-1/3">
             {proteinParameter.map((param, index) => (
               <ParamInput
-                key={ConvertResult.proteins[index]}
-                label={ConvertResult.proteins[index]}
+                key={Object.values(ConvertResult.proteins)[index]}
+                label={Object.values(ConvertResult.proteins)[index]}
                 value={param}
                 onChange={handleProteinParamChange(index)}
               />

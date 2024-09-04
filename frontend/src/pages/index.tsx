@@ -1,13 +1,13 @@
 import { FileSidebar } from "@/components/FileSidebar/FileSidebar";
 import { GUI } from "@/components/GUI/GUI";
 import { Simulation } from "@/components/Simulation/Simulation";
-import { useConverterAPI,useProteinParameter } from "@/hooks/useSimulatorAPI";
+import { useConverterAPI, useSimulatorResult } from "@/hooks/useSimulatorAPI";
 import { Resizable } from "re-resizable";
 import { ReactFlowProvider } from "reactflow";
 
 const Home = () => {
   const { postConverter, ConvertResult, resetSimulator } = useConverterAPI();
-  const { proteinParameter, setproteinParameter } = useProteinParameter();
+  const { SimulatorResult, setSimulatorResult } = useSimulatorResult();
   return (
     // Wrap all with ReactFlowProvider to access ReactFlow state globally.
     <ReactFlowProvider>
@@ -48,10 +48,12 @@ const Home = () => {
           maxWidth={"50%"}
           enable={{ right: true }}
         >
-          <Simulation ConvertResult={ConvertResult}
-                      reseter={resetSimulator}
-                      proteinParameter={proteinParameter}
-                      setproteinParameter={setproteinParameter} />
+          <Simulation
+            ConvertResult={ConvertResult}
+            reseter={resetSimulator}
+            SimulatorResult={SimulatorResult}
+            setSimulatorResult={setSimulatorResult}
+          />
         </Resizable>
       </div>
     </ReactFlowProvider>

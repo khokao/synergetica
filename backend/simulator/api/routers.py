@@ -6,7 +6,7 @@ from fastapi import APIRouter, WebSocket, WebSocketDisconnect
 from loguru import logger
 from omegaconf import OmegaConf
 
-from simulator.modules.build_protein_interaction import get_parts_name_list, run_convert
+from simulator.modules.build_protein_interaction import get_protein_nameId_dict, run_convert
 from simulator.modules.dynamic_formulation import build_function_as_str
 from simulator.modules.euler import solve_ode_with_euler
 
@@ -21,10 +21,10 @@ async def convert_gui_circuit(data: ConverterInput) -> ConverterOutput:
     circuit = OmegaConf.create(raw_circuit_data)
     protein_interact_graph, proteinId_list, all_nodes = run_convert(circuit)
     num_protein = len(proteinId_list)
-    protein_names = get_parts_name_list(proteinId_list, all_nodes)
+    protein_nameId_dict = get_protein_nameId_dict(proteinId_list, all_nodes)
     function_str = build_function_as_str(protein_interact_graph, proteinId_list, all_nodes)
     logger.info(f'defined function: {function_str}')
-    return ConverterOutput(num_protein=num_protein, proteins=protein_names, function_str=function_str)
+    return ConverterOutput(num_protein=num_protein, proteins=protein_nameId_dict, function_str=function_str)
 
 
 @router.websocket('/ws/simulation')

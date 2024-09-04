@@ -130,18 +130,18 @@ def run_convert(raw_circuit_data: DictConfig) -> tuple[np.ndarray, list[str], di
     return protein_interact_graph, proteinId_list, all_nodes
 
 
-def get_parts_name_list(proteinId_list: list[str], all_nodes: dict[str, GUINode]) -> list[str]:
-    """Get parts name list to display in the Simulator frontend.
+def get_protein_nameId_dict(proteinId_list: list[str], all_nodes: dict[str, GUINode]) -> dict[str, str]:
+    """Get protein parts name list to display in the Simulator frontend.
 
     Args:
-        proteinId_list (list[str]): list of protein Id. idx of the list is the idx of protein in protein_interact_graph.
+        proteinId_list (list[str]): dict of protein Id. idx of the list is the idx of protein in protein_interact_graph.
         all_nodes (dict[str, GUINode]): all nodes in the circuit converted to GUINode format.
 
     Returns:
-        parts_name_list (list[str]): list of parts name. If there are multiple same parts name, add number to the name.
+        parts_nameId_dict (dict[str,str]): list of parts name. If there are multiple same parts name, add number to the name.
     """
     parts_name_count: defaultdict[str, int] = defaultdict(int)
-    parts_name_list = []
+    protein_nameId_dict = {}
 
     for protein_id in proteinId_list:
         protein_node = all_nodes[protein_id]
@@ -149,8 +149,8 @@ def get_parts_name_list(proteinId_list: list[str], all_nodes: dict[str, GUINode]
 
         parts_name_count[parts_name] += 1
         if parts_name_count[parts_name] > 1:
-            parts_name_list.append(f'{parts_name}_{parts_name_count[parts_name]}')
+            protein_nameId_dict[protein_id] = f'{parts_name}_{parts_name_count[parts_name]}'
         else:
-            parts_name_list.append(parts_name)
+            protein_nameId_dict[protein_id] = parts_name
 
-    return parts_name_list
+    return protein_nameId_dict
