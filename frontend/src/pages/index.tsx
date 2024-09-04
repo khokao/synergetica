@@ -50,8 +50,8 @@ const Home = () => {
         >
           <Simulation ConvertResult={ConvertResult}
                       reseter={resetSimulator}
-                      parameter={proteinParameter}
-                      setParameter={setproteinParameter} />
+                      proteinParameter={proteinParameter}
+                      setproteinParameter={setproteinParameter} />
         </Resizable>
       </div>
     </ReactFlowProvider>

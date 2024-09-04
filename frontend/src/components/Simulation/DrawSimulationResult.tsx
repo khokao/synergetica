@@ -9,6 +9,7 @@ import {
   Title,
   Tooltip,
 } from "chart.js";
+import { init } from "next/dist/compiled/webpack/webpack";
 import type React from "react";
 import { useEffect, useState,Dispatch,SetStateAction} from "react";
 import { Line } from "react-chartjs-2";
@@ -45,27 +46,52 @@ const ParamInput = ({ label, value, onChange }) => (
   </label>
 );
 
+const setSimulatorOutput = (ws: WebSocket, newProteinParams: number[], setSimOutput: Dispatch<SetStateAction<number[][] | null>>) => {
+  if (ws && ws.readyState === WebSocket.OPEN) {
+    const params = JSON.stringify({
+      params: newProteinParams,
+    });
+    
+    ws.send(params);
+    ws.onmessage = (event) => {
+      let receivedData;
+      try {
+        receivedData = JSON.parse(event.data);
+        setSimOutput(receivedData);
+      } catch (error) {
+        console.log("Received non-JSON data:", event.data);
+        return;
+      }
+    };
+  }
+}
+
 export const Graph: React.FC<{ ConvertResult: ConverterResponseData | null, proteinParameter: number[],setproteinParameter:Dispatch<SetStateAction<number[]>>}> = ({ ConvertResult,proteinParameter,setproteinParameter }) => {
   const [ws, setWs] = useState<WebSocket | null>(null);
-  const [simOutput, setSimOutput] = useState<number[][] | null>(null);
-
+  const [simOutput, setSimOutput] = useState<number[][] | null>(Array[0]);
 
   useEffect(() => {
     if (ConvertResult !== null) {
-      setproteinParameter(Array(ConvertResult.num_protein).fill(1));
+      const initParameter = Array(ConvertResult.num_protein).fill(1);
+      setproteinParameter(initParameter);
+      
       const wsDefine = new WebSocket("ws://127.0.0.1:8000/ws/simulation");
       wsDefine.onopen = () => {
         wsDefine.send(JSON.stringify(ConvertResult));
+        setSimulatorOutput(wsDefine, initParameter, setSimOutput);
       };
+
       wsDefine.onmessage = (event) => {
         console.log("Received from server:", event.data);
       };
+
       wsDefine.onerror = (error) => {
         console.error("WebSocket error:", error);
       };
-
+      
       setWs(wsDefine);
 
+    
       return () => {
         wsDefine.close();
       };
@@ -76,20 +102,12 @@ export const Graph: React.FC<{ ConvertResult: ConverterResponseData | null, prot
     const newProteinParams = [...proteinParameter];
     newProteinParams[index] = Number.parseFloat(event.target.value);
     setproteinParameter(newProteinParams);
-    console.log(proteinParameter);
-    if (ws && ws.readyState === WebSocket.OPEN) {
-      const params = JSON.stringify({
-        params: newProteinParams,
-      });
-
-      ws.send(params);
-
-      ws.onmessage = (event) => {
-        const receivedData = JSON.parse(event.data);
-        console.log("Received from server:", receivedData);
-        setSimOutput(receivedData);
-      };
-    }
+    
+    const simulation_result: { [key: string]: number } = {};
+    ConvertResult?.proteins.forEach((protein_name, i) => {
+      simulation_result[protein_name] = newProteinParams[i];
+    });
+    setSimulatorOutput(ws, newProteinParams, setSimOutput);
   };
 
   const options = getGraphOptions();
