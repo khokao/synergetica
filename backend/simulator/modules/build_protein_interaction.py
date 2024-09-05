@@ -138,7 +138,8 @@ def get_protein_nameId_dict(proteinId_list: list[str], all_nodes: dict[str, GUIN
         all_nodes (dict[str, GUINode]): all nodes in the circuit converted to GUINode format.
 
     Returns:
-        parts_nameId_dict (dict[str,str]): list of parts name. If there are multiple same parts name, add number to the name.
+        parts_nameId_dict (dict[str,str]): dict of protein Id and protein name. {protein_id: protein_name}
+            if there are multiple proteins with the same name, add number to the end of the name.
     """
     parts_name_count: defaultdict[str, int] = defaultdict(int)
     protein_nameId_dict = {}

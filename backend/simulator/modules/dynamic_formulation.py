@@ -12,7 +12,7 @@ class ODEBuilder:
         self.PCN = 15  # plasmid copy number. unit = [copy/cell]
         self.Dmrna = 0.012145749  # mRNA degradation rate. unit = [1/s]
         self.Emrna = 300  # transcription coefficient
-        self.Erpu = 0.00001  # translation coefficient
+        self.Erpu = 0.01  # translation coefficient
 
     def PRS_str(self, params: dict[str, float], var_idx: int, control_type: int) -> str:
         """build PRS equation as a string.
@@ -26,9 +26,9 @@ class ODEBuilder:
             prs (str): PRS equation as a string.
         """
         if control_type == 1:
-            prs = f"""(({params['Ymax']} + (({params['Ymax']}-{params['Ymin']}) *  var[{var_idx}] ** {params['n']}) / ( var[{var_idx}] ** {params['n']} + {params['K']} ** {params['n']})) / {params['Ymax']})"""  # noqa: E501
+            prs = f"""(({params['Ymin']} + (({params['Ymax']}-{params['Ymin']}) *  var[{var_idx}] ** {params['n']}) / ( var[{var_idx}] ** {params['n']} + {params['K']} ** {params['n']})) / {params['Ymax']})"""  # noqa: E501
         elif control_type == -1:
-            prs = f"""(({params['Ymax']} + (({params['Ymax']}-{params['Ymin']}) * {params['K']} ** {params['n']}) / ( var[{var_idx}] ** {params['n']} + {params['K']} ** {params['n']})) / {params['Ymax']})"""  # noqa: E501
+            prs = f"""(({params['Ymin']} + (({params['Ymax']}-{params['Ymin']}) * {params['K']} ** {params['n']}) / ( var[{var_idx}] ** {params['n']} + {params['K']} ** {params['n']})) / {params['Ymax']})"""  # noqa: E501
         return prs.replace('\n', '')
 
     def make_mrna_ode(
