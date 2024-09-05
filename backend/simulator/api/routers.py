@@ -41,7 +41,7 @@ async def simulation(websocket: WebSocket) -> None:
                 function_str = data.get('function_str', None)
                 exec(function_str, globals(), functions)
                 function_name = function_str.split(' ')[1].split('(')[0]
-                times = np.arange(0, 30, 0.1)
+                times = np.arange(0, 300, 1)
                 var_init = [0.0] * (data['num_protein'] * 2)
                 logger.info(f'Function {function_name} defined.')
                 await websocket.send_text(f"Function '{function_name}' defined.")

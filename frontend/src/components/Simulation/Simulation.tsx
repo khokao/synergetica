@@ -15,7 +15,7 @@ export const Simulation: React.FC<{
       <div className="flex justify-center h-full">
         <Graph ConvertResult={ConvertResult} setSimulatorResult={setSimulatorResult} />
       </div>
-      <div className="flex justify-end mb-4">
+      <div className="flex justify-end">
         <button type="button" onClick={reseter} className="px-4 py-1 border-2 border-black rounded mr-4">
           Reset
         </button>

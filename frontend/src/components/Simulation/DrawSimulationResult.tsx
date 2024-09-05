@@ -9,7 +9,6 @@ import {
   Title,
   Tooltip,
 } from "chart.js";
-import { init } from "next/dist/compiled/webpack/webpack";
 import type React from "react";
 import { type Dispatch, type SetStateAction, useEffect, useState } from "react";
 import { Line } from "react-chartjs-2";
@@ -142,7 +141,7 @@ export const Graph: React.FC<{
   return (
     <div className="h-full">
       {ConvertResult ? (
-        <div className="flex flex-row h-full">
+        <div className="flex flex-row h-4/5 m-8">
           <div className="h-full w-2/3">{graphData && <Line options={options} data={graphData} />}</div>
           <div className="flex flex-col justify-center items-center ml-5 mb-4 w-1/3">
             {proteinParameter.map((param, index) => (
