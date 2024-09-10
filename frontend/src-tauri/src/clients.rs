@@ -12,7 +12,7 @@ impl APIClient {
     ) -> Result<reqwest::Response, reqwest::Error> {
         let client = reqwest::Client::new();
         client
-            .post("http://127.0.0.1:8000/generate")
+            .post("http://127.0.0.1:8080/generate")
             .json(&json!({
                 "reactflow_object_json_str": reactflow_object_json_str,
                 "rbs_target_parameters": rbs_target_parameters

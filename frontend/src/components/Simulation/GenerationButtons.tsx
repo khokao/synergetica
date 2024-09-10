@@ -7,10 +7,15 @@ import { type Edge, type Node, useReactFlow } from "reactflow";
 import useSWR from "swr";
 
 export const GenerationButtons: React.FC<{ SimulatorResult: { [key: string]: number } }> = ({ SimulatorResult }) => {
+  const reactFlow = useReactFlow();
+  const [reactFlowNodes, setReactFlowNodes] = useState<Node[]>([]);
+  const [reactFlowEdges, setReactFlowEdges] = useState<Edge[]>([]);
+
   const { data, mutate, isValidating } = useSWR(
     "call_generator_api",
     async () => {
       const generatorRequestData = {
+        reactflow_object_json_str: JSON.stringify(reactFlow.toObject()),
         rbs_target_parameters: SimulatorResult,
       };
       const response = await callGeneratorAPI(generatorRequestData);
@@ -27,10 +32,6 @@ export const GenerationButtons: React.FC<{ SimulatorResult: { [key: string]: num
       shouldRetryOnError: false,
     },
   );
-
-  const reactFlow = useReactFlow();
-  const [reactFlowNodes, setReactFlowNodes] = useState<Node[]>([]);
-  const [reactFlowEdges, setReactFlowEdges] = useState<Edge[]>([]);
 
   const [isOpen, setIsOpen] = useState(false);
 
