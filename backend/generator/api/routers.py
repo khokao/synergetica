@@ -1,19 +1,22 @@
 import asyncio
+import json
 
 from fastapi import APIRouter, HTTPException
 from huggingface_hub import hf_hub_download
 from loguru import logger
 
 from ..core.genetic_algorithm import async_generate_rbs
-from .schemas import GeneratorInput, GeneratorOutput
+from .schemas import GeneratorInput, GeneratorOutput, ReactFlowObject
+from .utils import create_parent2child_details
 
 router = APIRouter()
 
 
 @router.post('/generate', response_model=GeneratorOutput)
 async def generate_sequences(input: GeneratorInput) -> GeneratorOutput:
-    logger.info(f'Generating sequences with input: {input.model_dump_json()}')
+    reactflow_object = ReactFlowObject(**json.loads(input.reactflow_object_json_str))
 
+    logger.info('Generating sequences...')
     try:
         predictor_ckpt_path = await asyncio.to_thread(
             hf_hub_download,
@@ -21,24 +24,18 @@ async def generate_sequences(input: GeneratorInput) -> GeneratorOutput:
             filename='v1.ckpt',
         )
 
-        # Run with dummy inputs.
-        rbs_sequences, rbs_rescaled_predictions = await async_generate_rbs(
-            predictor_ckpt_path=predictor_ckpt_path,
-            target_value=399228.4223,
-            num_iterations=2,
-        )
-        logger.info(f'Generated sequences: {rbs_sequences}')
-        logger.info(f'Generated rescaled predictions: {rbs_rescaled_predictions}')
-        return GeneratorOutput(  # Dummy code. (TODO: Replace)
-            group_node_details={
-                'foobar-group-id-0': [
-                    {'node_category': 'protein', 'sequence': 'ATCG'},
-                ],
-                'foobar-group-id-1': [
-                    {'node_category': 'protein', 'sequence': 'ATCG'},
-                ],
-            }
-        )
+        all_ga_outputs = {}
+        for protein_id, target_value in input.rbs_target_parameters.items():
+            rbs_result = await async_generate_rbs(
+                predictor_ckpt_path=predictor_ckpt_path,
+                target_value=target_value,
+                num_iterations=2,
+            )
+            all_ga_outputs[protein_id] = rbs_result
+
+        parent2child_details = create_parent2child_details(all_ga_outputs, reactflow_object.nodes)
+
+        return GeneratorOutput(parent2child_details=parent2child_details)
 
     except asyncio.CancelledError as e:
         logger.error('The task was cancelled due to a client disconnect.')
