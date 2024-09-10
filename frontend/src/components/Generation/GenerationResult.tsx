@@ -39,16 +39,21 @@ const GUIView: React.FC<GUIViewProps> = ({ reactFlowNodes, reactFlowEdges }) => 
   );
 };
 
+
+
+
 const GeneratedSequenceView: React.FC = () => {
   const { data } = useSWR<GeneratorResponseData>("call_generator_api");
   const [copied, setCopied] = useState<string | null>(null);
 
-  const groupIds = Object.keys(data.group_node_details);
+  // Extract group IDs from the data
+  const groupIds = Object.keys(data.parent2child_details);
 
+  // Handle copy to clipboard action
   const handleCopy = (text: string, groupId: string) => {
     navigator.clipboard.writeText(text).then(() => {
       setCopied(groupId);
-      setTimeout(() => setCopied(null), 2000);
+      setTimeout(() => setCopied(null), 2000); // Reset copied state after 2 seconds
     });
   };
 
@@ -56,7 +61,7 @@ const GeneratedSequenceView: React.FC = () => {
     <div className="container mx-auto">
       <div className="space-y-6">
         {groupIds.map((groupId) => {
-          const sequences = data.group_node_details[groupId];
+          const sequences = data.parent2child_details[groupId];
           const concatenatedSequences = sequences.map((sequence) => sequence.sequence).join("");
 
           return (
@@ -64,22 +69,29 @@ const GeneratedSequenceView: React.FC = () => {
               <div className="flex justify-between items-center mb-2">
                 <h3 className="text-xl font-semibold">{groupId}</h3>
               </div>
-              <div className="relative bg-gray-100 p-2 rounded-lg overflow-x-auto">
-                <pre className="text-sm whitespace-pre-wrap">{concatenatedSequences}</pre>
-                <button
-                  type="button"
-                  onClick={() => handleCopy(concatenatedSequences, groupId)}
-                  className="absolute top-2 right-2 text-gray-500 hover:text-gray-700 flex items-center"
-                >
-                  {copied === groupId ? (
-                    <>
-                      <span className="mr-1 text-sm text-gray-700">Copied</span>
-                      <CheckIcon className="h-5 w-5 text-green-500" />
-                    </>
-                  ) : (
-                    <ClipboardIcon className="h-5 w-5" />
-                  )}
-                </button>
+
+              <div className="flex">
+                <div className="bg-gray-100 p-2 overflow-x-auto flex-grow">
+                  <pre className="text-sm whitespace-pre-wrap">{concatenatedSequences}</pre>
+                </div>
+
+                <div className="flex-shrink-0">
+                  <div className="bg-gray-100 p-1">
+                    <button
+                      type="button"
+                      onClick={() => handleCopy(concatenatedSequences, groupId)}
+                      className="text-gray-600 hover:text-gray-700 flex items-center bg-gray-100 hover:bg-gray-200 p-2 rounded"
+                    >
+                      {copied === groupId ? (
+                        <>
+                          <CheckIcon className="h-4 w-4 text-green-500" />
+                        </>
+                      ) : (
+                        <ClipboardIcon className="h-4 w-4" />
+                      )}
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
           );
@@ -88,6 +100,13 @@ const GeneratedSequenceView: React.FC = () => {
     </div>
   );
 };
+
+
+
+
+
+
+
 
 export const GenerationResult: React.FC<GenerationButtonsProps> = ({
   isOpen,
