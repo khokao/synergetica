@@ -1,12 +1,34 @@
 from pydantic import BaseModel, field_validator
 
 
+class ReactFlowNodeData(BaseModel):
+    nodeCategory: str | None = None  # Parent node does not have this key.
+    sequence: str | None = None  # Parent node does not have this key.
+
+
+class ReactFlowNodePosition(BaseModel):
+    x: float
+    y: float
+
+
+class ReactFlowNode(BaseModel):
+    id: str
+    type: str
+    position: ReactFlowNodePosition
+    data: ReactFlowNodeData
+    parentId: str | None = None  # Parent node does not have this key.
+
+
+class ReactFlowObject(BaseModel):
+    nodes: list[ReactFlowNode]
+
+
 class GeneratorInput(BaseModel):
     reactflow_object_json_str: str
     rbs_target_parameters: dict[str, float]
 
 
-class ChildNodesDetails(BaseModel):
+class OutputChildNodeDetails(BaseModel):
     node_category: str  # Used to display the colored sequence in the frontend ?
     sequence: str
 
@@ -20,4 +42,4 @@ class ChildNodesDetails(BaseModel):
 
 
 class GeneratorOutput(BaseModel):
-    group_node_details: dict[str, list[ChildNodesDetails]]
+    parent2child_details: dict[str, list[OutputChildNodeDetails]]
