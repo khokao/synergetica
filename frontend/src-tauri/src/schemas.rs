@@ -9,7 +9,7 @@ pub struct ChildNodesDetails {
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct GeneratorResponseData {
-    pub group_node_details: HashMap<String, Vec<ChildNodesDetails>>,
+    pub parent2child_details: HashMap<String, Vec<ChildNodesDetails>>,
 }
 
 #[derive(Serialize,Deserialize)]

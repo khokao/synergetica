@@ -9,7 +9,7 @@ interface ChildNodesDetails {
 }
 
 export interface GeneratorResponseData {
-  group_node_details: { [key: string]: ChildNodesDetails[] };
+  parent2child_details: { [key: string]: ChildNodesDetails[] };
 }
 
 export interface GeneratorError {
