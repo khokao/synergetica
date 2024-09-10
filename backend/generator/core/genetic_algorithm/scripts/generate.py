@@ -61,9 +61,8 @@ async def async_generate_rbs(
     num_workers: int = 4,
     init_base_sequences: Annotated[Optional[List[str]], typer.Option()] = None,
     return_top_k: int = 3,
-) -> tuple[list[str], list[float]]:
-    """Async version of generate_rbs method.
-    """
+) -> dict[str, list[str] | list[float]]:
+    """Async version of generate_rbs method."""
     if init_base_sequences is None:
         init_base_sequences = RBS_INIT_BASE_SEQUENCES
 
@@ -81,7 +80,10 @@ async def async_generate_rbs(
         init_base_sequences=init_base_sequences,
     )
 
-    return sequences[:return_top_k], rescaled_predictions[:return_top_k]
+    return {
+        'sequences': sequences[:return_top_k],
+        'rescaled_predictions': rescaled_predictions[:return_top_k],
+    }
 
 
 @app.command()
@@ -95,7 +97,7 @@ def generate_rbs(
     num_workers: int = 4,
     init_base_sequences: Annotated[Optional[List[str]], typer.Option()] = None,
     return_top_k: int = 3,
-) -> tuple[list[str], list[float]]:
+) -> dict[str, list[str] | list[float]]:
     """
     Args:
         predictor_ckpt_path (str): The path to the predictor model checkpoint.
@@ -130,7 +132,10 @@ def generate_rbs(
     )
 
     print(sequences[:return_top_k], rescaled_predictions[:return_top_k])
-    return sequences[:return_top_k], rescaled_predictions[:return_top_k]
+    return {
+        'sequences': sequences[:return_top_k],
+        'rescaled_predictions': rescaled_predictions[:return_top_k],
+    }
 
 
 @app.command()

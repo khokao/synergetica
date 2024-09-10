@@ -33,7 +33,7 @@ def test_fast_genetic_algorithm():
     )
 
     # Act
-    sequences, rescaled_predictions = genetic_algorithm(
+    sequences, rescaled_predictions = genetic_algorithm.run_sync(
         target_value=1.0,
         population_size=2,
         mutation_rate=0.5,
@@ -75,7 +75,7 @@ def test_generic_algorithm_fail_with_invalid_mutation_rate(mutation_rate):
 
     # Act & Assert
     with pytest.raises(AssertionError):
-        sequences, rescaled_predictions = genetic_algorithm(
+        sequences, rescaled_predictions = genetic_algorithm.run_sync(
             target_value=1.0,
             population_size=2,
             mutation_rate=mutation_rate,
