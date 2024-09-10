@@ -1,22 +1,21 @@
-# type: ignore
 import asyncio
 
 
 class RequestCancelledMiddleware:
     """ref: https://github.com/fastapi/fastapi/discussions/11360"""
 
-    def __init__(self, app):
+    def __init__(self, app):  # type: ignore
         self.app = app
 
-    async def __call__(self, scope, receive, send):
+    async def __call__(self, scope, receive, send):  # type: ignore
         if scope['type'] != 'http':
             await self.app(scope, receive, send)
             return
 
         # Let's make a shared queue for the request messages
-        queue = asyncio.Queue()
+        queue = asyncio.Queue()  # type: ignore
 
-        async def message_poller(sentinel, handler_task):
+        async def message_poller(sentinel, handler_task):  # type: ignore
             nonlocal queue
             while True:
                 message = await receive()
