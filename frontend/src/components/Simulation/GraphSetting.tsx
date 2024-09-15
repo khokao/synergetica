@@ -9,7 +9,17 @@ export const getGraphOptions = () => ({
   },
   scales: {
     x: {
-      display: false,
+      display: true,
+      ticks: {
+        display: false,
+      },
+      grid: {
+        display: false,
+      },
+      title: {
+        display: true,
+        text: "Time",
+      },
     },
     y: {
       title: {
