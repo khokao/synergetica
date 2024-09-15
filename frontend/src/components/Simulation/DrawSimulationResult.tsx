@@ -1,3 +1,5 @@
+import { getGraphOptions } from "@/components/Simulation/GraphSetting";
+import { ParamInput } from "@/components/Simulation/ParamBar";
 import type { ConverterResponseData } from "@/interfaces/simulatorAPI";
 import {
   CategoryScale,
@@ -14,36 +16,6 @@ import { type Dispatch, type SetStateAction, useEffect, useState } from "react";
 import { Line } from "react-chartjs-2";
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
-
-const getGraphOptions = () => ({
-  responsive: true,
-  maintainAspectRatio: false,
-  plugins: {
-    title: {
-      display: true,
-      text: "Simulation Result",
-    },
-  },
-  scales: {
-    x: {
-      display: false,
-    },
-    y: {
-      title: {
-        display: true,
-        text: "Protein Levels",
-      },
-    },
-  },
-});
-
-const ParamInput = ({ label, value, onChange }) => (
-  <label className="flex items-center mb-2">
-    <span className="inline-block w-16">{label}</span>
-    <input type="range" min="1" max="1000" step="1" value={value} onChange={onChange} className="mx-2" />
-    <span className="w-12 text-right">{value}</span>
-  </label>
-);
 
 const setSimulatorOutput = (
   ws: WebSocket,
@@ -69,10 +41,12 @@ const setSimulatorOutput = (
   }
 };
 
-export const Graph: React.FC<{
+type GraphProps = {
   ConvertResult: ConverterResponseData | null;
   setSimulatorResult: Dispatch<SetStateAction<{ [key: string]: number }>>;
-}> = ({ ConvertResult, setSimulatorResult }) => {
+};
+
+export const Graph: React.FC<GraphProps> = ({ ConvertResult, setSimulatorResult }) => {
   const [ws, setWs] = useState<WebSocket | null>(null);
   const [simOutput, setSimOutput] = useState<number[][] | null>(Array[0]);
   const [proteinParameter, setproteinParameter] = useState<number[]>([]);
@@ -106,7 +80,18 @@ export const Graph: React.FC<{
 
   const handleProteinParamChange = (index: number) => (event: React.ChangeEvent<HTMLInputElement>) => {
     const newProteinParams = [...proteinParameter];
-    newProteinParams[index] = Number.parseFloat(event.target.value);
+    let value = Number.parseFloat(event.target.value);
+
+    // 値を範囲内に収める
+    const MIN_VALUE = 1;
+    const MAX_VALUE = 1000;
+    if (value > MAX_VALUE) {
+      value = MAX_VALUE;
+    } else if (value < MIN_VALUE) {
+      value = MIN_VALUE;
+    }
+
+    newProteinParams[index] = value;
     setproteinParameter(newProteinParams);
 
     const simulation_result: { [key: string]: number } = {};
