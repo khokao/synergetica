@@ -39,9 +39,6 @@ const GUIView: React.FC<GUIViewProps> = ({ reactFlowNodes, reactFlowEdges }) => 
   );
 };
 
-
-
-
 const GeneratedSequenceView: React.FC = () => {
   const { data } = useSWR<GeneratorResponseData>("call_generator_api");
   const [copied, setCopied] = useState<string | null>(null);
@@ -100,13 +97,6 @@ const GeneratedSequenceView: React.FC = () => {
     </div>
   );
 };
-
-
-
-
-
-
-
 
 export const GenerationResult: React.FC<GenerationButtonsProps> = ({
   isOpen,

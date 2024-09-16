@@ -1,5 +1,5 @@
-import { Graph } from "@/components/Simulation/DrawSimulationResult";
 import { GenerationButtons } from "@/components/Generation/GenerationButtons";
+import { Graph } from "@/components/Simulation/DrawSimulationResult";
 import type { ConverterResponseData } from "@/interfaces/simulatorAPI";
 import type React from "react";
 import type { Dispatch, SetStateAction } from "react";
