@@ -1,3 +1,4 @@
+import json
 from http import HTTPStatus
 
 import pytest
@@ -8,64 +9,40 @@ from generator.api.main import app
 client = TestClient(app)
 
 
-def test_generator_api_with_valid_input():
+def test_generator_api_with_valid_input(get_test_circuit, protein_ids):
     data = {
-        'rbs_parameter': 4.2,
-        'rbs_upstream': 'ATG',
-        'rbs_downstream': 'GGG',
-        'promoter_parameter': 3.1,
-        'promoter_upstream': 'TATA',
+        'reactflow_object_json_str': json.dumps(get_test_circuit),
+        'rbs_target_parameters': {protein_id: 100 for protein_id in protein_ids},
     }
 
     response = client.post('/generate', json=data)
 
     assert response.status_code == HTTPStatus.OK
-    json_response = response.json()
-    assert isinstance(json_response['rbs_sequence'], str), 'rbs_sequence should be a string'
-    assert isinstance(json_response['promoter_sequence'], str), 'promoter_sequence should be a string'
 
 
 @pytest.mark.parametrize(
-    'data',
+    'reactflow_object_json_str, rbs_target_parameters, expected_status_code',
     [
-        {
-            'rbs_parameter': 'invalid',  # rbs_parameter should be a float
-            'rbs_upstream': 'ATG',
-            'rbs_downstream': 'GGG',
-            'promoter_parameter': 3.1,
-            'promoter_upstream': 'TATA',
-        },
-        {
-            'rbs_parameter': 1.2,
-            'rbs_upstream': 123,  # rbs_upstream should be a string
-            'rbs_downstream': 'GGG',
-            'promoter_parameter': 3.1,
-            'promoter_upstream': 'TATA',
-        },
-        {
-            'rbs_parameter': 1.2,
-            'rbs_upstream': 'ATG',
-            'rbs_downstream': 123,  # rbs_downstream should be a string
-            'promoter_parameter': 3.1,
-            'promoter_upstream': 'TATA',
-        },
-        {
-            'rbs_parameter': 1.2,
-            'rbs_upstream': 'ATG',
-            'rbs_downstream': 'GGG',
-            'promoter_parameter': 'invalid',  # promoter_parameter should be a float
-            'promoter_upstream': 'TATA',
-        },
-        {
-            'rbs_parameter': 1.2,
-            'rbs_upstream': 'ATG',
-            'rbs_downstream': 'GGG',
-            'promoter_parameter': 3.1,
-            'promoter_upstream': None,  # promoter_upstream should be a string
-        },
+        ('', 'valid', HTTPStatus.UNPROCESSABLE_ENTITY),  # Empty reactflow_object_json_str
+        ('invalid_json', 'valid', HTTPStatus.UNPROCESSABLE_ENTITY),  # Invalid JSON
+        ('valid', {}, HTTPStatus.UNPROCESSABLE_ENTITY),  # Empty rbs_target_parameters
+        ('valid', {'non_existing_id': 100}, HTTPStatus.UNPROCESSABLE_ENTITY),  # Non-existing protein ID
     ],
 )
-def test_generator_api_with_invalid_input(data):
+def test_generator_api_with_invalid_input(
+    reactflow_object_json_str, rbs_target_parameters, expected_status_code, get_test_circuit, protein_ids
+):
+    data = {'reactflow_object_json_str': reactflow_object_json_str, 'rbs_target_parameters': rbs_target_parameters}
+    if data['reactflow_object_json_str'] == 'valid':
+        data['reactflow_object_json_str'] = json.dumps(get_test_circuit)
+    if data['rbs_target_parameters'] == 'valid':
+        data['rbs_target_parameters'] = {protein_id: 100 for protein_id in protein_ids}
+
     response = client.post('/generate', json=data)
 
-    assert response.status_code == HTTPStatus.UNPROCESSABLE_ENTITY
+    assert response.status_code == expected_status_code
+
+
+# NOTE: The test for request cancellation is omitted due to the high cost
+# of simulating external API calls (e.g., Hugging Face downloads) and handling
+# complex asynchronous cancellation behavior.
