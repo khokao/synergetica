@@ -1,6 +1,7 @@
 import { getGraphOptions } from "@/components/Simulation/GraphSetting";
 import { ParamInput } from "@/components/Simulation/ParamBar";
 import type { ConverterResponseData } from "@/interfaces/simulatorAPI";
+import { PARAM_MAX_VALUE, PARAM_MIN_VALUE } from "@/components/Simulation/ParamBar";
 import {
   CategoryScale,
   Chart as ChartJS,
@@ -82,13 +83,11 @@ export const Graph: React.FC<GraphProps> = ({ ConvertResult, setSimulatorResult 
     const newProteinParams = [...proteinParameter];
     let value = Number.parseFloat(event.target.value);
 
-    // 値を範囲内に収める
-    const MIN_VALUE = 1;
-    const MAX_VALUE = 1000;
-    if (value > MAX_VALUE) {
-      value = MAX_VALUE;
-    } else if (value < MIN_VALUE) {
-      value = MIN_VALUE;
+
+    if (value >PARAM_MAX_VALUE) {
+      value = PARAM_MAX_VALUE;
+    } else if (value < PARAM_MIN_VALUE) {
+      value = PARAM_MIN_VALUE;
     }
 
     newProteinParams[index] = value;
@@ -124,10 +123,10 @@ export const Graph: React.FC<GraphProps> = ({ ConvertResult, setSimulatorResult 
       : null;
 
   return (
-    <div className="h-full">
+    <div className="h-full w-full">
       {ConvertResult ? (
-        <div className="flex flex-row h-4/5 m-8">
-          <div className="h-full w-2/3">{graphData && <Line options={options} data={graphData} />}</div>
+        <div className="flex flex-col h-3/5 m-8">
+          <div className="h-full">{graphData && <Line options={options} data={graphData} />}</div>
           <div className="flex flex-col justify-center items-center ml-5 mb-4 w-1/3">
             {proteinParameter.map((param, index) => (
               <ParamInput
