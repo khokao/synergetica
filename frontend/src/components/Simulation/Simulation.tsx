@@ -7,9 +7,9 @@ import type { Dispatch, SetStateAction } from "react";
 export const Simulation: React.FC<{
   ConvertResult: ConverterResponseData;
   reseter: () => void;
-  SimulatorResult: { [key: string]: number };
+  simulatorResult: { [key: string]: number };
   setSimulatorResult: Dispatch<SetStateAction<{ [key: string]: number }>>;
-}> = ({ ConvertResult, reseter, SimulatorResult, setSimulatorResult }) => {
+}> = ({ ConvertResult, reseter, simulatorResult, setSimulatorResult }) => {
   return (
     <div className="flex flex-col h-full">
       <div className="flex justify-center h-full">
@@ -20,7 +20,7 @@ export const Simulation: React.FC<{
           Reset
         </button>
       </div>
-      <GenerationButtons SimulatorResult={SimulatorResult} />
+      <GenerationButtons simulatorResult={simulatorResult} />
     </div>
   );
 };

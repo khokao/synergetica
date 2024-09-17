@@ -22,6 +22,6 @@ export const useConverterAPI = () => {
 };
 
 export const useSimulatorResult = () => {
-  const [SimulatorResult, setSimulatorResult] = useState<{ [key: string]: number }>({});
-  return { SimulatorResult, setSimulatorResult };
+  const [simulatorResult, setSimulatorResult] = useState<{ [key: string]: number }>({});
+  return { simulatorResult, setSimulatorResult };
 };

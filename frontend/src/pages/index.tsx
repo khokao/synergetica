@@ -7,7 +7,7 @@ import { ReactFlowProvider } from "reactflow";
 
 const Home = () => {
   const { postConverter, ConvertResult, resetSimulator } = useConverterAPI();
-  const { SimulatorResult, setSimulatorResult } = useSimulatorResult();
+  const { simulatorResult, setSimulatorResult } = useSimulatorResult();
   return (
     // Wrap all with ReactFlowProvider to access ReactFlow state globally.
     <ReactFlowProvider>
@@ -51,7 +51,7 @@ const Home = () => {
           <Simulation
             ConvertResult={ConvertResult}
             reseter={resetSimulator}
-            SimulatorResult={SimulatorResult}
+            simulatorResult={simulatorResult}
             setSimulatorResult={setSimulatorResult}
           />
         </Resizable>
