@@ -1,6 +1,6 @@
 import { GenerationResult } from "@/components/Generation/GenerationResult";
 import { callGeneratorAPI, cancelGeneratorAPI } from "@/hooks/useGeneratorAPI";
-import type { GeneratorResponseData, GeneratorRequestData } from "@/interfaces/generatorAPI";
+import type { GeneratorRequestData, GeneratorResponseData } from "@/interfaces/generatorAPI";
 import { DocumentIcon, PlayIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import type React from "react";
 import { useState } from "react";

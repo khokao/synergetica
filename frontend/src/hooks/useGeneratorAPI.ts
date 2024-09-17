@@ -1,4 +1,4 @@
-import type { GeneratorResponseData, GeneratorRequestData } from "@/interfaces/generatorAPI";
+import type { GeneratorRequestData, GeneratorResponseData } from "@/interfaces/generatorAPI";
 import { invoke } from "@tauri-apps/api/tauri";
 
 // This function is responsible for making the API call to the backend via Tauri.
