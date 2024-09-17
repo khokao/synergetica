@@ -54,8 +54,8 @@ async def generate_sequences(input: GeneratorInput) -> GeneratorOutput:
 
         return GeneratorOutput(parent2child_details=parent2child_details)
     except asyncio.CancelledError as e:
-        logger.error('The task was cancelled due to a client disconnect.')
-        raise HTTPException(status_code=499, detail='Request cancelled') from e
+        logger.error('The task was canceled due to a client disconnect.')
+        raise HTTPException(status_code=499, detail='Request canceled') from e
     except Exception as e:
         logger.error(f'Error during sequence generation: {str(e)}')
         raise HTTPException(status_code=HTTPStatus.INTERNAL_SERVER_ERROR, detail='Internal server error') from e
