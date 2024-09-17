@@ -4,13 +4,14 @@ import { fireEvent, render, screen, within } from "@testing-library/react";
 import { ReactFlowProvider } from "reactflow";
 import { describe, expect, it } from "vitest";
 
+const nodePartsName = "test-node-name";
 const nodeCategory = "promoter";
 const nodeId = "test-node-id";
 
 const renderComponent = () => {
   return render(
     <ReactFlowProvider>
-      <NodeCommandPalette nodeCategory={nodeCategory} nodeId={nodeId} />
+      <NodeCommandPalette nodeCategory={nodeCategory} nodePartsName={nodePartsName} nodeId={nodeId} />
     </ReactFlowProvider>,
   );
 };
