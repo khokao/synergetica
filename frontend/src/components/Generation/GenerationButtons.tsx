@@ -1,6 +1,6 @@
 import { GenerationResult } from "@/components/Generation/GenerationResult";
 import { callGeneratorAPI, cancelGeneratorAPI } from "@/hooks/useGeneratorAPI";
-import type { GeneratorResponseData, generatorRequestData } from "@/interfaces/generatorAPI";
+import type { GeneratorResponseData, GeneratorRequestData } from "@/interfaces/generatorAPI";
 import { DocumentIcon, PlayIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import type React from "react";
 import { useState } from "react";
@@ -16,12 +16,12 @@ export const GenerationButtons: React.FC<{ simulatorResult: { [key: string]: num
   // Fetcher is defined here to keep the logic for interacting with SWR separate from the pure API call logic.
   const generatorFetcher = async (
     key: string,
-    { arg }: { arg: generatorRequestData },
+    { arg }: { arg: GeneratorRequestData },
   ): Promise<GeneratorResponseData> => {
     return await callGeneratorAPI(arg);
   };
 
-  const { data, trigger, isMutating } = useSWRMutation<GeneratorResponseData, Error, string, generatorRequestData>(
+  const { data, trigger, isMutating } = useSWRMutation<GeneratorResponseData, Error, string, GeneratorRequestData>(
     "call_generator_api",
     generatorFetcher,
     {
@@ -34,7 +34,7 @@ export const GenerationButtons: React.FC<{ simulatorResult: { [key: string]: num
     setReactFlowNodes(reactFlow.getNodes());
     setReactFlowEdges(reactFlow.getEdges());
 
-    const generatorRequestData: generatorRequestData = {
+    const generatorRequestData: GeneratorRequestData = {
       reactflow_object_json_str: JSON.stringify(reactFlow.toObject()),
       rbs_target_parameters: simulatorResult,
     };
