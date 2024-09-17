@@ -38,7 +38,7 @@ async fn call_generator_api(
             rbs_target_parameters,
         ) => resp,
         _ = token.cancelled() => {
-            return Err("Request was cancelled".into());
+            return Err("Request was canceled".into());
         }
     };
 
