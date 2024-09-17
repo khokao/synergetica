@@ -3,16 +3,15 @@ import type { GeneratorResponseData } from "@/interfaces/generatorAPI";
 import { Dialog, DialogPanel, DialogTitle, Transition, TransitionChild } from "@headlessui/react";
 import { CheckIcon, ClipboardIcon } from "@heroicons/react/24/outline";
 import type React from "react";
-import { useState } from "react";
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 import { type Edge, type Node, ReactFlow, ReactFlowProvider } from "reactflow";
-import useSWR from "swr";
 
-interface GenerationButtonsProps {
+interface GenerationResultProps {
   isOpen: boolean;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   reactFlowNodes: Node[];
   reactFlowEdges: Edge[];
+  data: GeneratorResponseData | undefined;
 }
 
 interface GUIViewProps {
@@ -39,18 +38,19 @@ const GUIView: React.FC<GUIViewProps> = ({ reactFlowNodes, reactFlowEdges }) => 
   );
 };
 
-const GeneratedSequenceView: React.FC = () => {
-  const { data } = useSWR<GeneratorResponseData>("call_generator_api");
+interface GeneratedSequenceViewProps {
+  data: GeneratorResponseData;
+}
+
+const GeneratedSequenceView: React.FC<GeneratedSequenceViewProps> = ({ data }) => {
   const [copied, setCopied] = useState<string | null>(null);
 
-  // Extract group IDs from the data
   const groupIds = Object.keys(data.parent2child_details);
 
-  // Handle copy to clipboard action
   const handleCopy = (text: string, groupId: string) => {
     navigator.clipboard.writeText(text).then(() => {
       setCopied(groupId);
-      setTimeout(() => setCopied(null), 2000); // Reset copied state after 2 seconds
+      setTimeout(() => setCopied(null), 2000);
     });
   };
 
@@ -78,13 +78,12 @@ const GeneratedSequenceView: React.FC = () => {
                       type="button"
                       onClick={() => handleCopy(concatenatedSequences, groupId)}
                       className="text-gray-600 hover:text-gray-700 flex items-center bg-gray-100 hover:bg-gray-200 p-2 rounded"
+                      data-testid="copy-button"
                     >
                       {copied === groupId ? (
-                        <>
-                          <CheckIcon className="h-4 w-4 text-green-500" />
-                        </>
+                        <CheckIcon data-testid="check-icon" className="h-4 w-4 text-green-500" />
                       ) : (
-                        <ClipboardIcon className="h-4 w-4" />
+                        <ClipboardIcon data-testid="clipboard-icon" className="h-4 w-4" />
                       )}
                     </button>
                   </div>
@@ -98,15 +97,16 @@ const GeneratedSequenceView: React.FC = () => {
   );
 };
 
-export const GenerationResult: React.FC<GenerationButtonsProps> = ({
+export const GenerationResult: React.FC<GenerationResultProps> = ({
   isOpen,
   setIsOpen,
   reactFlowNodes,
   reactFlowEdges,
+  data,
 }) => {
   return (
     <Transition appear show={isOpen} as={Fragment}>
-      <Dialog as="div" className="relative z-10" onClose={() => setIsOpen(false)}>
+      <Dialog as="div" className="relative z-10" open={isOpen} onClose={() => setIsOpen(false)}>
         <TransitionChild
           as={Fragment}
           enter="ease-out duration-300"
@@ -141,9 +141,7 @@ export const GenerationResult: React.FC<GenerationButtonsProps> = ({
                   </div>
 
                   <div className="flex w-1/2 flex-col justify-between">
-                    <div className="">
-                      <GeneratedSequenceView />
-                    </div>
+                    <GeneratedSequenceView data={data} />
 
                     <div className="ml-auto">
                       <button
