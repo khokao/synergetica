@@ -42,7 +42,7 @@ describe("Simulation Component", () => {
   it("renders the component correctly", () => {
     render(
       <ReactFlowProvider>
-        <Simulation ConvertResult={mockConvertResult} reseter={mockReseter} />
+        <Simulation convertResult={mockConvertResult} reseter={mockReseter} />
       </ReactFlowProvider>,
     );
 
@@ -53,7 +53,7 @@ describe("Simulation Component", () => {
   it("calls reseter function when Reset button is clicked", () => {
     render(
       <ReactFlowProvider>
-        <Simulation ConvertResult={mockConvertResult} reseter={mockReseter} />
+        <Simulation convertResult={mockConvertResult} reseter={mockReseter} />
       </ReactFlowProvider>,
     );
 

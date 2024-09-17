@@ -9,7 +9,7 @@ export const callCircuitConverterAPI = async (data: ConverterRequestData) => {
 };
 
 export const useConverterAPI = () => {
-  const [ConvertResult, setConvertResult] = useState<ConverterResponseData | null>(null);
+  const [convertResult, setConvertResult] = useState<ConverterResponseData | null>(null);
   const postConverter = async (flowDataJson: ConverterRequestData) => {
     const response = await callCircuitConverterAPI(flowDataJson);
     setConvertResult(response);
@@ -18,7 +18,7 @@ export const useConverterAPI = () => {
   const resetSimulator = async () => {
     setConvertResult(null);
   };
-  return { postConverter, ConvertResult, resetSimulator };
+  return { postConverter, convertResult, resetSimulator };
 };
 
 export const useSimulatorResult = () => {
