@@ -1,87 +1,88 @@
-import pytest
-from omegaconf import OmegaConf
+import numpy as np
 
+from simulator.api.schemas import ReactFlowObject
 from simulator.modules.build_protein_interaction import (
     build_protein_interact_graph,
-    get_protein_interaction,
-    get_protein_nameId_dict,
-    run_convert,
-    search_interaction_through_promoter,
+    create_adjacency_matrix,
+    extract_promoter_controlling_proteins,
+    search_all_connected_components,
 )
-from simulator.modules.parse_gui_graph import (
-    create_partsId_nodeId_table,
-    parse_all_nodes,
-    parse_edge_connection,
-)
-
-TEST_PROMOTER_PARTS_ID = '3aa865db07b14c56e1a95166d36b27819cacf657d350d8b85fb3b88e74d04f3c'
-TEST_CONTROL_DETAILS = 'Repression'
+from simulator.modules.utils import get_node_id2data, get_parts_id2node_ids
 
 
-@pytest.fixture
-def setup_node_parser(get_test_circuit):
-    circuit = OmegaConf.create(get_test_circuit)
-    all_nodes = parse_all_nodes(circuit.nodes)
-    promoter_controlling_proteins = parse_edge_connection(circuit.edges, all_nodes)
-    yield all_nodes, promoter_controlling_proteins
-
-
-def test_search_interaction_through_promoter(setup_node_parser):
+def test_create_adjacency_matrix_creates_correct_matrix(test_circuit, child_ids):
     # Arrange
-    all_nodes, promoter_controlling_proteins = setup_node_parser
-    partsId_to_nodeIds = create_partsId_nodeId_table(all_nodes)
+    reactflow_object = ReactFlowObject(**test_circuit)
+    edges = reactflow_object.edges
+    node_id2idx = {node.id: idx for idx, node in enumerate(reactflow_object.nodes)}
 
     # Act
-    protein_interaction = search_interaction_through_promoter(
-        promoter_partsId=TEST_PROMOTER_PARTS_ID,
-        control_details=TEST_CONTROL_DETAILS,
-        promoter_controlling_proteins=promoter_controlling_proteins,
-        partsId_to_nodeIds=partsId_to_nodeIds,
+    adjacency_matrix = create_adjacency_matrix(edges, node_id2idx)
+
+    # Assert
+    assert adjacency_matrix.shape == (len(child_ids), len(child_ids))
+    assert adjacency_matrix.sum() == len(edges)
+
+
+def test_search_all_connected_components_returns_correct_components():
+    # Arrange
+    adjacency_matrix = np.array(
+        [
+            [0, 1, 1, 0, 0],
+            [1, 0, 1, 0, 0],
+            [1, 1, 0, 0, 0],
+            [0, 0, 0, 0, 1],
+            [0, 0, 0, 1, 0],
+        ]
+    )
+
+    # Act
+    all_connected_components = search_all_connected_components(adjacency_matrix)
+
+    # Assert
+    assert all_connected_components == [[0, 1, 2], [0, 1, 2], [0, 1, 2], [3, 4], [3, 4]]
+
+
+def test_extract_promoter_controlling_proteins_correctly_extracts_proteins(test_circuit):
+    # Arrange
+    reactflow_object = ReactFlowObject(**test_circuit)
+    node_id2idx = {node.id: idx for idx, node in enumerate(reactflow_object.nodes)}
+    adjacency_matrix = create_adjacency_matrix(reactflow_object.edges, node_id2idx)
+    connected_components = search_all_connected_components(adjacency_matrix)
+    node_idx2id = {idx: node.id for idx, node in enumerate(reactflow_object.nodes)}
+    node_idx2category = {idx: node.data.nodeCategory for idx, node in enumerate(reactflow_object.nodes)}
+
+    # Act
+    promoter_controlling_proteins = extract_promoter_controlling_proteins(
+        connected_components, node_idx2id, node_idx2category
     )
 
     # Assert
-    assert len(protein_interaction) == 1
-    assert list(protein_interaction.values())[0] in [-1, 1]
+    expected_promoter_controlling_proteins = {
+        '03PeAEAA3uRVcCqVHwftQ': ['RPp8K6j_urCFeMtsm2pZv'],
+        'bbV7AW66sYRL9UJFXq7uH': ['QaBV3nMXJxcNaNN_hE6ji'],
+    }
+    assert promoter_controlling_proteins == expected_promoter_controlling_proteins
 
 
-def test_get_protein_interaction(setup_node_parser):
-    all_nodes, promoter_controlling_proteins = setup_node_parser
-    partsId_to_nodeIds = create_partsId_nodeId_table(all_nodes)
-    protein_interaction = get_protein_interaction(
-        controlTo_info_list=[
-            {
-                'partsId': TEST_PROMOTER_PARTS_ID,
-                'controlType': TEST_CONTROL_DETAILS,
-            }
-        ],
-        promoter_controlling_proteins=promoter_controlling_proteins,
-        partsId_to_nodeIds=partsId_to_nodeIds,
-    )
-
-    assert len(protein_interaction) == 1
-    assert list(protein_interaction.values())[0] in [-1, 1]
-
-
-def test_build_protein_interact_graph(setup_node_parser):
+def test_build_protein_interact_graph_creates_correct_graph(test_circuit, protein_ids):
     # Arrange
-    all_nodes, promoter_controlling_proteins = setup_node_parser
+    reactflow_object = ReactFlowObject(**test_circuit)
+    parts_id2node_ids = get_parts_id2node_ids(reactflow_object.nodes)
+    node_id2data = get_node_id2data(reactflow_object.nodes)
+    promoter_controlling_proteins = {
+        '03PeAEAA3uRVcCqVHwftQ': ['RPp8K6j_urCFeMtsm2pZv'],
+        'bbV7AW66sYRL9UJFXq7uH': ['QaBV3nMXJxcNaNN_hE6ji'],
+    }
 
     # Act
-    protein_interact_graph, proteinId_list = build_protein_interact_graph(all_nodes, promoter_controlling_proteins)
+    protein_interact_graph = build_protein_interact_graph(
+        promoter_controlling_proteins=promoter_controlling_proteins,
+        parts_id2node_ids=parts_id2node_ids,
+        node_id2data=node_id2data,
+        protein_node_ids=protein_ids,
+    )
 
     # Assert
     assert protein_interact_graph.shape == (2, 2)
     assert protein_interact_graph[0][1] == -1
-    assert len(proteinId_list) == 2
-
-
-def test_get_protein_nameId_dict(get_test_circuit):
-    # Arrange
-    circuit = OmegaConf.create(get_test_circuit)
-    protein_interact_graph, proteinId_list, all_nodes = run_convert(circuit)
-
-    # Act
-    protein_nameId_dict = get_protein_nameId_dict(proteinId_list, all_nodes)
-
-    # Assert
-    assert protein_nameId_dict == {'RPp8K6j_urCFeMtsm2pZv': 'BM3R1', 'QaBV3nMXJxcNaNN_hE6ji': 'AmeR'}
