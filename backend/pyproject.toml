@@ -46,8 +46,8 @@ jupyterlab = "^4.2.3"
 matplotlib = "^3.9.0"
 mypy = "*"
 pytest = "*"
-pytest-cov = "*"
 pytest-asyncio = "*"
+pytest-cov = "*"
 ruff = "*"
 
 [tool.ruff]
