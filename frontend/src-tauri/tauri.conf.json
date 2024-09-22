@@ -17,6 +17,9 @@
         "all": true,
         "open": true,
         "save": true
+      },
+      "fs": {
+        "writeFile": true
       }
     },
     "bundle": {
