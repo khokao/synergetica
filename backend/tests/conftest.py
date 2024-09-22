@@ -2,7 +2,7 @@ import pytest
 
 
 @pytest.fixture
-def get_test_circuit():
+def test_circuit():
     return TEST_CIRCUIT
 
 
