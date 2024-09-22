@@ -1,8 +1,18 @@
 import { GenerationResult } from "@/components/Generation/GenerationResult";
 import type { GeneratorResponseData } from "@/interfaces/generatorAPI";
+import { save } from "@tauri-apps/api/dialog";
+import { writeTextFile } from "@tauri-apps/api/fs";
 import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { ReactFlowProvider } from "reactflow";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { type Mock, beforeEach, describe, expect, it, vi } from "vitest";
+
+vi.mock("@tauri-apps/api/dialog", () => ({
+  save: vi.fn(),
+}));
+
+vi.mock("@tauri-apps/api/fs", () => ({
+  writeTextFile: vi.fn(),
+}));
 
 beforeEach(() => {
   global.ResizeObserver = vi.fn().mockImplementation(() => ({
@@ -126,5 +136,30 @@ describe("GenerationResult", () => {
     });
 
     expect(setIsOpenMock).toHaveBeenCalledWith(false);
+  });
+
+  it("handles export to FASTA functionality", async () => {
+    const mockedSave = save as unknown as Mock;
+    const mockedWriteTextFile = writeTextFile as unknown as Mock;
+
+    mockedSave.mockResolvedValue("/path/to/sequence.fasta");
+    mockedWriteTextFile.mockResolvedValue(undefined);
+
+    await act(async () => {
+      renderComponent(true, mockData);
+    });
+
+    const exportButton = screen.getByRole("button", { name: /Export/i });
+    await act(async () => {
+      fireEvent.click(exportButton);
+    });
+
+    expect(mockedSave).toHaveBeenCalledWith({
+      filters: [{ name: "FASTA", extensions: ["fasta", "fa"] }],
+      defaultPath: "sequence.fasta",
+    });
+    const expectedFastaContent = "> group1\nsequence1sequence2\n\n> group2\nsequence3";
+
+    expect(mockedWriteTextFile).toHaveBeenCalledWith("/path/to/sequence.fasta", expectedFastaContent);
   });
 });

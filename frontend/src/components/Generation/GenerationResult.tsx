@@ -2,6 +2,8 @@ import { flowNodeTypes } from "@/components/GUI/CustomNode";
 import type { GeneratorResponseData } from "@/interfaces/generatorAPI";
 import { Dialog, DialogPanel, DialogTitle, Transition, TransitionChild } from "@headlessui/react";
 import { CheckIcon, ClipboardIcon } from "@heroicons/react/24/outline";
+import { save } from "@tauri-apps/api/dialog";
+import { writeTextFile } from "@tauri-apps/api/fs";
 import type React from "react";
 import { Fragment, useState } from "react";
 import { type Edge, type Node, ReactFlow, ReactFlowProvider } from "reactflow";
@@ -39,27 +41,21 @@ const GUIView: React.FC<GUIViewProps> = ({ reactFlowNodes, reactFlowEdges }) => 
 };
 
 interface GeneratedSequenceViewProps {
-  data: GeneratorResponseData;
+  data: GeneratorResponseData | undefined;
+  handleCopy: (text: string, groupId: string) => void;
+  copied: string | null;
 }
 
-const GeneratedSequenceView: React.FC<GeneratedSequenceViewProps> = ({ data }) => {
-  const [copied, setCopied] = useState<string | null>(null);
-
+const GeneratedSequenceView: React.FC<GeneratedSequenceViewProps> = ({ data, handleCopy, copied }) => {
   const groupIds = Object.keys(data.parent2child_details);
-
-  const handleCopy = (text: string, groupId: string) => {
-    navigator.clipboard.writeText(text).then(() => {
-      setCopied(groupId);
-      setTimeout(() => setCopied(null), 2000);
-    });
-  };
 
   return (
     <div className="container mx-auto">
       <div className="space-y-6">
         {groupIds.map((groupId) => {
-          const sequences = data.parent2child_details[groupId];
-          const concatenatedSequences = sequences.map((sequence) => sequence.sequence).join("");
+          const concatenatedSequences = data.parent2child_details[groupId]
+            .map((sequence) => sequence.sequence)
+            .join("");
 
           return (
             <div key={groupId} className="border border-gray-300 rounded-lg p-4">
@@ -104,6 +100,38 @@ export const GenerationResult: React.FC<GenerationResultProps> = ({
   reactFlowEdges,
   data,
 }) => {
+  const [copied, setCopied] = useState<string | null>(null);
+
+  const handleCopy = (text: string, groupId: string) => {
+    navigator.clipboard.writeText(text).then(() => {
+      setCopied(groupId);
+      setTimeout(() => setCopied(null), 2000);
+    });
+  };
+
+  const handleExportFASTA = async () => {
+    if (!data) return;
+
+    const fastaContent = Object.keys(data.parent2child_details)
+      .map((groupId) => {
+        const concatenatedSequences = data.parent2child_details[groupId].map((sequence) => sequence.sequence).join("");
+        return `> ${groupId}\n${concatenatedSequences}`;
+      })
+      .join("\n\n");
+
+    try {
+      const filePath = await save({
+        filters: [{ name: "FASTA", extensions: ["fasta", "fa"] }],
+        defaultPath: "sequence.fasta",
+      });
+      if (filePath) {
+        await writeTextFile(filePath, fastaContent);
+      }
+    } catch (error) {
+      console.error("Error while exporting FASTA file:", error);
+    }
+  };
+
   return (
     <Transition appear show={isOpen} as={Fragment}>
       <Dialog as="div" className="relative z-10" open={isOpen} onClose={() => setIsOpen(false)}>
@@ -141,12 +169,20 @@ export const GenerationResult: React.FC<GenerationResultProps> = ({
                   </div>
 
                   <div className="flex w-1/2 flex-col justify-between">
-                    <GeneratedSequenceView data={data} />
+                    <GeneratedSequenceView data={data} handleCopy={handleCopy} copied={copied} />
 
-                    <div className="ml-auto">
+                    <div className="flex justify-end mt-4 space-x-3">
                       <button
                         type="button"
-                        className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                        onClick={handleExportFASTA}
+                        className="inline-flex justify-center rounded-md bg-gray-200 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-400 focus-visible:ring-offset-2"
+                      >
+                        Export
+                      </button>
+
+                      <button
+                        type="button"
+                        className="inline-flex justify-center rounded-md bg-gray-200 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-400 focus-visible:ring-offset-2"
                         onClick={() => setIsOpen(false)}
                       >
                         Close
