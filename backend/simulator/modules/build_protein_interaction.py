@@ -1,15 +1,8 @@
 from collections import defaultdict
-from typing import List, cast
 
 import numpy as np
-from omegaconf.dictconfig import DictConfig
 
-from simulator.core.schema import GUINode
-from simulator.modules.parse_gui_graph import (
-    create_partsId_nodeId_table,
-    parse_all_nodes,
-    parse_edge_connection,
-)
+from ..api.schemas import ReactFlowChildNodeData, ReactFlowEdge
 
 CONTROL_TYPE_STR2INT = {
     'Repression': -1,
@@ -17,141 +10,82 @@ CONTROL_TYPE_STR2INT = {
 }
 
 
-def search_interaction_through_promoter(
-    promoter_partsId: str,
-    control_details: str,
-    promoter_controlling_proteins: dict[str, List[str]],
-    partsId_to_nodeIds: dict[str, list[str]],
-) -> dict[str, int]:
-    """
-    assign interactions (int value) for controlled proteins by the given promoter.
+def create_adjacency_matrix(edges: list[ReactFlowEdge], node_id2idx: dict[str, int]) -> np.ndarray:
+    num_nodes = len(node_id2idx.keys())
+
+    adjacency_matrix = np.zeros((num_nodes, num_nodes), dtype=int)
+    for edge in edges:
+        source_idx = node_id2idx[edge.source]
+        target_idx = node_id2idx[edge.target]
+        adjacency_matrix[source_idx, target_idx] = 1
+
+    return adjacency_matrix
+
+
+def search_all_connected_components(adjacency_matrix: np.ndarray) -> list[list[int]]:
+    """Get connected node index groups from adjacency matrix.
 
     Args:
-        promoter_id (str): partsId of the promoter.
-        control_details (dict[str, str]): Control information for the promoter.
-        promoter_controlling_proteins (dict[str, List[str]]): Dictionary of connected protein node_ids for each promoter
-        partsId_to_nodeId (dict[str, List[str]]): Dictionary to convert parts names to node IDs.
-
+        adjacency_matrix (np.ndarray): adjacency matrix of the nodes. [i][j] = 1 means i->j edge exists.
     Returns:
-        protein_interaction (dict[str, int]): Interactions for controlled proteins. {protein_id: interaction}
+        all_connected_components (list[list[int]]): list of connected node index for each connected component.
     """
-    protein_interaction = {}
-    promoter_nodeIds = partsId_to_nodeIds.get(promoter_partsId, [])
-    for promoter_nodeId in promoter_nodeIds:
-        for controlled_protein_id in promoter_controlling_proteins.get(promoter_nodeId, []):
-            interaction = CONTROL_TYPE_STR2INT[control_details]
-            protein_interaction[controlled_protein_id] = interaction
-    return protein_interaction
+
+    def dfs(node_idx: int, visited: set, adjacency_matrix: np.ndarray) -> None:
+        visited.add(node_idx)
+        for i in range(len(adjacency_matrix)):
+            if adjacency_matrix[node_idx, i] == 1 and i not in visited:
+                dfs(i, visited, adjacency_matrix)
+
+    all_connected_components = []
+    for i in range(len(adjacency_matrix)):
+        visited = set()
+        dfs(i, visited, adjacency_matrix)
+        all_connected_components.append(list(visited))
+
+    return all_connected_components
 
 
-def get_protein_interaction(
-    controlTo_info_list: list[dict[str, str]],
-    promoter_controlling_proteins: dict[str, list[str]],
-    partsId_to_nodeIds: dict[str, list[str]],
-) -> dict[str, int]:
-    """get all interacting protein_nodes and how interact for the given protein.
+def extract_promoter_controlling_proteins(
+    all_connected_components: list[list[int]],
+    node_idx2id: dict[int, str],
+    node_idx2category: dict[int, str],
+) -> dict[str, list[str]]:
+    promoter_controlling_proteins = defaultdict(list)
+    for i, connected_components in enumerate(all_connected_components):
+        if node_idx2category[i] == 'promoter':
+            promoter_node_id = node_idx2id[i]
 
-    Args:
-        controlTo_info (list[dict[str, str]]): Information about which promoters the protein controls.
-            e.g)[{'partsId': '3aa865db07b14c56e1a95166d36b27819cacf657d350d8b85fb3b88e74d04f3c',
-                  'controlType': 'Repression',}]
-        promoter_controlling_proteins (dict[str, list[str]]): dict of connected protein node_id for each promoter node.
-        partsId_to_nodeIds (dict[str,list[str]]): dict to convert parts_name to node_id.
-                                                   There can be multiple node_id for one parts_name.
-            dict: {nodePartsName:list[node_id]}
+            for j in connected_components:
+                if node_idx2category[j] == 'protein':
+                    protein_node_id = node_idx2id[j]
 
-    Returns:
-        protein_interaction (dict[str,int]): {protein_node_id: (1 or -1)}
-    """
-    protein_interaction = {}
-    for controlTo_info in controlTo_info_list:
-        promoter_id = controlTo_info['partsId']
-        control_details = controlTo_info['controlType']
-        interaction = search_interaction_through_promoter(
-            promoter_id, control_details, promoter_controlling_proteins, partsId_to_nodeIds
-        )
-        protein_interaction.update(interaction)
-    return protein_interaction
+                    promoter_controlling_proteins[promoter_node_id].append(protein_node_id)
+    promoter_controlling_proteins = dict(promoter_controlling_proteins)
+
+    return promoter_controlling_proteins
 
 
 def build_protein_interact_graph(
-    all_nodes: dict[str, GUINode],
     promoter_controlling_proteins: dict[str, list[str]],
-) -> tuple[np.ndarray, list[str]]:
-    """Build protein interaction graph from GUI circuit with promoter controlling information.
+    parts_id2node_ids: dict[str, list[str]],
+    node_id2data: dict[str, ReactFlowChildNodeData],
+    protein_node_ids: list[str],
+):
+    num_protein_nodes = len(protein_node_ids)
 
-    Args:
-        all_nodes (dict[str, GUINode]): all nodes in the circuit converted to GUINode format.
-        promoter_controlling_proteins (dict[str, list[str]]): dict of connected protein node id for each promoter node.
-
-    Returns:
-        protein_interact_graph: np.ndarray: directed graph of protein interaction converted from GUI circuit.
-            protein_interact_graph[i][j] = 1 or -1 or 0. value means how protein-i control to protein-j
-            shape=(num_protein, num_protein)
-        proteinId_list (list[str]): list of protein Id. idx of the list is the idx of protein in protein_interact_graph.
-    """
-    partsId_to_nodeIds = create_partsId_nodeId_table(all_nodes)
-    proteinId_list = [nodeId for nodeId, node in all_nodes.items() if node.nodeCategory == 'protein']
-    protein_interaction_graph: np.ndarray = np.zeros((len(proteinId_list), len(proteinId_list)))
-
-    for idx, protein_nodeId in enumerate(proteinId_list):
-        controlTo_info_list = all_nodes[protein_nodeId].controlTo
-        if controlTo_info_list is None:
+    protein_interaction_graph = np.zeros((num_protein_nodes, num_protein_nodes), dtype=int)
+    for i, protein_node_id in enumerate(protein_node_ids):
+        control_to_list = node_id2data[protein_node_id].controlTo
+        if control_to_list is None:
             continue
-        else:
-            controlTo_info_list = cast(list[dict[str, str]], controlTo_info_list)
-        protein_interaction = get_protein_interaction(
-            controlTo_info_list, promoter_controlling_proteins, partsId_to_nodeIds
-        )
-        for interact_protein_id, interaction_info in protein_interaction.items():
-            protein_interaction_graph[idx, proteinId_list.index(interact_protein_id)] = interaction_info
 
-    return protein_interaction_graph, proteinId_list
+        for control_to_item in control_to_list:
+            control_type_int = CONTROL_TYPE_STR2INT[control_to_item.controlType]
+            promoter_node_ids = parts_id2node_ids.get(control_to_item.partsId, [])
 
+            for promoter_node_id in promoter_node_ids:
+                for controlled_protein_node_id in promoter_controlling_proteins.get(promoter_node_id, []):
+                    protein_interaction_graph[i, protein_node_ids.index(controlled_protein_node_id)] = control_type_int
 
-def run_convert(raw_circuit_data: DictConfig) -> tuple[np.ndarray, list[str], dict[str, GUINode]]:
-    """Convert GUI circuit data to protein interaction graph.
-
-    Args:
-        raw_circuit_data (OmegaConf): circuit data send from GUI frontend. OmegaConf format.
-
-    Returns:
-        protein_interact_graph (np.ndarray): directed graph of protein interaction converted from GUI circuit.
-            protein_interact_graph[i][j] = 1 or -1 or 0. value means how protein-i control to protein-j
-        proteinId_list (list[str]): list of protein Id. idx of the list is the idx of protein in protein_interact_graph.
-        all_nodes (dict[str, GUINode]): all nodes in the circuit converted to GUINode format.
-    """
-    all_nodes = parse_all_nodes(raw_circuit_data.nodes)
-    promoter_controlling_proteins = parse_edge_connection(raw_circuit_data.edges, all_nodes)
-    protein_interact_graph, proteinId_list = build_protein_interact_graph(all_nodes, promoter_controlling_proteins)
-    assert protein_interact_graph.shape == (len(proteinId_list), len(proteinId_list))
-    assert np.isin(protein_interact_graph, [0, 1, -1]).all()
-
-    return protein_interact_graph, proteinId_list, all_nodes
-
-
-def get_protein_nameId_dict(proteinId_list: list[str], all_nodes: dict[str, GUINode]) -> dict[str, str]:
-    """Get protein parts name list to display in the Simulator frontend.
-
-    Args:
-        proteinId_list (list[str]): dict of protein Id. idx of the list is the idx of protein in protein_interact_graph.
-        all_nodes (dict[str, GUINode]): all nodes in the circuit converted to GUINode format.
-
-    Returns:
-        parts_nameId_dict (dict[str,str]): dict of protein Id and protein name. {protein_id: protein_name}
-            if there are multiple proteins with the same name, add number to the end of the name.
-    """
-    parts_name_count: defaultdict[str, int] = defaultdict(int)
-    protein_nameId_dict = {}
-
-    for protein_id in proteinId_list:
-        protein_node = all_nodes[protein_id]
-        parts_name = protein_node.nodePartsName
-
-        parts_name_count[parts_name] += 1
-        if parts_name_count[parts_name] > 1:
-            protein_nameId_dict[protein_id] = f'{parts_name}_{parts_name_count[parts_name]}'
-        else:
-            protein_nameId_dict[protein_id] = parts_name
-
-    return protein_nameId_dict
+    return protein_interaction_graph
