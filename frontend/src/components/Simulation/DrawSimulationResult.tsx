@@ -1,6 +1,6 @@
 import { getGraphOptions } from "@/components/Simulation/GraphSetting";
 import { ParamInput } from "@/components/Simulation/ParamBar";
-import { paramMinValue,paramMaxValue } from "@/components/Simulation/ParamBar";
+import { paramMaxValue, paramMinValue } from "@/components/Simulation/ParamBar";
 import type { ConverterResponseData } from "@/interfaces/simulatorAPI";
 import {
   CategoryScale,
