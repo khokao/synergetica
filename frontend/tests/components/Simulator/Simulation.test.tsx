@@ -35,6 +35,13 @@ describe("Simulation Component", () => {
 
   const mockReseter = vi.fn();
 
+  const mockSimulatorResult: { [key: string]: number } = {
+    'RPp8K6j_urCFeMtsm2pZv': 100,
+    'QaBV3nMXJxcNaNN_hE6ji': 800,
+  };
+  
+  const mockSetSimulatorResult = vi.fn();
+
   beforeEach(() => {
     vi.clearAllMocks();
   });
@@ -42,7 +49,7 @@ describe("Simulation Component", () => {
   it("renders the component correctly", () => {
     render(
       <ReactFlowProvider>
-        <Simulation ConvertResult={mockConvertResult} reseter={mockReseter} />
+        <Simulation ConvertResult={mockConvertResult} reseter={mockReseter} SimulatorResult={mockSimulatorResult} setSimulatorResult={mockSetSimulatorResult} />
       </ReactFlowProvider>,
     );
 
@@ -53,7 +60,7 @@ describe("Simulation Component", () => {
   it("calls reseter function when Reset button is clicked", () => {
     render(
       <ReactFlowProvider>
-        <Simulation convertResult={mockConvertResult} reseter={mockReseter} />
+        <Simulation ConvertResult={mockConvertResult} reseter={mockReseter} SimulatorResult={mockSimulatorResult} setSimulatorResult={mockSetSimulatorResult} />
       </ReactFlowProvider>,
     );
 
