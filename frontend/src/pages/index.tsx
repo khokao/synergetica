@@ -49,9 +49,9 @@ const Home = () => {
           enable={{ right: true }}
         >
           <Simulation
-            ConvertResult={convertResult}
+            convertResult={convertResult}
             reseter={resetSimulator}
-            SimulatorResult={simulatorResult}
+            simulatorResult={simulatorResult}
             setSimulatorResult={setSimulatorResult}
           />
         </Resizable>

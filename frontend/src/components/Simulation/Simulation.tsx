@@ -7,14 +7,14 @@ import type { Dispatch, SetStateAction } from "react";
 type SimulationProps = {
   convertResult: ConverterResponseData;
   reseter: () => void;
-  simularotResult: { [key: string]: number };
+  simulatorResult: { [key: string]: number };
   setSimulatorResult: Dispatch<SetStateAction<{ [key: string]: number }>>;
 };
 
 export const Simulation: React.FC<SimulationProps> = ({
   convertResult,
   reseter,
-  simularotResult,
+  simulatorResult,
   setSimulatorResult,
 }) => {
   return (
@@ -27,7 +27,7 @@ export const Simulation: React.FC<SimulationProps> = ({
           Reset
         </button>
       </div>
-      <GenerationButtons simulatorResult={simularotResult} />
+      <GenerationButtons simulatorResult={simulatorResult} />
     </div>
   );
 };
