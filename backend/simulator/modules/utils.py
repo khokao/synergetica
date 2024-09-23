@@ -4,6 +4,14 @@ from ..api.schemas import ReactFlowChildNode, ReactFlowChildNodeData
 
 
 def get_parts_id2node_ids(nodes: list[ReactFlowChildNode]) -> dict[str, list[str]]:
+    """Create a mapping from part IDs to lists of node IDs.
+
+    Args:
+        nodes (list[ReactFlowChildNode]): List of ReactFlowChildNode objects.
+
+    Returns:
+        dict[str, list[str]]: Dictionary where keys are part IDs and values are lists of associated node IDs.
+    """
     parts_id2node_ids = defaultdict(list)
     for node in nodes:
         parts_id2node_ids[node.data.partsId].append(node.id)

@@ -12,6 +12,15 @@ CONTROL_TYPE_STR2INT = {
 
 
 def create_adjacency_matrix(edges: list[ReactFlowEdge], node_id2idx: dict[str, int]) -> np.ndarray:
+    """Create an adjacency matrix from a list of edges and a node index mapping.
+
+    Args:
+        edges (list[ReactFlowEdge]): List of edges where each edge connects a source node to a target node.
+        node_id2idx (dict[str, int]): Mapping from node ID to index for matrix construction.
+
+    Returns:
+        adjacency_matrix (np.ndarray): A square adjacency matrix where [i][j] = 1 if there is an edge from node i,j.
+    """
     num_nodes = len(node_id2idx.keys())
 
     adjacency_matrix = np.zeros((num_nodes, num_nodes), dtype=int)
@@ -52,6 +61,17 @@ def extract_promoter_controlling_proteins(
     node_idx2id: dict[int, str],
     node_idx2category: dict[int, Literal['protein', 'promoter', 'terminator']],
 ) -> dict[str, list[str]]:
+    """Extract the proteins that control each promoter based on the connected components.
+
+    Args:
+        all_connected_components (list[list[int]]): List of connected node groups identified by index.
+        node_idx2id (dict[int, str]): Mapping from node index to node ID.
+        node_idx2category (dict[int, Literal): Mapping from node index to node category.
+
+    Returns:
+        dict[str, list[str]]:
+            A dictionary where the keys are promoter node IDs and the values are lists of protein node IDs.
+    """
     promoter_controlling_proteins = defaultdict(list)
     for i, connected_components in enumerate(all_connected_components):
         if node_idx2category[i] == 'promoter':
@@ -72,6 +92,21 @@ def build_protein_interact_graph(
     node_id2data: dict[str, ReactFlowChildNodeData],
     protein_node_ids: list[str],
 ) -> np.ndarray:
+    """Build a protein interaction graph based on control relationships and promoter-protein interactions.
+
+    Args:
+        promoter_controlling_proteins (dict[str, list[str]]):
+            Dictionary mapping promoter IDs to lists of controlling protein IDs.
+        parts_id2node_ids (dict[str, list[str]]): Mapping from part IDs to lists of node IDs related to those parts.
+        node_id2data (dict[str, ReactFlowChildNodeData]):
+            Mapping from node ID to detailed node data, including control information.
+        protein_node_ids (list[str]): List of all protein node IDs.
+
+    Returns:
+        protein_interaction_graph (np.ndarray):
+            A square matrix representing protein interaction, where [i][j] = -1 or 1
+            if protein i represses or activates protein j, and 0 otherwise.
+    """
     num_protein_nodes = len(protein_node_ids)
 
     protein_interaction_graph = np.zeros((num_protein_nodes, num_protein_nodes), dtype=int)
