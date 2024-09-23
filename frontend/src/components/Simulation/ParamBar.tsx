@@ -1,7 +1,7 @@
 import type React from "react";
 
-export const PARAM_MIN_VALUE = 1;
-export const PARAM_MAX_VALUE = 1000;
+export const paramMinValue = 1;
+export const paramMaxValue = 1000;
 
 type ParamInputProps = {
   label: string;
@@ -14,8 +14,8 @@ export const ParamInput: React.FC<ParamInputProps> = ({ label, value, onChange }
     <span className="inline-block w-16">{label}</span>
     <input
       type="range"
-      min={PARAM_MIN_VALUE}
-      max={PARAM_MAX_VALUE}
+      min={paramMinValue}
+      max={paramMaxValue}
       step="1"
       value={value}
       onChange={onChange}
@@ -23,8 +23,8 @@ export const ParamInput: React.FC<ParamInputProps> = ({ label, value, onChange }
     />
     <input
       type="number"
-      min={PARAM_MIN_VALUE}
-      max={PARAM_MAX_VALUE}
+      min={paramMinValue}
+      max={paramMaxValue}
       step="1"
       value={value}
       onChange={onChange}

@@ -1,6 +1,6 @@
 import { getGraphOptions } from "@/components/Simulation/GraphSetting";
 import { ParamInput } from "@/components/Simulation/ParamBar";
-import { PARAM_MAX_VALUE, PARAM_MIN_VALUE } from "@/components/Simulation/ParamBar";
+import { paramMinValue,paramMaxValue } from "@/components/Simulation/ParamBar";
 import type { ConverterResponseData } from "@/interfaces/simulatorAPI";
 import {
   CategoryScale,
@@ -83,10 +83,10 @@ export const Graph: React.FC<GraphProps> = ({ ConvertResult, setSimulatorResult 
     const newProteinParams = [...proteinParameter];
     let value = Number.parseFloat(event.target.value);
 
-    if (value > PARAM_MAX_VALUE) {
-      value = PARAM_MAX_VALUE;
-    } else if (value < PARAM_MIN_VALUE) {
-      value = PARAM_MIN_VALUE;
+    if (value > paramMaxValue) {
+      value = paramMaxValue;
+    } else if (value < paramMinValue) {
+      value = paramMinValue;
     }
 
     newProteinParams[index] = value;
