@@ -48,7 +48,9 @@ async def generate_sequences(input: GeneratorInput) -> GeneratorOutput:
                 for protein_id, target_value in input.rbs_target_parameters.items()
             ]
             results = await asyncio.gather(*tasks)
+        logger.info('Generation complete.')
 
+        logger.info('Creating response...')
         all_ga_outputs = dict(results)
         parent2child_details = create_parent2child_details(all_ga_outputs, reactflow_object.nodes)
 
