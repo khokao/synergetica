@@ -1,4 +1,4 @@
-export interface generatorRequestData {
+export interface GeneratorRequestData {
   reactflow_object_json_str: string;
   rbs_target_parameters: { [key: string]: number };
 }
@@ -19,5 +19,5 @@ export interface GeneratorError {
 export type GeneratorResponseContextType = {
   response: GeneratorResponseData | GeneratorError | null;
   setResponse: React.Dispatch<React.SetStateAction<GeneratorResponseData | GeneratorError | null>>;
-  callGeneratorAPI: (data: generatorRequestData) => Promise<void>;
+  callGeneratorAPI: (data: GeneratorRequestData) => Promise<void>;
 };

@@ -6,6 +6,33 @@ def get_test_circuit():
     return TEST_CIRCUIT
 
 
+@pytest.fixture
+def protein_ids():
+    protein_ids = []
+    for node in TEST_CIRCUIT['nodes']:
+        if node['type'] == 'child' and node['data']['nodeCategory'] == 'protein':  # type: ignore
+            protein_ids.append(node['id'])
+    return protein_ids
+
+
+@pytest.fixture
+def parent_ids():
+    parent_ids = []
+    for node in TEST_CIRCUIT['nodes']:
+        if node['type'] == 'parent':
+            parent_ids.append(node['id'])
+    return parent_ids
+
+
+@pytest.fixture
+def child_ids():
+    child_ids = []
+    for node in TEST_CIRCUIT['nodes']:
+        if node['type'] == 'child':
+            child_ids.append(node['id'])
+    return child_ids
+
+
 TEST_CIRCUIT = {
     'nodes': [
         {

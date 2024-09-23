@@ -1,3 +1,3 @@
 from .middleware import RequestCancelledMiddleware
-from .parse_flow import get_child_id2key, get_ordered_parent2children
+from .parse_flow import get_child_id2key, get_parent2ordered_children
 from .create_api_response import create_parent2child_details

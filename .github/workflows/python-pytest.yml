@@ -37,6 +37,10 @@ jobs:
           poetry_version: "1.8"
           working_dir: backend
 
+      - name: Log in to Hugging Face
+        shell: bash
+        run: poetry run huggingface-cli login --token ${{ secrets.HUGGINGFACE_TOKEN }}
+
       - name: pytest
         run: | # set -o pipefail is required to propagate pytest exit code
           set -o pipefail

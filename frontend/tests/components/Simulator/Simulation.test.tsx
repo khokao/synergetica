@@ -2,8 +2,18 @@ import { Simulation } from "@/components/Simulation/Simulation";
 import { callGeneratorAPI } from "@/hooks/useGeneratorAPI";
 import type { ConverterResponseData } from "@/interfaces/simulatorAPI";
 import { fireEvent, render, screen } from "@testing-library/react";
+import { ReactFlowProvider } from "reactflow";
 import useSWR from "swr";
 import { type Mock, vi } from "vitest";
+
+vi.stubGlobal(
+  "ResizeObserver",
+  class {
+    observe() {}
+    unobserve() {}
+    disconnect() {}
+  },
+);
 
 vi.mock("@/hooks/useGeneratorAPI", () => ({
   callGeneratorAPI: vi.fn(),
@@ -30,16 +40,22 @@ describe("Simulation Component", () => {
   });
 
   it("renders the component correctly", () => {
-    render(<Simulation ConvertResult={mockConvertResult} reseter={mockReseter} />);
-
-    /*expect(screen.getByTestId("graph-component")).toBeInTheDocument();*/
+    render(
+      <ReactFlowProvider>
+        <Simulation convertResult={mockConvertResult} reseter={mockReseter} />
+      </ReactFlowProvider>,
+    );
 
     expect(screen.getByText("Reset")).toBeInTheDocument();
     expect(screen.getByText("Generate")).toBeInTheDocument();
   });
 
   it("calls reseter function when Reset button is clicked", () => {
-    render(<Simulation ConvertResult={mockConvertResult} reseter={mockReseter} />);
+    render(
+      <ReactFlowProvider>
+        <Simulation convertResult={mockConvertResult} reseter={mockReseter} />
+      </ReactFlowProvider>,
+    );
 
     fireEvent.click(screen.getByText("Reset"));
 

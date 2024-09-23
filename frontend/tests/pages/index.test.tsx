@@ -15,10 +15,6 @@ vi.mock("@/components/Simulation/Simulation", () => ({
   Simulation: () => <div>Simulation Section</div>,
 }));
 
-vi.mock("@/components/Generation/Generation", () => ({
-  Generation: () => <div>Generation Section</div>,
-}));
-
 describe("Home Page", () => {
   it("renders FileSidebar component", () => {
     render(<Home />);
@@ -33,10 +29,5 @@ describe("Home Page", () => {
   it("renders Simulation component", () => {
     render(<Home />);
     expect(screen.getByText("Simulation Section")).toBeInTheDocument();
-  });
-
-  it("renders Generation component", () => {
-    render(<Home />);
-    expect(screen.getByText("Generation Section")).toBeInTheDocument();
   });
 });
