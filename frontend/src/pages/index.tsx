@@ -1,56 +1,62 @@
 import { FileSidebar } from "@/components/FileSidebar/FileSidebar";
 import { GUI } from "@/components/GUI/GUI";
-import { Generation } from "@/components/Generation/Generation";
 import { Simulation } from "@/components/Simulation/Simulation";
-import { useConverterAPI } from "@/hooks/useSimulatorAPI";
+import { useConverterAPI, useSimulatorResult } from "@/hooks/useSimulatorAPI";
 import { Resizable } from "re-resizable";
+import { ReactFlowProvider } from "reactflow";
 
 const Home = () => {
-  const { postConverter, ConvertResult, resetSimulator } = useConverterAPI();
+  const { postConverter, convertResult, resetSimulator } = useConverterAPI();
+  const { simulatorResult, setSimulatorResult } = useSimulatorResult();
   return (
-    <div className="flex h-screen">
-      <Resizable
-        className="border-r-2 border-black-500"
-        defaultSize={{
-          width: "10%",
-          height: "100%",
-        }}
-        minWidth={"5%"}
-        maxWidth={"20%"}
-        enable={{ right: true }}
-      >
-        <FileSidebar />
-      </Resizable>
+    // Wrap all with ReactFlowProvider to access ReactFlow state globally.
+    <ReactFlowProvider>
+      <div className="flex h-screen">
+        <Resizable
+          className="border-r-2 border-black-500"
+          defaultSize={{
+            width: "10%",
+            height: "100%",
+          }}
+          minWidth={"5%"}
+          maxWidth={"20%"}
+          enable={{ right: true }}
+        >
+          <FileSidebar />
+        </Resizable>
 
-      <Resizable
-        className="border-r-2 border-black-500"
-        defaultSize={{
-          width: "40%",
-          height: "100%",
-        }}
-        minWidth={"30%"}
-        maxWidth={"50%"}
-        enable={{ right: true }}
-      >
-        <GUI onClickSimulate={postConverter} />
-      </Resizable>
+        <Resizable
+          className="border-r-2 border-black-500"
+          defaultSize={{
+            width: "45%",
+            height: "100%",
+          }}
+          minWidth={"30%"}
+          maxWidth={"50%"}
+          enable={{ right: true }}
+        >
+          <GUI onClickSimulate={postConverter} />
+        </Resizable>
 
-      <div className="flex flex-col flex-grow">
         <Resizable
           className="border-b-2 border-black-500"
           defaultSize={{
-            width: "100%",
-            height: "70%",
+            width: "45%",
+            height: "100%",
           }}
-          minHeight={"10%"}
-          maxHeight={"90%"}
-          enable={{ bottom: true }}
+          minWidth={"30%"}
+          maxWidth={"50%"}
+          enable={{ right: true }}
         >
-          <Simulation ConvertResult={ConvertResult} reseter={resetSimulator} />
+          <Simulation
+            convertResult={convertResult}
+            reseter={resetSimulator}
+            simulatorResult={simulatorResult}
+            setSimulatorResult={setSimulatorResult}
+          />
         </Resizable>
-        <Generation />
       </div>
-    </div>
+    </ReactFlowProvider>
   );
 };
 

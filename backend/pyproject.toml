@@ -13,6 +13,7 @@ packages = [
 
 [tool.poetry.dependencies]
 python = ">=3.12,<4"
+aiomultiprocess = "*"
 bitsandbytes = "<0.43"  # cannot install 0.43
 datasets = "*"
 einops = "*"
@@ -45,6 +46,7 @@ jupyterlab = "^4.2.3"
 matplotlib = "^3.9.0"
 mypy = "*"
 pytest = "*"
+pytest-asyncio = "*"
 pytest-cov = "*"
 ruff = "*"
 
@@ -100,10 +102,15 @@ ignore_missing_imports = true
 [tool.pytest.ini_options]
 testpaths = "tests"
 console_output_style = "progress"
+asyncio_default_fixture_loop_scope = "function"
 
 addopts = [
     "--cov",
     "--cov-report=term-missing:skip-covered",
+]
+
+filterwarnings = [
+    "ignore:.*GPU available but not used.*"
 ]
 
 [tool.coverage.run]

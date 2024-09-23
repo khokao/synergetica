@@ -25,6 +25,7 @@
     "@headlessui/react": "^2.1.2",
     "@heroicons/react": "^2.1.4",
     "chart.js": "^4.4.3",
+    "human-id": "^4.1.1",
     "nanoid": "^5.0.7",
     "re-resizable": "^6.9.17",
     "react": "^18.3.1",

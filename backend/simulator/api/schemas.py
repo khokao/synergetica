@@ -18,5 +18,5 @@ class ConverterInput(BaseModel):
 
 class ConverterOutput(BaseModel):
     num_protein: int
-    proteins: list[str]
+    proteins: dict[str, str]
     function_str: str

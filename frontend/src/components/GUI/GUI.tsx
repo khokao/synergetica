@@ -2,7 +2,6 @@ import { Bottombar } from "@/components/GUI/Bottombar";
 import { Flow } from "@/components/GUI/Flow";
 import type { ConverterRequestData } from "@/interfaces/simulatorAPI";
 import type React from "react";
-import { ReactFlowProvider } from "reactflow";
 import "reactflow/dist/style.css";
 
 type GUIProps = {
@@ -11,15 +10,13 @@ type GUIProps = {
 
 export const GUI: React.FC<GUIProps> = ({ onClickSimulate }) => {
   return (
-    <ReactFlowProvider>
-      <div className="flex flex-col flex-grow h-full">
-        <div className="flex-grow" data-testid="flow-component">
-          <Flow onClickSimulate={onClickSimulate} />
-        </div>
-        <div data-testid="bottombar-component">
-          <Bottombar />
-        </div>
+    <div className="flex flex-col flex-grow h-full">
+      <div className="flex-grow" data-testid="flow-component">
+        <Flow onClickSimulate={onClickSimulate} />
       </div>
-    </ReactFlowProvider>
+      <div data-testid="bottombar-component">
+        <Bottombar />
+      </div>
+    </div>
   );
 };

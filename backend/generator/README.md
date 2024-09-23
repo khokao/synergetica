@@ -4,8 +4,9 @@ NOTE: Please run the command in the [`backend`](../../backend/) directory.
 
 ## 1. Set up a server with FastAPI (dev)
 
+To avoid address conflicts with the simulator, you can specify a different port (e.g., `8080`) with the following command:
 ```zsh
-poetry run fastapi dev generator/api/main.py
+poetry run fastapi dev generator/api/main.py --port 8080
 ```
 
 ## 2. Generic Algorithm

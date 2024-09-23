@@ -1,26 +1,21 @@
 use crate::schemas::{GeneratorResponseData,ConverterResponseData};
 use reqwest;
 use serde_json::json;
+use std::collections::HashMap;
 
 pub struct APIClient;
 
 impl APIClient {
-    pub async fn send_request(
-        rbs_parameter: f64,
-        rbs_upstream: String,
-        rbs_downstream: String,
-        promoter_parameter: f64,
-        promoter_upstream: String,
+    pub async fn send_request_generation(
+        reactflow_object_json_str: String,
+        rbs_target_parameters: HashMap<String, f64>,
     ) -> Result<reqwest::Response, reqwest::Error> {
         let client = reqwest::Client::new();
         client
-            .post("http://127.0.0.1:8000/generate")
+            .post("http://127.0.0.1:8080/generate")
             .json(&json!({
-                "rbs_parameter": rbs_parameter,
-                "rbs_upstream": rbs_upstream,
-                "rbs_downstream": rbs_downstream,
-                "promoter_parameter": promoter_parameter,
-                "promoter_upstream": promoter_upstream,
+                "reactflow_object_json_str": reactflow_object_json_str,
+                "rbs_target_parameters": rbs_target_parameters
             }))
             .send()
             .await

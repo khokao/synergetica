@@ -1,6 +1,5 @@
-import { CustomChildNode, CustomParentNode } from "@/components/GUI/CustomNode";
+import { flowNodeTypes } from "@/components/GUI/CustomNode";
 import { createChildNode, dragChildNode, stopDragChildNode } from "@/components/GUI/nodeActions";
-import { callCircuitConverterAPI } from "@/hooks/useSimulatorAPI";
 import type { ConverterRequestData } from "@/interfaces/simulatorAPI";
 import type React from "react";
 import { useCallback, useRef } from "react";
@@ -14,13 +13,10 @@ import ReactFlow, {
   Panel,
   useStoreApi,
   type ReactFlowState,
-  type NodeTypes,
   type Node,
   type Edge,
 } from "reactflow";
 import type { StoreApi } from "zustand";
-
-const nodeTypes: NodeTypes = { child: CustomChildNode, parent: CustomParentNode };
 
 type GUIProps = {
   onClickSimulate: (data: ConverterRequestData) => void;
@@ -124,7 +120,7 @@ export const Flow: React.FC<GUIProps> = ({ onClickSimulate }) => {
         onDrop={onDrop}
         onDragOver={onDragOver}
         proOptions={{ hideAttribution: true }} // discussion: https://github.com/xyflow/xyflow/discussions/2961
-        nodeTypes={nodeTypes}
+        nodeTypes={flowNodeTypes}
         defaultViewport={{ x: 0, y: 0, zoom: 0.5 }}
         minZoom={0.1}
         maxZoom={2.0}

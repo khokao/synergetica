@@ -10,7 +10,7 @@ import {
   Tooltip,
 } from "chart.js";
 import type React from "react";
-import { useCallback, useEffect, useState } from "react";
+import { type Dispatch, type SetStateAction, useEffect, useState } from "react";
 import { Line } from "react-chartjs-2";
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
@@ -45,22 +45,53 @@ const ParamInput = ({ label, value, onChange }) => (
   </label>
 );
 
-export const Graph: React.FC<{ ConvertResult: ConverterResponseData | null }> = ({ ConvertResult }) => {
-  const [proteinParams, setProteinParams] = useState<number[]>([]);
+const setSimulatorOutput = (
+  ws: WebSocket,
+  newProteinParams: number[],
+  setSimOutput: Dispatch<SetStateAction<number[][] | null>>,
+) => {
+  if (ws && ws.readyState === WebSocket.OPEN) {
+    const params = JSON.stringify({
+      params: newProteinParams,
+    });
+
+    ws.send(params);
+    ws.onmessage = (event) => {
+      let receivedData: number[][];
+      try {
+        receivedData = JSON.parse(event.data);
+        setSimOutput(receivedData);
+      } catch (error) {
+        console.log("Received non-JSON data:", event.data);
+        return;
+      }
+    };
+  }
+};
+
+export const Graph: React.FC<{
+  convertResult: ConverterResponseData | null;
+  setSimulatorResult: Dispatch<SetStateAction<{ [key: string]: number }>>;
+}> = ({ convertResult, setSimulatorResult }) => {
   const [ws, setWs] = useState<WebSocket | null>(null);
-  const [simOutput, setSimOutput] = useState<number[][] | null>(null);
+  const [simOutput, setSimOutput] = useState<number[][] | null>(Array[0]);
+  const [proteinParameter, setproteinParameter] = useState<number[]>([]);
 
   useEffect(() => {
-    if (ConvertResult !== null) {
-      setProteinParams(Array(ConvertResult.num_protein).fill(1));
+    if (convertResult !== null) {
+      const initParameter = Array(convertResult.num_protein).fill(1);
+      setproteinParameter(initParameter);
 
       const wsDefine = new WebSocket("ws://127.0.0.1:8000/ws/simulation");
       wsDefine.onopen = () => {
-        wsDefine.send(ConvertResult.function_str);
+        wsDefine.send(JSON.stringify(convertResult));
+        setSimulatorOutput(wsDefine, initParameter, setSimOutput);
       };
+
       wsDefine.onmessage = (event) => {
         console.log("Received from server:", event.data);
       };
+
       wsDefine.onerror = (error) => {
         console.error("WebSocket error:", error);
       };
@@ -71,54 +102,52 @@ export const Graph: React.FC<{ ConvertResult: ConverterResponseData | null }> = 
         wsDefine.close();
       };
     }
-  }, [ConvertResult]);
+  }, [convertResult]);
 
   const handleProteinParamChange = (index: number) => (event: React.ChangeEvent<HTMLInputElement>) => {
-    const newProteinParams = [...proteinParams];
+    const newProteinParams = [...proteinParameter];
     newProteinParams[index] = Number.parseFloat(event.target.value);
-    setProteinParams(newProteinParams);
+    setproteinParameter(newProteinParams);
 
-    if (ws && ws.readyState === WebSocket.OPEN) {
-      const params = JSON.stringify({
-        params: newProteinParams,
-      });
+    const simulation_result: { [key: string]: number } = {};
+    const proteinIds = convertResult ? Object.keys(convertResult.proteins) : [];
 
-      ws.send(params);
+    setSimulatorOutput(ws, newProteinParams, setSimOutput);
 
-      ws.onmessage = (event) => {
-        const receivedData = JSON.parse(event.data);
-        console.log("Received from server:", receivedData);
-        setSimOutput(receivedData);
-      };
-    }
+    proteinIds.forEach((proteinId, i) => {
+      simulation_result[proteinId] = newProteinParams[i];
+    });
+
+    setSimulatorResult(simulation_result);
   };
 
   const options = getGraphOptions();
 
-  const graphData = simOutput
-    ? {
-        labels: simOutput.map(([time]) => time),
-        datasets: Array(ConvertResult?.num_protein)
-          .fill(0)
-          .map((_, i) => ({
-            label: ConvertResult.proteins[i],
-            data: simOutput.map((row) => row[1 + i]),
-            borderColor: `hsl(${(i * 60) % 360}, 70%, 50%)`,
-            fill: false,
-          })),
-      }
-    : null;
+  const graphData =
+    simOutput && convertResult
+      ? {
+          labels: simOutput.map(([time]) => time),
+          datasets: Array(convertResult?.num_protein)
+            .fill(0)
+            .map((_, i) => ({
+              label: Object.values(convertResult.proteins)[i],
+              data: simOutput.map((row) => row[1 + i]),
+              borderColor: `hsl(${(i * 60) % 360}, 70%, 50%)`,
+              fill: false,
+            })),
+        }
+      : null;
 
   return (
     <div className="h-full">
-      {ConvertResult ? (
-        <div className="flex flex-row h-full">
+      {convertResult ? (
+        <div className="flex flex-row h-4/5 m-8">
           <div className="h-full w-2/3">{graphData && <Line options={options} data={graphData} />}</div>
           <div className="flex flex-col justify-center items-center ml-5 mb-4 w-1/3">
-            {proteinParams.map((param, index) => (
+            {proteinParameter.map((param, index) => (
               <ParamInput
-                key={ConvertResult.proteins[index]}
-                label={ConvertResult.proteins[index]}
+                key={Object.values(convertResult.proteins)[index]}
+                label={Object.values(convertResult.proteins)[index]}
                 value={param}
                 onChange={handleProteinParamChange(index)}
               />

@@ -11,12 +11,15 @@ client = TestClient(app)
 
 
 @pytest.fixture
-def expected_function():
-    function_str = 'def ODEtoSolve(var:list[float],t:float,TIR1:float,TIR3:float):\n\td0dt = 300 * 0.5 * ((1.0 + ((1.0-0.2) * 3.0 ** 2.0) / ( var[3] ** 2.0 + 3.0 ** 2.0)) / 1.0) *  15 - 0.012145749 * var[0]\n\td1dt = 1e-05 * TIR1 * var[0] - 0.1 * var[1]\n\td2dt = 300 * 0.5 * ((1.0 + ((1.0-0.2) * 3.0 ** 2.0) / ( var[1] ** 2.0 + 3.0 ** 2.0)) / 1.0) *  15 - 0.012145749 * var[2]\n\td3dt = 1e-05 * TIR3 * var[2] - 0.1 * var[3]\n\treturn (d0dt, d1dt,d2dt, d3dt)'  # noqa: E501
-    yield function_str
+def convert_result_example():
+    num_protein = 2
+    proteins = {'RPp8K6j_urCFeMtsm2pZv': 'BM3R1', 'QaBV3nMXJxcNaNN_hE6ji': 'AmeR'}
+    function_str = 'def ODEtoSolve(var:list[float],t:float,TIR1:float,TIR3:float):\n\td0dt = 300 * 0.5 * ((0.2 + ((1.0-0.2) * 3.0 ** 2.0) / ( var[3] ** 2.0 + 3.0 ** 2.0)) / 1.0) * 15 - 0.012145749 * var[0]\n\td1dt = 0.01 * TIR1 * var[0] - 0.1 * var[1]\n\td2dt = 300 * 0.5 * ((0.2 + ((1.0-0.2) * 3.0 ** 2.0) / ( var[1] ** 2.0 + 3.0 ** 2.0)) / 1.0) * 15 - 0.012145749 * var[2]\n\td3dt = 0.01 * TIR3 * var[2] - 0.1 * var[3]\n\treturn (d0dt, d1dt,d2dt, d3dt)'  # noqa: E501
+
+    yield {'num_protein': num_protein, 'proteins': proteins, 'function_str': function_str}
 
 
-def test_convert_gui_circuit_returns_correct_output(get_test_circuit, expected_function):
+def test_convert_gui_circuit_returns_correct_output(get_test_circuit):
     # Arrange
     sample_flow_data_json = json.dumps(get_test_circuit)
     endpoint = '/convert-gui-circuit'
@@ -25,19 +28,19 @@ def test_convert_gui_circuit_returns_correct_output(get_test_circuit, expected_f
     # Act
     response = client.post(endpoint, json=data)
     response_data = response.json()
+    print(f'Response data: {response_data}')
 
     # Assert
     assert response.status_code == HTTPStatus.OK
     ConverterOutput(**response_data)
-    assert response_data['proteins'] == ['BM3R1', 'AmeR']
+    assert response_data['proteins'] == {'RPp8K6j_urCFeMtsm2pZv': 'BM3R1', 'QaBV3nMXJxcNaNN_hE6ji': 'AmeR'}
 
 
-def test_websocket_simulation(expected_function):
+def test_websocket_simulation(convert_result_example):
     # Arrange
     with client.websocket_connect('/ws/simulation') as websocket:
         # Act
-        function_definition = expected_function
-        websocket.send_text(function_definition)
+        websocket.send_text(json.dumps(convert_result_example))
         response = websocket.receive_text()
 
         # Assert

@@ -1,45 +1,26 @@
+import { GenerationButtons } from "@/components/Generation/GenerationButtons";
 import { Graph } from "@/components/Simulation/DrawSimulationResult";
-import { callGeneratorAPI } from "@/hooks/useGeneratorAPI";
 import type { ConverterResponseData } from "@/interfaces/simulatorAPI";
 import type React from "react";
-import useSWR from "swr";
+import type { Dispatch, SetStateAction } from "react";
 
-export const Simulation: React.FC<{ ConvertResult: ConverterResponseData; reseter: () => void }> = ({
-  ConvertResult,
-  reseter,
-}) => {
-  const { mutate } = useSWR("call_generator_api");
-
-  const onCallGeneratorAPIClick = async () => {
-    const generatorRequestData = {
-      rbs_parameter: 0.5,
-      rbs_upstream: "ATG",
-      rbs_downstream: "TAA",
-      promoter_parameter: 0.5,
-      promoter_upstream: "TATA",
-    };
-
-    const response = await callGeneratorAPI(generatorRequestData);
-    await mutate(response, false);
-  };
-
+export const Simulation: React.FC<{
+  convertResult: ConverterResponseData;
+  reseter: () => void;
+  simulatorResult: { [key: string]: number };
+  setSimulatorResult: Dispatch<SetStateAction<{ [key: string]: number }>>;
+}> = ({ convertResult, reseter, simulatorResult, setSimulatorResult }) => {
   return (
     <div className="flex flex-col h-full">
       <div className="flex justify-center h-full">
-        <Graph ConvertResult={ConvertResult} />
+        <Graph convertResult={convertResult} setSimulatorResult={setSimulatorResult} />
       </div>
-      <div className="flex justify-end mb-4">
+      <div className="flex justify-end">
         <button type="button" onClick={reseter} className="px-4 py-1 border-2 border-black rounded mr-4">
           Reset
         </button>
-        <button
-          type="button"
-          onClick={onCallGeneratorAPIClick}
-          className="px-4 py-1 border-2 border-black rounded mr-6"
-        >
-          Generate
-        </button>
       </div>
+      <GenerationButtons simulatorResult={simulatorResult} />
     </div>
   );
 };

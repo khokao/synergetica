@@ -3,8 +3,8 @@ from omegaconf import OmegaConf
 
 from simulator.modules.build_protein_interaction import (
     build_protein_interact_graph,
-    get_parts_name_list,
     get_protein_interaction,
+    get_protein_nameId_dict,
     run_convert,
     search_interaction_through_promoter,
 )
@@ -75,13 +75,13 @@ def test_build_protein_interact_graph(setup_node_parser):
     assert len(proteinId_list) == 2
 
 
-def test_get_parts_name_list(get_test_circuit):
+def test_get_protein_nameId_dict(get_test_circuit):
     # Arrange
     circuit = OmegaConf.create(get_test_circuit)
     protein_interact_graph, proteinId_list, all_nodes = run_convert(circuit)
 
     # Act
-    parts_name_list = get_parts_name_list(proteinId_list, all_nodes)
+    protein_nameId_dict = get_protein_nameId_dict(proteinId_list, all_nodes)
 
     # Assert
-    assert parts_name_list == ['BM3R1', 'AmeR']
+    assert protein_nameId_dict == {'RPp8K6j_urCFeMtsm2pZv': 'BM3R1', 'QaBV3nMXJxcNaNN_hE6ji': 'AmeR'}

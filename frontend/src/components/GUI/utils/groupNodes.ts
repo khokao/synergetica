@@ -1,5 +1,5 @@
-import { nanoid } from "nanoid";
-import { Edge, type Node } from "reactflow";
+import { humanId } from "human-id";
+import type { Node } from "reactflow";
 
 export const ungroupNodes = (nds: Node[]): Node[] => {
   return nds
@@ -35,7 +35,7 @@ export const groupNodes = (nds: Node[]): Node[] => {
   const maxX = Math.max(...nds.map((n) => n.position.x + n.width));
   const maxY = Math.max(...nds.map((n) => n.position.y + n.height));
 
-  const parentId = nanoid();
+  const parentId = humanId({ separator: "-", capitalize: false });
   const mergin = 20;
   const parentX = minX - mergin;
   const parentY = minY - mergin;
