@@ -1,15 +1,15 @@
 from generator.api.schemas import ReactFlowObject
-from generator.api.utils.parse_flow import get_child_id2key, get_ordered_parent2children
+from generator.api.utils.parse_flow import get_child_id2key, get_parent2ordered_children
 
 
 def test_parent2children_is_ordered(test_circuit, parent_ids, child_ids):
     parent_ids_order = ['bVl9HNco7sIW-5TMtKGYK', '4zMfqishHf2qroUA5zFrC']
     reactflow_object = ReactFlowObject(**test_circuit)
 
-    parent2children = get_ordered_parent2children(reactflow_object.nodes)
+    parent2ordered_children = get_parent2ordered_children(reactflow_object.nodes)
 
-    assert list(parent2children.keys()) == parent_ids_order
-    assert {child_id for children in parent2children.values() for child_id in children} == set(child_ids)
+    assert list(parent2ordered_children.keys()) == parent_ids_order
+    assert {child_id for children in parent2ordered_children.values() for child_id in children} == set(child_ids)
 
 
 def test_child_id2key_sequence(test_circuit, child_ids):
