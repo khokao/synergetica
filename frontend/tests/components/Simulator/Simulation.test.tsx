@@ -3,7 +3,6 @@ import { callGeneratorAPI } from "@/hooks/useGeneratorAPI";
 import type { ConverterResponseData } from "@/interfaces/simulatorAPI";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { ReactFlowProvider } from "reactflow";
-import useSWR from "swr";
 import { type Mock, vi } from "vitest";
 
 vi.stubGlobal(
@@ -52,7 +51,7 @@ describe("Simulation Component", () => {
         <Simulation
           convertResult={mockconvertResult}
           reseter={mockReseter}
-          SimulatorResult={mockSimulatorResult}
+          simularotResult={mockSimulatorResult}
           setSimulatorResult={mockSetSimulatorResult}
         />
       </ReactFlowProvider>,
@@ -68,7 +67,7 @@ describe("Simulation Component", () => {
         <Simulation
           convertResult={mockconvertResult}
           reseter={mockReseter}
-          SimulatorResult={mockSimulatorResult}
+          simularotResult={mockSimulatorResult}
           setSimulatorResult={mockSetSimulatorResult}
         />
       </ReactFlowProvider>,
