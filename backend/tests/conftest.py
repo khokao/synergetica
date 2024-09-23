@@ -36,7 +36,7 @@ def child_ids():
 TEST_CIRCUIT = {
     'nodes': [
         {
-            'id': 'bVl9HNco7sIW-5TMtKGYK',
+            'id': 'sad-apples-appear',
             'type': 'parent',
             'position': {'x': 224.8125, 'y': 998},
             'style': {'width': 571, 'height': 123},
@@ -75,7 +75,7 @@ TEST_CIRCUIT = {
             'selected': False,
             'positionAbsolute': {'x': 418.8125, 'y': 1071},
             'dragging': False,
-            'parentId': 'bVl9HNco7sIW-5TMtKGYK',
+            'parentId': 'sad-apples-appear',
         },
         {
             'id': 'RhEl0dU5hqHmBtOy92eDj',
@@ -102,7 +102,7 @@ TEST_CIRCUIT = {
             'selected': False,
             'positionAbsolute': {'x': 591.8125, 'y': 1023},
             'dragging': False,
-            'parentId': 'bVl9HNco7sIW-5TMtKGYK',
+            'parentId': 'sad-apples-appear',
         },
         {
             'id': '03PeAEAA3uRVcCqVHwftQ',
@@ -134,10 +134,10 @@ TEST_CIRCUIT = {
             'selected': False,
             'dragging': False,
             'positionAbsolute': {'x': 244.8125, 'y': 1018},
-            'parentId': 'bVl9HNco7sIW-5TMtKGYK',
+            'parentId': 'sad-apples-appear',
         },
         {
-            'id': '4zMfqishHf2qroUA5zFrC',
+            'id': 'soft-rabbits-boil',
             'type': 'parent',
             'position': {'x': 230.8125, 'y': 1316},
             'style': {'width': 571, 'height': 123},
@@ -176,7 +176,7 @@ TEST_CIRCUIT = {
             'selected': False,
             'positionAbsolute': {'x': 424.8125, 'y': 1389},
             'dragging': False,
-            'parentId': '4zMfqishHf2qroUA5zFrC',
+            'parentId': 'soft-rabbits-boil',
         },
         {
             'id': 'Vc0hhaojeiO-2MNutZQKK',
@@ -203,7 +203,7 @@ TEST_CIRCUIT = {
             'selected': True,
             'positionAbsolute': {'x': 597.8125, 'y': 1341},
             'dragging': False,
-            'parentId': '4zMfqishHf2qroUA5zFrC',
+            'parentId': 'soft-rabbits-boil',
         },
         {
             'id': 'bbV7AW66sYRL9UJFXq7uH',
@@ -235,7 +235,7 @@ TEST_CIRCUIT = {
             'selected': False,
             'dragging': False,
             'positionAbsolute': {'x': 250.8125, 'y': 1336},
-            'parentId': '4zMfqishHf2qroUA5zFrC',
+            'parentId': 'soft-rabbits-boil',
         },
     ],
     'edges': [
