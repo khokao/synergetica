@@ -19,7 +19,7 @@ export const ParamInput: React.FC<ParamInputProps> = ({ label, value, onChange }
       step="1"
       value={value}
       onChange={onChange}
-			className="h-1 bg-gray-200 accent-red-500 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
+      className="h-1 bg-gray-200 accent-red-500 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
     />
     <input
       type="number"
