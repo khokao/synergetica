@@ -1,4 +1,5 @@
 from collections import defaultdict
+from typing import Literal
 
 import numpy as np
 
@@ -31,7 +32,7 @@ def search_all_connected_components(adjacency_matrix: np.ndarray) -> list[list[i
         all_connected_components (list[list[int]]): list of connected node index for each connected component.
     """
 
-    def dfs(node_idx: int, visited: set, adjacency_matrix: np.ndarray) -> None:
+    def dfs(node_idx: int, visited: set[int], adjacency_matrix: np.ndarray) -> None:
         visited.add(node_idx)
         for i in range(len(adjacency_matrix)):
             if adjacency_matrix[node_idx, i] == 1 and i not in visited:
@@ -39,7 +40,7 @@ def search_all_connected_components(adjacency_matrix: np.ndarray) -> list[list[i
 
     all_connected_components = []
     for i in range(len(adjacency_matrix)):
-        visited = set()
+        visited = set()  # type: set[int]
         dfs(i, visited, adjacency_matrix)
         all_connected_components.append(list(visited))
 
@@ -49,7 +50,7 @@ def search_all_connected_components(adjacency_matrix: np.ndarray) -> list[list[i
 def extract_promoter_controlling_proteins(
     all_connected_components: list[list[int]],
     node_idx2id: dict[int, str],
-    node_idx2category: dict[int, str],
+    node_idx2category: dict[int, Literal['protein', 'promoter', 'terminator']],
 ) -> dict[str, list[str]]:
     promoter_controlling_proteins = defaultdict(list)
     for i, connected_components in enumerate(all_connected_components):
@@ -61,9 +62,8 @@ def extract_promoter_controlling_proteins(
                     protein_node_id = node_idx2id[j]
 
                     promoter_controlling_proteins[promoter_node_id].append(protein_node_id)
-    promoter_controlling_proteins = dict(promoter_controlling_proteins)
 
-    return promoter_controlling_proteins
+    return dict(promoter_controlling_proteins)
 
 
 def build_protein_interact_graph(
@@ -71,7 +71,7 @@ def build_protein_interact_graph(
     parts_id2node_ids: dict[str, list[str]],
     node_id2data: dict[str, ReactFlowChildNodeData],
     protein_node_ids: list[str],
-):
+) -> np.ndarray:
     num_protein_nodes = len(protein_node_ids)
 
     protein_interaction_graph = np.zeros((num_protein_nodes, num_protein_nodes), dtype=int)

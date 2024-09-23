@@ -3,7 +3,7 @@ from collections import defaultdict
 from ..api.schemas import ReactFlowChildNode, ReactFlowChildNodeData
 
 
-def get_parts_id2node_ids(nodes: list[ReactFlowChildNode]) -> dict[str, str]:
+def get_parts_id2node_ids(nodes: list[ReactFlowChildNode]) -> dict[str, list[str]]:
     parts_id2node_ids = defaultdict(list)
     for node in nodes:
         parts_id2node_ids[node.data.partsId].append(node.id)

@@ -16,7 +16,7 @@ def get_protein_id2parts_name(
         protein_id2display_name (dict[str,str]): Dict of protein id and display protein name. {protein_id: protein_name}
             if there are multiple proteins with the same name, add number to the end of the name.
     """
-    parts_name_count = defaultdict(int)
+    parts_name_count = defaultdict(int)  # type: dict[str, int]
     protein_id2display_name = {}
     for protein_node_id in protein_node_ids:
         protein_parts_name = node_id2data[protein_node_id].nodePartsName
