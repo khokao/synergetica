@@ -25,7 +25,7 @@ vi.mock("swr", () => ({
 }));
 
 describe("Simulation Component", () => {
-  const mockconvertResult: ConverterResponseData = {
+  const mockConvertResult: ConverterResponseData = {
     num_protein: 2,
     proteins: { RPp8K6j_urCFeMtsm2pZv: "BM3R1", QaBV3nMXJxcNaNN_hE6ji: "AmeR" },
     function_str:
@@ -49,9 +49,9 @@ describe("Simulation Component", () => {
     render(
       <ReactFlowProvider>
         <Simulation
-          convertResult={mockconvertResult}
+          convertResult={mockConvertResult}
           reseter={mockReseter}
-          simularotResult={mockSimulatorResult}
+          simulatorResult={mockSimulatorResult}
           setSimulatorResult={mockSetSimulatorResult}
         />
       </ReactFlowProvider>,
@@ -65,9 +65,9 @@ describe("Simulation Component", () => {
     render(
       <ReactFlowProvider>
         <Simulation
-          convertResult={mockconvertResult}
+          convertResult={mockConvertResult}
           reseter={mockReseter}
-          simularotResult={mockSimulatorResult}
+          simulatorResult={mockSimulatorResult}
           setSimulatorResult={mockSetSimulatorResult}
         />
       </ReactFlowProvider>,
