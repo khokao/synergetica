@@ -1,4 +1,4 @@
-export const getGraphOptions = () => ({
+export const graphOptions = {
   responsive: true,
   maintainAspectRatio: false,
   plugins: {
@@ -28,4 +28,4 @@ export const getGraphOptions = () => ({
       },
     },
   },
-});
+};

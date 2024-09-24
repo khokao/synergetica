@@ -1,4 +1,4 @@
-import { getGraphOptions } from "@/components/Simulation/GraphSetting";
+import { graphOptions } from "@/components/Simulation/GraphSetting";
 import { ParamInput } from "@/components/Simulation/ParamBar";
 import { paramMaxValue, paramMinValue } from "@/components/Simulation/ParamBar";
 import type { ConverterResponseData } from "@/interfaces/simulatorAPI";
@@ -104,8 +104,6 @@ export const Graph: React.FC<GraphProps> = ({ convertResult, setSimulatorResult 
     setSimulatorResult(simulation_result);
   };
 
-  const options = getGraphOptions();
-
   const graphData =
     simOutput && convertResult
       ? {
@@ -125,7 +123,7 @@ export const Graph: React.FC<GraphProps> = ({ convertResult, setSimulatorResult 
     <div className="h-full w-full">
       {convertResult ? (
         <div className="flex flex-col h-3/5 m-8">
-          <div className="h-full">{graphData && <Line options={options} data={graphData} />}</div>
+          <div className="h-full">{graphData && <Line options={graphOptions} data={graphData} />}</div>
           <div className="flex flex-col justify-center items-center ml-5 mb-4 w-1/3">
             {proteinParameter.map((param, index) => (
               <ParamInput

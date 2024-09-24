@@ -16,7 +16,7 @@ global.WebSocket = vi.fn(() => ({
 })) as unknown as typeof WebSocket;
 
 describe("Graph component", () => {
-  const mockconvertResult: ConverterResponseData = {
+  const mockConvertResult: ConverterResponseData = {
     num_protein: 2,
     proteins: { RPp8K6j_urCFeMtsm2pZv: "BM3R1", QaBV3nMXJxcNaNN_hE6ji: "AmeR" },
     function_str:
@@ -30,11 +30,11 @@ describe("Graph component", () => {
   it("should initialize WebSocket and display protein parameters when convertResult is provided", () => {
     const setSimulatorResult = vi.fn();
 
-    render(<Graph convertResult={mockconvertResult} setSimulatorResult={setSimulatorResult} />);
+    render(<Graph convertResult={mockConvertResult} setSimulatorResult={setSimulatorResult} />);
 
     expect(global.WebSocket).toHaveBeenCalledWith("ws://127.0.0.1:8000/ws/simulation");
 
-    for (const protein of Object.values(mockconvertResult.proteins)) {
+    for (const protein of Object.values(mockConvertResult.proteins)) {
       const paramInput = screen.getByText(protein);
       expect(paramInput).toBeInTheDocument();
     }
@@ -43,7 +43,7 @@ describe("Graph component", () => {
   it("should update protein parameter and send message via WebSocket when slider is changed", () => {
     const setSimulatorResult = vi.fn();
 
-    render(<Graph convertResult={mockconvertResult} setSimulatorResult={setSimulatorResult} />);
+    render(<Graph convertResult={mockConvertResult} setSimulatorResult={setSimulatorResult} />);
     const slider = screen.getAllByRole("slider")[0];
 
     fireEvent.change(slider, { target: { value: "10" } });
