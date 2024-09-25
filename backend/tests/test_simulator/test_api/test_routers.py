@@ -19,16 +19,15 @@ def convert_result_example():
     yield {'num_protein': num_protein, 'proteins': proteins, 'function_str': function_str}
 
 
-def test_convert_gui_circuit_returns_correct_output(get_test_circuit):
+def test_convert_gui_circuit_returns_correct_output(test_circuit):
     # Arrange
-    sample_flow_data_json = json.dumps(get_test_circuit)
+    sample_flow_data_json = json.dumps(test_circuit)
     endpoint = '/convert-gui-circuit'
     data = {'flow_data_json_str': sample_flow_data_json}
 
     # Act
     response = client.post(endpoint, json=data)
     response_data = response.json()
-    print(f'Response data: {response_data}')
 
     # Assert
     assert response.status_code == HTTPStatus.OK

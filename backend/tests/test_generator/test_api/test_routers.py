@@ -9,9 +9,9 @@ from generator.api.main import app
 client = TestClient(app)
 
 
-def test_generator_api_with_valid_input(get_test_circuit, protein_ids):
+def test_generator_api_with_valid_input(test_circuit, protein_ids):
     data = {
-        'reactflow_object_json_str': json.dumps(get_test_circuit),
+        'reactflow_object_json_str': json.dumps(test_circuit),
         'rbs_target_parameters': {protein_id: 100 for protein_id in protein_ids},
     }
 
@@ -30,11 +30,11 @@ def test_generator_api_with_valid_input(get_test_circuit, protein_ids):
     ],
 )
 def test_generator_api_with_invalid_input(
-    reactflow_object_json_str, rbs_target_parameters, expected_status_code, get_test_circuit, protein_ids
+    reactflow_object_json_str, rbs_target_parameters, expected_status_code, test_circuit, protein_ids
 ):
     data = {'reactflow_object_json_str': reactflow_object_json_str, 'rbs_target_parameters': rbs_target_parameters}
     if data['reactflow_object_json_str'] == 'valid':
-        data['reactflow_object_json_str'] = json.dumps(get_test_circuit)
+        data['reactflow_object_json_str'] = json.dumps(test_circuit)
     if data['rbs_target_parameters'] == 'valid':
         data['rbs_target_parameters'] = {protein_id: 100 for protein_id in protein_ids}
 
