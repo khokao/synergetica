@@ -54,7 +54,7 @@ export const Graph: React.FC<GraphProps> = ({ convertResult, setSimulatorResult 
 
   useEffect(() => {
     if (convertResult !== null) {
-      const initParameter = Array(convertResult.num_protein).fill(1);
+      const initParameter = Array(convertResult.num_protein).fill(10000);
       setproteinParameter(initParameter);
 
       const wsDefine = new WebSocket("ws://127.0.0.1:8000/ws/simulation");
@@ -82,7 +82,6 @@ export const Graph: React.FC<GraphProps> = ({ convertResult, setSimulatorResult 
   const handleProteinParamChange = (index: number) => (event: React.ChangeEvent<HTMLInputElement>) => {
     const newProteinParams = [...proteinParameter];
     let value = Number.parseFloat(event.target.value);
-
     if (value > paramMaxValue) {
       value = paramMaxValue;
     } else if (value < paramMinValue) {
@@ -112,7 +111,7 @@ export const Graph: React.FC<GraphProps> = ({ convertResult, setSimulatorResult 
             .fill(0)
             .map((_, i) => ({
               label: Object.values(convertResult.proteins)[i],
-              data: simOutput.map((row) => row[1 + i]),
+              data: simOutput.map((row) => row[1 + 2 * i]),
               borderColor: `hsl(${(i * 60) % 360}, 70%, 50%)`,
               fill: false,
             })),

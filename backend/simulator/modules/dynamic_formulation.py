@@ -10,9 +10,9 @@ from simulator.core.schema import GUINode
 class ODEBuilder:
     def __init__(self) -> None:
         self.PCN = 15  # plasmid copy number. unit = [copy/cell]
-        self.Dmrna = 0.012145749  # mRNA degradation rate. unit = [1/s]
-        self.Emrna = 300  # transcription coefficient
-        self.Erpu = 0.01  # translation coefficient
+        self.Dmrna = 0.1  # mRNA degradation rate. unit = [1/s]
+        self.Emrna = 0.2  # transcription coefficient
+        self.Erpu = 0.02  # translation coefficient
 
     def PRS_str(self, params: dict[str, float], var_idx: int, control_type: int) -> str:
         """build PRS equation as a string.
@@ -62,7 +62,8 @@ class ODEBuilder:
                 assert interact_params is not None, 'interaction is defined but parameters are not defined'
                 # interact_params = cast(dict[str, float], interact_params)
                 protein_idx = 2 * j + 1
-                prs += self.PRS_str(interact_params, var_idx=protein_idx, control_type=interact_info)
+                prs_component = self.PRS_str(interact_params, var_idx=protein_idx, control_type=interact_info)
+                prs += f'{prs_component}'
 
         own_params = all_nodes[proteinId_list[idx]].meta
         assert own_params is not None, 'protein parameters are not defined'
@@ -111,6 +112,7 @@ class ODEBuilder:
 
         ode = ''
         mrna_ode_str = self.make_mrna_ode(idx, interact_info_array, proteinId_list, all_nodes)
+
         protein_ode_str = self.make_protein_ode(idx, proteinId_list, all_nodes)
 
         ode += f'\t{mrna_ode_str}\n'
