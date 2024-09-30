@@ -112,7 +112,6 @@ class ODEBuilder:
 
         ode = ''
         mrna_ode_str = self.make_mrna_ode(idx, interact_info_array, proteinId_list, all_nodes)
-
         protein_ode_str = self.make_protein_ode(idx, proteinId_list, all_nodes)
 
         ode += f'\t{mrna_ode_str}\n'
