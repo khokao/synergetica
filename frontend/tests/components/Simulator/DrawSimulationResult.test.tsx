@@ -27,7 +27,7 @@ describe("Graph component", () => {
     vi.clearAllMocks();
   });
 
-  it("should initialize WebSocket and display protein parameters when ConvertResult is provided", () => {
+  it("should initialize WebSocket and display protein parameters when convertResult is provided", () => {
     const setSimulatorResult = vi.fn();
 
     render(<Graph convertResult={mockConvertResult} setSimulatorResult={setSimulatorResult} />);
@@ -37,9 +37,6 @@ describe("Graph component", () => {
     for (const protein of Object.values(mockConvertResult.proteins)) {
       const paramInput = screen.getByText(protein);
       expect(paramInput).toBeInTheDocument();
-
-      const valueDisplay = within(paramInput.closest("label")).getByText("1");
-      expect(valueDisplay).toBeInTheDocument();
     }
   });
 

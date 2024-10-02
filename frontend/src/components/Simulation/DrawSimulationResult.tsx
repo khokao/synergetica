@@ -1,3 +1,6 @@
+import { ParamInput } from "@/components/Simulation/ParamBar";
+import { paramMaxValue, paramMinValue } from "@/components/Simulation/ParamBar";
+import { graphOptions } from "@/components/Simulation/graphSetting";
 import type { ConverterResponseData } from "@/interfaces/simulatorAPI";
 import {
   CategoryScale,
@@ -14,36 +17,6 @@ import { type Dispatch, type SetStateAction, useEffect, useState } from "react";
 import { Line } from "react-chartjs-2";
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
-
-const getGraphOptions = () => ({
-  responsive: true,
-  maintainAspectRatio: false,
-  plugins: {
-    title: {
-      display: true,
-      text: "Simulation Result",
-    },
-  },
-  scales: {
-    x: {
-      display: false,
-    },
-    y: {
-      title: {
-        display: true,
-        text: "Protein Levels",
-      },
-    },
-  },
-});
-
-const ParamInput = ({ label, value, onChange }) => (
-  <label className="flex items-center mb-2">
-    <span className="inline-block w-16">{label}</span>
-    <input type="range" min="1" max="1000" step="1" value={value} onChange={onChange} className="mx-2" />
-    <span className="w-12 text-right">{value}</span>
-  </label>
-);
 
 const setSimulatorOutput = (
   ws: WebSocket,
@@ -69,10 +42,12 @@ const setSimulatorOutput = (
   }
 };
 
-export const Graph: React.FC<{
+type GraphProps = {
   convertResult: ConverterResponseData | null;
   setSimulatorResult: Dispatch<SetStateAction<{ [key: string]: number }>>;
-}> = ({ convertResult, setSimulatorResult }) => {
+};
+
+export const Graph: React.FC<GraphProps> = ({ convertResult, setSimulatorResult }) => {
   const [ws, setWs] = useState<WebSocket | null>(null);
   const [simOutput, setSimOutput] = useState<number[][] | null>(Array[0]);
   const [proteinParameter, setproteinParameter] = useState<number[]>([]);
@@ -106,7 +81,15 @@ export const Graph: React.FC<{
 
   const handleProteinParamChange = (index: number) => (event: React.ChangeEvent<HTMLInputElement>) => {
     const newProteinParams = [...proteinParameter];
-    newProteinParams[index] = Number.parseFloat(event.target.value);
+    let value = Number.parseFloat(event.target.value);
+
+    if (value > paramMaxValue) {
+      value = paramMaxValue;
+    } else if (value < paramMinValue) {
+      value = paramMinValue;
+    }
+
+    newProteinParams[index] = value;
     setproteinParameter(newProteinParams);
 
     const simulation_result: { [key: string]: number } = {};
@@ -120,8 +103,6 @@ export const Graph: React.FC<{
 
     setSimulatorResult(simulation_result);
   };
-
-  const options = getGraphOptions();
 
   const graphData =
     simOutput && convertResult
@@ -139,10 +120,10 @@ export const Graph: React.FC<{
       : null;
 
   return (
-    <div className="h-full">
+    <div className="h-full w-full">
       {convertResult ? (
-        <div className="flex flex-row h-4/5 m-8">
-          <div className="h-full w-2/3">{graphData && <Line options={options} data={graphData} />}</div>
+        <div className="flex flex-col h-3/5 m-8">
+          <div className="h-full">{graphData && <Line options={graphOptions} data={graphData} />}</div>
           <div className="flex flex-col justify-center items-center ml-5 mb-4 w-1/3">
             {proteinParameter.map((param, index) => (
               <ParamInput

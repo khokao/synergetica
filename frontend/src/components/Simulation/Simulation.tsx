@@ -4,12 +4,19 @@ import type { ConverterResponseData } from "@/interfaces/simulatorAPI";
 import type React from "react";
 import type { Dispatch, SetStateAction } from "react";
 
-export const Simulation: React.FC<{
+type SimulationProps = {
   convertResult: ConverterResponseData;
   reseter: () => void;
   simulatorResult: { [key: string]: number };
   setSimulatorResult: Dispatch<SetStateAction<{ [key: string]: number }>>;
-}> = ({ convertResult, reseter, simulatorResult, setSimulatorResult }) => {
+};
+
+export const Simulation: React.FC<SimulationProps> = ({
+  convertResult,
+  reseter,
+  simulatorResult,
+  setSimulatorResult,
+}) => {
   return (
     <div className="flex flex-col h-full">
       <div className="flex justify-center h-full">
