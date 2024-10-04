@@ -1,0 +1,30 @@
+import { memo } from 'react'
+import { MiniMap } from '@xyflow/react';
+// import UndoRedo from '../header/undo-redo'
+import { ZoomInOut } from "@/components/Circuit/operator/zoom-in-out"
+// import Control from './control'
+
+export type OperatorProps = {
+  handleUndo: () => void
+  handleRedo: () => void
+}
+
+// export const Operator = ({ handleUndo, handleRedo }: OperatorProps) => {
+export const Operator = () => {
+  return (
+    <>
+      <MiniMap
+        style={{
+          width: 102,
+          height: 72,
+        }}
+        className='!absolute !left-4 !bottom-14 z-[9] !m-0 !w-[102px] !h-[72px] !border-[0.5px] !border-black/8 !rounded-lg !shadow-lg'
+      />
+      <div className='flex items-center mt-1 gap-2 absolute left-4 bottom-4 z-[9]'>
+        <ZoomInOut />
+        {/* <UndoRedo handleUndo={handleUndo} handleRedo={handleRedo} />
+        <Control /> */}
+      </div>
+    </>
+  )
+}

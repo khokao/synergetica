@@ -3,7 +3,9 @@ import { GUI } from "@/components/GUI/GUI";
 import { Simulation } from "@/components/Simulation/Simulation";
 import { useConverterAPI, useSimulatorResult } from "@/hooks/useSimulatorAPI";
 import { Resizable } from "re-resizable";
-import { ReactFlowProvider } from "reactflow";
+import { ReactFlowProvider } from "@xyflow/react";
+import { Circuit } from "@/components/Circuit/Circuit";
+import { DnDProvider } from "@/components/Circuit/context";
 
 const Home = () => {
   const { postConverter, convertResult, resetSimulator } = useConverterAPI();
@@ -12,7 +14,7 @@ const Home = () => {
     // Wrap all with ReactFlowProvider to access ReactFlow state globally.
     <ReactFlowProvider>
       <div className="flex h-screen">
-        <Resizable
+        {/* <Resizable
           className="border-r-2 border-black-500"
           defaultSize={{
             width: "10%",
@@ -23,22 +25,25 @@ const Home = () => {
           enable={{ right: true }}
         >
           <FileSidebar />
-        </Resizable>
+        </Resizable> */}
 
         <Resizable
           className="border-r-2 border-black-500"
           defaultSize={{
-            width: "45%",
+            width: "100%",
             height: "100%",
           }}
-          minWidth={"30%"}
-          maxWidth={"50%"}
+          minWidth={"100%"}
+          maxWidth={"100%"}
           enable={{ right: true }}
         >
-          <GUI onClickSimulate={postConverter} />
+          {/* <GUI onClickSimulate={postConverter} /> */}
+          <DnDProvider>
+            <Circuit />
+          </DnDProvider>
         </Resizable>
 
-        <Resizable
+        {/* <Resizable
           className="border-b-2 border-black-500"
           defaultSize={{
             width: "45%",
@@ -54,7 +59,7 @@ const Home = () => {
             simulatorResult={simulatorResult}
             setSimulatorResult={setSimulatorResult}
           />
-        </Resizable>
+        </Resizable> */}
       </div>
     </ReactFlowProvider>
   );
