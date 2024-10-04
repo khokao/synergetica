@@ -33,7 +33,9 @@ async def generate_sequences(input: GeneratorInput) -> GeneratorOutput:
 
     logger.info('Downloading predictor checkpoint...')
     try:
-        predictor_ckpt_path = hf_hub_download(repo_id='gene-circuit-ide/rbs-predictor', filename='v1.ckpt')
+        predictor_ckpt_path = hf_hub_download(
+            repo_id='gene-circuit-ide/rbs-predictor', filename='v1.ckpt', token='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'
+        )
     except Exception as e:
         logger.error(f'Error downloading predictor checkpoint: {str(e)}')
         raise HTTPException(
