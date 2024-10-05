@@ -1,11 +1,9 @@
-import { FileSidebar } from "@/components/FileSidebar/FileSidebar";
-import { GUI } from "@/components/GUI/GUI";
 import { Simulation } from "@/components/Simulation/Simulation";
+import { Circuit } from "@/components/circuit/circuit";
+import { DnDProvider } from "@/components/circuit/dnd/context";
 import { useConverterAPI, useSimulatorResult } from "@/hooks/useSimulatorAPI";
-import { Resizable } from "re-resizable";
 import { ReactFlowProvider } from "@xyflow/react";
-import { Circuit } from "@/components/Circuit/Circuit";
-import { DnDProvider } from "@/components/Circuit/context";
+import { Resizable } from "re-resizable";
 
 const Home = () => {
   const { postConverter, convertResult, resetSimulator } = useConverterAPI();

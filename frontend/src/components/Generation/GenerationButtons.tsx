@@ -2,9 +2,9 @@ import { GenerationResult } from "@/components/Generation/GenerationResult";
 import { callGeneratorAPI, cancelGeneratorAPI } from "@/hooks/useGeneratorAPI";
 import type { GeneratorRequestData, GeneratorResponseData } from "@/interfaces/generatorAPI";
 import { DocumentIcon, PlayIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { type Edge, type Node, useReactFlow } from "@xyflow/react";
 import type React from "react";
 import { useState } from "react";
-import { type Edge, type Node, useReactFlow } from "reactflow";
 import useSWRMutation from "swr/mutation";
 
 export const GenerationButtons: React.FC<{ simulatorResult: { [key: string]: number } }> = ({ simulatorResult }) => {

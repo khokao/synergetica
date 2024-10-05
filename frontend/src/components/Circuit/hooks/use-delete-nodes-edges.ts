@@ -1,10 +1,9 @@
+import { getConnectedComponents } from "@/components/circuit/hooks/utils/connected-components";
+import { groupNodes, ungroupNodes } from "@/components/circuit/hooks/utils/ungroup-group";
 import { useReactFlow } from "@xyflow/react";
-import type { Node, Edge } from "@xyflow/react";
+import type { Edge, Node } from "@xyflow/react";
 import { produce } from "immer";
 import { useCallback } from "react";
-import { EDGE_LENGTH } from "@/components/Circuit/constants";
-import { getConnectedComponents } from "@/components/Circuit/utils/connected-components"
-import { groupNodes, ungroupNodes } from "@/components/Circuit/utils/group-nodes";
 
 export const useDeleteNodesEdges = () => {
   const reactflow = useReactFlow();
@@ -70,7 +69,7 @@ export const useDeleteNodesEdges = () => {
 
       setNodes(newNodes);
     },
-    [reactflow]
+    [reactflow],
   );
 
   return {

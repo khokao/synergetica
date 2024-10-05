@@ -4,9 +4,9 @@ import { Dialog, DialogPanel, DialogTitle, Transition, TransitionChild } from "@
 import { CheckIcon, ClipboardIcon } from "@heroicons/react/24/outline";
 import { save } from "@tauri-apps/api/dialog";
 import { writeTextFile } from "@tauri-apps/api/fs";
+import { type Edge, type Node, ReactFlow, ReactFlowProvider } from "@xyflow/react";
 import type React from "react";
 import { Fragment, useState } from "react";
-import { type Edge, type Node, ReactFlow, ReactFlowProvider } from "reactflow";
 
 interface GenerationResultProps {
   isOpen: boolean;

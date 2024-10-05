@@ -1,76 +1,53 @@
+import { CircuitEdgeTypes, CircuitNodeTypes } from "@/components/circuit/constants";
+import { DnDPanel } from "@/components/circuit/dnd/panel";
+import { useDeleteNodesEdges } from "@/components/circuit/hooks/use-delete-nodes-edges";
+import { useDragNodes } from "@/components/circuit/hooks/use-drag-nodes";
+import { Operator } from "@/components/circuit/operator/operator";
+import { Background, BackgroundVariant, Panel, ReactFlow, useEdgesState, useNodesState } from "@xyflow/react";
+import type { Edge, Node } from "@xyflow/react";
 import type React from "react";
-import { humanId } from "human-id";
-import {
-  ReactFlow,
-  useNodesState,
-  useEdgesState,
-  Controls,
-  useReactFlow,
-  Background,
-  BackgroundVariant,
-  Panel,
-  useStoreApi,
-} from "@xyflow/react";
-import type { Node, Edge } from "@xyflow/react";
-import { CircuitNodeTypes, CircuitEdgeTypes } from "@/components/Circuit/constants";
-import { useDragNodes } from "@/components/Circuit/hooks/use-drag-nodes";
-import { useDeleteNodesEdges } from "@/components/Circuit/hooks/use-delete-nodes-edges";
-import { DnDPanel } from "@/components/Circuit/Panel";
-import { Operator } from "@/components/Circuit/operator/index";
-
 
 export const Circuit: React.FC = () => {
   const [nodes, setNodes, onNodesChange] = useNodesState<Node>([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>([]);
 
-  const {
-    handleDragOver,
-    handleDrop,
-    handleDragLeave,
-    handleNodeDragStart,
-    handleNodeDrag,
-    handleNodeDragStop,
-  } = useDragNodes();
+  const { handleDragOver, handleDrop, handleDragLeave, handleNodeDragStart, handleNodeDrag, handleNodeDragStop } =
+    useDragNodes();
 
-  const {
-    handleDelete,
-  } = useDeleteNodesEdges();
+  const { handleDelete } = useDeleteNodesEdges();
 
   return (
-      <div
-        // ref={reactFlowWrapper}
-        className="react-flow-wrapper h-full"
-        onDrop={handleDrop}
-        onDragOver={handleDragOver}
-        onDragLeave={handleDragLeave}
+    <div
+      className="react-flow-wrapper h-full"
+      onDrop={handleDrop}
+      onDragOver={handleDragOver}
+      onDragLeave={handleDragLeave}
+    >
+      <ReactFlow
+        id="main-flow"
+        nodes={nodes}
+        edges={edges}
+        onNodesChange={onNodesChange}
+        onEdgesChange={onEdgesChange}
+        onNodeDrag={handleNodeDrag}
+        onNodeDragStart={handleNodeDragStart}
+        onNodeDragStop={handleNodeDragStop}
+        onDelete={handleDelete}
+        nodeTypes={CircuitNodeTypes}
+        edgeTypes={CircuitEdgeTypes}
+        defaultViewport={{ x: 0, y: 0, zoom: 1.0 }}
+        minZoom={0.5}
+        maxZoom={1.5}
+        proOptions={{ hideAttribution: true }}
       >
-        <ReactFlow
-          nodes={nodes}
-          edges={edges}
-          onNodesChange={onNodesChange}
-          onEdgesChange={onEdgesChange}
-          onNodeDrag={handleNodeDrag}
-          onNodeDragStart={handleNodeDragStart}
-          onNodeDragStop={handleNodeDragStop}
-          onDelete={handleDelete}
-          nodeTypes={CircuitNodeTypes}
-          edgeTypes={CircuitEdgeTypes}
-          defaultViewport={{ x: 0, y: 0, zoom: 1.0 }}
-          minZoom={0.1}
-          maxZoom={2.0}
-          proOptions={{ hideAttribution: true }}
-        >
-          <Background variant={BackgroundVariant.Dots} />
-          {/* <Panel position="top-right" onClick={handleClickSimulate}>
-            <SimulateButton />
-          </Panel> */}
-          <Panel position="top-left">
-            <DnDPanel />
-          </Panel>
-          <Panel position="bottom-left">
-            <Operator />
-          </Panel>
-        </ReactFlow>
-      </div>
+        <Background variant={BackgroundVariant.Dots} />
+        <Panel position="top-left">
+          <DnDPanel />
+        </Panel>
+        <Panel position="bottom-left">
+          <Operator />
+        </Panel>
+      </ReactFlow>
+    </div>
   );
 };
