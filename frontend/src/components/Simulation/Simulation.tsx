@@ -1,26 +1,34 @@
-import { GenerationButtons } from "@/components/Generation/GenerationButtons";
-import { Graph } from "@/components/Simulation/DrawSimulationResult";
-import type { ConverterResponseData } from "@/interfaces/simulatorAPI";
-import type React from "react";
-import type { Dispatch, SetStateAction } from "react";
 
-export const Simulation: React.FC<{
-  convertResult: ConverterResponseData;
-  reseter: () => void;
-  simulatorResult: { [key: string]: number };
-  setSimulatorResult: Dispatch<SetStateAction<{ [key: string]: number }>>;
-}> = ({ convertResult, reseter, simulatorResult, setSimulatorResult }) => {
+import React from "react";
+import { Chart } from "@/components/simulation/chart"
+import { Sliders } from "@/components/simulation/sliders"
+import { useSimulationData } from "@/components/simulation/hooks";
+
+export const Simulation: React.FC = () => {
+  const {
+    proteinParameter,
+    handleProteinParamChange,
+    proteinNames,
+    chartData,
+    convertResult,
+  } = useSimulationData();
+
   return (
-    <div className="flex flex-col h-full">
-      <div className="flex justify-center h-full">
-        <Graph convertResult={convertResult} setSimulatorResult={setSimulatorResult} />
-      </div>
-      <div className="flex justify-end">
-        <button type="button" onClick={reseter} className="px-4 py-1 border-2 border-black rounded mr-4">
-          Reset
-        </button>
-      </div>
-      <GenerationButtons simulatorResult={simulatorResult} />
+    <div className="flex flex-col w-full h-full space-y-4">
+      {convertResult && chartData.length > 0 ? (
+        <div className="flex-grow overflow-auto">
+          <Chart chartData={chartData} proteinNames={proteinNames} />
+          <Sliders
+            proteinParameter={proteinParameter}
+            handleProteinParamChange={handleProteinParamChange}
+            proteinNames={proteinNames}
+          />
+        </div>
+      ) : (
+        <div className="flex flex-col justify-center items-center h-full text-center">
+          <span>No results found.</span>
+        </div>
+      )}
     </div>
   );
 };

@@ -4,6 +4,7 @@ import { useDeleteNodesEdges } from "@/components/circuit/hooks/use-delete-nodes
 import { useDragNodes } from "@/components/circuit/hooks/use-drag-nodes";
 import { Operator } from "@/components/circuit/operator/operator";
 import { ExpandCollapseButton } from "@/components/circuit/panel/expand-collapse";
+import { SimulateButton } from "@/components/circuit/simulate/simulate-button";
 import { Background, BackgroundVariant, Panel, ReactFlow, useEdgesState, useNodesState } from "@xyflow/react";
 import type { Edge, Node } from "@xyflow/react";
 import type React from "react";
@@ -42,7 +43,7 @@ export const Circuit: React.FC = () => {
         proOptions={{ hideAttribution: true }}
       >
         <Background variant={BackgroundVariant.Dots} />
-        <Panel position="top-center" className="flex items-center justify-center">
+        <Panel position="top-center">
           <DnDPanel />
         </Panel>
         <Panel position="top-left">
@@ -53,6 +54,9 @@ export const Circuit: React.FC = () => {
         </Panel>
         <Panel position="bottom-left">
           <Operator />
+        </Panel>
+        <Panel position="bottom-right">
+          <SimulateButton/>
         </Panel>
       </ReactFlow>
     </div>
