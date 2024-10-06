@@ -3,6 +3,7 @@ import { DnDPanel } from "@/components/circuit/dnd/panel";
 import { useDeleteNodesEdges } from "@/components/circuit/hooks/use-delete-nodes-edges";
 import { useDragNodes } from "@/components/circuit/hooks/use-drag-nodes";
 import { Operator } from "@/components/circuit/operator/operator";
+import { ExpandCollapseButton } from "@/components/circuit/panel/expand-collapse";
 import { Background, BackgroundVariant, Panel, ReactFlow, useEdgesState, useNodesState } from "@xyflow/react";
 import type { Edge, Node } from "@xyflow/react";
 import type React from "react";
@@ -18,7 +19,7 @@ export const Circuit: React.FC = () => {
 
   return (
     <div
-      className="react-flow-wrapper h-full"
+      className="react-flow-wrapper h-full w-full"
       onDrop={handleDrop}
       onDragOver={handleDragOver}
       onDragLeave={handleDragLeave}
@@ -41,8 +42,14 @@ export const Circuit: React.FC = () => {
         proOptions={{ hideAttribution: true }}
       >
         <Background variant={BackgroundVariant.Dots} />
-        <Panel position="top-left">
+        <Panel position="top-center" className="flex items-center justify-center">
           <DnDPanel />
+        </Panel>
+        <Panel position="top-left">
+          <ExpandCollapseButton position="left" />
+        </Panel>
+        <Panel position="top-right">
+          <ExpandCollapseButton position="right" />
         </Panel>
         <Panel position="bottom-left">
           <Operator />

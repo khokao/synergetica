@@ -13,7 +13,7 @@ const IconTooltip: React.FC<{
   <Tooltip>
     <TooltipTrigger asChild>
       <div
-        className={`flex items-center justify-center cursor-pointer w-10 h-10 rounded-lg ${color}`}
+        className={`flex items-center justify-center cursor-pointer w-8 h-8 rounded-lg ${color}`}
         onDragStart={() => onDragStart(nodeCategory)}
         draggable
       >
@@ -35,7 +35,7 @@ export const DnDPanel: React.FC = () => {
 
   return (
     <TooltipProvider>
-      <div className="flex justify-center space-x-4 bg-gray-100 shadow-lg p-2 rounded-lg">
+      <div className="flex items-center justify-center w-[140px] h-[48px] mr-[32px] space-x-3 bg-gray-100 shadow-lg px-3 py-2 rounded-lg">
         <IconTooltip
           label="Promoter"
           icon={<CornerUpRight className="text-blue-800" />}

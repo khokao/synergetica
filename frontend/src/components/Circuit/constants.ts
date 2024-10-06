@@ -15,9 +15,9 @@ export const CircuitEdgeTypes: EdgeTypes = {
   custom: CustomEdge,
 };
 
-export const NODE_WIDTH = 200;
-export const NODE_HEIGHT = 140;
+export const NODE_WIDTH = 180;
+export const NODE_HEIGHT = 126;
 
-export const EDGE_LENGTH = 50;
+export const EDGE_LENGTH = 30;
 export const NODE_CONNECT_DISTANCE = 150;
-export const GROUP_NODE_MARGIN = 30;
+export const GROUP_NODE_MARGIN = 20;

@@ -20,18 +20,17 @@ export const CustomChildNode = ({ id, selected, data }: NodeProps) => {
       <Handle
         type="target"
         position={Position.Left}
-        className={`w-3 h-3 rounded-full border-2 border-gray-400 ${
+        className={`w-2 h-2 rounded-full border-2 border-gray-400 ${
           data.leftHandleConnected ? `bg-gray-400` : `bg-white`
         }`}
       />
       <Handle
         type="source"
         position={Position.Right}
-        className={`w-3 h-3 rounded-full border-2 border-gray-400 ${
+        className={`w-2 h-2 rounded-full border-2 border-gray-400 ${
           data.rightHandleConnected ? `bg-gray-400` : `bg-white`
         }`}
       />
-      {id}
     </div>
   );
 };
