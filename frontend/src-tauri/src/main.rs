@@ -14,11 +14,8 @@ use std::path::Path;
 use std::sync::Arc;
 use tauri::Builder;
 use tokio_util::sync::CancellationToken;
-use std::path::PathBuf;
 use std::process::Command;
 use tokio::sync::Mutex;
-use tauri::api::path;
-use tauri::Manager;
 use tauri::async_runtime;
 
 struct AppState {
@@ -124,24 +121,14 @@ async fn main() {
     Builder::default()
         .manage(state)
         .setup(|app| {
-            /*
-            let compose_file_path = if cfg!(debug_assertions) {
-                let mut path = PathBuf::from("compose.yml");
-                path = path.canonicalize().expect("Failed to find compose.yml");
-                path
-            } else {
-                let resource_dir = path::resource_dir()
-                    .expect("Failed to get resource directory");
-                resource_dir.join("compose.yml")
-            };
-
-            let compose_file_path = Arc::new(compose_file_path);
-
-            app.manage(compose_file_path.clone());
-            */
+            let resource_path = app.path_resolver()
+            .resolve_resource("compose.yml")
+            .expect("failed to resolve resource");
             
             async_runtime::spawn_blocking(move || {
                 Command::new("docker-compose")
+                    .arg("-f")
+                    .arg(resource_path)
                     .arg("up")
                     .arg("-d")
                     .spawn()
@@ -156,8 +143,8 @@ async fn main() {
             call_circuit_converter_api,
             read_dir
         ])
-        .on_window_event(|event| {
-        if let tauri::WindowEvent::CloseRequested { api, .. } = event.event() {
+        .on_window_event(|event|{
+        if let tauri::WindowEvent::CloseRequested { .. } = event.event() {
             Command::new("docker-compose")
                 .arg("down")
                 .status()
