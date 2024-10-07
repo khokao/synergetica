@@ -2,10 +2,10 @@ import React from 'react';
 import { useReactFlow } from "@xyflow/react";
 import { Button } from "@/components/ui/button"
 import { ChartSpline } from 'lucide-react';
-import { usePanelContext } from "@/components/circuit/panel/panel-context";
+import { usePanelContext } from "@/components/circuit/resizable-panel/resizable-panel-context";
 import { useSimulator } from '@/components/simulation/simulator-context';
 
-export const SimulateButton = () => {
+export const RunSimulatorButton = () => {
   const reactflow = useReactFlow();
   const { openPanels, togglePanel } = usePanelContext();
   const { postConverter } = useSimulator();

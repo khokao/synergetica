@@ -1,6 +1,5 @@
 import React, { createContext, useContext } from 'react';
-import { useConverterAPI, useSimulatorResult } from '@/hooks/useSimulatorAPI';
-import type { ConverterRequestData, ConverterResponseData } from '@/interfaces/simulatorAPI';
+import { useConverterAPI, useSimulatorResult, ConverterRequestData, ConverterResponseData } from '@/components/simulation/hooks/use-simulator-api';
 
 interface SimulatorContextProps {
   postConverter: (flowDataJson: ConverterRequestData) => Promise<ConverterResponseData>;

@@ -1,5 +1,5 @@
 import { NODE_HEIGHT, NODE_WIDTH, TEMP_EDGE_ID, TEMP_NODE_ID } from "@/components/circuit/constants";
-import { useDnD } from "@/components/circuit/dnd/context";
+import { useDnD } from "@/components/circuit/dnd/dnd-context";
 import { adjustNodePositionsAndConnectHandles } from "@/components/circuit/hooks/utils/adjust-position";
 import { getConnectedComponents } from "@/components/circuit/hooks/utils/connected-components";
 import { createChildNode, createTempNode } from "@/components/circuit/hooks/utils/create-node";
@@ -81,7 +81,9 @@ export const useDragNodes = () => {
         removeTempEdge(draft);
 
         const tempNode = newNodes.find((n) => n.id === TEMP_NODE_ID);
-        addTempEdge(draft, tempNode, newNodes);
+        if (tempNode) {
+          addTempEdge(draft, tempNode, newNodes);
+        }
       });
 
       setNodes(newNodes);

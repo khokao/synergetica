@@ -1,6 +1,6 @@
 import { CustomEdge } from "@/components/circuit/edges/custom-edge";
-import { CustomChildNode } from "@/components/circuit/nodes/child";
-import { CustomParentNode } from "@/components/circuit/nodes/parent";
+import { CustomChildNode } from "@/components/circuit/nodes/child-node";
+import { CustomParentNode } from "@/components/circuit/nodes/parent-node";
 import type { EdgeTypes, NodeTypes } from "@xyflow/react";
 
 export const TEMP_NODE_ID = "temp";

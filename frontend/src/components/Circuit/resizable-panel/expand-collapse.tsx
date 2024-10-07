@@ -1,4 +1,4 @@
-import { usePanelContext } from "@/components/circuit/panel/panel-context";
+import { usePanelContext } from "@/components/circuit/resizable-panel/resizable-panel-context";
 import type { PanelPosition } from "@/components/hooks/use-panel-controls";
 import { Button } from "@/components/ui/button";
 import { PanelLeftClose, PanelLeftOpen, PanelRightClose, PanelRightOpen } from "lucide-react";

@@ -1,4 +1,4 @@
-import { useDnD } from "@/components/circuit/dnd/context";
+import { useDnD } from "@/components/circuit/dnd/dnd-context";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { CornerUpRight, RectangleHorizontal, Type } from "lucide-react";
 import type React from "react";

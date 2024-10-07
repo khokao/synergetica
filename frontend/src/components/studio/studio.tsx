@@ -1,11 +1,9 @@
-// src/components/studio/studio.tsx
-
 "use client";
 
 import { Circuit } from "@/components/circuit/circuit";
-import { DnDProvider } from "@/components/circuit/dnd/context";
-import { PanelProvider } from "@/components/circuit/panel/panel-context";
-import { usePanelControls } from "@/components/hooks/use-panel-controls";
+import { DnDProvider } from "@/components/circuit/dnd/dnd-context";
+import { PanelProvider } from "@/components/circuit/resizable-panel/resizable-panel-context";
+import { usePanelControls } from "@/components/circuit/hooks/use-panel-controls";
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/components/ui/resizable";
 import { ReactFlowProvider } from "@xyflow/react";
 import { SimulatorProvider } from "@/components/simulation/simulator-context";

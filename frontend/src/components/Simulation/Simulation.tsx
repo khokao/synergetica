@@ -2,7 +2,7 @@
 import React from "react";
 import { Chart } from "@/components/simulation/chart"
 import { Sliders } from "@/components/simulation/sliders"
-import { useSimulationData } from "@/components/simulation/hooks";
+import { useSimulationData } from "@/components/simulation/hooks/use-simulation-data";
 
 export const Simulation: React.FC = () => {
   const {
