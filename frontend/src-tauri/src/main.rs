@@ -140,7 +140,41 @@ async fn main() {
         .manage(state)
         .setup(|app| {
             let _ = fix_path_env::fix();
+            let image_name = "thickstem78/gene-circuit-ide:dev";
+            // check if image exists 
+            let mut inspect_out = Command::new("docker")
+                    .arg("inspect")
+                    .arg("--type=image")
+                    .arg(image_name)
+                    .stdout(Stdio::piped())
+                    .spawn()
+                    .expect("Failed to start docker-compose up");
 
+            let mut inspect_stdout = inspect_out.stdout.take().unwrap();
+            let mut inspect_output = String::new();
+            inspect_stdout.read_to_string(&mut inspect_output)?;
+            info!("Inspect output: {}", inspect_output);
+            
+            if inspect_output == "[]\n" {
+                info!("Image not found, pulling from docker hub");
+                let mut pull_out = Command::new("docker")
+                    .arg("pull")
+                    .arg(image_name)
+                    .stdout(Stdio::piped())
+                    .spawn()
+                    .expect("Failed to pull docker image");
+                
+                let pull_stdout = pull_out.stdout.take().unwrap();
+                let pull_reader = BufReader::new(pull_stdout);
+                for pull_line in pull_reader.lines() {
+                    info!("{}", pull_line?);
+                }
+
+            } else {
+                info!("Image found, skipping pull");
+            }
+
+            // get compose.yml file path
             let resource_path = app.path_resolver()
             .resolve_resource("compose.yml")
             .expect("failed to resolve resource");
@@ -149,6 +183,7 @@ async fn main() {
 
             info!("Resource path: {:?}", resource_path);
 
+            // start backend servers by docker-compose
             let mut child = Command::new("docker-compose")
                     .arg("-f")
                     .arg(resource_path)
