@@ -13,10 +13,15 @@ use std::fs;
 use std::path::Path;
 use std::sync::Arc;
 use tauri::Builder;
-use tokio_util::sync::CancellationToken;
-use std::process::Command;
-use tokio::sync::Mutex;
+use tauri::Manager;
 use tauri::async_runtime;
+use tokio_util::sync::CancellationToken;
+use std::process::{Command,Stdio};
+use std::io::prelude::*;
+use std::io::BufReader;
+use tokio::sync::Mutex;
+use tauri_plugin_log::LogTarget;
+use log::{info,LevelFilter};
 
 struct AppState {
     cancellation_token: CancellationToken,
@@ -114,27 +119,52 @@ fn read_dir(path: String) -> Result<FileEntry, String> {
 
 #[tokio::main]
 async fn main() {
+
     let state = Arc::new(Mutex::new(AppState {
         cancellation_token: CancellationToken::new(),
     }));
 
+    struct ResourcePath(std::path::PathBuf);
+
     Builder::default()
+        .plugin(
+                tauri_plugin_log::Builder::new()
+                    .targets([
+                        LogTarget::Stdout, 
+                        LogTarget::Webview,
+                        LogTarget::LogDir,
+                    ])
+                    .level(LevelFilter::Info)
+                    .build(),
+            )
         .manage(state)
         .setup(|app| {
+            let _ = fix_path_env::fix();
+
             let resource_path = app.path_resolver()
             .resolve_resource("compose.yml")
             .expect("failed to resolve resource");
-            
-            async_runtime::spawn_blocking(move || {
-                Command::new("docker-compose")
+
+            app.manage(ResourcePath(resource_path.clone()));
+
+            info!("Resource path: {:?}", resource_path);
+
+            let mut child = Command::new("docker-compose")
                     .arg("-f")
                     .arg(resource_path)
                     .arg("up")
                     .arg("-d")
+                    .stdout(Stdio::piped())
                     .spawn()
                     .expect("Failed to start docker-compose up");
-            });
-
+                
+            let stdout = child.stdout.take().unwrap();
+            let reader = BufReader::new(stdout);
+            for line in reader.lines() {
+                info!("{}", line?);
+            }
+            
+            
             Ok(())
         })
         .invoke_handler(tauri::generate_handler![
@@ -145,10 +175,18 @@ async fn main() {
         ])
         .on_window_event(|event|{
         if let tauri::WindowEvent::CloseRequested { .. } = event.event() {
+            let app_handle = event.window().app_handle();
+            let resource_path = app_handle.state::<ResourcePath>().0.clone();
+            
+           
+            async_runtime::spawn_blocking(move || {
             Command::new("docker-compose")
+                .arg("-f")
+                .arg(resource_path)
                 .arg("down")
-                .status()
+                .spawn()
                 .expect("Failed to run docker-compose down");
+                });
             }
         })
 
