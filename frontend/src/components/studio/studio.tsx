@@ -6,8 +6,10 @@ import { PanelProvider } from "@/components/circuit/resizable-panel/resizable-pa
 import { usePanelControls } from "@/components/circuit/hooks/use-panel-controls";
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/components/ui/resizable";
 import { ReactFlowProvider } from "@xyflow/react";
-import { SimulatorProvider } from "@/components/simulation/simulator-context";
+// import { SimulatorProvider } from "@/components/simulation/simulator-context";
 import { Simulation } from "@/components/simulation/simulation";
+import { ConverterProvider } from "@/components/simulation/contexts/converter-context"
+import { SimulatorProvider } from "@/components/simulation/contexts/simulator-context"
 
 export const Studio = () => {
   const { openPanels, panelRefs, togglePanel } = usePanelControls();
@@ -16,7 +18,7 @@ export const Studio = () => {
     <div className="h-full">
       <ReactFlowProvider>
         <PanelProvider value={{ openPanels, togglePanel }}>
-          <SimulatorProvider>
+          <ConverterProvider>
             <ResizablePanelGroup direction="horizontal" className="h-full">
               <ResizablePanel
                 defaultSize={0}
@@ -45,10 +47,12 @@ export const Studio = () => {
                 maxSize={30.0}
                 ref={panelRefs.right}
               >
-                <Simulation />
+                <SimulatorProvider>
+                  <Simulation />
+                </SimulatorProvider>
               </ResizablePanel>
             </ResizablePanelGroup>
-          </SimulatorProvider>
+          </ConverterProvider>
         </PanelProvider>
       </ReactFlowProvider>
     </div>
