@@ -1,4 +1,3 @@
-// contexts/converter-context.tsx
 import React, { createContext, useContext, useState } from 'react';
 import { ConverterResponseData } from '@/components/simulation/hooks/use-simulator-api';
 

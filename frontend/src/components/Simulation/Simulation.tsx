@@ -1,4 +1,3 @@
-// src/components/simulation/simulation.tsx
 import React, { useMemo } from "react";
 import { Chart } from "@/components/simulation/chart";
 import { Sliders } from "@/components/simulation/sliders";
@@ -38,10 +37,10 @@ export const Simulation: React.FC = () => {
     <div className="flex flex-col w-full h-full">
       {convertResult && chartData.length > 0 ? (
         <div className="flex flex-col flex-grow">
-          <div className="h-[45vh]">
+          <div className="h-[50vh]">
             <Chart chartData={chartData} proteinNames={proteinNames} />
           </div>
-          <div className="h-[40vh]">
+          <div className="h-[35vh]">
             <Sliders
               proteinParameter={proteinParameter}
               handleProteinParamChange={handleProteinParamChange}

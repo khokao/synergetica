@@ -1,4 +1,3 @@
-// src/components/simulation/sliders.tsx
 import React from "react";
 import { Slider } from "@/components/ui/slider";
 import { Label } from "@/components/ui/label";
@@ -17,7 +16,7 @@ export const Sliders: React.FC<SlidersComponentProps> = ({
   proteinNames,
 }) => {
   return (
-    <Card className="h-full border-0">
+    <Card className="h-full border-0 shadow-none">
       <CardContent className="h-full">
         <ScrollArea className="h-full">
           {proteinParameter.map((param, index) => (
@@ -25,7 +24,11 @@ export const Sliders: React.FC<SlidersComponentProps> = ({
               key={proteinNames[index]}
               className="flex items-center mb-4 pr-4"
             >
-              <Label htmlFor={`slider-${index}`} className="w-28 pr-2">
+              <Label htmlFor={`slider-${index}`} className="w-40 pr-2 flex items-center">
+                <span
+                  className="inline-block w-3 h-3 rounded-full mr-2"
+                  style={{ backgroundColor: `hsl(var(--chart-${(index % 5) + 1}))` }}
+                />
                 {proteinNames[index]}
               </Label>
               <Slider

@@ -1,4 +1,3 @@
-// hooks/use-protein-parameters.ts
 import { useState, useEffect } from 'react';
 import { ConverterResponseData } from '@/components/simulation/hooks/use-simulator-api';
 

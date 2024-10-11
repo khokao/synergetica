@@ -1,4 +1,3 @@
-// src/components/simulation/chart.tsx
 import React from "react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Label } from "recharts";
@@ -31,11 +30,11 @@ const CustomTooltip: React.FC<CustomTooltipProps> = ({ active, payload }) => {
 
 export const Chart: React.FC<LineChartComponentProps> = ({ chartData, proteinNames }) => {
   return (
-    <Card className="border-0 h-full">
+    <Card className="border-0 h-full border-0 shadow-none pt-2">
       <CardHeader className="items-center p-2 h-[5vh]">
-        <CardTitle className="text-lg">Simulation Result</CardTitle>
+        <CardTitle className="text-xl">Simulation Result</CardTitle>
       </CardHeader>
-      <CardContent className="flex h-[40vh]">
+      <CardContent className="flex h-[40vh] py-2">
         <ResponsiveContainer width="100%" height="100%">
           <LineChart data={chartData} className="h-full">
             <CartesianGrid strokeDasharray="3 3" />
@@ -52,7 +51,7 @@ export const Chart: React.FC<LineChartComponentProps> = ({ chartData, proteinNam
                 key={name}
                 type="monotone"
                 dataKey={name}
-                stroke={`hsl(${(index * 60) % 360}, 70%, 50%)`}
+                stroke={`hsl(var(--chart-${(index) % 5 + 1}))`}
                 strokeWidth={2}
                 dot={false}
               />

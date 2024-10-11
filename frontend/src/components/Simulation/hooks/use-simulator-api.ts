@@ -1,4 +1,3 @@
-// hooks/use-simulator-api.ts
 import { invoke } from "@tauri-apps/api/tauri";
 
 export interface ConverterRequestData {
