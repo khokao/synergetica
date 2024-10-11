@@ -19,9 +19,9 @@ class ConverterInput(BaseModel):
 
 
 class ConverterOutput(BaseModel):
-    num_protein: int
-    proteins: dict[str, str]
+    protein_id2name: dict[str, str]
     function_str: str
+    valid: bool
 
 
 class ReactFlowChildNodeControlItem(BaseModel):

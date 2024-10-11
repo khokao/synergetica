@@ -48,10 +48,9 @@ async def convert_gui_circuit(data: ConverterInput) -> ConverterOutput:
     )
     function_str = build_function_as_str(protein_interact_graph, protein_node_ids, node_id2data)
 
-    num_protein = len(protein_node_ids)
     protein_id2display_name = get_protein_id2parts_name(protein_node_ids=protein_node_ids, node_id2data=node_id2data)
 
-    return ConverterOutput(num_protein=num_protein, proteins=protein_id2display_name, function_str=function_str)
+    return ConverterOutput(protein_id2name=protein_id2display_name, function_str=function_str, valid=True)
 
 
 @router.websocket('/ws/simulation')
@@ -69,7 +68,7 @@ async def simulation(websocket: WebSocket) -> None:
                 exec(function_str, globals(), functions)
                 function_name = function_str.split(' ')[1].split('(')[0]
                 times = np.arange(0, 300, 1, dtype=np.float64)
-                var_init = [0.0] * (data['num_protein'] * 2)
+                var_init = [0.0] * (len(data['protein_id2name'].keys()) * 2)
                 logger.info(f'Function {function_name} defined.')
                 await websocket.send_text(f"Function '{function_name}' defined.")
             else:  # solving ODE with the given parameters.
