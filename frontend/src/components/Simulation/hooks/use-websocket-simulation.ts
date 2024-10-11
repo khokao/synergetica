@@ -2,13 +2,13 @@ import { useEffect, useRef } from 'react';
 import { useConverter } from '@/components/simulation/contexts/converter-context';
 import { useSimulator } from '@/components/simulation/contexts/simulator-context';
 
-export const useWebSocketSimulation = (proteinParameter: number[]) => {
+export const useWebSocketSimulation = (proteinParameter: { [id: string]: number }) => {
   const { convertResult } = useConverter();
   const { setSimulationResult } = useSimulator();
   const wsRef = useRef<WebSocket | null>(null);
 
   useEffect(() => {
-    if (convertResult !== null && proteinParameter.length > 0) {
+    if (convertResult !== null && Object.keys(proteinParameter).length > 0) {
       if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN) {
         sendParameters(wsRef.current, proteinParameter);
         return;
@@ -56,7 +56,7 @@ export const useWebSocketSimulation = (proteinParameter: number[]) => {
     }
   }, [proteinParameter]);
 
-  const sendParameters = (ws: WebSocket, parameters: number[]) => {
+  const sendParameters = (ws: WebSocket, parameters: { [id: string]: number }) => {
     const params = JSON.stringify({ params: parameters });
     ws.send(params);
   };

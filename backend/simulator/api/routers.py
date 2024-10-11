@@ -73,7 +73,7 @@ async def simulation(websocket: WebSocket) -> None:
                 await websocket.send_text(f"Function '{function_name}' defined.")
             else:  # solving ODE with the given parameters.
                 try:
-                    params = data['params']  # params = dict['params':list[float]]
+                    params = data['params'].values()  # params = dict['params':list[float]]
                     solution = solve_ode_with_euler(
                         functions[function_name], times=times, var_init=var_init, args=tuple(params)
                     )
