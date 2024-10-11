@@ -30,6 +30,7 @@ export const useSimulate = () => {
       const newNodes = produce(nodes, (draft) => {
         draft.forEach((node) => {
           node.data.simulationTargetHighlight = undefined;
+          node.selected = false;
         });
 
         Object.keys(responseData.protein_id2name).map((id, index) => {
