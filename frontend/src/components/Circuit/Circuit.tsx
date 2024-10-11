@@ -1,3 +1,5 @@
+// src/components/circuit/circuit.tsx
+import React from "react";
 import { CircuitEdgeTypes, CircuitNodeTypes } from "@/components/circuit/constants";
 import { DnDPanel } from "@/components/circuit/dnd/dnd-panel";
 import { useDeleteNodesEdges } from "@/components/circuit/hooks/use-delete-nodes-edges";
@@ -7,7 +9,6 @@ import { ExpandCollapseButton } from "@/components/circuit/resizable-panel/expan
 import { RunSimulatorButton } from "@/components/circuit/simulation/run-simulator";
 import { Background, BackgroundVariant, Panel, ReactFlow, useEdgesState, useNodesState } from "@xyflow/react";
 import type { Edge, Node } from "@xyflow/react";
-import type React from "react";
 
 export const Circuit: React.FC = () => {
   const [nodes, setNodes, onNodesChange] = useNodesState<Node>([]);
@@ -56,7 +57,7 @@ export const Circuit: React.FC = () => {
           <Operator />
         </Panel>
         <Panel position="bottom-right">
-          <RunSimulatorButton/>
+          <RunSimulatorButton />
         </Panel>
       </ReactFlow>
     </div>

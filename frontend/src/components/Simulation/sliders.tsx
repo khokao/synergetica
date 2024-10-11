@@ -23,7 +23,7 @@ export const Sliders: React.FC<SlidersComponentProps> = ({
           {proteinParameter.map((param, index) => (
             <div
               key={proteinNames[index]}
-              className="flex items-center mb-4 py-4 pr-4"
+              className="flex items-center mb-4 pr-4"
             >
               <Label htmlFor={`slider-${index}`} className="w-28 pr-2">
                 {proteinNames[index]}
