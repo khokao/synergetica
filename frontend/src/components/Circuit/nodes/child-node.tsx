@@ -7,12 +7,18 @@ import type { NodeProps } from "@xyflow/react";
 import React from "react";
 
 export const CustomChildNode = ({ id, selected, data }: NodeProps) => {
-  const { nodeCategory, nodePartsName } = data;
+  const { nodeCategory, nodePartsName, simulationTargetHighlight } = data;
 
   return (
     <div
-      className={`relative rounded-xl border-2 ${selected ? "border-pink-600" : "border-gray-500"}`}
-      style={{ height: NODE_HEIGHT, width: NODE_WIDTH }}
+      className="relative rounded-xl"
+      style={{
+        borderWidth: simulationTargetHighlight ? '4px' : '2px',
+        borderColor: (simulationTargetHighlight || (selected ? '#DB2777' : '#6B7280')) as string,
+        borderStyle: 'solid',
+        height: NODE_HEIGHT,
+        width: NODE_WIDTH,
+      }}
     >
       <ChildHeader nodeCategory={nodeCategory} />
       <ChildSelectModal id={id} nodeCategory={nodeCategory} nodePartsName={nodePartsName} />

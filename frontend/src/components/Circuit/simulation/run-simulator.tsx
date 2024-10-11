@@ -1,36 +1,10 @@
 import React from 'react';
-import { useReactFlow } from "@xyflow/react";
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 import { ChartSpline } from 'lucide-react';
-import { usePanelContext } from "@/components/circuit/resizable-panel/resizable-panel-context";
-import { callCircuitConverterAPI } from '@/components/simulation/hooks/use-simulator-api';
-import { useConverter } from "@/components/simulation/contexts/converter-context"
+import { useSimulate } from "@/components/circuit/hooks/use-run-simulator";
 
 export const RunSimulatorButton = () => {
-  const reactflow = useReactFlow();
-  const { openPanels, togglePanel } = usePanelContext();
-  const { setConvertResult } = useConverter();
-
-  const handleSimulate = async () => {
-    const panelPosition = 'right';
-    const isOpen = openPanels[panelPosition];
-
-    if (!isOpen) {
-      togglePanel(panelPosition);
-    }
-
-    try {
-      const requestData = {
-        flow_json: JSON.stringify(reactflow.toObject()),
-      };
-
-      const responseData = await callCircuitConverterAPI(requestData);
-
-      setConvertResult(responseData);
-    } catch (error) {
-      console.error("Simulation failed:", error);
-    }
-  };
+  const { handleSimulate } = useSimulate();
 
   return (
     <Button

@@ -1,4 +1,3 @@
-// src/components/circuit/circuit.tsx
 import React from "react";
 import { CircuitEdgeTypes, CircuitNodeTypes } from "@/components/circuit/constants";
 import { DnDPanel } from "@/components/circuit/dnd/dnd-panel";
