@@ -1,17 +1,17 @@
 import React, { createContext, useContext, useState } from 'react';
 
 interface SimulatorContextProps {
-  simulationData: number[][] | null;
-  setSimulationData: React.Dispatch<React.SetStateAction<number[][] | null>>;
+  simulationResult: number[][] | null;
+  setSimulationResult: React.Dispatch<React.SetStateAction<number[][] | null>>;
 }
 
 const SimulatorContext = createContext<SimulatorContextProps | undefined>(undefined);
 
 export const SimulatorProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [simulationData, setSimulationData] = useState<number[][] | null>(null);
+  const [simulationResult, setSimulationResult] = useState<number[][] | null>(null);
 
   return (
-    <SimulatorContext.Provider value={{ simulationData, setSimulationData }}>
+    <SimulatorContext.Provider value={{ simulationResult, setSimulationResult }}>
       {children}
     </SimulatorContext.Provider>
   );

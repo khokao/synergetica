@@ -1,12 +1,14 @@
 import { useState, useEffect } from 'react';
-import { ConverterResponseData } from '@/components/simulation/hooks/use-simulator-api';
+import { useConverter } from "@/components/simulation/contexts/converter-context";
 
-export const useProteinParameters = (convertResult: ConverterResponseData | null) => {
+export const useProteinParameters = () => {
+  const { convertResult } = useConverter();
   const [proteinParameter, setProteinParameter] = useState<number[]>([]);
 
   useEffect(() => {
     if (convertResult !== null) {
-      const initParameter = Array(convertResult.num_protein).fill(1);
+      const numProteins = Object.keys(convertResult.protein_id2name).length;
+      const initParameter = Array(numProteins).fill(1);
       setProteinParameter(initParameter);
     }
   }, [convertResult]);

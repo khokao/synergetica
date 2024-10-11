@@ -3,18 +3,23 @@ import { Slider } from "@/components/ui/slider";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent } from "@/components/ui/card";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
+import { useConverter } from "@/components/simulation/contexts/converter-context";
+import { useProteinParameters } from "@/components/simulation/hooks/use-protein-parameters";
+import { useWebSocketSimulation } from "@/components/simulation/hooks/use-websocket-simulation";
 
-interface SlidersComponentProps {
-  proteinParameter: number[];
-  handleProteinParamChange: (index: number) => (value: number[]) => void;
-  proteinNames: string[];
-}
 
-export const Sliders: React.FC<SlidersComponentProps> = ({
-  proteinParameter,
-  handleProteinParamChange,
-  proteinNames,
-}) => {
+export const Sliders: React.FC = () => {
+  const { convertResult } = useConverter();
+
+  if (!convertResult) {
+    return null;
+  }
+
+  const { proteinParameter, handleProteinParamChange } = useProteinParameters();
+  useWebSocketSimulation(proteinParameter);
+
+  const proteinNames = Object.values(convertResult.protein_id2name);
+
   return (
     <Card className="h-full border-0 shadow-none">
       <CardContent className="h-full">

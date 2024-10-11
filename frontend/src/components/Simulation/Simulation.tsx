@@ -1,61 +1,55 @@
-import React, { useMemo } from "react";
+import React from "react";
 import { Chart } from "@/components/simulation/chart";
 import { Sliders } from "@/components/simulation/sliders";
 import { Button } from "@/components/ui/button";
 import { useConverter } from "@/components/simulation/contexts/converter-context";
-import { useProteinParameters } from "@/components/simulation/hooks/use-protein-parameters";
-import { useWebSocketSimulation } from "@/components/simulation/hooks/use-websocket-simulation";
-import { useSimulator } from "@/components/simulation/contexts/simulator-context";
+
+
+const Message: React.FC<{ lines: string[] }> = ({ lines }) => {
+  return (
+    <div className="flex flex-col items-center justify-center h-full">
+      {lines.map((line, index) => (
+        <p key={index} className="text-center">
+          {line}
+        </p>
+      ))}
+    </div>
+  );
+};
+
 
 export const Simulation: React.FC = () => {
   const { convertResult } = useConverter();
-  const { simulationData } = useSimulator();
 
-  const { proteinParameter, handleProteinParamChange } = useProteinParameters(convertResult);
+  if (!convertResult) {
+    return (
+      <div className="flex items-center justify-center h-full">
+        <Message lines={["Build the circuit", "and run the simulation."]} />
+      </div>
+    );
+  }
 
-  useWebSocketSimulation(proteinParameter);
-
-  const proteinNames = useMemo(() => {
-    return convertResult ? Object.values(convertResult.proteins) : [];
-  }, [convertResult]);
-
-  const chartData = useMemo(() => {
-    if (simulationData && convertResult) {
-      return simulationData.map((row) => {
-        const dataPoint: { [key: string]: number } = { time: row[0] };
-        proteinNames.forEach((name, index) => {
-          dataPoint[name] = row[index + 1];
-        });
-        return dataPoint;
-      });
-    } else {
-      return [];
-    }
-  }, [simulationData, convertResult, proteinNames]);
+  if (!convertResult.valid) {
+    return (
+      <div className="flex items-center justify-center h-full">
+        <Message lines={["Invalid circuit.", "Please check and retry."]} />
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col w-full h-full">
-      {convertResult && chartData.length > 0 ? (
-        <div className="flex flex-col flex-grow">
-          <div className="h-[50vh]">
-            <Chart chartData={chartData} proteinNames={proteinNames} />
-          </div>
-          <div className="h-[35vh]">
-            <Sliders
-              proteinParameter={proteinParameter}
-              handleProteinParamChange={handleProteinParamChange}
-              proteinNames={proteinNames}
-            />
-          </div>
-          <div className="h-[10vh] flex items-center justify-center">
-            <Button className="mt-4">Run</Button>
-          </div>
+      <div className="flex flex-col flex-grow">
+        <div className="h-[50vh]">
+          <Chart />
         </div>
-      ) : (
-        <div className="flex flex-col justify-center items-center flex-grow text-center">
-          <span>No results found.</span>
+        <div className="h-[35vh]">
+          <Sliders />
         </div>
-      )}
+        <div className="h-[10vh] flex items-center justify-center">
+          <Button className="mt-4">Run</Button>
+        </div>
+      </div>
     </div>
   );
 };

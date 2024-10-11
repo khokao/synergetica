@@ -1,11 +1,8 @@
 import React from "react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Label } from "recharts";
-
-interface LineChartComponentProps {
-  chartData: any[];
-  proteinNames: string[];
-}
+import { useSimulator } from "@/components/simulation/contexts/simulator-context";
+import { useConverter } from "@/components/simulation/contexts/converter-context";
 
 interface CustomTooltipProps {
   active?: boolean;
@@ -28,7 +25,23 @@ const CustomTooltip: React.FC<CustomTooltipProps> = ({ active, payload }) => {
   return null;
 };
 
-export const Chart: React.FC<LineChartComponentProps> = ({ chartData, proteinNames }) => {
+export const Chart: React.FC = () => {
+  const { convertResult } = useConverter();
+  const { simulationResult } = useSimulator();
+
+  if (!convertResult || !simulationResult) {
+    return null;
+  }
+
+  const proteinNames = Object.values(convertResult.protein_id2name);
+  const chartData = simulationResult.map((row) => {
+    const dataPoint: { [key: string]: number } = { time: row[0] };
+    proteinNames.forEach((name, index) => {
+      dataPoint[name] = row[index + 1];
+    });
+    return dataPoint;
+  });
+
   return (
     <Card className="border-0 h-full border-0 shadow-none pt-2">
       <CardHeader className="items-center p-2 h-[5vh]">

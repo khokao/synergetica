@@ -4,7 +4,7 @@ import { useSimulator } from '@/components/simulation/contexts/simulator-context
 
 export const useWebSocketSimulation = (proteinParameter: number[]) => {
   const { convertResult } = useConverter();
-  const { setSimulationData } = useSimulator();
+  const { setSimulationResult } = useSimulator();
   const wsRef = useRef<WebSocket | null>(null);
 
   useEffect(() => {
@@ -24,7 +24,7 @@ export const useWebSocketSimulation = (proteinParameter: number[]) => {
       ws.onmessage = (event) => {
         try {
           const receivedData = JSON.parse(event.data) as number[][];
-          setSimulationData(receivedData);
+          setSimulationResult(receivedData);
         } catch (error) {
           console.log("Received non-JSON data:", event.data);
         }
@@ -47,7 +47,7 @@ export const useWebSocketSimulation = (proteinParameter: number[]) => {
         }
       };
     }
-  }, [convertResult, proteinParameter, setSimulationData]);
+  }, [convertResult, proteinParameter, setSimulationResult]);
 
   useEffect(() => {
     const ws = wsRef.current;

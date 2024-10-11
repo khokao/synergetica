@@ -5,9 +5,9 @@ export interface ConverterRequestData {
 }
 
 export interface ConverterResponseData {
-  num_protein: number;
-  proteins: { [key: string]: string };
+  protein_id2name: { [key: string]: string };
   function_str: string;
+  valid: boolean;
 }
 
 export const callCircuitConverterAPI = async (data: ConverterRequestData) => {
