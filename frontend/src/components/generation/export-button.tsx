@@ -1,0 +1,52 @@
+// components/generation/ExportButton.tsx
+import React from 'react';
+import { Button } from '@/components/ui/button';
+import { ArrowUpToLine } from 'lucide-react';
+import { save } from '@tauri-apps/api/dialog';
+import { writeTextFile } from '@tauri-apps/api/fs';
+
+interface ChildNodesDetails {
+  nodeCategory: string;
+  sequence: string;
+}
+
+interface GeneratorResponseData {
+  parent2child_details: { [key: string]: ChildNodesDetails[] };
+}
+
+interface ExportButtonProps {
+  data: GeneratorResponseData;
+}
+
+export const ExportButton: React.FC<ExportButtonProps> = ({ data }) => {
+  const handleExportFASTA = async () => {
+    if (!data) return;
+
+    const fastaContent = Object.keys(data.parent2child_details)
+      .map((groupId) => {
+        const concatenatedSequences = data.parent2child_details[groupId]
+          .map((sequence) => sequence.sequence)
+          .join('');
+        return `> ${groupId}\n${concatenatedSequences}`;
+      })
+      .join('\n\n');
+
+    try {
+      const filePath = await save({
+        filters: [{ name: 'FASTA', extensions: ['fasta', 'fa'] }],
+        defaultPath: 'sequence.fasta',
+      });
+      if (filePath) {
+        await writeTextFile(filePath, fastaContent);
+      }
+    } catch (error) {
+      console.error('Error while exporting FASTA file:', error);
+    }
+  };
+
+  return (
+    <Button onClick={handleExportFASTA}>
+      <ArrowUpToLine className="mr-2 h-4 w-4" /> Export FASTA
+    </Button>
+  );
+};

@@ -2,6 +2,7 @@ import React from "react";
 import { Chart } from "@/components/simulation/chart";
 import { Sliders } from "@/components/simulation/sliders";
 import { useConverter } from "@/components/simulation/contexts/converter-context";
+import { useSimulator } from "@/components/simulation/contexts/simulator-context";
 import { GenerationButtons } from "@/components/generation/generation-buttons";
 
 
@@ -20,6 +21,7 @@ const Message: React.FC<{ lines: string[] }> = ({ lines }) => {
 
 export const Simulation: React.FC = () => {
   const { convertResult } = useConverter();
+  const { simulationResult } = useSimulator();
 
   if (!convertResult) {
     return (

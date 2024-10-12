@@ -1,6 +1,7 @@
-import type { PanelPosition } from "@/components/hooks/use-panel-controls";
 import type React from "react";
 import { createContext, useContext } from "react";
+
+type PanelPosition = "left" | "right";
 
 type PanelContextType = {
   openPanels: Record<PanelPosition, boolean>;

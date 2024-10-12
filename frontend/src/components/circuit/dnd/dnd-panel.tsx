@@ -1,35 +1,45 @@
+import React, { useState } from 'react';
 import { useDnD } from "@/components/circuit/dnd/dnd-context";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import * as RadixTooltip from '@radix-ui/react-tooltip';
 import { CornerUpRight, RectangleHorizontal, Type } from "lucide-react";
-import type React from "react";
 
-const IconTooltip: React.FC<{
-  label: string;
-  icon: React.ReactNode;
-  color: string;
-  nodeCategory: string;
-  onDragStart: (nodeCategory: string) => void;
-}> = ({ label, icon, color, nodeCategory, onDragStart }) => (
-  <Tooltip>
-    <TooltipTrigger asChild>
-      <div
-        className={`flex items-center justify-center cursor-pointer w-8 h-8 rounded-lg ${color}`}
-        onDragStart={() => onDragStart(nodeCategory)}
-        draggable
-      >
-        {icon}
-      </div>
-    </TooltipTrigger>
-    <TooltipContent side="bottom" align="center">
-      {label}
-    </TooltipContent>
-  </Tooltip>
-);
+const IconTooltip = ({ label, icon, color, nodeCategory, onDragStart }) => {
+  const [tooltipVisible, setTooltipVisible] = useState(false);
 
-export const DnDPanel: React.FC = () => {
+  const handleDragStart = () => {
+    // Tooltip is hidden when dragging starts to prevent it from persisting during drag events
+    setTooltipVisible(false);
+    onDragStart(nodeCategory);
+  };
+
+  return (
+    <Tooltip open={tooltipVisible}>
+      <TooltipTrigger asChild>
+        <div
+          className={`flex items-center justify-center cursor-pointer w-8 h-8 rounded-lg ${color}`}
+          draggable
+          onDragStart={handleDragStart}
+          onPointerEnter={() => setTooltipVisible(true)}
+          onPointerLeave={() => setTooltipVisible(false)}
+        >
+          {icon}
+        </div>
+      </TooltipTrigger>
+      <RadixTooltip.Portal>
+        <TooltipContent side="bottom">
+          <p>{label}</p>
+        </TooltipContent>
+      </RadixTooltip.Portal>
+    </Tooltip>
+  );
+};
+
+export const DnDPanel = () => {
   const [_, setDnDCategory] = useDnD();
 
-  const handleDragStart = (nodeCategory: string) => {
+  const handleDragStart = (nodeCategory) => {
+    if (!setDnDCategory) return;
     setDnDCategory(nodeCategory);
   };
 

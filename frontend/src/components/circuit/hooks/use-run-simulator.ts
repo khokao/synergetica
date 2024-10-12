@@ -47,5 +47,5 @@ export const useSimulate = () => {
     }
   };
 
-  return { handleSimulate };
+  return { handleSimulate, setConvertResult };
 };
