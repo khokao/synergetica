@@ -1,8 +1,8 @@
 import React from "react";
 import { Chart } from "@/components/simulation/chart";
 import { Sliders } from "@/components/simulation/sliders";
-import { Button } from "@/components/ui/button";
 import { useConverter } from "@/components/simulation/contexts/converter-context";
+import { GenerationButtons } from "@/components/generation/generation-buttons";
 
 
 const Message: React.FC<{ lines: string[] }> = ({ lines }) => {
@@ -46,8 +46,8 @@ export const Simulation: React.FC = () => {
         <div className="h-[35vh]">
           <Sliders />
         </div>
-        <div className="h-[10vh] flex items-center justify-center">
-          <Button className="mt-4">Run</Button>
+        <div className="h-[10vh]">
+          <GenerationButtons/>
         </div>
       </div>
     </div>

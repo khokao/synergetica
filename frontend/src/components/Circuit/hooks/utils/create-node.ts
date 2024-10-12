@@ -19,6 +19,7 @@ export const createChildNode = (position: XYPosition, nodeCategory): Node => ({
     leftHandleConnected: false,
     rightHandleConnected: false,
     simulationTargetHighlight: undefined,
+    showParentId: false,
   },
 });
 

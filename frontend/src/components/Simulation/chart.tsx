@@ -45,7 +45,10 @@ export const Chart: React.FC = () => {
   return (
     <Card className="border-0 h-full border-0 shadow-none pt-2">
       <CardHeader className="items-center p-2 h-[5vh]">
-        <CardTitle className="text-xl">Simulation Result</CardTitle>
+        <CardTitle className="text-xl space-x-2 tracking-wide">
+          <span>Simulation</span>
+          <span>Result</span>
+        </CardTitle>
       </CardHeader>
       <CardContent className="flex h-[40vh] py-2">
         <ResponsiveContainer width="100%" height="100%">

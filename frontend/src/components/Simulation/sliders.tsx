@@ -4,8 +4,8 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent } from "@/components/ui/card";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { useConverter } from "@/components/simulation/contexts/converter-context";
-import { useProteinParameters } from "@/components/simulation/hooks/use-protein-parameters";
 import { useWebSocketSimulation } from "@/components/simulation/hooks/use-websocket-simulation";
+import { useProteinParameters } from "@/components/simulation/contexts/protein-parameter-context";
 
 export const Sliders: React.FC = () => {
   const { convertResult } = useConverter();
