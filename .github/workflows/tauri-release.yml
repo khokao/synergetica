@@ -4,8 +4,8 @@ on:
   push:
     branches:
       - release
-    paths:
-      - "frontend/**"
+    #paths:
+    #  - "frontend/**"
   pull_request:
     types:
       - opened

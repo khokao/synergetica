@@ -22,5 +22,3 @@ COPY ./common /app/common
 RUN pip install --no-cache-dir --upgrade -r /app/requirements.txt
 
 EXPOSE 8080 8000
-
-

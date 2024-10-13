@@ -17,7 +17,7 @@ services:
     environment:
       - HF_HOME=/app/.cache/huggingface
     command: >
-      bash -c 'huggingface-cli login --token $HF_TOKEN &&
+      bash -c 'huggingface-cli login --token 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 &&
       fastapi dev generator/api/main.py --host 0.0.0.0 --port 8080'
     ports:
       - "8080:8080"

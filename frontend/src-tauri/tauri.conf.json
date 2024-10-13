@@ -47,7 +47,7 @@
         "providerShortName": null,
         "signingIdentity": null
       },
-      "resources": ["compose.yml",".env"],
+      "resources": ["compose.yml"],
       "shortDescription": "",
       "targets": "all",
       "windows": {
