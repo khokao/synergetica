@@ -1,7 +1,7 @@
 import type React from "react";
 
 export const paramMinValue = 1;
-export const paramMaxValue = 1000;
+export const paramMaxValue = 20000;
 
 type ParamInputProps = {
   label: string;
