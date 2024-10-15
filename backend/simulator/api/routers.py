@@ -4,27 +4,54 @@ from typing import Callable
 import numpy as np
 from fastapi import APIRouter, WebSocket, WebSocketDisconnect
 from loguru import logger
-from omegaconf import OmegaConf
 
-from simulator.modules.build_protein_interaction import get_protein_nameId_dict, run_convert
-from simulator.modules.dynamic_formulation import build_function_as_str
-from simulator.modules.euler import solve_ode_with_euler
-
-from .schemas import ConverterInput, ConverterOutput
+from ..modules.build_protein_interaction import (
+    build_protein_interact_graph,
+    create_adjacency_matrix,
+    extract_promoter_controlling_proteins,
+    search_all_connected_components,
+)
+from ..modules.dynamic_formulation import build_function_as_str
+from ..modules.euler import solve_ode_with_euler
+from ..modules.utils import get_node_id2data, get_parts_id2node_ids, get_specific_category_node_ids
+from .schemas import ConverterInput, ConverterOutput, ReactFlowObject
+from .utils import get_protein_id2parts_name
 
 router = APIRouter()
 
 
 @router.post('/convert-gui-circuit', response_model=ConverterOutput)
 async def convert_gui_circuit(data: ConverterInput) -> ConverterOutput:
-    raw_circuit_data: dict = json.loads(data.flow_data_json_str)
-    circuit = OmegaConf.create(raw_circuit_data)
-    protein_interact_graph, proteinId_list, all_nodes = run_convert(circuit)
-    num_protein = len(proteinId_list)
-    protein_nameId_dict = get_protein_nameId_dict(proteinId_list, all_nodes)
-    function_str = build_function_as_str(protein_interact_graph, proteinId_list, all_nodes)
-    logger.info(f'defined function: {function_str}')
-    return ConverterOutput(num_protein=num_protein, proteins=protein_nameId_dict, function_str=function_str)
+    reactflow_data = json.loads(data.flow_data_json_str)
+    reactflow_object = ReactFlowObject(**reactflow_data)
+
+    node_id2idx = {node.id: idx for idx, node in enumerate(reactflow_object.nodes)}
+    adjacency_matrix = create_adjacency_matrix(edges=reactflow_object.edges, node_id2idx=node_id2idx)
+    all_connected_components = search_all_connected_components(adjacency_matrix=adjacency_matrix)
+
+    node_idx2id = {idx: node.id for idx, node in enumerate(reactflow_object.nodes)}
+    node_idx2category = {idx: node.data.nodeCategory for idx, node in enumerate(reactflow_object.nodes)}
+    promoter_controlling_proteins = extract_promoter_controlling_proteins(
+        all_connected_components=all_connected_components,
+        node_idx2category=node_idx2category,
+        node_idx2id=node_idx2id,
+    )
+
+    parts_id2node_ids = get_parts_id2node_ids(reactflow_object.nodes)
+    node_id2data = get_node_id2data(reactflow_object.nodes)
+    protein_node_ids = get_specific_category_node_ids(reactflow_object.nodes, node_category='protein')
+    protein_interact_graph = build_protein_interact_graph(
+        promoter_controlling_proteins=promoter_controlling_proteins,
+        parts_id2node_ids=parts_id2node_ids,
+        node_id2data=node_id2data,
+        protein_node_ids=protein_node_ids,
+    )
+    function_str = build_function_as_str(protein_interact_graph, protein_node_ids, node_id2data)
+
+    num_protein = len(protein_node_ids)
+    protein_id2display_name = get_protein_id2parts_name(protein_node_ids=protein_node_ids, node_id2data=node_id2data)
+
+    return ConverterOutput(num_protein=num_protein, proteins=protein_id2display_name, function_str=function_str)
 
 
 @router.websocket('/ws/simulation')

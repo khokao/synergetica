@@ -4,7 +4,7 @@
 import numpy as np
 import numpy.typing as npt
 
-from simulator.core.schema import GUINode
+from ..api.schemas import ReactFlowChildNodeData
 
 
 class ODEBuilder:
@@ -35,16 +35,17 @@ class ODEBuilder:
         self,
         idx: int,
         interact_info_array: npt.NDArray[np.int_],
-        proteinId_list: list[str],
-        all_nodes: dict[str, GUINode],
+        protein_node_ids: list[str],
+        node_id2data: dict[str, ReactFlowChildNodeData],
     ) -> str:
         """build mRNA ODE equation as a string.
 
         Args:
             idx (int): protein index in the protein_interaction_graph.
             interact_info_array (npt.NDArray[np.int_]): array of interaction info for the target protein. 1 or -1 or 0.
-            proteinId_list (list[str]): list of protein Id. idx of the list is the idx of ptn in protein_interact_graph.
-            all_nodes (dict[str, GUINode]): all node information in the GUI circuit.
+            protein_node_ids (list[str]): List of protein id.
+                The list idx refers to the index of the protein in the protein_interact_graph.
+            node_id2data (dict[str, ReactFlowChildNodeData]): Dict of node id to node data.
 
         Returns:
             mrna_ode_str (str): mRNA ODE equation as a string.
@@ -57,7 +58,7 @@ class ODEBuilder:
                 if interact_info == 0:
                     continue
 
-                interact_params = all_nodes[proteinId_list[j]].meta
+                interact_params = node_id2data[protein_node_ids[j]].meta
                 # retyping from dict[str,float]| None to dict[str,float] for mypy type checking.
                 assert interact_params is not None, 'interaction is defined but parameters are not defined'
                 # interact_params = cast(dict[str, float], interact_params)
@@ -65,25 +66,28 @@ class ODEBuilder:
                 prs_component = self.PRS_str(interact_params, var_idx=protein_idx, control_type=interact_info)
                 prs += f'{prs_component}'
 
-        own_params = all_nodes[proteinId_list[idx]].meta
+        own_params = node_id2data[protein_node_ids[idx]].meta
         assert own_params is not None, 'protein parameters are not defined'
         mrna_ode_right = f'{self.Emrna} * {own_params['Pmax']} * {prs} * {self.PCN} - {self.Dmrna} * var[{idx*2}]'
         mrna_ode_left = f'd{idx*2}dt'
         mrna_ode_str = f'{mrna_ode_left} = {mrna_ode_right}'
         return mrna_ode_str
 
-    def make_protein_ode(self, idx: int, proteinId_list: list[str], all_nodes: dict[str, GUINode]) -> str:
+    def make_protein_ode(
+        self, idx: int, protein_node_ids: list[str], node_id2data: dict[str, ReactFlowChildNodeData]
+    ) -> str:
         """build protein ODE equation as a string.
 
         Args:
             idx (int): protein index in the protein_interaction_graph.
-            proteinId_list (list[str]): list of protein Id. idx of the list is the idx of ptn in protein_interact_graph.
-            all_nodes (dict[str, GUINode]): all node information in the GUI circuit.
+            proteinId_list (list[str]): List of protein id.
+                The list idx refers to the index of the protein in the protein_interact_graph.
+            node_id2data (dict[str, ReactFlowChildNodeData]): Dict of node id to node data.
 
         Returns:
             protein_ode_str (str): protein ODE equation as a string.
         """
-        own_params = all_nodes[proteinId_list[idx]].meta
+        own_params = node_id2data[protein_node_ids[idx]].meta
         assert own_params is not None, 'protein parameters are not defined'
         protein_ode_left = f'd{idx*2+1}dt'
         protein_ode_right = f'{self.Erpu} * TIR{2*idx+1} * var[{idx*2}] - {own_params['Dp']} * var[{idx*2+1}]'
@@ -95,24 +99,25 @@ class ODEBuilder:
         self,
         interact_info_array: npt.NDArray[np.int_],
         idx: int,
-        proteinId_list: list[str],
-        all_nodes: dict[str, GUINode],
+        protein_node_ids: list[str],
+        node_id2data: dict[str, ReactFlowChildNodeData],
     ) -> str:
         """
 
         Args:
             interact_info_array (npt.NDArray[np.int_]):  array of interaction info for the target protein. 1 or -1 or 0.
             idx (int): protein index in the protein_interaction_graph.
-            proteinId_list (list[str]): list of protein Id. idx of the list is the idx of ptn in protein_interact_graph.
-            all_nodes (dict[str, GUINode]): all node information in the GUI circuit.
+            protein_node_ids (list[str]): List of protein id.
+                The list idx refers to the index of the protein in the protein_interact_graph.
+            node_id2data (dict[str, ReactFlowChildNodeData]): Dict of node id to node data.
 
         Returns:
             ode (str): string ODE equation for the target protein. It contains mRNA and protein equations.
         """
 
         ode = ''
-        mrna_ode_str = self.make_mrna_ode(idx, interact_info_array, proteinId_list, all_nodes)
-        protein_ode_str = self.make_protein_ode(idx, proteinId_list, all_nodes)
+        mrna_ode_str = self.make_mrna_ode(idx, interact_info_array, protein_node_ids, node_id2data)
+        protein_ode_str = self.make_protein_ode(idx, protein_node_ids, node_id2data)
 
         ode += f'\t{mrna_ode_str}\n'
         ode += f'\t{protein_ode_str}\n'
@@ -121,15 +126,16 @@ class ODEBuilder:
 
 
 def build_function_as_str(
-    protein_interact_graph: np.ndarray, proteinId_list: list[str], all_nodes: dict[str, GUINode]
+    protein_interact_graph: np.ndarray, protein_node_ids: list[str], node_id2data: dict[str, ReactFlowChildNodeData]
 ) -> str:
     """Build ODE function as a string to be defined by exec().
 
     Args:
         protein_interact_graph (np.ndarray): directed graph of protein interaction converted from GUI circuit.
             protein_interact_graph[i][j] = 1 or -1. how control protein-i to protein-j
-        proteinId_list (list[str]): list of protein Id. idx of the list is the idx of protein in protein_interact_graph.
-        all_nodes (dict[str, GUINode]): all nodes in the GUI circuit converted to GUINode format.
+        protein_node_ids (list[str]): List of protein id.
+            The list idx refers to the index of the protein in the protein_interact_graph.
+        node_id2data (dict[str, ReactFlowChildNodeData]): Dict of node id to node data.
 
     Returns:
         function_str (str): ODE function as a string.
@@ -142,7 +148,7 @@ def build_function_as_str(
 
     for idx, interact_info_array in enumerate(protein_interact_graph):
         def_str += f'TIR{2*idx+1}:float,'
-        ode_str = ode_builder(interact_info_array, idx, proteinId_list, all_nodes)
+        ode_str = ode_builder(interact_info_array, idx, protein_node_ids, node_id2data)
         all_ode_str += ode_str
         return_str += f'd{idx*2}dt, d{idx*2+1}dt,'
 
