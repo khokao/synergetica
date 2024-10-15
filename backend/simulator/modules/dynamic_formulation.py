@@ -68,7 +68,7 @@ class ODEBuilder:
 
         own_params = node_id2data[protein_node_ids[idx]].meta
         assert own_params is not None, 'protein parameters are not defined'
-        mrna_ode_right = f'{self.Emrna} * {own_params['Pmax']} * {prs}  {self.PCN} - {self.Dmrna} * var[{idx*2}]'
+        mrna_ode_right = f'{self.Emrna} * {own_params['Pmax']} * {prs}{self.PCN} - {self.Dmrna} * var[{idx*2}]'
         mrna_ode_left = f'd{idx*2}dt'
         mrna_ode_str = f'{mrna_ode_left} = {mrna_ode_right}'
         return mrna_ode_str
