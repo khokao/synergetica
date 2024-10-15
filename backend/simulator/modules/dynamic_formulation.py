@@ -26,9 +26,9 @@ class ODEBuilder:
             prs (str): PRS equation as a string.
         """
         if control_type == 1:
-            prs = f"""(({params['Ymin']} + (({params['Ymax']}-{params['Ymin']}) *  var[{var_idx}] ** {params['n']}) / ( var[{var_idx}] ** {params['n']} + {params['K']} ** {params['n']})) / {params['Ymax']})"""  # noqa: E501
+            prs = f"""(({params['Ymin']} + (({params['Ymax']}-{params['Ymin']}) *  var[{var_idx}] ** {params['n']}) / ( var[{var_idx}] ** {params['n']} + {params['K']} ** {params['n']})) / {params['Ymax']}) * """  # noqa: E501
         elif control_type == -1:
-            prs = f"""(({params['Ymin']} + (({params['Ymax']}-{params['Ymin']}) * {params['K']} ** {params['n']}) / ( var[{var_idx}] ** {params['n']} + {params['K']} ** {params['n']})) / {params['Ymax']})"""  # noqa: E501
+            prs = f"""(({params['Ymin']} + (({params['Ymax']}-{params['Ymin']}) * {params['K']} ** {params['n']}) / ( var[{var_idx}] ** {params['n']} + {params['K']} ** {params['n']})) / {params['Ymax']}) * """  # noqa: E501
         return prs.replace('\n', '')
 
     def make_mrna_ode(
@@ -51,7 +51,7 @@ class ODEBuilder:
             mrna_ode_str (str): mRNA ODE equation as a string.
         """
         if np.all(interact_info_array == 0):
-            prs = '1'
+            prs = '1 *'
         else:
             prs = ''
             for j, interact_info in enumerate(interact_info_array):
@@ -67,7 +67,7 @@ class ODEBuilder:
 
         own_params = node_id2data[protein_node_ids[idx]].meta
         assert own_params is not None, 'protein parameters are not defined'
-        mrna_ode_right = f'{self.Emrna} * {own_params['Pmax']} * {prs} * {self.PCN} - {self.Dmrna} * var[{idx*2}]'
+        mrna_ode_right = f'{self.Emrna} * {own_params['Pmax']} * {prs}  {self.PCN} - {self.Dmrna} * var[{idx*2}]'
         mrna_ode_left = f'd{idx*2}dt'
         mrna_ode_str = f'{mrna_ode_left} = {mrna_ode_right}'
         return mrna_ode_str

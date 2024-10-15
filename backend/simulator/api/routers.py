@@ -78,7 +78,7 @@ async def simulation(websocket: WebSocket) -> None:
                     solution = solve_ode_with_euler(
                         functions[function_name], times=times, var_init=var_init, args=tuple(params)
                     )
-                    logger.info(f'Solution: {solution[:5]}')
+                    logger.info(f'Solution: {solution[:3]}')
                     response_data = json.dumps(solution.tolist())
                     await websocket.send_text(response_data)
                 except Exception as e:  # When an error occurs
