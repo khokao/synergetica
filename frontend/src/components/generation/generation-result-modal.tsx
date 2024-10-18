@@ -35,8 +35,10 @@ export const GenerationResultModal = ({ data, snapshot }) => {
       </Tooltip>
 
       <DialogContent
-        aria-describedby={undefined}
         className="max-w-none h-[80vh] w-[80vw] flex flex-col"
+        aria-describedby={undefined}
+        onOpenAutoFocus={(event) => event.preventDefault()}
+        onCloseAutoFocus={(event) => event.preventDefault()}
       >
         <DialogHeader>
           <DialogTitle className="text-2xl text-center tracking-wide space-x-2">

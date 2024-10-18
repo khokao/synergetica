@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { useDnD } from "@/components/circuit/dnd/dnd-context";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import * as RadixTooltip from '@radix-ui/react-tooltip';
-import { CornerUpRight, RectangleHorizontal, Type } from "lucide-react";
+import { CornerUpRight, RectangleHorizontal } from "lucide-react";
+import { RiText } from "@remixicon/react";
 
 const IconTooltip = ({ label, icon, color, nodeCategory, onDragStart }) => {
   const [tooltipVisible, setTooltipVisible] = useState(false);
@@ -62,7 +63,7 @@ export const DnDPanel = () => {
         />
         <IconTooltip
           label="Terminator"
-          icon={<Type className="text-red-800" />}
+          icon={<RiText className="text-red-800" />}
           color="bg-red-200"
           nodeCategory="terminator"
           onDragStart={handleDragStart}

@@ -45,7 +45,7 @@ export const Sliders: React.FC = () => {
                 onValueChange={handleProteinParamChange(id)}
                 className="w-full"
               />
-              <span className="w-20 text-right">{proteinParameter[id]}</span>
+              <span className="w-24 text-right">{proteinParameter[id]}</span>
             </div>
           ))}
           <ScrollBar />

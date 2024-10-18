@@ -1,4 +1,5 @@
-import { CornerUpRight, RectangleHorizontal, Type } from "lucide-react";
+import { CornerUpRight, RectangleHorizontal } from "lucide-react";
+import { RiText } from "@remixicon/react";
 import React from "react";
 
 const headerMap = {
@@ -15,11 +16,12 @@ const headerMap = {
   terminator: {
     text: "Terminator",
     bgColor: "bg-red-200",
-    icon: <Type className="text-red-800" />,
+    icon: <RiText className="text-red-800" />,
   },
 };
 
-export const ChildHeader = ({ nodeCategory }) => {
+export const ChildHeader = ({ data }) => {
+  const { nodeCategory } = data;
   const { text, bgColor, icon } = headerMap[nodeCategory];
 
   return (

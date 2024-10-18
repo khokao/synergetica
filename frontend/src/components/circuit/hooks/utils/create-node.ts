@@ -10,8 +10,9 @@ export const createChildNode = (position: XYPosition, nodeCategory): Node => ({
   height: NODE_HEIGHT,
   data: {
     nodeCategory: nodeCategory,
-    nodeSubcategory: undefined,
     nodePartsName: undefined,
+    description: undefined,
+    nodeSubcategory: undefined,
     sequence: undefined,
     controlBy: null,
     controlTo: null,
