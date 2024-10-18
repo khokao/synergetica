@@ -4,6 +4,7 @@ import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 import { Slider } from '@/components/ui/slider';
 import { Label } from '@/components/ui/label';
 import { useConverter } from '@/components/simulation/contexts/converter-context';
+import { MIN_SLIDER_PARAM, MAX_SLIDER_PARAM } from "@/components/simulation/constants";
 
 interface SnapshotData {
   proteinParameter: { [id: string]: number };
@@ -41,8 +42,8 @@ export const ParameterPreview: React.FC<ParameterPreviewProps> = ({ snapshot }) 
                 </Label>
                 <Slider
                   id={`slider-${id}`}
-                  min={1}
-                  max={1000}
+                  min={MIN_SLIDER_PARAM}
+                  max={MAX_SLIDER_PARAM}
                   step={1}
                   defaultValue={[proteinParameter[id]]}
                   disabled
