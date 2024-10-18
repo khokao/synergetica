@@ -4,6 +4,7 @@ import { Sliders } from "@/components/simulation/sliders";
 import { useConverter } from "@/components/simulation/contexts/converter-context";
 import { useSimulator } from "@/components/simulation/contexts/simulator-context";
 import { GenerationButtons } from "@/components/generation/generation-buttons";
+import { Separator } from '@/components/ui/separator';
 
 
 const Message: React.FC<{ lines: string[] }> = ({ lines }) => {
@@ -45,10 +46,11 @@ export const Simulation: React.FC = () => {
         <div className="h-[50%]">
           <Chart />
         </div>
-        <div className="h-[40%]">
+        <div className="h-[35%]">
           <Sliders />
         </div>
-        <div className="h-[10%]">
+        <Separator orientation="horizontal" />
+        <div className="h-[15%]">
           <GenerationButtons/>
         </div>
       </div>

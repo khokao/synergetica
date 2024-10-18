@@ -6,7 +6,7 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 import * as RadixTooltip from '@radix-ui/react-tooltip';
 
 export const SimulatorButtons = () => {
-  const { handleSimulate, setConvertResult } = useSimulate();
+  const { handleRunSimulate, handleResetSimulate } = useSimulate();
 
   return (
     <TooltipProvider>
@@ -16,7 +16,7 @@ export const SimulatorButtons = () => {
             <Button
               variant="default"
               size="icon"
-              onClick={() => setConvertResult(null)}
+              onClick={handleResetSimulate}
               className="w-10 h-10 p-2 shadow-lg"
             >
               <RotateCw className="w-10 h-10" />
@@ -36,7 +36,7 @@ export const SimulatorButtons = () => {
             <Button
               variant="default"
               size="icon"
-              onClick={handleSimulate}
+              onClick={handleRunSimulate}
               className="w-10 h-10 p-2 shadow-lg"
             >
               <ChartSpline className="w-10 h-10" />

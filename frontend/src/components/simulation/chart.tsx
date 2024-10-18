@@ -43,11 +43,10 @@ export const Chart: React.FC = () => {
   });
 
   return (
-    <Card className="border-0 h-full border-0 shadow-none pt-2">
+    <Card className="h-full border-0 shadow-none pt-2">
       <CardHeader className="flex justify-center items-center p-0 h-[10%]">
         <CardTitle className="text-xl space-x-2 tracking-wide">
           <span>Simulation</span>
-          <span>Result</span>
         </CardTitle>
       </CardHeader>
       <CardContent className="flex h-[90%] py-2">

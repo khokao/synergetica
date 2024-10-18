@@ -9,7 +9,7 @@ export const useSimulate = () => {
   const { openPanels, togglePanel } = usePanelContext();
   const { setConvertResult } = useConverter();
 
-  const handleSimulate = async () => {
+  const handleRunSimulate = async () => {
     const panelPosition = 'right';
     const isOpen = openPanels[panelPosition];
 
@@ -47,5 +47,19 @@ export const useSimulate = () => {
     }
   };
 
-  return { handleSimulate, setConvertResult };
+  const handleResetSimulate = () => {
+    const { getNodes, setNodes } = reactflow;
+    const nodes = getNodes();
+
+    const newNodes = produce(nodes, (draft) => {
+      draft.forEach((node) => {
+        node.data.simulationTargetHighlight = undefined;
+      });
+    });
+
+    setNodes(newNodes);
+    setConvertResult(null);
+  }
+
+  return { handleRunSimulate, handleResetSimulate };
 };
