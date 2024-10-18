@@ -50,7 +50,7 @@ describe("Graph component", () => {
 
     expect(mockSend).toHaveBeenCalledWith(
       JSON.stringify({
-        params: [10, 1],
+        params: [10, 10000],
       }),
     );
   });
