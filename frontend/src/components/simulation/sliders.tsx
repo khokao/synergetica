@@ -6,6 +6,7 @@ import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { useConverter } from "@/components/simulation/contexts/converter-context";
 import { useWebSocketSimulation } from "@/components/simulation/hooks/use-websocket-simulation";
 import { useProteinParameters } from "@/components/simulation/contexts/protein-parameter-context";
+import { MIN_SLIDER_PARAM, MAX_SLIDER_PARAM } from "@/components/simulation/constants";
 
 export const Sliders: React.FC = () => {
   const { convertResult } = useConverter();
@@ -37,8 +38,8 @@ export const Sliders: React.FC = () => {
               </Label>
               <Slider
                 id={`slider-${id}`}
-                min={1}
-                max={1000}
+                min={MIN_SLIDER_PARAM}
+                max={MAX_SLIDER_PARAM}
                 step={1}
                 value={[proteinParameter[id]]}
                 onValueChange={handleProteinParamChange(id)}

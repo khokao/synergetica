@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { useConverter } from "@/components/simulation/contexts/converter-context";
+import { DEFAULT_SLIDER_PARAM } from "@/components/simulation/constants";
 
 interface ProteinParameterContextProps {
   proteinParameter: { [id: string]: number };
@@ -17,7 +18,7 @@ export const ProteinParameterProvider: React.FC<{ children: React.ReactNode }> =
     if (convertResult !== null) {
       const initParams: { [id: string]: number } = {};
       Object.keys(convertResult.protein_id2name).forEach(id => {
-        initParams[id] = 1;
+        initParams[id] = DEFAULT_SLIDER_PARAM;
       });
       setProteinParameter(initParams);
     }
