@@ -9,7 +9,7 @@ export const GenerationButtons = () => {
   const { data, snapshot, isMutating, generate, cancel } = useGeneratorData();
 
   return (
-    <div className="flex justify-center items-center space-x-4">
+    <div className="flex justify-center items-center h-full space-x-4">
       <TooltipProvider>
 
         <Tooltip>

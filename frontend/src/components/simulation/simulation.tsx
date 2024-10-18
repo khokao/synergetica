@@ -42,13 +42,13 @@ export const Simulation: React.FC = () => {
   return (
     <div className="flex flex-col w-full h-full">
       <div className="flex flex-col flex-grow">
-        <div className="h-[50vh]">
+        <div className="h-[50%]">
           <Chart />
         </div>
-        <div className="h-[35vh]">
+        <div className="h-[40%]">
           <Sliders />
         </div>
-        <div className="h-[10vh]">
+        <div className="h-[10%]">
           <GenerationButtons/>
         </div>
       </div>

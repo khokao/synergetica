@@ -20,7 +20,7 @@ export const Sliders: React.FC = () => {
   const proteinEntries = Object.entries(convertResult.protein_id2name);
 
   return (
-    <Card className="h-full border-0 shadow-none">
+    <Card className="h-full border-0 shadow-none pt-4">
       <CardContent className="h-full">
         <ScrollArea className="h-full">
           {proteinEntries.map(([id, name], index) => (
