@@ -37,7 +37,7 @@ export const Chart: React.FC = () => {
   const chartData = simulationResult.map((row) => {
     const dataPoint: { [key: string]: number } = { time: row[0] };
     proteinNames.forEach((name, index) => {
-      dataPoint[name] = row[index + 1];
+      dataPoint[name] = row[1 + 2 * index];
     });
     return dataPoint;
   });
