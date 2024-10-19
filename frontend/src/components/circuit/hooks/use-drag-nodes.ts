@@ -13,53 +13,59 @@ import { useCallback, useRef } from "react";
 
 export const useDragNodes = () => {
   const reactflow = useReactFlow();
-  const [dndCategory] = useDnD();
+  const [dndCategory, _] = useDnD();
   const dragStartNode = useRef<Node | null>(null);
   const dragStartConnectedEdges = useRef<Edge[] | null>(null);
 
-  const getDnDNodePosition = (e, screenToFlowPosition) => {
-    const mousePosition = screenToFlowPosition({
-      x: e.clientX,
-      y: e.clientY,
-    });
-    const nodePosition = {
-      x: mousePosition.x - NODE_WIDTH / 2,
-      y: mousePosition.y - NODE_HEIGHT / 2,
-    };
+  const getDnDNodePosition = useCallback(
+    (e: React.DragEvent, screenToFlowPosition: (pos: { x: number; y: number }) => { x: number; y: number }) => {
+      const mousePosition = screenToFlowPosition({
+        x: e.clientX,
+        y: e.clientY,
+      });
+      const nodePosition = {
+        x: mousePosition.x - NODE_WIDTH / 2,
+        y: mousePosition.y - NODE_HEIGHT / 2,
+      };
 
-    return nodePosition;
-  };
+      return nodePosition;
+    },
+    [],
+  );
 
-  const removeTempNode = (draftNodes: Node[]) => {
+  const removeTempNode = useCallback((draftNodes: Node[]) => {
     const tempNodeIndex = draftNodes.findIndex((n) => n.id === TEMP_NODE_ID);
     if (tempNodeIndex !== -1) draftNodes.splice(tempNodeIndex, 1);
-  };
+  }, []);
 
-  const removeTempEdge = (draftEdges: Edge[]) => {
+  const removeTempEdge = useCallback((draftEdges: Edge[]) => {
     const tempEdgeIndex = draftEdges.findIndex((e) => e.id === TEMP_EDGE_ID);
     if (tempEdgeIndex !== -1) draftEdges.splice(tempEdgeIndex, 1);
-  };
+  }, []);
 
-  const updateOrAddTempNode = (draftNodes: Node[], nodePosition: { x: number; y: number }, category) => {
-    const tempNode = draftNodes.find((n) => n.id === TEMP_NODE_ID);
-    if (tempNode) {
-      tempNode.position = nodePosition;
-    } else {
-      draftNodes.push(createTempNode(nodePosition, category));
-    }
-  };
+  const updateOrAddTempNode = useCallback(
+    (draftNodes: Node[], nodePosition: { x: number; y: number }, category: string) => {
+      const tempNode = draftNodes.find((n) => n.id === TEMP_NODE_ID);
+      if (tempNode) {
+        tempNode.position = nodePosition;
+      } else {
+        draftNodes.push(createTempNode(nodePosition, category));
+      }
+    },
+    [],
+  );
 
-  const addTempEdge = (draftEdges: Edge[], tempNode: Node, nodes: Node[]) => {
+  const addTempEdge = useCallback((draftEdges: Edge[], tempNode: Node, nodes: Node[]) => {
     const nearestEdge = createNearestEdge(tempNode, tempNode, nodes);
     if (nearestEdge) {
       nearestEdge.id = TEMP_EDGE_ID;
       nearestEdge.animated = true;
       draftEdges.push(nearestEdge);
     }
-  };
+  }, []);
 
   const handleDragOver = useCallback(
-    (e) => {
+    (e: React.DragEvent) => {
       e.preventDefault();
       e.stopPropagation();
 
@@ -70,13 +76,17 @@ export const useDragNodes = () => {
       const nodes = getNodes();
       const edges = getEdges();
 
-      // If tempNode exists, update its position. Otherwise, create a new tempNode.
       const newNodes = produce(nodes, (draft) => {
-        draft.forEach((node) => node.id !== TEMP_NODE_ID && (node.selected = false));
-        updateOrAddTempNode(draft, nodePosition, dndCategory);
+        for (const node of draft) {
+          if (node.id !== TEMP_NODE_ID) {
+            node.selected = false;
+          }
+        }
+        if (dndCategory) {
+          updateOrAddTempNode(draft, nodePosition, dndCategory);
+        }
       });
 
-      // Delete tempEdge if it exists, and create a new tempEdge if a nearest edge exists.
       const newEdges = produce(edges, (draft) => {
         removeTempEdge(draft);
 
@@ -89,11 +99,11 @@ export const useDragNodes = () => {
       setNodes(newNodes);
       setEdges(newEdges);
     },
-    [dndCategory, reactflow],
+    [dndCategory, reactflow, updateOrAddTempNode, removeTempEdge, addTempEdge, getDnDNodePosition],
   );
 
   const handleDrop = useCallback(
-    (e) => {
+    (e: React.DragEvent) => {
       e.preventDefault();
       e.stopPropagation();
 
@@ -103,6 +113,8 @@ export const useDragNodes = () => {
 
       const nodes = getNodes();
       const edges = getEdges();
+
+      if (!dndCategory) return;
 
       const newNode = createChildNode(nodePosition, dndCategory);
       const nearestEdge = createNearestEdge(newNode, newNode, nodes);
@@ -114,11 +126,13 @@ export const useDragNodes = () => {
         if (nearestEdge) {
           const { sourceNode, targetNode, parentNode, siblingNodes } = findRelatedNodes(draft, nearestEdge);
 
-          adjustNodePositionsAndConnectHandles(newNode, sourceNode, targetNode, parentNode);
+          if (sourceNode && targetNode) {
+            adjustNodePositionsAndConnectHandles(newNode, sourceNode, targetNode, parentNode ?? null);
 
-          ungroupNodes(draft, parentNode);
+            ungroupNodes(draft, parentNode);
 
-          groupNodes(draft, [sourceNode, targetNode, ...siblingNodes]);
+            groupNodes(draft, [sourceNode, targetNode, ...siblingNodes]);
+          }
         }
       });
 
@@ -133,26 +147,29 @@ export const useDragNodes = () => {
       setNodes(newNodes);
       setEdges(newEdges);
     },
-    [dndCategory, reactflow],
+    [dndCategory, reactflow, removeTempNode, getDnDNodePosition, removeTempEdge],
   );
 
   // Ensure temp node is removed for quick drag-and-drop operations where handleDrop might not fire.
-  const handleDragLeave = useCallback((e) => {
-    e.preventDefault();
-    e.stopPropagation();
+  const handleDragLeave = useCallback(
+    (e: React.DragEvent) => {
+      e.preventDefault();
+      e.stopPropagation();
 
-    const { getNodes, setNodes } = reactflow;
-    const nodes = getNodes();
+      const { getNodes, setNodes } = reactflow;
+      const nodes = getNodes();
 
-    const newNodes = produce(nodes, (draft) => {
-      removeTempNode(draft);
-    });
+      const newNodes = produce(nodes, (draft) => {
+        removeTempNode(draft);
+      });
 
-    setNodes(newNodes);
-  }, []);
+      setNodes(newNodes);
+    },
+    [reactflow, removeTempNode],
+  );
 
   const handleNodeDragStart = useCallback(
-    (e, node: Node) => {
+    (e: React.DragEvent, node: Node) => {
       e.preventDefault();
       e.stopPropagation();
 
@@ -160,11 +177,11 @@ export const useDragNodes = () => {
       const edges = getEdges();
 
       const newEdges = produce(edges, (draft) => {
-        draft.forEach((e) => {
-          if (e.source === node.id || e.target === node.id) {
-            e.animated = true;
+        for (const edge of draft) {
+          if (edge.source === node.id || edge.target === node.id) {
+            edge.animated = true;
           }
-        });
+        }
       });
 
       dragStartNode.current = node;
@@ -176,7 +193,7 @@ export const useDragNodes = () => {
   );
 
   const handleNodeDrag = useCallback(
-    (e, node: Node) => {
+    (e: React.DragEvent, node: Node) => {
       e.preventDefault();
       e.stopPropagation();
 
@@ -191,12 +208,16 @@ export const useDragNodes = () => {
 
           const siblingNodes = nodes.filter((n) => n.parentId === node.id);
 
-          const rightNode = siblingNodes.reduce((acc, curr) => {
-            return curr.position.x > acc.position.x ? curr : acc;
-          });
-          const leftNode = siblingNodes.reduce((acc, curr) => {
-            return curr.position.x < acc.position.x ? curr : acc;
-          });
+          if (siblingNodes.length === 0) return;
+
+          const rightNode = siblingNodes.reduce(
+            (acc, curr) => (curr.position.x > acc.position.x ? curr : acc),
+            siblingNodes[0],
+          );
+          const leftNode = siblingNodes.reduce(
+            (acc, curr) => (curr.position.x < acc.position.x ? curr : acc),
+            siblingNodes[0],
+          );
 
           const nearestEdge = createNearestEdge(rightNode, leftNode, nodes);
           if (nearestEdge) {
@@ -215,9 +236,18 @@ export const useDragNodes = () => {
       const newEdges = produce(edges, (draft) => {
         if (parentNode) {
           if (isNodeOutsideParent(node, parentNode)) {
-            return draft.filter((e) => e.source !== node.id && e.target !== node.id);
+            // Remove edges connected to the node
+            for (let i = draft.length - 1; i >= 0; i--) {
+              const edge = draft[i];
+              if (edge.source === node.id || edge.target === node.id) {
+                draft.splice(i, 1);
+              }
+            }
+          } else {
+            if (dragStartConnectedEdges.current) {
+              draft.push(...dragStartConnectedEdges.current);
+            }
           }
-          draft.push(...dragStartConnectedEdges.current);
         } else {
           removeTempEdge(draft);
 
@@ -227,11 +257,11 @@ export const useDragNodes = () => {
 
       setEdges(newEdges);
     },
-    [reactflow],
+    [reactflow, removeTempEdge, addTempEdge],
   );
 
   const handleNodeDragStop = useCallback(
-    (e, node: Node) => {
+    (e: React.DragEvent, node: Node) => {
       e.preventDefault();
       e.stopPropagation();
 
@@ -241,16 +271,17 @@ export const useDragNodes = () => {
       const edges = getEdges();
 
       if (node.type === "parent") {
-        const rightNode = nodes
-          .filter((n) => n.parentId === node.id)
-          .reduce((acc, curr) => {
-            return curr.position.x > acc.position.x ? curr : acc;
-          });
-        const leftNode = nodes
-          .filter((n) => n.parentId === node.id)
-          .reduce((acc, curr) => {
-            return curr.position.x < acc.position.x ? curr : acc;
-          });
+        const siblingNodes = nodes.filter((n) => n.parentId === node.id);
+        if (siblingNodes.length === 0) return;
+
+        const rightNode = siblingNodes.reduce(
+          (acc, curr) => (curr.position.x > acc.position.x ? curr : acc),
+          siblingNodes[0],
+        );
+        const leftNode = siblingNodes.reduce(
+          (acc, curr) => (curr.position.x < acc.position.x ? curr : acc),
+          siblingNodes[0],
+        );
 
         const nearestEdge = createNearestEdge(rightNode, leftNode, nodes);
 
@@ -261,51 +292,57 @@ export const useDragNodes = () => {
 
           const sourceNode = draft.find((n) => n.id === nearestEdge.source);
           const targetNode = draft.find((n) => n.id === nearestEdge.target);
-          const sourceParentNode = draft.find((n) => n.id === sourceNode.parentId);
-          const targetParentNode = draft.find((n) => n.id === targetNode.parentId);
+          const sourceParentNode = sourceNode ? draft.find((n) => n.id === sourceNode.parentId) : undefined;
+          const targetParentNode = targetNode ? draft.find((n) => n.id === targetNode.parentId) : undefined;
           const sourceSiblingNodes = draft.filter(
-            (n) => (n.type === "child" && n.parentId === sourceNode.parentId) || n.id === sourceNode.id,
+            (n) => (n.type === "child" && n.parentId === sourceNode?.parentId) || n.id === sourceNode?.id,
           );
           const targetSiblingNodes = draft.filter(
-            (n) => (n.type === "child" && n.parentId === targetNode.parentId) || n.id === targetNode.id,
+            (n) => (n.type === "child" && n.parentId === targetNode?.parentId) || n.id === targetNode?.id,
           );
 
-          const adjustSourceSiblingNodes = node.id === sourceNode.parentId;
+          const adjustSourceSiblingNodes = node.id === sourceNode?.parentId;
 
-          ungroupNodes(draft, sourceParentNode);
-          ungroupNodes(draft, targetParentNode);
+          if (sourceParentNode) {
+            ungroupNodes(draft, sourceParentNode);
+          }
+          if (targetParentNode) {
+            ungroupNodes(draft, targetParentNode);
+          }
 
-          if (adjustSourceSiblingNodes) {
+          if (adjustSourceSiblingNodes && sourceNode && targetNode) {
             const oldPositionX = sourceNode.position.x;
             const oldPositionY = sourceNode.position.y;
-            adjustNodePositionsAndConnectHandles(sourceNode, sourceNode, targetNode, undefined);
+            adjustNodePositionsAndConnectHandles(sourceNode, sourceNode, targetNode, null);
             const offsetPositionX = sourceNode.position.x - oldPositionX;
             const offsetPositionY = sourceNode.position.y - oldPositionY;
 
-            sourceSiblingNodes.forEach((n) => {
+            for (const n of sourceSiblingNodes) {
               if (n.id !== sourceNode.id) {
                 n.parentId = undefined;
-                n.position.x = n.position.x + offsetPositionX;
-                n.position.y = n.position.y + offsetPositionY;
+                n.position.x += offsetPositionX;
+                n.position.y += offsetPositionY;
               }
-            });
-          } else {
+            }
+          } else if (sourceNode && targetNode) {
             const oldPositionX = targetNode.position.x;
             const oldPositionY = targetNode.position.y;
-            adjustNodePositionsAndConnectHandles(targetNode, sourceNode, targetNode, undefined);
+            adjustNodePositionsAndConnectHandles(targetNode, sourceNode, targetNode, null);
             const offsetPositionX = targetNode.position.x - oldPositionX;
             const offsetPositionY = targetNode.position.y - oldPositionY;
 
-            targetSiblingNodes.forEach((n) => {
+            for (const n of targetSiblingNodes) {
               if (n.id !== targetNode.id) {
                 n.parentId = undefined;
-                n.position.x = n.position.x + offsetPositionX;
-                n.position.y = n.position.y + offsetPositionY;
+                n.position.x += offsetPositionX;
+                n.position.y += offsetPositionY;
               }
-            });
+            }
           }
 
-          groupNodes(draft, [...sourceSiblingNodes, ...targetSiblingNodes]);
+          if (sourceNode && targetNode) {
+            groupNodes(draft, [...sourceSiblingNodes, ...targetSiblingNodes]);
+          }
         });
 
         const newEdges = produce(edges, (draft) => {
@@ -331,51 +368,63 @@ export const useDragNodes = () => {
           draft.push(nearestEdge);
         }
 
-        draft.forEach((e) => {
-          e.animated = false;
-        });
+        for (const edge of draft) {
+          edge.animated = false;
+        }
       });
 
       const newNodes = produce(nodes, (draft) => {
         if (parentNode) {
           if (isNodeOutsideParent(node, parentNode)) {
-            dragStartConnectedEdges.current.forEach((e) => {
-              const sourceNode = draft.find((n) => n.id === e.source);
-              const targetNode = draft.find((n) => n.id === e.target);
+            if (dragStartConnectedEdges.current) {
+              for (const edge of dragStartConnectedEdges.current) {
+                const sourceNode = draft.find((n) => n.id === edge.source);
+                const targetNode = draft.find((n) => n.id === edge.target);
 
-              sourceNode.data.rightHandleConnected = false;
-              targetNode.data.leftHandleConnected = false;
-            });
+                if (sourceNode) {
+                  sourceNode.data.rightHandleConnected = false;
+                }
+                if (targetNode) {
+                  targetNode.data.leftHandleConnected = false;
+                }
+              }
+            }
 
             const siblingNodes = draft.filter((n) => n.parentId === parentNode.id);
-            siblingNodes.forEach((n) => {
+            for (const n of siblingNodes) {
               if (n.parentId === parentNode.id) {
                 n.parentId = undefined;
-                n.position.x = n.position.x + parentNode.position.x;
-                n.position.y = n.position.y + parentNode.position.y;
+                n.position.x += parentNode.position.x;
+                n.position.y += parentNode.position.y;
               }
-            });
+            }
 
             const parentIndex = draft.findIndex((n) => n.id === parentNode.id);
             if (parentIndex !== -1) draft.splice(parentIndex, 1);
 
             const connectedComponents = getConnectedComponents(siblingNodes, newEdges);
-            connectedComponents.forEach((cc) => {
+            for (const cc of connectedComponents) {
               groupNodes(draft, cc);
-            });
+            }
           } else {
-            draft.find((n) => n.id === node.id).position = dragStartNode.current.position;
+            if (dragStartNode.current) {
+              const targetNode = draft.find((n) => n.id === node.id);
+              if (targetNode) {
+                targetNode.position = { ...dragStartNode.current.position };
+              }
+            }
           }
         } else {
-          // drag node has no parent node.
           if (nearestEdge) {
             const { sourceNode, targetNode, parentNode, siblingNodes } = findRelatedNodes(draft, nearestEdge);
 
-            adjustNodePositionsAndConnectHandles(node, sourceNode, targetNode, parentNode);
+            if (sourceNode && targetNode) {
+              adjustNodePositionsAndConnectHandles(node, sourceNode, targetNode, parentNode ?? null);
 
-            ungroupNodes(draft, parentNode);
+              ungroupNodes(draft, parentNode);
 
-            groupNodes(draft, [sourceNode, targetNode, ...siblingNodes]);
+              groupNodes(draft, [sourceNode, targetNode, ...siblingNodes]);
+            }
           }
         }
       });
@@ -383,7 +432,7 @@ export const useDragNodes = () => {
       setNodes(newNodes);
       setEdges(newEdges);
     },
-    [reactflow],
+    [reactflow, removeTempEdge],
   );
 
   return {

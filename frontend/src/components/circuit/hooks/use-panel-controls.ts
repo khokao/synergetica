@@ -2,15 +2,19 @@ import { useRef, useState } from "react";
 
 export type PanelPosition = "left" | "right";
 
+interface PanelRef {
+  resize: (size: number) => void;
+}
+
 export const usePanelControls = () => {
   const [openPanels, setOpenPanels] = useState({
     left: false,
     right: false,
   });
 
-  const panelRefs = {
-    left: useRef<any>(null),
-    right: useRef<any>(null),
+  const panelRefs: Record<PanelPosition, React.RefObject<PanelRef>> = {
+    left: useRef<PanelRef>(null),
+    right: useRef<PanelRef>(null),
   };
 
   const togglePanel = (position: PanelPosition) => {

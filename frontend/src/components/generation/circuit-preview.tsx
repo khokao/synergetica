@@ -20,11 +20,11 @@ export const CircuitPreview: React.FC<CircuitPreviewProps> = ({ snapshot }) => {
   const { nodes, edges } = snapshot;
 
   const newNodes = produce(nodes, (draft) => {
-    draft.forEach((node) => {
+    for (const node of draft) {
       if (node.type === "parent") {
         node.data.showParentId = true;
       }
-    });
+    }
   });
 
   return (

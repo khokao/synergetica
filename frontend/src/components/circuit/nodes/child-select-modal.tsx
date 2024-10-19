@@ -123,7 +123,7 @@ const ChildSelectModalComponent = ({ id, data }) => {
     (option) => {
       const { getNodes, setNodes } = reactflow;
       const newNodes = produce(getNodes(), (draft) => {
-        draft.forEach((node) => {
+        for (const node of draft) {
           if (node.id === id) {
             node.data.nodePartsName = option.nodePartsName;
             node.data.description = option.description;
@@ -134,7 +134,7 @@ const ChildSelectModalComponent = ({ id, data }) => {
             node.data.controlTo = option.controlTo;
             node.data.meta = option.meta;
           }
-        });
+        }
       });
       setNodes(newNodes);
       setIsOpen(false);

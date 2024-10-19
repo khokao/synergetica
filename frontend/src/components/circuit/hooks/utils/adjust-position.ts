@@ -6,7 +6,7 @@ export const adjustNodePositionsAndConnectHandles = (
   adjustedNode: Node,
   sourceNode: Node,
   targetNode: Node,
-  parentNode: Node | undefined,
+  parentNode: Node | null,
 ) => {
   if (adjustedNode.id === sourceNode.id) {
     sourceNode.position = adjustSourceNodePosition(targetNode, parentNode);

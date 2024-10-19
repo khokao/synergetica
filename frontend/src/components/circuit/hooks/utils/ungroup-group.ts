@@ -2,18 +2,18 @@ import { GROUP_NODE_MARGIN, NODE_HEIGHT, NODE_WIDTH } from "@/components/circuit
 import { createParentNode } from "@/components/circuit/hooks/utils/create-node";
 import type { Node } from "@xyflow/react";
 
-export const ungroupNodes = (draft: Node[], parentNode: Node) => {
+export const ungroupNodes = (draft: Node[], parentNode: Node | undefined) => {
   if (!parentNode) {
     return;
   }
 
-  draft.forEach((n) => {
+  for (const n of draft) {
     if (n.parentId === parentNode.id) {
       n.parentId = undefined;
       n.position.x += parentNode.position.x;
       n.position.y += parentNode.position.y;
     }
-  });
+  }
 
   const parentIndex = draft.findIndex((n) => n.id === parentNode.id);
   if (parentIndex !== -1) draft.splice(parentIndex, 1);
@@ -38,11 +38,11 @@ export const groupNodes = (draft: Node[], nodesToGroup: Node[]) => {
   const newParentNode = createParentNode({ x: parentX, y: parentY }, parentWidth, parentHeight);
   draft.unshift(newParentNode);
 
-  draft.forEach((n) => {
+  for (const n of draft) {
     if (nodesToGroup.includes(n)) {
       n.parentId = newParentNode.id;
       n.position.x = n.position.x - parentX;
       n.position.y = n.position.y - parentY;
     }
-  });
+  }
 };

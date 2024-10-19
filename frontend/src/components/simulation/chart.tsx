@@ -13,8 +13,8 @@ const CustomTooltip: React.FC<CustomTooltipProps> = ({ active, payload }) => {
   if (active && payload && payload.length) {
     return (
       <div className="bg-white border border-gray-300 p-2 rounded shadow-lg">
-        {payload.map((entry, index) => (
-          <p key={index} style={{ color: entry.color }} className="text-sm">
+        {payload.map((entry) => (
+          <p key={entry.name} style={{ color: entry.color }} className="text-sm">
             {entry.name}: {entry.value.toPrecision(3)}
           </p>
         ))}
@@ -66,7 +66,7 @@ export const Chart: React.FC = () => {
                 key={name}
                 type="monotone"
                 dataKey={name}
-                stroke={`hsl(var(--chart-${((index) % 5) + 1}))`}
+                stroke={`hsl(var(--chart-${(index % 5) + 1}))`}
                 strokeWidth={2}
                 dot={false}
               />

@@ -18,9 +18,9 @@ export const ProteinParameterProvider: React.FC<{ children: React.ReactNode }> =
   useEffect(() => {
     if (convertResult !== null) {
       const initParams: { [id: string]: number } = {};
-      Object.keys(convertResult.protein_id2name).forEach((id) => {
+      for (const id of Object.keys(convertResult.protein_id2name)) {
         initParams[id] = DEFAULT_SLIDER_PARAM;
-      });
+      }
       setProteinParameter(initParams);
     }
   }, [convertResult]);

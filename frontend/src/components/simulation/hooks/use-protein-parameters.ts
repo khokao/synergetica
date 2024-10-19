@@ -8,9 +8,9 @@ export const useProteinParameters = () => {
   useEffect(() => {
     if (convertResult !== null) {
       const initParams: { [id: string]: number } = {};
-      Object.keys(convertResult.protein_id2name).forEach((id) => {
+      for (const id of Object.keys(convertResult.protein_id2name)) {
         initParams[id] = 1;
-      });
+      }
       setProteinParameter(initParams);
     }
   }, [convertResult]);

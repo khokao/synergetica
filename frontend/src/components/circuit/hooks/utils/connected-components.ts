@@ -23,7 +23,7 @@ const dfs = (
   nodeId: string,
   adjacencyList: Record<string, string[]>,
   visited: Set<string>,
-  group: Array<Node>,
+  group: Node[],
   nodeMap: Record<string, Node>,
 ): void => {
   visited.add(nodeId);
@@ -39,7 +39,7 @@ const dfs = (
 export const getConnectedComponents = (nds: Node[], eds: Edge[]): Node[][] => {
   const adjacencyList = createAdjacencyList(nds, eds);
   const visited: Set<string> = new Set();
-  const groups = [];
+  const groups: Node[][] = [];
 
   const nodeMap = {};
   for (const n of nds) {

@@ -9,8 +9,8 @@ import type React from "react";
 const Message: React.FC<{ lines: string[] }> = ({ lines }) => {
   return (
     <div className="flex flex-col items-center justify-center h-full">
-      {lines.map((line, index) => (
-        <p key={index} className="text-center">
+      {lines.map((line) => (
+        <p key={line} className="text-center">
           {line}
         </p>
       ))}

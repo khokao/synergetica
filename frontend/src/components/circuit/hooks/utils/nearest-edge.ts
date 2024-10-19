@@ -12,8 +12,8 @@ const calculateDistance = (position1: XYPosition, position2: XYPosition): number
 const calculateDistanceBetweenHandles = (
   sourceNode: Node,
   targetNode: Node,
-  sourceParentNode: Node,
-  targetParentNode: Node,
+  sourceParentNode: Node | null,
+  targetParentNode: Node | null,
 ): number => {
   if (sourceNode.data.rightHandleConnected || targetNode.data.leftHandleConnected) {
     return Number.MAX_VALUE;
@@ -31,15 +31,16 @@ const findNearestNode = (
 ): { nearestNode: Node | null; nearestNodeDistance: number } => {
   const parentNode = nds.find((n) => n.id === node.parentId);
 
-  let nearestNode = null;
+  let nearestNode: Node | null = null;
   let nearestNodeDistance = Number.MAX_VALUE;
 
   for (const n of nds) {
     if (n.id !== node.id && n.type === node.type) {
       const pn = nds.find((nn) => nn.id === n.parentId);
+
       const distance = isFromLeftHandle
-        ? calculateDistanceBetweenHandles(n, node, pn, parentNode)
-        : calculateDistanceBetweenHandles(node, n, parentNode, pn);
+        ? calculateDistanceBetweenHandles(n, node, pn ?? null, parentNode ?? null)
+        : calculateDistanceBetweenHandles(node, n, parentNode ?? null, pn ?? null);
 
       if (distance < nearestNodeDistance && distance < NODE_CONNECT_DISTANCE) {
         nearestNode = n;
@@ -51,7 +52,7 @@ const findNearestNode = (
   return { nearestNode, nearestNodeDistance };
 };
 
-export const createNearestEdge = (sourceNode: Node, targetNode: Node, nds: Node[]): Edge => {
+export const createNearestEdge = (sourceNode: Node, targetNode: Node, nds: Node[]): Edge | null => {
   const nearestSource = findNearestNode(targetNode, nds, true);
   const nearestTarget = findNearestNode(sourceNode, nds, false);
 

@@ -28,12 +28,12 @@ export const useSimulate = () => {
       const nodes = getNodes();
 
       const newNodes = produce(nodes, (draft) => {
-        draft.forEach((node) => {
+        for (const node of draft) {
           node.data.simulationTargetHighlight = undefined;
           node.selected = false;
-        });
+        }
 
-        Object.keys(responseData.protein_id2name).map((id, index) => {
+        Object.keys(responseData.protein_id2name).forEach((id, index) => {
           const node = draft.find((node) => node.id === id);
           if (node) {
             node.data.simulationTargetHighlight = `hsl(var(--chart-${(index % 5) + 1}))`;
@@ -52,9 +52,9 @@ export const useSimulate = () => {
     const nodes = getNodes();
 
     const newNodes = produce(nodes, (draft) => {
-      draft.forEach((node) => {
+      for (const node of draft) {
         node.data.simulationTargetHighlight = undefined;
-      });
+      }
     });
 
     setNodes(newNodes);
