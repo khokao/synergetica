@@ -1,5 +1,5 @@
 import React from 'react';
-import { ReactFlow, ReactFlowProvider } from '@xyflow/react';
+import { ReactFlow, ReactFlowProvider, Background, BackgroundVariant } from '@xyflow/react';
 import { produce } from 'immer';
 import { CircuitEdgeTypes, CircuitNodeTypes } from '@/components/circuit/constants';
 import { Node, Edge } from '@xyflow/react';
@@ -43,7 +43,9 @@ export const CircuitPreview: React.FC<CircuitPreviewProps> = ({ snapshot }) => {
         edgesFocusable={false}
         elementsSelectable={false}
         className="rounded-lg shadow-md border-2 border-gray-100"
-      />
+      >
+        <Background variant={BackgroundVariant.Dots} />
+      </ReactFlow>
     </ReactFlowProvider>
   );
 };

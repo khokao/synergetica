@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card";
-import { ReactFlow, ReactFlowProvider, useReactFlow } from "@xyflow/react";
+import { ReactFlow, ReactFlowProvider, useReactFlow, Background, BackgroundVariant } from "@xyflow/react";
 import { produce } from "immer";
 import { ChevronDown } from "lucide-react";
 import React, { useState, useEffect, useCallback } from "react";
@@ -57,7 +57,9 @@ const CircuitPreview = ({ id }) => {
         edgesFocusable={false}
         elementsSelectable={false}
         className="border-2 border-gray-300 rounded-lg p-4"
-      />
+      >
+        <Background variant={BackgroundVariant.Dots} />
+      </ReactFlow>
     </ReactFlowProvider>
   );
 };
