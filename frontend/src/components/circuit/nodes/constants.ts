@@ -481,3 +481,12 @@ export const PARTS_ID2NAME = [
   acc[data.partsId] = data.nodePartsName;
   return acc;
 }, {});
+
+export const PARTS_NAME2CATEGORY = [
+  ...PROMOTER_DATA.map(data => ({ nodePartsName: data.nodePartsName, category: "promoter" })),
+  ...PROTEIN_DATA.map(data => ({ nodePartsName: data.nodePartsName, category: "protein" })),
+  ...TERMINATOR_DATA.map(data => ({ nodePartsName: data.nodePartsName, category: "terminator" }))
+].reduce((acc, data) => {
+  acc[data.nodePartsName] = data.category;
+  return acc;
+}, {});
