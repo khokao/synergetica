@@ -11,7 +11,6 @@ import { useReactFlow } from "@xyflow/react";
 import { Ellipsis, Trash2 } from "lucide-react";
 import React, { useCallback } from "react";
 
-
 const SettingsDropDownMenu = ({ id }) => {
   const { deleteElements, getNodes, getEdges } = useReactFlow();
 
@@ -33,27 +32,19 @@ const SettingsDropDownMenu = ({ id }) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button
-          variant="ghost"
-          aria-label="settings"
-          className="p-2 rounded-full text-gray-400 !ring-0 !ring-offset-0"
-        >
+        <Button variant="ghost" aria-label="settings" className="p-2 rounded-full text-gray-400 !ring-0 !ring-offset-0">
           <Ellipsis />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="center" className="bg-white shadow-lg">
-        <DropdownMenuItem
-          onClick={handleDeleteNode}
-          className="flex items-center cursor-pointer p-2 hover:bg-gray-100"
-        >
+        <DropdownMenuItem onClick={handleDeleteNode} className="flex items-center cursor-pointer p-2 hover:bg-gray-100">
           <Trash2 className="w-4 h-4 mr-2" />
           Delete
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );
-}
-
+};
 
 const ChildFooterComponent = ({ id }) => {
   return (

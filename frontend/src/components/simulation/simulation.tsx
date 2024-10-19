@@ -1,11 +1,10 @@
-import React from "react";
+import { GenerationButtons } from "@/components/generation/generation-buttons";
 import { Chart } from "@/components/simulation/chart";
-import { Sliders } from "@/components/simulation/sliders";
 import { useConverter } from "@/components/simulation/contexts/converter-context";
 import { useSimulator } from "@/components/simulation/contexts/simulator-context";
-import { GenerationButtons } from "@/components/generation/generation-buttons";
-import { Separator } from '@/components/ui/separator';
-
+import { Sliders } from "@/components/simulation/sliders";
+import { Separator } from "@/components/ui/separator";
+import type React from "react";
 
 const Message: React.FC<{ lines: string[] }> = ({ lines }) => {
   return (
@@ -18,7 +17,6 @@ const Message: React.FC<{ lines: string[] }> = ({ lines }) => {
     </div>
   );
 };
-
 
 export const Simulation: React.FC = () => {
   const { convertResult } = useConverter();
@@ -51,7 +49,7 @@ export const Simulation: React.FC = () => {
         </div>
         <Separator orientation="horizontal" />
         <div className="h-[15%]">
-          <GenerationButtons/>
+          <GenerationButtons />
         </div>
       </div>
     </div>

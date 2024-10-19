@@ -1,14 +1,13 @@
-import { Dna } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Separator } from '@/components/ui/separator';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { CircuitPreview } from '@/components/generation/circuit-preview';
-import { ParameterPreview } from '@/components/generation/parameter-preview';
-import { SequencePreview } from '@/components/generation/sequence-preview';
-import { ExportButton } from '@/components/generation/export-button';
+import { CircuitPreview } from "@/components/generation/circuit-preview";
+import { ExportButton } from "@/components/generation/export-button";
+import { ParameterPreview } from "@/components/generation/parameter-preview";
+import { SequencePreview } from "@/components/generation/sequence-preview";
+import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Separator } from "@/components/ui/separator";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
-import * as RadixTooltip from '@radix-ui/react-tooltip';
-
+import * as RadixTooltip from "@radix-ui/react-tooltip";
+import { Dna } from "lucide-react";
 
 export const GenerationResultModal = ({ data, snapshot }) => {
   return (
@@ -17,10 +16,7 @@ export const GenerationResultModal = ({ data, snapshot }) => {
         <TooltipTrigger asChild>
           <div>
             <DialogTrigger asChild>
-              <Button
-                size="icon"
-                disabled={!data}
-              >
+              <Button size="icon" disabled={!data}>
                 <Dna className="w-5 h-5" />
               </Button>
             </DialogTrigger>

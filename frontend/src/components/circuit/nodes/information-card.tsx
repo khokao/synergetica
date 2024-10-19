@@ -1,14 +1,8 @@
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { RiText } from "@remixicon/react";
-import { Button } from "@/components/ui/button";
-import { MoveRight } from "lucide-react";
 import { PARTS_ID2NAME, PARTS_NAME2CATEGORY } from "@/components/circuit/nodes/constants";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { RiText } from "@remixicon/react";
+import { MoveRight } from "lucide-react";
 
 const CATEGORY_COLORS = {
   promoter: "text-blue-800",
@@ -44,10 +38,7 @@ const ControlSection = ({ data, direction }) => {
     <>
       {controlData.map((control) => {
         const { partsId, controlType, id } = control;
-        const [sourcePartsId, targetPartsId] =
-          direction === "by"
-            ? [partsId, data.partsId]
-            : [data.partsId, partsId];
+        const [sourcePartsId, targetPartsId] = direction === "by" ? [partsId, data.partsId] : [data.partsId, partsId];
 
         return (
           <Button key={id || partsId} variant="secondary" className="space-x-2">
@@ -62,7 +53,7 @@ const ControlSection = ({ data, direction }) => {
 };
 
 export const InformationCard = ({ data }) => {
-  const titleColor = CATEGORY_COLORS[data.nodeCategory] || '';
+  const titleColor = CATEGORY_COLORS[data.nodeCategory] || "";
 
   return (
     <Card className="h-full w-full">

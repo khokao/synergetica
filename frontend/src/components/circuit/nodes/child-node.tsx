@@ -11,9 +11,9 @@ export const CustomChildNode = ({ id, selected, data }: NodeProps) => {
     <div
       className="relative rounded-xl"
       style={{
-        borderWidth: data.simulationTargetHighlight ? '4px' : '2px',
-        borderColor: (data.simulationTargetHighlight || (selected ? '#DB2777' : '#6B7280')) as string,
-        borderStyle: 'solid',
+        borderWidth: data.simulationTargetHighlight ? "4px" : "2px",
+        borderColor: (data.simulationTargetHighlight || (selected ? "#DB2777" : "#6B7280")) as string,
+        borderStyle: "solid",
         height: NODE_HEIGHT,
         width: NODE_WIDTH,
       }}
@@ -25,14 +25,14 @@ export const CustomChildNode = ({ id, selected, data }: NodeProps) => {
         type="target"
         position={Position.Left}
         className={`w-2 h-2 rounded-full border-2 border-gray-400 ${
-          data.leftHandleConnected ? `bg-gray-400` : `bg-white`
+          data.leftHandleConnected ? "bg-gray-400" : "bg-white"
         }`}
       />
       <Handle
         type="source"
         position={Position.Right}
         className={`w-2 h-2 rounded-full border-2 border-gray-400 ${
-          data.rightHandleConnected ? `bg-gray-400` : `bg-white`
+          data.rightHandleConnected ? "bg-gray-400" : "bg-white"
         }`}
       />
     </div>

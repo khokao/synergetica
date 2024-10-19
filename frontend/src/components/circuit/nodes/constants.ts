@@ -498,20 +498,12 @@ export const TERMINATOR_DATA = [
   },
 ];
 
-export const PARTS_ID2NAME = [
-  ...PROMOTER_DATA,
-  ...PROTEIN_DATA,
-  ...TERMINATOR_DATA
-].reduce((acc, data) => {
+export const PARTS_ID2NAME = [...PROMOTER_DATA, ...PROTEIN_DATA, ...TERMINATOR_DATA].reduce((acc, data) => {
   acc[data.partsId] = data.nodePartsName;
   return acc;
 }, {});
 
-export const PARTS_NAME2CATEGORY = [
-  ...PROMOTER_DATA,
-  ...PROTEIN_DATA,
-  ...TERMINATOR_DATA
-].reduce((acc, data) => {
+export const PARTS_NAME2CATEGORY = [...PROMOTER_DATA, ...PROTEIN_DATA, ...TERMINATOR_DATA].reduce((acc, data) => {
   acc[data.nodePartsName] = data.nodeCategory;
   return acc;
 }, {});

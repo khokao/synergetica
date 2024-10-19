@@ -1,8 +1,8 @@
-import { useReactFlow } from "@xyflow/react";
-import { produce } from 'immer';
-import { callCircuitConverterAPI } from '@/components/simulation/hooks/use-simulator-api';
-import { useConverter } from "@/components/simulation/contexts/converter-context";
 import { usePanelContext } from "@/components/circuit/resizable-panel/resizable-panel-context";
+import { useConverter } from "@/components/simulation/contexts/converter-context";
+import { callCircuitConverterAPI } from "@/components/simulation/hooks/use-simulator-api";
+import { useReactFlow } from "@xyflow/react";
+import { produce } from "immer";
 
 export const useSimulate = () => {
   const reactflow = useReactFlow();
@@ -10,7 +10,7 @@ export const useSimulate = () => {
   const { setConvertResult } = useConverter();
 
   const handleRunSimulate = async () => {
-    const panelPosition = 'right';
+    const panelPosition = "right";
     const isOpen = openPanels[panelPosition];
 
     if (!isOpen) {
@@ -36,7 +36,7 @@ export const useSimulate = () => {
         Object.keys(responseData.protein_id2name).map((id, index) => {
           const node = draft.find((node) => node.id === id);
           if (node) {
-            node.data.simulationTargetHighlight = `hsl(var(--chart-${(index % 5) + 1}))`
+            node.data.simulationTargetHighlight = `hsl(var(--chart-${(index % 5) + 1}))`;
           }
         });
       });
@@ -59,7 +59,7 @@ export const useSimulate = () => {
 
     setNodes(newNodes);
     setConvertResult(null);
-  }
+  };
 
   return { handleRunSimulate, handleResetSimulate };
 };

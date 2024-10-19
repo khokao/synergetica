@@ -1,8 +1,8 @@
-import React from "react";
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Label } from "recharts";
-import { useSimulator } from "@/components/simulation/contexts/simulator-context";
 import { useConverter } from "@/components/simulation/contexts/converter-context";
+import { useSimulator } from "@/components/simulation/contexts/simulator-context";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import type React from "react";
+import { CartesianGrid, Label, Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 
 interface CustomTooltipProps {
   active?: boolean;
@@ -66,7 +66,7 @@ export const Chart: React.FC = () => {
                 key={name}
                 type="monotone"
                 dataKey={name}
-                stroke={`hsl(var(--chart-${(index) % 5 + 1}))`}
+                stroke={`hsl(var(--chart-${((index) % 5) + 1}))`}
                 strokeWidth={2}
                 dot={false}
               />

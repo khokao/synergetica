@@ -1,9 +1,9 @@
-import React from 'react';
-import { Button } from "@/components/ui/button";
-import { ChartSpline, RotateCw } from 'lucide-react';
 import { useSimulate } from "@/components/circuit/hooks/use-run-simulator";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
-import * as RadixTooltip from '@radix-ui/react-tooltip';
+import { Button } from "@/components/ui/button";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import * as RadixTooltip from "@radix-ui/react-tooltip";
+import { ChartSpline, RotateCw } from "lucide-react";
+import React from "react";
 
 export const SimulatorButtons = () => {
   const { handleRunSimulate, handleResetSimulate } = useSimulate();
@@ -13,12 +13,7 @@ export const SimulatorButtons = () => {
       <div className="absolute !right-5 !bottom-5 flex space-x-4">
         <Tooltip>
           <TooltipTrigger asChild>
-            <Button
-              variant="default"
-              size="icon"
-              onClick={handleResetSimulate}
-              className="w-10 h-10 p-2 shadow-lg"
-            >
+            <Button variant="default" size="icon" onClick={handleResetSimulate} className="w-10 h-10 p-2 shadow-lg">
               <RotateCw className="w-10 h-10" />
             </Button>
           </TooltipTrigger>
@@ -33,12 +28,7 @@ export const SimulatorButtons = () => {
 
         <Tooltip>
           <TooltipTrigger asChild>
-            <Button
-              variant="default"
-              size="icon"
-              onClick={handleRunSimulate}
-              className="w-10 h-10 p-2 shadow-lg"
-            >
+            <Button variant="default" size="icon" onClick={handleRunSimulate} className="w-10 h-10 p-2 shadow-lg">
               <ChartSpline className="w-10 h-10" />
             </Button>
           </TooltipTrigger>

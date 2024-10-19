@@ -1,6 +1,6 @@
-import { useEffect, useRef } from 'react';
-import { useConverter } from '@/components/simulation/contexts/converter-context';
-import { useSimulator } from '@/components/simulation/contexts/simulator-context';
+import { useConverter } from "@/components/simulation/contexts/converter-context";
+import { useSimulator } from "@/components/simulation/contexts/simulator-context";
+import { useEffect, useRef } from "react";
 
 export const useWebSocketSimulation = (proteinParameter: { [id: string]: number }) => {
   const { convertResult } = useConverter();

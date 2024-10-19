@@ -1,5 +1,5 @@
-import { CornerUpRight, RectangleHorizontal } from "lucide-react";
 import { RiText } from "@remixicon/react";
+import { CornerUpRight, RectangleHorizontal } from "lucide-react";
 import React from "react";
 
 const headerMap = {

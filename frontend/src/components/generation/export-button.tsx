@@ -1,9 +1,8 @@
-// components/generation/ExportButton.tsx
-import React from 'react';
-import { Button } from '@/components/ui/button';
-import { ArrowUpToLine } from 'lucide-react';
-import { save } from '@tauri-apps/api/dialog';
-import { writeTextFile } from '@tauri-apps/api/fs';
+import { Button } from "@/components/ui/button";
+import { save } from "@tauri-apps/api/dialog";
+import { writeTextFile } from "@tauri-apps/api/fs";
+import { ArrowUpToLine } from "lucide-react";
+import type React from "react";
 
 interface ChildNodesDetails {
   nodeCategory: string;
@@ -24,23 +23,21 @@ export const ExportButton: React.FC<ExportButtonProps> = ({ data }) => {
 
     const fastaContent = Object.keys(data.parent2child_details)
       .map((groupId) => {
-        const concatenatedSequences = data.parent2child_details[groupId]
-          .map((sequence) => sequence.sequence)
-          .join('');
+        const concatenatedSequences = data.parent2child_details[groupId].map((sequence) => sequence.sequence).join("");
         return `> ${groupId}\n${concatenatedSequences}`;
       })
-      .join('\n\n');
+      .join("\n\n");
 
     try {
       const filePath = await save({
-        filters: [{ name: 'FASTA', extensions: ['fasta', 'fa'] }],
-        defaultPath: 'sequence.fasta',
+        filters: [{ name: "FASTA", extensions: ["fasta", "fa"] }],
+        defaultPath: "sequence.fasta",
       });
       if (filePath) {
         await writeTextFile(filePath, fastaContent);
       }
     } catch (error) {
-      console.error('Error while exporting FASTA file:', error);
+      console.error("Error while exporting FASTA file:", error);
     }
   };
 

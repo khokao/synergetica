@@ -1,6 +1,7 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
-import { useConverter } from "@/components/simulation/contexts/converter-context";
 import { DEFAULT_SLIDER_PARAM } from "@/components/simulation/constants";
+import { useConverter } from "@/components/simulation/contexts/converter-context";
+import type React from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 interface ProteinParameterContextProps {
   proteinParameter: { [id: string]: number };
@@ -17,7 +18,7 @@ export const ProteinParameterProvider: React.FC<{ children: React.ReactNode }> =
   useEffect(() => {
     if (convertResult !== null) {
       const initParams: { [id: string]: number } = {};
-      Object.keys(convertResult.protein_id2name).forEach(id => {
+      Object.keys(convertResult.protein_id2name).forEach((id) => {
         initParams[id] = DEFAULT_SLIDER_PARAM;
       });
       setProteinParameter(initParams);
@@ -25,7 +26,7 @@ export const ProteinParameterProvider: React.FC<{ children: React.ReactNode }> =
   }, [convertResult]);
 
   const handleProteinParamChange = (id: string) => (value: number[]) => {
-    setProteinParameter(prevParams => ({
+    setProteinParameter((prevParams) => ({
       ...prevParams,
       [id]: value[0],
     }));
@@ -41,7 +42,7 @@ export const ProteinParameterProvider: React.FC<{ children: React.ReactNode }> =
 export const useProteinParameters = (): ProteinParameterContextProps => {
   const context = useContext(ProteinParameterContext);
   if (!context) {
-    throw new Error('useProteinParameters must be used within a ProteinParameterProvider');
+    throw new Error("useProteinParameters must be used within a ProteinParameterProvider");
   }
   return context;
 };

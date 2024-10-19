@@ -2,14 +2,14 @@
 
 import { Circuit } from "@/components/circuit/circuit";
 import { DnDProvider } from "@/components/circuit/dnd/dnd-context";
-import { PanelProvider } from "@/components/circuit/resizable-panel/resizable-panel-context";
 import { usePanelControls } from "@/components/circuit/hooks/use-panel-controls";
+import { PanelProvider } from "@/components/circuit/resizable-panel/resizable-panel-context";
+import { ConverterProvider } from "@/components/simulation/contexts/converter-context";
+import { ProteinParameterProvider } from "@/components/simulation/contexts/protein-parameter-context";
+import { SimulatorProvider } from "@/components/simulation/contexts/simulator-context";
+import { Simulation } from "@/components/simulation/simulation";
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/components/ui/resizable";
 import { ReactFlowProvider } from "@xyflow/react";
-import { ProteinParameterProvider } from "@/components/simulation/contexts/protein-parameter-context";
-import { Simulation } from "@/components/simulation/simulation";
-import { ConverterProvider } from "@/components/simulation/contexts/converter-context"
-import { SimulatorProvider } from "@/components/simulation/contexts/simulator-context"
 
 export const Studio = () => {
   const { openPanels, panelRefs, togglePanel } = usePanelControls();

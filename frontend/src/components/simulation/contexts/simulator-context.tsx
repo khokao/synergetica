@@ -1,4 +1,5 @@
-import React, { createContext, useContext, useState } from 'react';
+import type React from "react";
+import { createContext, useContext, useState } from "react";
 
 interface SimulatorContextProps {
   simulationResult: number[][] | null;
@@ -11,16 +12,14 @@ export const SimulatorProvider: React.FC<{ children: React.ReactNode }> = ({ chi
   const [simulationResult, setSimulationResult] = useState<number[][] | null>(null);
 
   return (
-    <SimulatorContext.Provider value={{ simulationResult, setSimulationResult }}>
-      {children}
-    </SimulatorContext.Provider>
+    <SimulatorContext.Provider value={{ simulationResult, setSimulationResult }}>{children}</SimulatorContext.Provider>
   );
 };
 
 export const useSimulator = (): SimulatorContextProps => {
   const context = useContext(SimulatorContext);
   if (!context) {
-    throw new Error('useSimulator must be used within a SimulatorProvider');
+    throw new Error("useSimulator must be used within a SimulatorProvider");
   }
   return context;
 };

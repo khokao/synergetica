@@ -1,11 +1,10 @@
-import { Play, Ban, Loader2 } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { GenerationResultModal } from '@/components/generation/generation-result-modal';
-import { useGeneratorData } from '@/components/generation/hooks/use-generator-data';
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { GenerationResultModal } from "@/components/generation/generation-result-modal";
+import { useGeneratorData } from "@/components/generation/hooks/use-generator-data";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import * as RadixTooltip from '@radix-ui/react-tooltip';
-
+import * as RadixTooltip from "@radix-ui/react-tooltip";
+import { Ban, Loader2, Play } from "lucide-react";
 
 export const GenerationButtons = () => {
   const { data, snapshot, isMutating, generate, cancel } = useGeneratorData();
@@ -23,11 +22,7 @@ export const GenerationButtons = () => {
             <TooltipTrigger asChild>
               <div>
                 <Button size="icon" onClick={generate} disabled={isMutating}>
-                  {isMutating ? (
-                    <Loader2 className="w-5 h-5 animate-spin" />
-                  ) : (
-                    <Play className="w-5 h-5" />
-                  )}
+                  {isMutating ? <Loader2 className="w-5 h-5 animate-spin" /> : <Play className="w-5 h-5" />}
                 </Button>
               </div>
             </TooltipTrigger>
@@ -57,7 +52,7 @@ export const GenerationButtons = () => {
           </Tooltip>
 
           <GenerationResultModal data={data} snapshot={snapshot} />
-          </TooltipProvider>
+        </TooltipProvider>
       </CardContent>
     </Card>
   );

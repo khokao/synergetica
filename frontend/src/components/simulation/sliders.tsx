@@ -1,12 +1,12 @@
-import React from "react";
-import { Slider } from "@/components/ui/slider";
-import { Label } from "@/components/ui/label";
-import { Card, CardContent } from "@/components/ui/card";
-import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
+import { MAX_SLIDER_PARAM, MIN_SLIDER_PARAM } from "@/components/simulation/constants";
 import { useConverter } from "@/components/simulation/contexts/converter-context";
-import { useWebSocketSimulation } from "@/components/simulation/hooks/use-websocket-simulation";
 import { useProteinParameters } from "@/components/simulation/contexts/protein-parameter-context";
-import { MIN_SLIDER_PARAM, MAX_SLIDER_PARAM } from "@/components/simulation/constants";
+import { useWebSocketSimulation } from "@/components/simulation/hooks/use-websocket-simulation";
+import { Card, CardContent } from "@/components/ui/card";
+import { Label } from "@/components/ui/label";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
+import { Slider } from "@/components/ui/slider";
+import type React from "react";
 
 export const Sliders: React.FC = () => {
   const { convertResult } = useConverter();
@@ -25,10 +25,7 @@ export const Sliders: React.FC = () => {
       <CardContent className="h-full">
         <ScrollArea className="h-full">
           {proteinEntries.map(([id, name], index) => (
-            <div
-              key={id}
-              className="flex items-center mb-4 pr-4"
-            >
+            <div key={id} className="flex items-center mb-4 pr-4">
               <Label htmlFor={`slider-${id}`} className="w-40 pr-2 flex items-center">
                 <span
                   className="inline-block w-3 h-3 rounded-full mr-2"

@@ -1,9 +1,14 @@
-import { useState } from 'react';
-import { useReactFlow } from '@xyflow/react';
-import useSWRMutation from 'swr/mutation';
-import { callGeneratorAPI, cancelGeneratorAPI, GeneratorRequestData, GeneratorResponseData } from '@/components/generation/hooks/use-generator-api';
-import { useProteinParameters } from '@/components/simulation/contexts/protein-parameter-context';
-import { Node, Edge } from '@xyflow/react';
+import {
+  type GeneratorRequestData,
+  type GeneratorResponseData,
+  callGeneratorAPI,
+  cancelGeneratorAPI,
+} from "@/components/generation/hooks/use-generator-api";
+import { useProteinParameters } from "@/components/simulation/contexts/protein-parameter-context";
+import { useReactFlow } from "@xyflow/react";
+import type { Edge, Node } from "@xyflow/react";
+import { useState } from "react";
+import useSWRMutation from "swr/mutation";
 
 interface SnapshotData {
   nodes: Node[];
@@ -23,14 +28,15 @@ export const useGeneratorData = () => {
     return await callGeneratorAPI(arg);
   };
 
-  const { data, trigger, isMutating, reset } = useSWRMutation<GeneratorResponseData, Error, string, GeneratorRequestData>(
-    'call_generator_api',
-    generatorFetcher,
-    {
-      revalidate: false,
-      populateCache: false,
-    },
-  );
+  const { data, trigger, isMutating, reset } = useSWRMutation<
+    GeneratorResponseData,
+    Error,
+    string,
+    GeneratorRequestData
+  >("call_generator_api", generatorFetcher, {
+    revalidate: false,
+    populateCache: false,
+  });
 
   const generate = async () => {
     reset();
@@ -55,7 +61,7 @@ export const useGeneratorData = () => {
     try {
       await trigger(generatorRequestData);
     } catch (error) {
-      console.error('Error occurred while calling generator API:', error);
+      console.error("Error occurred while calling generator API:", error);
     }
   };
 

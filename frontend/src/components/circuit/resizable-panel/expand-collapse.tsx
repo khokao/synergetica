@@ -1,10 +1,9 @@
-import type React from "react";
-import { PanelLeftClose, PanelLeftOpen, PanelRightClose, PanelRightOpen } from "lucide-react";
+import { usePanelContext } from "@/components/circuit/resizable-panel/resizable-panel-context";
 import { Button } from "@/components/ui/button";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import * as RadixTooltip from '@radix-ui/react-tooltip';
-import { usePanelContext } from "@/components/circuit/resizable-panel/resizable-panel-context";
-
+import * as RadixTooltip from "@radix-ui/react-tooltip";
+import { PanelLeftClose, PanelLeftOpen, PanelRightClose, PanelRightOpen } from "lucide-react";
+import type React from "react";
 
 export const ExpandCollapseButton = ({ position }) => {
   const { openPanels, togglePanel } = usePanelContext();

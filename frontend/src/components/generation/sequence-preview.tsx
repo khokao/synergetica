@@ -1,5 +1,5 @@
-import React from 'react';
-import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import type React from "react";
 
 interface ChildNodesDetails {
   nodeCategory: string;
@@ -28,9 +28,7 @@ export const SequencePreview: React.FC<SequencePreviewProps> = ({ data }) => {
       </TableHeader>
       <TableBody>
         {sequenceIds.map((id) => {
-          const concatenatedSequences = data.parent2child_details[id]
-            .map((item) => item.sequence)
-            .join('');
+          const concatenatedSequences = data.parent2child_details[id].map((item) => item.sequence).join("");
 
           return (
             <TableRow key={id}>

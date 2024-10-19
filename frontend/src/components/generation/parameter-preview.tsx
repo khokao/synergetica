@@ -1,10 +1,10 @@
-import React from 'react';
-import { Card, CardContent } from '@/components/ui/card';
-import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
-import { Slider } from '@/components/ui/slider';
-import { Label } from '@/components/ui/label';
-import { useConverter } from '@/components/simulation/contexts/converter-context';
-import { MIN_SLIDER_PARAM, MAX_SLIDER_PARAM } from "@/components/simulation/constants";
+import { MAX_SLIDER_PARAM, MIN_SLIDER_PARAM } from "@/components/simulation/constants";
+import { useConverter } from "@/components/simulation/contexts/converter-context";
+import { Card, CardContent } from "@/components/ui/card";
+import { Label } from "@/components/ui/label";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
+import { Slider } from "@/components/ui/slider";
+import type React from "react";
 
 interface SnapshotData {
   proteinParameter: { [id: string]: number };

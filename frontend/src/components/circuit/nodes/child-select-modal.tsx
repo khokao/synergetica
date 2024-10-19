@@ -1,16 +1,15 @@
 import { CircuitEdgeTypes, CircuitNodeTypes, NODE_HEIGHT, TEMP_NODE_ID } from "@/components/circuit/constants";
 import { PROMOTER_DATA, PROTEIN_DATA, TERMINATOR_DATA } from "@/components/circuit/nodes/constants";
+import { InformationCard } from "@/components/circuit/nodes/information-card";
 import { Button } from "@/components/ui/button";
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card";
-import { ReactFlow, ReactFlowProvider, useReactFlow, Background, BackgroundVariant } from "@xyflow/react";
+import { Separator } from "@/components/ui/separator";
+import { Background, BackgroundVariant, ReactFlow, ReactFlowProvider, useReactFlow } from "@xyflow/react";
 import { produce } from "immer";
 import { ChevronDown } from "lucide-react";
 import React, { useState, useEffect, useCallback } from "react";
-import { InformationCard } from "@/components/circuit/nodes/information-card";
-import { Separator } from '@/components/ui/separator';
-
 
 const modalMap = {
   promoter: {
@@ -81,11 +80,7 @@ const SelectMenu = ({ options, selectedOption, handleSelect }) => {
                   onSelect={() => handleSelect(o)}
                   asChild
                 >
-                  <div
-                    className={`cursor-pointer h-full ${
-                      isSelected ? "border-2 border-gray-500 bg-gray-100" : ""
-                    }`}
-                  >
+                  <div className={`cursor-pointer h-full ${isSelected ? "border-2 border-gray-500 bg-gray-100" : ""}`}>
                     <InformationCard data={o} />
                   </div>
                 </CommandItem>
@@ -98,7 +93,6 @@ const SelectMenu = ({ options, selectedOption, handleSelect }) => {
   );
 };
 
-
 const Container = ({ children }) => (
   <div className="flex justify-between items-center h-1/3 px-2 py-2 bg-gray-50 rounded-b-xl">{children}</div>
 );
@@ -108,7 +102,7 @@ const ChildSelectModalComponent = ({ id, data }) => {
     return (
       <Container>
         <Button variant="ghost" className="flex justify-between items-center py-2 px-2 w-full">
-          <span></span>
+          <span />
           <ChevronDown />
         </Button>
       </Container>

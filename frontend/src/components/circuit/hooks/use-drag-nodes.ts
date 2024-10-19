@@ -216,9 +216,8 @@ export const useDragNodes = () => {
         if (parentNode) {
           if (isNodeOutsideParent(node, parentNode)) {
             return draft.filter((e) => e.source !== node.id && e.target !== node.id);
-          } else {
-            draft.push(...dragStartConnectedEdges.current);
           }
+          draft.push(...dragStartConnectedEdges.current);
         } else {
           removeTempEdge(draft);
 

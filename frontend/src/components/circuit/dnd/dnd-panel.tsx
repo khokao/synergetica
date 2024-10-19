@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
 import { useDnD } from "@/components/circuit/dnd/dnd-context";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import * as RadixTooltip from '@radix-ui/react-tooltip';
-import { CornerUpRight, RectangleHorizontal } from "lucide-react";
+import * as RadixTooltip from "@radix-ui/react-tooltip";
 import { RiText } from "@remixicon/react";
+import { CornerUpRight, RectangleHorizontal } from "lucide-react";
+import React, { useState } from "react";
 
 const IconTooltip = ({ label, icon, color, nodeCategory, onDragStart }) => {
   const [tooltipVisible, setTooltipVisible] = useState(false);

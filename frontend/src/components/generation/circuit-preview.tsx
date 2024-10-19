@@ -1,8 +1,8 @@
-import React from 'react';
-import { ReactFlow, ReactFlowProvider, Background, BackgroundVariant } from '@xyflow/react';
-import { produce } from 'immer';
-import { CircuitEdgeTypes, CircuitNodeTypes } from '@/components/circuit/constants';
-import { Node, Edge } from '@xyflow/react';
+import { CircuitEdgeTypes, CircuitNodeTypes } from "@/components/circuit/constants";
+import { Background, BackgroundVariant, ReactFlow, ReactFlowProvider } from "@xyflow/react";
+import type { Edge, Node } from "@xyflow/react";
+import { produce } from "immer";
+import type React from "react";
 
 interface SnapshotData {
   nodes: Node[];
@@ -21,7 +21,7 @@ export const CircuitPreview: React.FC<CircuitPreviewProps> = ({ snapshot }) => {
 
   const newNodes = produce(nodes, (draft) => {
     draft.forEach((node) => {
-      if (node.type === 'parent') {
+      if (node.type === "parent") {
         node.data.showParentId = true;
       }
     });
