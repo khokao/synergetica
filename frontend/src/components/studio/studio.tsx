@@ -27,6 +27,7 @@ export const Studio = () => {
                   collapsible
                   minSize={20.0}
                   maxSize={30.0}
+                  // @ts-ignore
                   ref={panelRefs.left}
                 >
                   <div className="h-full p-4">
@@ -46,6 +47,7 @@ export const Studio = () => {
                   collapsible
                   minSize={20.0}
                   maxSize={30.0}
+                  // @ts-ignore
                   ref={panelRefs.right}
                 >
                   <SimulatorProvider>
