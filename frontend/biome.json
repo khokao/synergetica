@@ -32,7 +32,7 @@
   },
   "overrides": [
     {
-      "include": ["next.config.js", "src/pages/**/*.tsx"],
+      "include": ["next.config.js", "src/app/**/*.tsx"],
       "linter": {
         "rules": {
           "style": {
