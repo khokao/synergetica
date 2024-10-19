@@ -65,12 +65,12 @@ export const InformationCard = ({ data }) => {
   const titleColor = CATEGORY_COLORS[data.nodeCategory] || '';
 
   return (
-    <Card>
+    <Card className="h-full w-full">
       <CardHeader>
         <CardTitle className={`${titleColor}`}>{data.nodePartsName}</CardTitle>
         <CardDescription>{data.description}</CardDescription>
       </CardHeader>
-      <CardContent className="flex justify-center items-center">
+      <CardContent className="flex flex-col justify-center items-center">
         <ControlSection data={data} direction="by" />
         <ControlSection data={data} direction="to" />
       </CardContent>

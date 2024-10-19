@@ -6,9 +6,11 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card";
 import { ReactFlow, ReactFlowProvider, useReactFlow } from "@xyflow/react";
 import { produce } from "immer";
-import { ChevronDown, CircleCheck } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 import React, { useState, useEffect, useCallback } from "react";
 import { InformationCard } from "@/components/circuit/nodes/information-card";
+import { Separator } from '@/components/ui/separator';
+
 
 const modalMap = {
   promoter: {
@@ -54,36 +56,46 @@ const CircuitPreview = ({ id }) => {
         nodesFocusable={false}
         edgesFocusable={false}
         elementsSelectable={false}
+        className="border-2 border-gray-300 rounded-lg p-4"
       />
     </ReactFlowProvider>
   );
 };
 
-const SelectMenu = ({ options, selected, handleSelect }) => {
+const SelectMenu = ({ options, selectedOption, handleSelect }) => {
   return (
-    <Command className="flex flex-col flex-grow">
+    <Command className="flex flex-col h-full w-full">
       <CommandInput placeholder="Search..." />
-      <CommandList className="flex-grow overflow-y-auto mt-2">
+      <CommandList className="flex-grow overflow-y-auto mt-2 !max-h-none !h-[60vh]">
         <CommandEmpty>No results found.</CommandEmpty>
         <CommandGroup>
-          {options.map((o) => (
-            <CommandItem key={o.nodePartsName} value={`${o.nodePartsName} ${o.description}`} onSelect={() => handleSelect(o)}>
-              <div className="flex items-center justify-between w-full">
-                <div>
-                  <span className={`font-bold ${selected?.nodePartsName === o.nodePartsName ? "text-indigo-600" : ""}`}>{o.nodePartsName}</span>
-                  <div className={`text-sm ${selected?.nodePartsName === o.nodePartsName ? "text-indigo-600" : "text-gray-500"}`}>
-                    {o.description}
+          <div className="grid grid-cols-2 gap-4 h-full">
+            {options.map((o) => {
+              const isSelected = selectedOption && o.nodePartsName === selectedOption.nodePartsName;
+              return (
+                <CommandItem
+                  key={o.nodePartsName}
+                  value={`${o.nodePartsName} ${o.description}`}
+                  onSelect={() => handleSelect(o)}
+                  asChild
+                >
+                  <div
+                    className={`cursor-pointer h-full ${
+                      isSelected ? "border-2 border-gray-500 bg-gray-100" : ""
+                    }`}
+                  >
+                    <InformationCard data={o} />
                   </div>
-                </div>
-                {selected?.nodePartsName === o.nodePartsName && <CircleCheck aria-hidden="true" className="h-5 w-5 text-indigo-600" />}
-              </div>
-            </CommandItem>
-          ))}
+                </CommandItem>
+              );
+            })}
+          </div>
         </CommandGroup>
       </CommandList>
     </Command>
   );
 };
+
 
 const Container = ({ children }) => (
   <div className="flex justify-between items-center h-1/3 px-2 py-2 bg-gray-50 rounded-b-xl">{children}</div>
@@ -158,8 +170,6 @@ const ChildSelectModalComponent = ({ id, data }) => {
     </Button>
   );
 
-
-
   return (
     <Container>
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -176,12 +186,12 @@ const ChildSelectModalComponent = ({ id, data }) => {
           <DialogTrigger asChild>{buttonContent}</DialogTrigger>
         )}
         <DialogContent
-          className="bg-white shadow-lg p-6 rounded-2xl flex flex-col"
+          className="flex flex-col max-w-none h-[80vh] w-[80vw]"
           aria-describedby={undefined}
           onOpenAutoFocus={(event) => event.preventDefault()}
           onCloseAutoFocus={(event) => event.preventDefault()}
         >
-          <DialogHeader className="flex-shrink-0 flex justify-between items-center mb-4">
+          <DialogHeader className="flex-shrink-0 flex justify-between items-center">
             <DialogTitle
               className={`text-xl font-semibold border-b-2 ${underlineColor} pb-2 pl-4 pr-4 mx-auto text-center`}
             >
@@ -189,10 +199,15 @@ const ChildSelectModalComponent = ({ id, data }) => {
             </DialogTitle>
           </DialogHeader>
 
-          <div className="border-2 border-gray-300 rounded-lg mb-4 flex-shrink-0" style={{ height: NODE_HEIGHT }}>
-            <CircuitPreview id={id} />
+          <div className="flex flex-row h-full w-full">
+            <div className="flex flex-col p-4 h-full w-1/3">
+              <CircuitPreview id={id} />
+            </div>
+            <Separator orientation="vertical" />
+            <div className="flex flex-col p-4 h-full w-2/3 overflow-hidden">
+              <SelectMenu options={options} selectedOption={selectedOption} handleSelect={handleSelect} />
+            </div>
           </div>
-          <SelectMenu options={options} selected={selectedOption} handleSelect={handleSelect} />
         </DialogContent>
       </Dialog>
     </Container>

@@ -2,6 +2,7 @@ export const PROMOTER_DATA = [
   {
     nodePartsName: "PameR",
     description: "Regulated Promoter repressed by AmeR",
+    nodeCategory: "promoter",
     nodeSubcategory: "RepressivePromoter",
     sequence: "gatagtgacaaacttgacaactcatcacttcctaggtataatgctagc",
     partsId: "3185f745eb818a94545e9a8607a4541ef31e47ba6a246ad8eb73fe078fc1542c",
@@ -17,6 +18,7 @@ export const PROMOTER_DATA = [
   {
     nodePartsName: "PamtR",
     description: "Regulated Promoter repressed by AmtR",
+    nodeCategory: "promoter",
     nodeSubcategory: "RepressivePromoter",
     sequence: "gattcgttaccaattgacagtttctatcgatctatagataatgctagc",
     partsId: "a2a19f6c01bc404d9b3245dce99546cf8b39a79c5f24c2d6811c658142981d39",
@@ -32,6 +34,7 @@ export const PROMOTER_DATA = [
   {
     nodePartsName: "Pbetl",
     description: "Regulated Promoter repressed by BetI",
+    nodeCategory: "promoter",
     nodeSubcategory: "RepressivePromoter",
     sequence: "agcgcgggtgagagggattcgttaccaattgacaattgattggacgttcaatataatgctagc",
     partsId: "468d92f750bef157b9bd89ffd62518cb4db9fcd32a706f15fc6d1200b0b23bf7",
@@ -47,6 +50,7 @@ export const PROMOTER_DATA = [
   {
     nodePartsName: "Pbm3r1",
     description: "Regulated Promoter repressed by BM3R1",
+    nodeCategory: "promoter",
     nodeSubcategory: "RepressivePromoter",
     sequence: "tctgattcgttaccaattgacggaatgaacgttcattccgataatgctagc",
     partsId: "3aa865db07b14c56e1a95166d36b27819cacf657d350d8b85fb3b88e74d04f3c",
@@ -62,6 +66,7 @@ export const PROMOTER_DATA = [
   {
     nodePartsName: "PhyllR",
     description: "Regulated Promoters repressed by HylIR",
+    nodeCategory: "promoter",
     nodeSubcategory: "RepressivePromoter",
     sequence: "gattcgttaccaattgacatatttaaaattcttgtttaaaatgctagc",
     partsId: "c3b51399403871aaf80ff1a40a5a981acfa730a7c9993b70bca0084e6da58849",
@@ -77,6 +82,7 @@ export const PROMOTER_DATA = [
   {
     nodePartsName: "PlcaRA",
     description: "Regulated Promoters repressed by LcaRA",
+    nodeCategory: "promoter",
     nodeSubcategory: "RepressivePromoter",
     sequence: "tctgattcgttaccaattgacaattcacctacctttcgttaggttaggttgt",
     partsId: "0ca92788a7ec220bd01176f55500545a7df2474de8064901b415ecb25cd5e382",
@@ -92,6 +98,7 @@ export const PROMOTER_DATA = [
   {
     nodePartsName: "PlitR",
     description: "Regulated Promoter repressed by LitR",
+    nodeCategory: "promoter",
     nodeSubcategory: "RepressivePromoter",
     sequence: "gattcgttaccaattgacaaatttataaattgtcagtataatgctagc",
     partsId: "843d99e4224bb7b1e44bf225df65a2559e830bebbfb9e923b29930e2741bf551",
@@ -107,6 +114,7 @@ export const PROMOTER_DATA = [
   {
     nodePartsName: "PlmrA",
     description: "Regulated Promoter repressed by LmrA",
+    nodeCategory: "promoter",
     nodeSubcategory: "RepressivePromoter",
     sequence: "tctgattcgttaccaattgacaactggtggtcgaatcaagataatagaccagtcactatattt",
     partsId: "7f07390615e62a6c104023fcdd035bdc407c126670778f63426da903c9bf2ede",
@@ -122,6 +130,7 @@ export const PROMOTER_DATA = [
   {
     nodePartsName: "PphlF",
     description: "Regulated Promoter repressed by PhlF",
+    nodeCategory: "promoter",
     nodeSubcategory: "RepressivePromoter",
     sequence: "tctgattcgttaccaattgacatgatacgaaacgtaccgtatcgttaaggt",
     partsId: "ed38591d3933370cbbb83626321e8697c22ea97463a82cba32973b92935292e6",
@@ -137,6 +146,7 @@ export const PROMOTER_DATA = [
   {
     nodePartsName: "PpsrA",
     description: "Regulated Promoter repressed by PsrA",
+    nodeCategory: "promoter",
     nodeSubcategory: "RepressivePromoter",
     sequence: "aggaacaaacgtttgattgacagctagctcagtcctaggtataatgctagc",
     partsId: "4bcf1beb58b8a87b468461cc176531c2d57f449a82cabab993e735b6ce923ba8",
@@ -152,6 +162,7 @@ export const PROMOTER_DATA = [
   {
     nodePartsName: "PqacR",
     description: "Regulated Promoter repressed by QacR",
+    nodeCategory: "promoter",
     nodeSubcategory: "RepressivePromoter",
     sequence: "cgttaccaattgacagctagctcagtcctactttagtatatagaccgtgcgatcggtctata",
     partsId: "9c0781baa6c9c52013e3435b9d79e727d0bcfbedf067805d8e7918e1835df5bb",
@@ -167,6 +178,7 @@ export const PROMOTER_DATA = [
   {
     nodePartsName: "PsrpR",
     description: "Regulated Promoter repressed by SrpR",
+    nodeCategory: "promoter",
     nodeSubcategory: "RepressivePromoter",
     sequence: "gattcgttaccaattgacagctagctcagtcctaggtatatacatacatgcttgtttgtttgtaaac",
     partsId: "5e69da185a5bcf8b40c526acaa2bb3238a7db8d35b09ed56e2b54e726d738c2c",
@@ -185,6 +197,7 @@ export const PROTEIN_DATA = [
   {
     nodePartsName: "AmeR",
     description: "Repressor Protein of PameR",
+    nodeCategory: "protein",
     nodeSubcategory: "RepressorProtein",
     sequence:
       "atgaacaaaaccattgatcaggtgcgtaaaggtgatcgtaaaagcgatctgccggttcgtcgtcgtccgcgtcgtagtgccgaagaaacccgtcgtgatattctggcaaaagccgaagaactgtttcgtgaacgtggttttaatgcagttgccattgcagatattgcaagcgcactgaatatgagtccggcaaatgtgtttaaacattttagcagcaaaaacgcactggttgatgcaattggttttggtcagattggtgtttttgaacgtcagatttgtccgctggataaaagccatgcaccgctggatcgtctgcgtcatctggcacgtaatctgatggaacagcatcatcaggatcatttcaaacacatacgggtttttattcagatcctgatgaccgccaaacaggatatgaaatgtggcgattattacaaaagcgtgattgcaaaactgctggccgaaattattcgtgatggtgttgaagcaggtctgtatattgcaaccgatattccggttctggcagaaaccgttctgcatgcactgaccagcgttattcatccggttctgattgcacaagaagatattggtaatctggcaacccgttgtgatcagctggttgatctgattgatgcaggtctgcgtaatccgctggcaaaataa",
@@ -208,6 +221,7 @@ export const PROTEIN_DATA = [
   {
     nodePartsName: "AmtR",
     description: "Repressor Protein of PamtR",
+    nodeCategory: "protein",
     nodeSubcategory: "RepressorProtein",
     sequence:
       "atggcaggcgcagttggtcgtccgcgtcgtagtgcaccgcgtcgtgcaggtaaaaatccgcgtgaagaaattctggatgcaagcgcagaactgtttacccgtcagggttttgcaaccaccagtacccatcagattgcagatgcagttggtattcgtcaggcaagcctgtattatcattttccgagcaaaaccgaaatctttctgaccctgctgaaaagcaccgttgaaccgagcaccgttctggcagaagatctgagcaccctggatgcaggtccggaaatgcgtctgtgggcaattgttgcaagcgaagttcgtctgctgctgagcaccaaatggaatgttggtcgtctgtatcagctgccgattgttggtagcgaagaatttgcagaatatcatagccagcgtgaagcactgaccaatgtttttcgtgatctggcaaccgaaattgttggtgatgatccgcgtgcagaactgccgtttcatattaccatgagcgttattgaaatgcgtcgcaatgatggtaaaattccgagtccgctgagcgcagatagcctgccggaaaccgcaattatgctggcagatgcaagcctggcagttctgggtgcaccgctgcctgcagatcgtgttgaaaaaaccctggaactgattaaacaggcagatgcaaaataa",
@@ -231,6 +245,7 @@ export const PROTEIN_DATA = [
   {
     nodePartsName: "BetI",
     description: "Repressor Protein of Betl",
+    nodeCategory: "protein",
     nodeSubcategory: "RepressorProtein",
     sequence:
       "atgccgaaactgggtatgcagagcattcgtcgtcgtcagctgattgatgcaaccctggaagcaattaatgaagttggtatgcatgatgcaaccattgcacagattgcacgtcgtgccggtgttagcaccggtattattagccattatttccgcgataaaaacggtctgctggaagcaaccatgcgtgatattaccagccagctgcgtgatgcagttctgaatcgtctgcatgcactgccgcagggtagcgcagaacagcgtctgcaggcaattgttggtggtaattttgatgaaacccaggttagcagcgcagcaatgaaagcatggctggcattttgggcaagcagcatgcatcagccgatgctgtatcgtctgcagcaggttagcagtcgtcgtctgctgagcaatctggttagcgaatttcgtcgtgaactgcctcgtgaacaggcacaagaggcaggttatggtctggcagcactgattgatggtctgtggctgcgtgcagcactgagcggtaaaccgctggataaaacccgtgcaaatagcctgacccgtcattttatcacccagcatctgccgaccgattaa",
@@ -254,6 +269,7 @@ export const PROTEIN_DATA = [
   {
     nodePartsName: "BM3R1",
     description: "Repressor Protein of Pbm3R1",
+    nodeCategory: "protein",
     nodeSubcategory: "RepressorProtein",
     sequence:
       "atggaaagcaccccgaccaaacagaaagcaatttttagcgcaagcctgctgctgtttgcagaacgtggttttgatgcaaccaccatgccgatgattgcagaaaatgcaaaagttggtgcaggcaccatttatcgctatttcaaaaacaaagaaagcctggtgaacgaactgtttcagcagcatgttaatgaatttctgcagtgtattgaaagcggtctggcaaatgaacgtgatggttatcgtgatggctttcatcacatttttgaaggtatggtgacctttaccaaaaatcatccgcgtgcactgggttttatcaaaacccatagccagggcacctttctgaccgaagaaagccgtctggcatatcagaaactggttgaatttgtgtgcaccttttttcgtgaaggtcagaaacagggtgtgattcgtaatctgccggaaaatgcactgattgcaattctgtttggcagctttatggaagtgtatgaaatgatcgagaacgattatctgagcctgaccgatgaactgctgaccggtgttgaagaaagcctgtgggcagcactgagccgtcagagctaa",
@@ -277,6 +293,7 @@ export const PROTEIN_DATA = [
   {
     nodePartsName: "HlyIIR",
     description: "Repressor Protein of PhyllR",
+    nodeCategory: "protein",
     nodeSubcategory: "RepressorProtein",
     sequence:
       "atgaaatacatcctgtttgaggtgtgcgaaatgggtaaaagccgtgaacagaccatggaaaatattctgaaagcagccaaaaagaaattcggcgaacgtggttatgaaggcaccagcattcaagaaattaccaaagaagccaaagttaacgttgcaatggccagctattactttaatggcaaagagaacctgtactacgaggtgttcaaaaaatacggtctggcaaatgaactgccgaactttctggaaaaaaaccagtttaatccgattaatgccctgcgtgaatatctgaccgtttttaccacccacattaaagaaaatccggaaattggcaccctggcctatgaagaaattatcaaagaaagcgcacgcctggaaaaaatcaaaccgtattttatcggcagcttcgaacagctgaaagaaattctgcaagagggtgaaaaacagggtgtgtttcacttttttagcatcaaccataccatccattggattaccagcattgttctgtttccgaaattcaaaaaattcatcgatagcctgggtccgaatgaaaccaatgataccaatcatgaatggatgccggaagatctggttagccgtattattagcgcactgaccgataaaccgaacatttaa",
@@ -300,6 +317,7 @@ export const PROTEIN_DATA = [
   {
     nodePartsName: "IcaRA",
     description: "Repressor Protein of PlcaRA",
+    nodeCategory: "protein",
     nodeSubcategory: "RepressorProtein",
     sequence:
       "gtgaaagacaaaattatcgataacgccatcaccctgtttagcgaaaaaggttatgacggcaccaccctggatgatattgcaaaaagcgtgaacatcaaaaaagccagcctgtattatcactttgatagcaaaaaaagcatctacgagcagagcgttaaatgctgtttcgattatctgaacaacatcatcatgatgaaccagaacaaaagcaactatagcatcgatgccctgtatcagtttctgtttgagttcatcttcgatatcgaggaacgctatattcgtatgtatgttcagctgagcaacacaccggaagaattttcaggtaacatttatggccagatccaggatctgaatcagagcctgagcaaagaaatcgccaaattctatgacgaaagcaaaatcaaaatgaccaaagaggacttccagaatctgattctgctgtttctggaaagctggtatctgaaagccagctttagccagaaatttggtgcagttgaagaaagcaaaagccagtttaaagatgaggtttatagcctgctgaacatctttctgaagaaataa",
@@ -323,6 +341,7 @@ export const PROTEIN_DATA = [
   {
     nodePartsName: "LitR",
     description: "Repressor Protein of PlitR",
+    nodeCategory: "protein",
     nodeSubcategory: "RepressorProtein",
     sequence:
       "atggataccattcagaaacgtccgcgtacccgtctgagtccggaaaaacgtaaagaacagctgctggatattgccattgaagtttttagccagcgtggtattggtcgtggtggtcatgcagatattgcagaaattgcacaggttagcgttgcaaccgtgtttaactattttccgacccgtgaagatctggttgatgatgttctgaacaaagtggaaaacgagtttcaccagttcatcaataacagcattagcctggatctggatgttcgtagcaatctgaataccctgctgctgaacattattgatagcgttcagaccggcaacaaatggattaaagtttggtttgaatggtcaaccagcacccgtgatgaagtttggcctctgtttctgagcacccatagcaataccaatcaggtgatcaaaaccatgtttgaagagggtattgaacgcaatgaagtgtgcaatgatcatacaccggaaaatctgaccaaaatgctgcatggtatttgctatagcgtgtttattcaggccaatcgtaatagcagcagcgaagaaatggaagaaaccgcaaattgctttctgaatatgctgtgcatctacaaataa",
@@ -346,6 +365,7 @@ export const PROTEIN_DATA = [
   {
     nodePartsName: "LmrA",
     description: "Repressor Protein of PlmrA",
+    nodeCategory: "protein",
     nodeSubcategory: "RepressorProtein",
     sequence:
       "atgagctatggtgatagccgtgaaaaaattctgagcgcagcaacccgtctgtttcagctgcagggttattatggcaccggtctgaatcagattatcaaagaaagcggtgcaccgaaaggtagcctgtattatcattttccgggtggtaaagaacagctggcaattgaagcagtgaacgaaatgaaagaatatatccgccagaaaatcgccgattgtatggaagcatgtaccgatccggcagaaggtattcaggcatttctgaaagaactgagctgtcagtttagctgtaccgaagatattgaaggtctgccggttggtctgctggcagcagaaaccagcctgaaaagcgaaccgctgcgtgaagcatgtcatgaagcatataaagaatgggccagcgtgtatgaagaaaaactgcgtcagaccggttgtagcgaaagccgtgcaaaagaagcaagcaccgttgttaatgcaatgattgaaggtggtattctgctgagcctgaccgcaaaaaatagcacaccgctgctgcatattagcagctgtattccggatctgctgaaacgttaa",
@@ -369,6 +389,7 @@ export const PROTEIN_DATA = [
   {
     nodePartsName: "PhlF",
     description: "Repressor Protein of PphlF",
+    nodeCategory: "protein",
     nodeSubcategory: "RepressorProtein",
     sequence:
       "atggcacgtaccccgagccgtagcagcattggtagcctgcgtagtccgcatacccataaagcaattctgaccagcaccattgaaatcctgaaagaatgtggttatagcggtctgagcattgaaagcgttgcacgtcgtgccggtgcaagcaaaccgaccatttatcgttggtggaccaataaagcagcactgattgccgaagtgtatgaaaatgaaagcgaacaggtgcgtaaatttccggatctgggtagctttaaagccgatctggattttctgctgcgtaatctgtggaaagtttggcgtgaaaccatttgtggtgaagcatttcgttgtgttattgcagaagcacagctggaccctgcaaccctgacccagctgaaagatcagtttatggaacgtcgtcgtgagatgccgaaaaaactggttgaaaatgccattagcaatggtgaactgccgaaagataccaatcgtgaactgctgctggatatgatttttggtttttgttggtatcgcctgctgaccgaacagctgaccgttgaacaggatattgaagaatttaccttcctgctgattaatggtgtttgtccgggtacacagcgttaa",
@@ -392,6 +413,7 @@ export const PROTEIN_DATA = [
   {
     nodePartsName: "PsrA",
     description: "Repressor Protein of PpsrA",
+    nodeCategory: "protein",
     nodeSubcategory: "RepressorProtein",
     sequence:
       "atggcacagagcgaaaccgttgaacgtattctggatgcagcagaacagctgtttgcagaacgtggttttgcagaaaccagcctgcgtctgattaccagcaaagccggtgttaatctggcagcagtgaattatcattttggcagcaaaaaagcactgattcaggcagtttttagccgttttctgggtccgttttgtgcaagcctggaacgtgaactggaacgtcgtcaggcacgtccggaacagaaaccgagcctggaagaactgctggaaatgctggttgaacaggcactggcagttcagcctcgtagcaataatgatctgagcatttttatgcgtctgctgggtctggcatttagccagagccagggtcatctgcgtcgttatctggaagatatgtatggtaaagtgttccgtcgttatatgctgctggttaatgaagcagcaccgcgtgttccgcctctggaactgttttggcgtgttcattttatgctgggtgcagcagcatttagcatgagcggtattaaagcactgcgtgcaattgcagaaaccgattttggtattaacaccagcattgaacaggttatgcgtctgatggttccgtttctggcagcaggtatgcgtgcagatagcggtgttaccgatgaagcaatggcagcagcacagctgcgtccgcgtagcaaaaccagcaccagcgcaaccaccgcaaaagcataa",
@@ -415,6 +437,7 @@ export const PROTEIN_DATA = [
   {
     nodePartsName: "QacR",
     description: "Repressor Protein of PqacR",
+    nodeCategory: "protein",
     nodeSubcategory: "RepressorProtein",
     sequence:
       "atgaacctgaaagataaaattctgggcgttgccaaagaactgtttatcaaaaatggctataacgcaaccaccaccggtgaaattgttaaactgagcgaaagcagcaaaggcaatctgtattatcactttaaaaccaaagagaacctgtttctggaaatcctgaacatcgaagaaagcaaatggcaagagcagtggaaaaaagaacaaatcaaatgcaaaaccaaccgcgagaaattctatctgtataatgaactgagcctgaccaccgaatattactatccgctgcagaatgccatcatcgagttttataccgagtactataaaaccaacagcatcaacgagaaaatgaacaaactggaaaacaaatacatcgatgcctaccacgtgatctttaaagaaggtaatctgaacggcgaatggtgcattaatgatgttaatgccgtgagcaaaattgcagcaaatgccgttaatggcattgttacctttacccatgagcagaatatcaacgaacgcattaaactgatgaacaaattcagccagatctttctgaatggcctgagcaaataa",
@@ -438,6 +461,7 @@ export const PROTEIN_DATA = [
   {
     nodePartsName: "SrpR",
     description: "Repressor Protein of PsrpR",
+    nodeCategory: "protein",
     nodeSubcategory: "RepressorProtein",
     sequence:
       "atggcacgtaaaaccgcagcagaagcagaagaaacccgtcagcgtattattgatgcagcactggaagtttttgttgcacagggtgttagtgatgcaaccctggatcagattgcacgtaaagccggtgttacccgtggtgcagtttattggcattttaatggtaaactggaagttctgcaggcagttctggcaagccgtcagcatccgctggaactggattttacaccggatctgggtattgaacgtagctgggaagcagttgttgttgcaatgctggatgcagttcatagtccgcagagcaaacagtttagcgaaattctgatttatcagggtctggatgaaagcggtctgattcataatcgtatggttcaggcaagcgatcgttttctgcagtatattcatcaggttctgcgtcatgcagttacccagggtgaactgccgattaatctggatctgcagaccagcattggtgtttttaaaggtctgattaccggtctgctgtatgaaggtctgcgtagcaaagatcagcaggcacagattatcaaagttgcactgggtagcttttgggcactgctgcgtgaaccgcctcgttttctgctgtgtgaagaagcacagattaaacaggtgaaatccttcgaataa",
@@ -464,6 +488,7 @@ export const TERMINATOR_DATA = [
   {
     nodePartsName: "L3S3P31",
     description: "Standard Terminator",
+    nodeCategory: "terminator",
     nodeSubcategory: "StandardTerminator",
     sequence: "ccaattattgaacaccctaacgggtgtttttttttttttggtctacc",
     partsId: "8a714a91168b796a27d449aae65d3b3bdffee30d737b94fb255e710e2b0427b4",
@@ -483,10 +508,10 @@ export const PARTS_ID2NAME = [
 }, {});
 
 export const PARTS_NAME2CATEGORY = [
-  ...PROMOTER_DATA.map(data => ({ nodePartsName: data.nodePartsName, category: "promoter" })),
-  ...PROTEIN_DATA.map(data => ({ nodePartsName: data.nodePartsName, category: "protein" })),
-  ...TERMINATOR_DATA.map(data => ({ nodePartsName: data.nodePartsName, category: "terminator" }))
+  ...PROMOTER_DATA,
+  ...PROTEIN_DATA,
+  ...TERMINATOR_DATA
 ].reduce((acc, data) => {
-  acc[data.nodePartsName] = data.category;
+  acc[data.nodePartsName] = data.nodeCategory;
   return acc;
 }, {});
