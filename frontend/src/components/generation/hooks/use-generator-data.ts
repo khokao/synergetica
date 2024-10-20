@@ -54,8 +54,8 @@ export const useGeneratorData = () => {
     });
 
     const generatorRequestData: GeneratorRequestData = {
-      reactflow_object_json_str: JSON.stringify(reactflow.toObject()),
-      rbs_target_parameters: currentProteinParameter,
+      reactflowObjectJsonStr: JSON.stringify(reactflow.toObject()),
+      rbsTargetParameters: currentProteinParameter,
     };
 
     try {

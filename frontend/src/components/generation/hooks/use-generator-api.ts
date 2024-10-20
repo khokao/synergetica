@@ -1,8 +1,8 @@
 import { invoke } from "@tauri-apps/api/tauri";
 
 export interface GeneratorRequestData {
-  reactflow_object_json_str: string;
-  rbs_target_parameters: { [key: string]: number };
+  reactflowObjectJsonStr: string;
+  rbsTargetParameters: { [key: string]: number };
 }
 
 interface ChildNodesDetails {
@@ -10,6 +10,7 @@ interface ChildNodesDetails {
   sequence: string;
 }
 
+// names are not renamed to camelCase ?
 export interface GeneratorResponseData {
   parent2child_details: { [key: string]: ChildNodesDetails[] };
 }
@@ -22,8 +23,8 @@ export interface GeneratorError {
 // It only focuses on API communication and does not include any state management or UI logic.
 export const callGeneratorAPI = async (data: GeneratorRequestData) => {
   return await invoke<GeneratorResponseData>("call_generator_api", {
-    reactflowObjectJsonStr: data.reactflow_object_json_str,
-    rbsTargetParameters: data.rbs_target_parameters,
+    reactflowObjectJsonStr: data.reactflowObjectJsonStr,
+    rbsTargetParameters: data.rbsTargetParameters,
   });
 };
 
