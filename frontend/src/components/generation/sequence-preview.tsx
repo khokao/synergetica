@@ -1,7 +1,6 @@
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import type React from "react";
 
-
 export const SequencePreview = ({ data }) => {
   const sequenceIds = Object.keys(data.parent2child_details);
 

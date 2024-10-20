@@ -6,7 +6,6 @@ import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { Slider } from "@/components/ui/slider";
 import type React from "react";
 
-
 export const ParameterPreview = ({ snapshot }) => {
   if (!snapshot) return null;
 

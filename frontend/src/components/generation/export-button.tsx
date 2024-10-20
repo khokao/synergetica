@@ -4,7 +4,6 @@ import { writeTextFile } from "@tauri-apps/api/fs";
 import { ArrowUpToLine } from "lucide-react";
 import type React from "react";
 
-
 export const ExportButton = ({ data }) => {
   const handleExportFASTA = async () => {
     if (!data) return;
