@@ -25,10 +25,10 @@ export const Sliders: React.FC = () => {
       <CardContent className="h-full">
         <ScrollArea className="h-full">
           {proteinEntries.map(([id, name], index) => (
-            <div key={id} className="flex items-center mb-4 pr-4">
-              <Label htmlFor={`slider-${id}`} className="w-40 pr-2 flex items-center">
+            <div key={id} className="flex items-center gap-4 pr-4">
+              <Label htmlFor={`slider-${id}`} className="w-40 flex items-center gap-2">
                 <span
-                  className="inline-block w-3 h-3 rounded-full mr-2"
+                  className="inline-block w-3 h-3 rounded-full"
                   style={{ backgroundColor: `hsl(var(--chart-${(index % 5) + 1}))` }}
                 />
                 {name}

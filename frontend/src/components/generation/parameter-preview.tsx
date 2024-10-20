@@ -23,12 +23,12 @@ export const ParameterPreview = ({ snapshot }) => {
     <Card className="h-full border-0 shadow-none pt-4">
       <CardContent className="h-full">
         <ScrollArea className="h-full">
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
             {proteinEntries.map(([id, name], index) => (
-              <div key={id} className="flex items-center mb-4 pr-4">
-                <Label htmlFor={`slider-${id}`} className="w-40 pr-2 flex items-center">
+              <div key={id} className="flex items-center gap-4 pr-4">
+                <Label htmlFor={`slider-${id}`} className="w-40 flex items-center gap-2">
                   <span
-                    className="inline-block w-3 h-3 rounded-full mr-2"
+                    className="inline-block w-3 h-3 rounded-full"
                     style={{ backgroundColor: `hsl(var(--chart-${(index % 5) + 1}))` }}
                   />
                   {name}
@@ -42,7 +42,7 @@ export const ParameterPreview = ({ snapshot }) => {
                   disabled
                   className="w-full"
                 />
-                <span className="w-20 text-right">{proteinParameter[id]}</span>
+                <span className="w-24 text-right">{proteinParameter[id]}</span>
               </div>
             ))}
           </div>
