@@ -81,6 +81,8 @@ async fn main() {
     }));
 
     Builder::default()
+        .plugin(tauri_plugin_fs::init())
+        .plugin(tauri_plugin_dialog::init())
         .manage(state)
         .invoke_handler(tauri::generate_handler![
             call_generator_api,
