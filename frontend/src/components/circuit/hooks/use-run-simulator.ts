@@ -19,7 +19,7 @@ export const useSimulate = () => {
 
     try {
       const requestData = {
-        flow_json: JSON.stringify(reactflow.toObject()),
+        reactflowObjectJsonStr: JSON.stringify(reactflow.toObject()),
       };
       const responseData = await callCircuitConverterAPI(requestData);
       setConvertResult(responseData);
