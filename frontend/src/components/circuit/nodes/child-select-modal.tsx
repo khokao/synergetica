@@ -1,4 +1,4 @@
-import { CircuitEdgeTypes, CircuitNodeTypes, NODE_HEIGHT, TEMP_NODE_ID } from "@/components/circuit/constants";
+import { CircuitEdgeTypes, CircuitNodeTypes, TEMP_NODE_ID } from "@/components/circuit/constants";
 import { PROMOTER_DATA, PROTEIN_DATA, TERMINATOR_DATA } from "@/components/circuit/nodes/constants";
 import { InformationCard } from "@/components/circuit/nodes/information-card";
 import { Button } from "@/components/ui/button";
@@ -15,19 +15,19 @@ const modalMap = {
   promoter: {
     title: "Select Promoter",
     underlineColor: "border-blue-800",
-    highlightColor: "bg-blue-100",
+    highlightColor: "text-blue-600",
     options: PROMOTER_DATA,
   },
   protein: {
     title: "Select Protein",
     underlineColor: "border-green-800",
-    highlightColor: "bg-green-100",
+    highlightColor: "text-green-600",
     options: PROTEIN_DATA,
   },
   terminator: {
     title: "Select Terminator",
     underlineColor: "border-red-800",
-    highlightColor: "bg-red-100",
+    highlightColor: "text-red-600",
     options: TERMINATOR_DATA,
   },
 };
@@ -67,10 +67,10 @@ const SelectMenu = ({ options, selectedOption, handleSelect }) => {
   return (
     <Command className="flex flex-col h-full w-full">
       <CommandInput placeholder="Search..." />
-      <CommandList className="flex-grow overflow-y-auto mt-2 !max-h-none !h-[60vh]">
+      <CommandList className="flex-grow overflow-y-auto mt-2 max-h-[60vh]">
         <CommandEmpty>No results found.</CommandEmpty>
-        <CommandGroup>
-          <div className="grid grid-cols-2 gap-4 h-full">
+        <CommandGroup className="h-full">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {options.map((o) => {
               const isSelected = selectedOption && o.nodePartsName === selectedOption.nodePartsName;
               return (
@@ -80,7 +80,7 @@ const SelectMenu = ({ options, selectedOption, handleSelect }) => {
                   onSelect={() => handleSelect(o)}
                   asChild
                 >
-                  <div className={`cursor-pointer h-full ${isSelected ? "border-2 border-gray-500 bg-gray-100" : ""}`}>
+                  <div className={`cursor-pointer ${isSelected ? "border-2 border-gray-500 bg-gray-100" : ""}`}>
                     <InformationCard data={o} />
                   </div>
                 </CommandItem>
@@ -153,13 +153,10 @@ const ChildSelectModalComponent = ({ id, data }) => {
   }, [isHighlighted]);
 
   const buttonContent = (
-    <Button
-      variant="ghost"
-      className={`flex justify-between items-center py-2 px-2 w-full hover:bg-gray-100 transition-colors duration-300 ${
-        isHighlighted ? highlightColor : ""
-      }`}
-    >
-      <span className="tracking-wider text-black font-extrabold text-lg">
+    <Button variant="ghost" className="flex justify-between items-center py-2 px-2 w-full hover:bg-gray-100">
+      <span
+        className={`tracking-wider text-black font-extrabold text-lg duration-300 ${isHighlighted ? highlightColor : ""}`}
+      >
         {selectedOption ? selectedOption.nodePartsName : ""}
       </span>
       <ChevronDown />
@@ -182,25 +179,23 @@ const ChildSelectModalComponent = ({ id, data }) => {
           <DialogTrigger asChild>{buttonContent}</DialogTrigger>
         )}
         <DialogContent
-          className="flex flex-col max-w-none h-[80vh] w-[80vw]"
+          className="flex flex-col max-w-none max-h-screen w-[80vw] h-auto overflow-auto"
           aria-describedby={undefined}
           onOpenAutoFocus={(event) => event.preventDefault()}
           onCloseAutoFocus={(event) => event.preventDefault()}
         >
           <DialogHeader className="flex-shrink-0 flex justify-between items-center">
-            <DialogTitle
-              className={`text-xl font-semibold border-b-2 ${underlineColor} pb-2 pl-4 pr-4 mx-auto text-center`}
-            >
+            <DialogTitle className={`text-xl font-semibold border-b-2 ${underlineColor} pb-2 px-4 mx-auto text-center`}>
               {title}
             </DialogTitle>
           </DialogHeader>
 
-          <div className="flex flex-row h-full w-full">
-            <div className="flex flex-col p-4 h-full w-1/3">
+          <div className="flex flex-row h-full w-full min-h-0">
+            <div className="flex flex-col p-4 w-1/3 overflow-auto">
               <CircuitPreview id={id} />
             </div>
             <Separator orientation="vertical" />
-            <div className="flex flex-col p-4 h-full w-2/3 overflow-hidden">
+            <div className="flex flex-col p-4 w-2/3 overflow-auto">
               <SelectMenu options={options} selectedOption={selectedOption} handleSelect={handleSelect} />
             </div>
           </div>
