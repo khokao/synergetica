@@ -1,20 +1,8 @@
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import type React from "react";
 
-interface ChildNodesDetails {
-  nodeCategory: string;
-  sequence: string;
-}
 
-interface GeneratorResponseData {
-  parent2child_details: { [key: string]: ChildNodesDetails[] };
-}
-
-interface SequencePreviewProps {
-  data: GeneratorResponseData;
-}
-
-export const SequencePreview: React.FC<SequencePreviewProps> = ({ data }) => {
+export const SequencePreview = ({ data }) => {
   const sequenceIds = Object.keys(data.parent2child_details);
 
   return (

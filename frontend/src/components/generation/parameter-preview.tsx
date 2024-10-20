@@ -6,15 +6,8 @@ import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { Slider } from "@/components/ui/slider";
 import type React from "react";
 
-interface SnapshotData {
-  proteinParameter: { [id: string]: number };
-}
 
-interface ParameterPreviewProps {
-  snapshot: SnapshotData | null;
-}
-
-export const ParameterPreview: React.FC<ParameterPreviewProps> = ({ snapshot }) => {
+export const ParameterPreview = ({ snapshot }) => {
   if (!snapshot) return null;
 
   const { proteinParameter } = snapshot;

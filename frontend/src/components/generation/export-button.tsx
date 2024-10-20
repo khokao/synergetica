@@ -4,20 +4,8 @@ import { writeTextFile } from "@tauri-apps/api/fs";
 import { ArrowUpToLine } from "lucide-react";
 import type React from "react";
 
-interface ChildNodesDetails {
-  nodeCategory: string;
-  sequence: string;
-}
 
-interface GeneratorResponseData {
-  parent2child_details: { [key: string]: ChildNodesDetails[] };
-}
-
-interface ExportButtonProps {
-  data: GeneratorResponseData;
-}
-
-export const ExportButton: React.FC<ExportButtonProps> = ({ data }) => {
+export const ExportButton = ({ data }) => {
   const handleExportFASTA = async () => {
     if (!data) return;
 
