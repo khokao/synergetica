@@ -22,7 +22,7 @@ router = APIRouter()
 
 @router.post('/convert-gui-circuit', response_model=ConverterOutput)
 async def convert_gui_circuit(data: ConverterInput) -> ConverterOutput:
-    reactflow_data = json.loads(data.flow_data_json_str)
+    reactflow_data = json.loads(data.reactflow_object_json_str)
     reactflow_object = ReactFlowObject(**reactflow_data)
 
     node_id2idx = {node.id: idx for idx, node in enumerate(reactflow_object.nodes)}
