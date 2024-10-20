@@ -7,10 +7,7 @@ mod schemas;
 use clients::APIClient;
 use errors::{handle_request_error, handle_response_error};
 use schemas::{ConverterResponseData, GeneratorResponseData};
-use serde::Serialize;
 use std::collections::HashMap;
-use std::fs;
-use std::path::Path;
 use std::sync::Arc;
 use tauri::Builder;
 use tokio::sync::Mutex;
@@ -62,8 +59,8 @@ async fn cancel_generator_api(state: tauri::State<'_, Arc<Mutex<AppState>>>) -> 
 }
 
 #[tauri::command]
-async fn call_circuit_converter_api(flow_json: String) -> Result<ConverterResponseData, String> {
-    let response = APIClient::send_request_circuit_converter(flow_json).await;
+async fn call_circuit_converter_api(reactflow_object_json_str: String) -> Result<ConverterResponseData, String> {
+    let response = APIClient::send_request_circuit_converter(reactflow_object_json_str).await;
 
     match response {
         Ok(resp) => {

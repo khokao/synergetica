@@ -21,12 +21,14 @@ impl APIClient {
             .await
     }
 
-    pub async fn send_request_circuit_converter(flow_json: String) -> Result<reqwest::Response, reqwest::Error> {
+    pub async fn send_request_circuit_converter(
+        reactflow_object_json_str: String,
+    ) -> Result<reqwest::Response, reqwest::Error> {
         let client = reqwest::Client::new();
         client
             .post("http://127.0.0.1:8000/convert-gui-circuit")
             .json(&json!({
-                "flow_data_json_str":flow_json
+                "reactflow_object_json_str":reactflow_object_json_str
             }))
             .send()
             .await
