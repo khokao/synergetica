@@ -24,6 +24,7 @@ export const NavItem = ({ href, icon: Icon, label }: NavItemProps) => {
         "flex items-center space-x-2",
         isActive ? "bg-white text-gray-900 shadow-md" : "text-gray-600 hover:text-gray-800",
       )}
+      data-testid="nav-item-button"
     >
       <Link href={href} className="flex items-center space-x-2">
         <Icon className="w-5 h-5" />
