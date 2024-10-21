@@ -1,6 +1,5 @@
-
-import { renderHook, act } from "@testing-library/react";
 import { usePanelControls } from "@/components/circuit/hooks/use-panel-controls";
+import { act, renderHook } from "@testing-library/react";
 
 const createMockPanelRef = () => ({
   resize: vi.fn(),

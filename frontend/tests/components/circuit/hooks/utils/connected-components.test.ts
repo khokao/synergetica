@@ -1,8 +1,7 @@
-import { describe, it, expect } from "vitest";
 import { getConnectedComponents } from "@/components/circuit/hooks/utils/connected-components";
+import { describe, expect, it } from "vitest";
 
 describe("getConnectedComponents", () => {
-
   it("should return a single group when all nodes are connected", () => {
     // Arrange
     const nodes = [

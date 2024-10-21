@@ -1,8 +1,8 @@
-import React from "react";
-import { render, screen } from "@testing-library/react";
-import { describe, it, expect } from "vitest";
 import { DnDProvider, useDnD } from "@/components/circuit/dnd/dnd-context";
+import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import type React from "react";
+import { describe, expect, it } from "vitest";
 
 const TestComponent: React.FC = () => {
   const [dndCategory, setDnDCategory] = useDnD();
@@ -10,7 +10,9 @@ const TestComponent: React.FC = () => {
   return (
     <div>
       <span data-testid="dnd-category">{dndCategory || "No category"}</span>
-      <button onClick={() => setDnDCategory("Test Category")}>Set Category</button>
+      <button type="button" onClick={() => setDnDCategory("Test Category")}>
+        Set Category
+      </button>
     </div>
   );
 };
@@ -21,7 +23,7 @@ describe("DnDContext", () => {
     render(
       <DnDProvider>
         <TestComponent />
-      </DnDProvider>
+      </DnDProvider>,
     );
 
     // Act
@@ -36,7 +38,7 @@ describe("DnDContext", () => {
     render(
       <DnDProvider>
         <TestComponent />
-      </DnDProvider>
+      </DnDProvider>,
     );
     const user = userEvent.setup();
 

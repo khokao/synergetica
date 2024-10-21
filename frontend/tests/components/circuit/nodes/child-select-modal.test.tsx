@@ -1,8 +1,7 @@
-import { render, screen, fireEvent } from "@testing-library/react";
 import { ChildSelectModal } from "@/components/circuit/nodes/child-select-modal";
+import { fireEvent, render, screen } from "@testing-library/react";
 
-import { describe, it, expect } from "vitest";
-
+import { describe, expect, it } from "vitest";
 
 vi.mock("@xyflow/react", async () => {
   const actual = await vi.importActual("@xyflow/react");
@@ -18,14 +17,13 @@ vi.mock("@xyflow/react", async () => {
   };
 });
 
-
 describe("ChildSelectModal", () => {
   const defaultId = "test-id";
-  const defaultData = {nodeCategory: "promoter", nodePartsName: "test-name"}
+  const defaultData = { nodeCategory: "promoter", nodePartsName: "test-name" };
 
   const renderComponent = () => {
     render(<ChildSelectModal id={defaultId} data={defaultData} />);
-  }
+  };
 
   it("renders the SelectMenu and CircuitPreview", async () => {
     // Arrange

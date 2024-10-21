@@ -1,8 +1,7 @@
-import { render, screen, waitFor } from "@testing-library/react";
 import { SimulatorButtons } from "@/components/circuit/simulation/simulator-buttons";
-import { vi } from "vitest";
+import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-
+import { vi } from "vitest";
 
 const handleResetSimulateMock = vi.fn();
 const handleRunSimulateMock = vi.fn();
@@ -18,11 +17,11 @@ describe("SimulatorButtons", () => {
   beforeEach(() => {
     vi.useFakeTimers({
       shouldAdvanceTime: true,
-    })
-  })
+    });
+  });
   afterEach(() => {
-    vi.restoreAllMocks()
-  })
+    vi.restoreAllMocks();
+  });
 
   it("calls handleResetSimulate when the reset button is clicked", async () => {
     // Arrange
@@ -60,7 +59,7 @@ describe("SimulatorButtons", () => {
     });
   });
 
-  it ("displays 'Simulate' tooltip on hover over simulate button", async () => {
+  it("displays 'Simulate' tooltip on hover over simulate button", async () => {
     // Arrange
     render(<SimulatorButtons />);
 

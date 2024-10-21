@@ -1,7 +1,7 @@
-import { describe, it, expect } from "vitest";
-import { createNearestEdge } from "@/components/circuit/hooks/utils/nearest-edge";
-import { createChildNode } from "@/components/circuit/hooks/utils/create-node";
 import { NODE_CONNECT_DISTANCE } from "@/components/circuit/constants";
+import { createChildNode } from "@/components/circuit/hooks/utils/create-node";
+import { createNearestEdge } from "@/components/circuit/hooks/utils/nearest-edge";
+import { describe, expect, it } from "vitest";
 
 describe("createNearestEdge", () => {
   it("should return null when there are no nodes in proximity to connect", () => {
@@ -37,7 +37,7 @@ describe("createNearestEdge", () => {
     const sourceNode = createChildNode({ x: 0, y: 0 }, "source-category");
     const closerTargetNode = createChildNode({ x: NODE_CONNECT_DISTANCE + 1, y: 0 }, "closer-target-category");
     const fartherTargetNode = createChildNode({ x: NODE_CONNECT_DISTANCE + 1000, y: 0 }, "farther-target-category");
-    const nodes  = [sourceNode, closerTargetNode, fartherTargetNode];
+    const nodes = [sourceNode, closerTargetNode, fartherTargetNode];
 
     // Act
     const result = createNearestEdge(sourceNode, fartherTargetNode, nodes);

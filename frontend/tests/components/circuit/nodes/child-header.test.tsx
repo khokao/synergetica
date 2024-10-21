@@ -1,7 +1,6 @@
-import { render, screen } from "@testing-library/react";
 import { ChildHeader } from "@/components/circuit/nodes/child-header";
-import { describe, it, expect } from "vitest";
-
+import { render, screen } from "@testing-library/react";
+import { describe, expect, it } from "vitest";
 
 describe("ChildHeader Component", () => {
   it("displays the correct text and styles for promoter category", () => {

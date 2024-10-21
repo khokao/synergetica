@@ -1,9 +1,8 @@
+import { ChildFooter } from "@/components/circuit/nodes/child-footer";
 import { render, screen } from "@testing-library/react";
-import { describe, it, expect, vi } from "vitest";
 import userEvent from "@testing-library/user-event";
 import React from "react";
-import { ChildFooter } from "@/components/circuit/nodes/child-footer";
-
+import { describe, expect, it, vi } from "vitest";
 
 const deleteElementsMock = vi.fn();
 

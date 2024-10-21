@@ -1,6 +1,6 @@
-import { describe, it, expect } from "vitest";
+import { EDGE_LENGTH, NODE_WIDTH } from "@/components/circuit/constants";
 import { adjustNodePositionsAndConnectHandles } from "@/components/circuit/hooks/utils/adjust-position";
-import { NODE_WIDTH, EDGE_LENGTH } from "@/components/circuit/constants";
+import { describe, expect, it } from "vitest";
 
 describe("adjustNodePositionsAndConnectHandles", () => {
   it("should adjust the position of the source node when it is the adjusted node", () => {

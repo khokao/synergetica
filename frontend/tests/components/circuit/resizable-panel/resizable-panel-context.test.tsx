@@ -1,15 +1,16 @@
-import React from "react";
-import { render, screen } from "@testing-library/react";
-import { describe, it, expect } from "vitest";
 import { PanelProvider, usePanelContext } from "@/components/circuit/resizable-panel/resizable-panel-context";
-
+import { render, screen } from "@testing-library/react";
+import type React from "react";
+import { describe, expect, it } from "vitest";
 
 const TestComponent: React.FC = () => {
   const { openPanels, togglePanel } = usePanelContext();
   return (
     <div>
       <span data-testid="left-panel">{openPanels.left ? "Open" : "Closed"}</span>
-      <button onClick={() => togglePanel("left")}>Toggle Left Panel</button>
+      <button type="button" onClick={() => togglePanel("left")}>
+        Toggle Left Panel
+      </button>
     </div>
   );
 };
@@ -26,7 +27,7 @@ describe("PanelContext", () => {
     render(
       <PanelProvider value={contextValue}>
         <TestComponent />
-      </PanelProvider>
+      </PanelProvider>,
     );
 
     // Assert

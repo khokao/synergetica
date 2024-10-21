@@ -1,6 +1,6 @@
-import { render, screen } from "@testing-library/react";
 import StudioPage from "@/app/studio/page";
-import { describe, it, expect } from "vitest";
+import { render, screen } from "@testing-library/react";
+import { describe, expect, it } from "vitest";
 
 vi.mock("@/components/studio/studio", () => ({
   Studio: () => <div data-testid="studio-component">Studio Component</div>,

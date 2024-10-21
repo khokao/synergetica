@@ -1,7 +1,6 @@
-import { render, screen, fireEvent } from "@testing-library/react";
-import { vi } from "vitest";
 import { ZoomInOut } from "@/components/circuit/operator/zoom-in-out";
-
+import { fireEvent, render, screen } from "@testing-library/react";
+import { vi } from "vitest";
 
 const zoomInMock = vi.fn();
 const zoomOutMock = vi.fn();

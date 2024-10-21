@@ -1,26 +1,25 @@
-import { fireEvent, render, screen, waitFor } from '@testing-library/react';
-import { DnDPanel } from '@/components/circuit/dnd/dnd-panel';
-import { describe, it, expect, vi } from 'vitest';
+import { DnDPanel } from "@/components/circuit/dnd/dnd-panel";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-
+import { describe, expect, it, vi } from "vitest";
 
 const setDnDCategoryMock = vi.fn();
 
-vi.mock('@/components/circuit/dnd/dnd-context', () => ({
+vi.mock("@/components/circuit/dnd/dnd-context", () => ({
   useDnD: () => [null, setDnDCategoryMock],
 }));
 
-describe('DnDPanel', () => {
+describe("DnDPanel", () => {
   beforeEach(() => {
     vi.useFakeTimers({
       shouldAdvanceTime: true,
-    })
-  })
+    });
+  });
   afterEach(() => {
-    vi.restoreAllMocks()
-  })
+    vi.restoreAllMocks();
+  });
 
-  it('displays the tooltip when hovering over an icon', async () => {
+  it("displays the tooltip when hovering over an icon", async () => {
     // Arrange
     render(<DnDPanel />);
 
@@ -38,7 +37,7 @@ describe('DnDPanel', () => {
     });
   });
 
-  it('calls the onDragStart function with the correct node category when dragging starts', () => {
+  it("calls the onDragStart function with the correct node category when dragging starts", () => {
     // Arrange
     render(<DnDPanel />);
 
@@ -46,6 +45,6 @@ describe('DnDPanel', () => {
     fireEvent.dragStart(screen.getByTestId("icon-promoter"));
 
     // Assert
-    expect(setDnDCategoryMock).toHaveBeenCalledWith('promoter');
+    expect(setDnDCategoryMock).toHaveBeenCalledWith("promoter");
   });
 });

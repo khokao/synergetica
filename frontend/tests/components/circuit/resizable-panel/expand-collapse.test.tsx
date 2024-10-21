@@ -1,8 +1,7 @@
-import { render, screen, waitFor } from "@testing-library/react";
 import { ExpandCollapseButton } from "@/components/circuit/resizable-panel/expand-collapse";
-import { vi } from "vitest";
+import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-
+import { vi } from "vitest";
 
 let openPanels = { left: false, right: true };
 const togglePanelMock = vi.fn(() => {
@@ -20,15 +19,14 @@ describe("ExpandCollapseButton", () => {
   beforeEach(() => {
     vi.useFakeTimers({
       shouldAdvanceTime: true,
-    })
+    });
 
     openPanels = { left: false, right: true };
     togglePanelMock.mockClear();
-  })
+  });
   afterEach(() => {
-    vi.restoreAllMocks()
-  })
-
+    vi.restoreAllMocks();
+  });
 
   it("displays 'Open' tooltip on hover over open button", async () => {
     // Arrange

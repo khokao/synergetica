@@ -30,9 +30,7 @@ export const Studio = () => {
                   // @ts-ignore
                   ref={panelRefs.left}
                 >
-                  <div className="h-full p-4">
-
-                  </div>
+                  <div className="h-full p-4" />
                 </ResizablePanel>
                 <ResizableHandle withHandle />
                 <ResizablePanel defaultSize={100}>
