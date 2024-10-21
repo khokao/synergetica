@@ -1,3 +1,4 @@
+import { WS_URL } from "@/components/simulation/constants";
 import { useConverter } from "@/components/simulation/contexts/converter-context";
 import { useSimulator } from "@/components/simulation/contexts/simulator-context";
 import { useEffect, useRef } from "react";
@@ -14,7 +15,7 @@ export const useWebSocketSimulation = (proteinParameter: { [id: string]: number 
         return;
       }
 
-      const ws = new WebSocket("ws://127.0.0.1:8000/ws/simulation");
+      const ws = new WebSocket(WS_URL);
 
       ws.onopen = () => {
         ws.send(JSON.stringify(convertResult));

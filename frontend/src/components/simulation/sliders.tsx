@@ -41,6 +41,7 @@ export const Sliders: React.FC = () => {
                 value={[proteinParameter[id]]}
                 onValueChange={handleProteinParamChange(id)}
                 className="w-full"
+                aria-label={name}
               />
               <span className="w-24 text-right">{proteinParameter[id]}</span>
             </div>
