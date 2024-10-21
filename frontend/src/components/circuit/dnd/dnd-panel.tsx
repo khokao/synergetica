@@ -23,6 +23,7 @@ const IconTooltip = ({ label, icon, color, nodeCategory, onDragStart }) => {
           onDragStart={handleDragStart}
           onPointerEnter={() => setTooltipVisible(true)}
           onPointerLeave={() => setTooltipVisible(false)}
+          data-testid={`icon-${nodeCategory}`}
         >
           {icon}
         </div>

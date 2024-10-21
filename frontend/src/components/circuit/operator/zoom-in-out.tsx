@@ -8,7 +8,10 @@ export const ZoomInOut: FC = () => {
   const { zoom } = useViewport();
 
   return (
-    <div className="flex bg-gray-100 rounded-xl shadow-lg border border-gray-300">
+    <div
+      className="flex bg-gray-100 rounded-xl shadow-lg border border-gray-300"
+      data-testid="zoom-in-out"
+    >
       <Button
         variant="ghost"
         size="icon"

@@ -13,7 +13,13 @@ export const SimulatorButtons = () => {
       <div className="absolute !right-5 !bottom-5 flex space-x-4">
         <Tooltip>
           <TooltipTrigger asChild>
-            <Button variant="default" size="icon" onClick={handleResetSimulate} className="w-10 h-10 p-2 shadow-lg">
+            <Button
+              variant="default"
+              size="icon"
+              onClick={handleResetSimulate}
+              className="w-10 h-10 p-2 shadow-lg"
+              data-testid="simulation-reset-button"
+            >
               <RotateCw className="w-10 h-10" />
             </Button>
           </TooltipTrigger>
@@ -28,7 +34,13 @@ export const SimulatorButtons = () => {
 
         <Tooltip>
           <TooltipTrigger asChild>
-            <Button variant="default" size="icon" onClick={handleRunSimulate} className="w-10 h-10 p-2 shadow-lg">
+            <Button
+              variant="default"
+              size="icon"
+              onClick={handleRunSimulate}
+              className="w-10 h-10 p-2 shadow-lg"
+              data-testid="simulation-run-button"
+            >
               <ChartSpline className="w-10 h-10" />
             </Button>
           </TooltipTrigger>

@@ -36,7 +36,7 @@ const SettingsDropDownMenu = ({ id }) => {
           <Ellipsis />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="center" className="bg-white shadow-lg">
+      <DropdownMenuContent align="center" className="bg-white shadow-lg" data-testid="dropdownmenu-content">
         <DropdownMenuItem onClick={handleDeleteNode} className="flex items-center cursor-pointer p-2 hover:bg-gray-100">
           <Trash2 className="w-4 h-4 mr-2" />
           Delete

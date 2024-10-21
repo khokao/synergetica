@@ -26,7 +26,13 @@ export const ExpandCollapseButton = ({ position }) => {
       <Tooltip>
         <TooltipTrigger asChild>
           <div>
-            <Button onClick={() => togglePanel(position)} variant="ghost" size="icon" className="p-2">
+            <Button
+              variant="ghost"
+              size="icon"
+              className="p-2"
+              onClick={() => togglePanel(position)}
+              data-testid="expand-collapse-button"
+            >
               {isOpen ? icons[position].close : icons[position].open}
             </Button>
           </div>

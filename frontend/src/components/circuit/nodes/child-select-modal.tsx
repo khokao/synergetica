@@ -56,6 +56,7 @@ const CircuitPreview = ({ id }) => {
         edgesFocusable={false}
         elementsSelectable={false}
         className="border-2 border-gray-300 rounded-lg p-4"
+        data-testid="select-modal-preview-flow"
       >
         <Background variant={BackgroundVariant.Dots} />
       </ReactFlow>
@@ -65,7 +66,7 @@ const CircuitPreview = ({ id }) => {
 
 const SelectMenu = ({ options, selectedOption, handleSelect }) => {
   return (
-    <Command className="flex flex-col h-full w-full">
+    <Command className="flex flex-col h-full w-full" data-testid="select-menu">
       <CommandInput placeholder="Search..." />
       <CommandList className="flex-grow overflow-y-auto mt-2 max-h-[60vh]">
         <CommandEmpty>No results found.</CommandEmpty>
@@ -153,7 +154,11 @@ const ChildSelectModalComponent = ({ id, data }) => {
   }, [isHighlighted]);
 
   const buttonContent = (
-    <Button variant="ghost" className="flex justify-between items-center py-2 px-2 w-full hover:bg-gray-100">
+    <Button
+      variant="ghost"
+      className="flex justify-between items-center py-2 px-2 w-full hover:bg-gray-100"
+      data-testid="select-modal-button"
+    >
       <span
         className={`tracking-wider text-black font-extrabold text-lg duration-300 ${isHighlighted ? highlightColor : ""}`}
       >
