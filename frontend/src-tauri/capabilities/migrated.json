@@ -7,13 +7,11 @@
   ],
   "permissions": [
     "core:default",
-    "fs:allow-write-file",
+    "fs:allow-write-text-file",
     "dialog:allow-open",
     "dialog:allow-save",
     "dialog:allow-message",
     "dialog:allow-ask",
-    "dialog:allow-confirm",
-    "fs:default",
-    "fs:default"
+    "dialog:allow-confirm"
   ]
 }
