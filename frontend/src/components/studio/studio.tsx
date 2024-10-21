@@ -31,7 +31,7 @@ export const Studio = () => {
                   ref={panelRefs.left}
                 >
                   <div className="h-full p-4">
-                    <span>Left Panel</span>
+
                   </div>
                 </ResizablePanel>
                 <ResizableHandle withHandle />

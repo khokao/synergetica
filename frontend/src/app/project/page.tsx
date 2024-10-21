@@ -1,5 +1,5 @@
 const ProjectPage = () => {
-  return <div className="p-4">WIP</div>;
+  return null;
 };
 
 export default ProjectPage;
