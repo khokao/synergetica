@@ -6,11 +6,8 @@ mod schemas;
 
 use clients::APIClient;
 use errors::{handle_request_error, handle_response_error};
-use schemas::{GeneratorResponseData,ConverterResponseData};
-use serde::Serialize;
+use schemas::{ConverterResponseData, GeneratorResponseData};
 use std::collections::HashMap;
-use std::fs;
-use std::path::Path;
 use std::sync::Arc;
 use tauri::Builder;
 use tokio::sync::Mutex;
@@ -62,8 +59,8 @@ async fn cancel_generator_api(state: tauri::State<'_, Arc<Mutex<AppState>>>) -> 
 }
 
 #[tauri::command]
-async fn call_circuit_converter_api(flow_json: String) -> Result<ConverterResponseData, String> {
-    let response = APIClient::send_request_circuit_converter(flow_json).await;
+async fn call_circuit_converter_api(reactflow_object_json_str: String) -> Result<ConverterResponseData, String> {
+    let response = APIClient::send_request_circuit_converter(reactflow_object_json_str).await;
 
     match response {
         Ok(resp) => {
@@ -77,39 +74,6 @@ async fn call_circuit_converter_api(flow_json: String) -> Result<ConverterRespon
     }
 }
 
-#[derive(Serialize)]
-struct FileEntry {
-    path: String,
-    is_dir: bool,
-    children: Option<Vec<FileEntry>>,
-}
-
-#[tauri::command]
-fn read_dir_recursive(path: &Path) -> Result<FileEntry, String> {
-    let mut entry = FileEntry {
-        path: path.display().to_string(),
-        is_dir: path.is_dir(),
-        children: None,
-    };
-
-    if path.is_dir() {
-        let children = fs::read_dir(path)
-            .map_err(|err| err.to_string())?
-            .filter_map(|entry| entry.ok())
-            .map(|entry| read_dir_recursive(&entry.path()))
-            .collect::<Result<Vec<_>, _>>()?;
-        entry.children = Some(children);
-    }
-
-    Ok(entry)
-}
-
-#[tauri::command]
-fn read_dir(path: String) -> Result<FileEntry, String> {
-    let path = Path::new(&path);
-    read_dir_recursive(path)
-}
-
 #[tokio::main]
 async fn main() {
     let state = Arc::new(Mutex::new(AppState {
@@ -117,12 +81,13 @@ async fn main() {
     }));
 
     Builder::default()
+        .plugin(tauri_plugin_fs::init())
+        .plugin(tauri_plugin_dialog::init())
         .manage(state)
         .invoke_handler(tauri::generate_handler![
             call_generator_api,
             cancel_generator_api,
             call_circuit_converter_api,
-            read_dir
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
