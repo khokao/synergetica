@@ -1,9 +1,10 @@
 import { NODE_HEIGHT, NODE_WIDTH } from "@/components/circuit/constants";
 import type { Node, XYPosition } from "@xyflow/react";
 import { humanId } from "human-id";
+import { nanoid } from "nanoid";
 
 export const createChildNode = (position: XYPosition, nodeCategory): Node => ({
-  id: humanId({ separator: "-", capitalize: false }),
+  id: nanoid(),
   type: "child",
   position,
   width: NODE_WIDTH,
