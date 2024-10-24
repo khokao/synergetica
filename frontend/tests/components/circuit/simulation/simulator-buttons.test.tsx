@@ -1,5 +1,5 @@
 import { SimulatorButtons } from "@/components/circuit/simulation/simulator-buttons";
-import { render, screen, waitFor } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { vi } from "vitest";
 
@@ -14,15 +14,6 @@ vi.mock("@/components/circuit/hooks/use-run-simulator", () => ({
 }));
 
 describe("SimulatorButtons", () => {
-  beforeEach(() => {
-    vi.useFakeTimers({
-      shouldAdvanceTime: true,
-    });
-  });
-  afterEach(() => {
-    vi.restoreAllMocks();
-  });
-
   it("calls handleResetSimulate when the reset button is clicked", async () => {
     // Arrange
     render(<SimulatorButtons />);
