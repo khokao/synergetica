@@ -21,8 +21,12 @@ export const GenerationButtons = () => {
           <Tooltip>
             <TooltipTrigger asChild>
               <div>
-                <Button size="icon" onClick={generate} disabled={isMutating}>
-                  {isMutating ? <Loader2 className="w-5 h-5 animate-spin" /> : <Play className="w-5 h-5" />}
+                <Button size="icon" onClick={generate} disabled={isMutating} data-testid="run-button">
+                  {isMutating ? (
+                    <Loader2 className="w-5 h-5 animate-spin" data-testid="loader-icon" />
+                  ) : (
+                    <Play className="w-5 h-5" data-testid="play-icon" />
+                  )}
                 </Button>
               </div>
             </TooltipTrigger>
@@ -38,7 +42,7 @@ export const GenerationButtons = () => {
           <Tooltip>
             <TooltipTrigger asChild>
               <div>
-                <Button size="icon" disabled={!isMutating} onClick={cancel}>
+                <Button size="icon" disabled={!isMutating} onClick={cancel} data-testid="cancel-button">
                   <Ban className="w-5 h-5" />
                 </Button>
               </div>
@@ -51,7 +55,7 @@ export const GenerationButtons = () => {
             </RadixTooltip.Portal>
           </Tooltip>
 
-          <GenerationResultModal data={data} snapshot={snapshot} />
+          <GenerationResultModal data={data} snapshot={snapshot} data-testid="generation-result-modal" />
         </TooltipProvider>
       </CardContent>
     </Card>

@@ -16,7 +16,7 @@ export const GenerationResultModal = ({ data, snapshot }) => {
         <TooltipTrigger asChild>
           <div>
             <DialogTrigger asChild>
-              <Button size="icon" disabled={!data}>
+              <Button size="icon" disabled={!data} data-testid="dna-button">
                 <Dna className="w-5 h-5" />
               </Button>
             </DialogTrigger>
