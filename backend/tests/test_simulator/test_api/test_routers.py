@@ -45,7 +45,7 @@ def test_websocket_simulation(convert_result_example):
         assert "Function 'ODEtoSolve' defined." in response
 
         # Act
-        simulation_params = {'params': {'RPp8K6j_urCFeMtsm2pZv': 100, 'QaBV3nMXJxcNaNN_hE6ji': 200 }}
+        simulation_params = {'params': {'RPp8K6j_urCFeMtsm2pZv': 100, 'QaBV3nMXJxcNaNN_hE6ji': 200}}
         websocket.send_text(json.dumps(simulation_params))
         response = websocket.receive_text()
 
