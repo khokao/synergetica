@@ -39,7 +39,7 @@ describe("ExportButton Component", () => {
     });
   });
 
-  it("does not call writeTextFile if save is cancelled", async () => {
+  it("does not call writeTextFile if save is canceled", async () => {
     // Arrange
     const mockData = {
       parent2child_details: {
