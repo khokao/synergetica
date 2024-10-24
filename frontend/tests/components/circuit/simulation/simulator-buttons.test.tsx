@@ -44,32 +44,4 @@ describe("SimulatorButtons", () => {
     // Assert
     expect(handleRunSimulateMock).toHaveBeenCalledTimes(1);
   });
-
-  it("displays 'Reset' tooltip on hover over reset button", async () => {
-    // Arrange
-    render(<SimulatorButtons />);
-
-    // Act
-    await userEvent.hover(screen.getByTestId("simulation-reset-button"));
-    vi.advanceTimersByTime(500);
-
-    // Assert
-    await waitFor(() => {
-      expect(screen.getByRole("tooltip", { name: "Reset" })).toBeInTheDocument();
-    });
-  });
-
-  it("displays 'Simulate' tooltip on hover over simulate button", async () => {
-    // Arrange
-    render(<SimulatorButtons />);
-
-    // Act
-    await userEvent.hover(screen.getByTestId("simulation-run-button"));
-    vi.advanceTimersByTime(500);
-
-    // Assert
-    await waitFor(() => {
-      expect(screen.getByRole("tooltip", { name: "Simulate" })).toBeInTheDocument();
-    });
-  });
 });

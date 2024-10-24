@@ -1,56 +1,41 @@
 import { useSimulate } from "@/components/circuit/hooks/use-run-simulator";
 import { Button } from "@/components/ui/button";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import * as RadixTooltip from "@radix-ui/react-tooltip";
 import { ChartSpline, RotateCw } from "lucide-react";
 import React from "react";
 
 export const SimulatorButtons = () => {
   const { handleRunSimulate, handleResetSimulate } = useSimulate();
 
+  const buttons = [
+    {
+      onClick: handleRunSimulate,
+      icon: <ChartSpline className="w-5 h-5" />,
+      label: "Simulate",
+      testId: "simulation-run-button",
+    },
+    {
+      onClick: handleResetSimulate,
+      icon: <RotateCw className="w-5 h-5" />,
+      label: "Reset",
+      testId: "simulation-reset-button",
+    },
+  ];
+
   return (
-    <TooltipProvider>
-      <div className="absolute !right-5 !bottom-5 flex space-x-4">
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <Button
-              variant="default"
-              size="icon"
-              onClick={handleResetSimulate}
-              className="w-10 h-10 p-2 shadow-lg"
-              data-testid="simulation-reset-button"
-            >
-              <RotateCw className="w-10 h-10" />
-            </Button>
-          </TooltipTrigger>
-
-          {/* Using RadixTooltip.Portal to avoid layout issues caused by parent styles */}
-          <RadixTooltip.Portal>
-            <TooltipContent align="center">
-              <p>Reset</p>
-            </TooltipContent>
-          </RadixTooltip.Portal>
-        </Tooltip>
-
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <Button
-              variant="default"
-              size="icon"
-              onClick={handleRunSimulate}
-              className="w-10 h-10 p-2 shadow-lg"
-              data-testid="simulation-run-button"
-            >
-              <ChartSpline className="w-10 h-10" />
-            </Button>
-          </TooltipTrigger>
-          <RadixTooltip.Portal>
-            <TooltipContent align="center">
-              <p>Simulate</p>
-            </TooltipContent>
-          </RadixTooltip.Portal>
-        </Tooltip>
-      </div>
-    </TooltipProvider>
+    <div className="absolute right-5 bottom-5 flex flex-col space-y-2">
+      {buttons.map(({ onClick, icon, label, testId }) => (
+        <Button
+          key={testId}
+          variant="default"
+          size="icon"
+          onClick={onClick}
+          className="p-2 w-28 flex items-center"
+          data-testid={testId}
+        >
+          <div className="w-8 flex justify-center">{icon}</div>
+          <span className="flex-1 text-center">{label}</span>
+        </Button>
+      ))}
+    </div>
   );
 };
