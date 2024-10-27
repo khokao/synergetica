@@ -11,13 +11,14 @@ use std::collections::HashMap;
 use std::sync::Arc;
 use tauri::Builder;
 use tauri::Manager;
+use tauri::path::BaseDirectory;
 use tauri::async_runtime;
 use tokio_util::sync::CancellationToken;
 use std::process::{Command,Stdio};
 use std::io::prelude::*;
 use std::io::BufReader;
 use tokio::sync::Mutex;
-use tauri_plugin_log::LogTarget;
+use tauri_plugin_log::{Target,TargetKind};
 use log::{info,LevelFilter};
 
 struct AppState {
@@ -83,7 +84,6 @@ async fn call_circuit_converter_api(reactflow_object_json_str: String) -> Result
 
 #[tokio::main]
 async fn main() {
-
     let state = Arc::new(Mutex::new(AppState {
         cancellation_token: CancellationToken::new(),
     }));
@@ -94,9 +94,9 @@ async fn main() {
         .plugin(
                 tauri_plugin_log::Builder::new()
                     .targets([
-                        LogTarget::Stdout, 
-                        LogTarget::Webview,
-                        LogTarget::LogDir,
+                        Target::new(TargetKind::Stdout),
+                        Target::new(TargetKind::Webview),
+                        Target::new(TargetKind::LogDir { file_name: None }),
                     ])
                     .level(LevelFilter::Info)
                     .build(),
@@ -139,9 +139,8 @@ async fn main() {
             }
 
             // get compose.yml file path
-            let resource_path = app.path_resolver()
-            .resolve_resource("compose.yml")
-            .expect("failed to resolve resource");
+            let resource_path = app.path()
+            .resolve("compose.yml", BaseDirectory::Resource)?;
 
             app.manage(ResourcePath(resource_path.clone()));
 
@@ -171,11 +170,11 @@ async fn main() {
             cancel_generator_api,
             call_circuit_converter_api,
         ])
-        .on_window_event(|event|{
-        if let tauri::WindowEvent::CloseRequested { .. } = event.event() {
-            let app_handle = event.window().app_handle();
+        .on_window_event(|window, event|{
+        if let tauri::WindowEvent::CloseRequested { .. } = event {
+            let app_handle = window.app_handle();
             let resource_path = app_handle.state::<ResourcePath>().0.clone();
-            
+                
            
             async_runtime::spawn_blocking(move || {
             Command::new("docker-compose")
