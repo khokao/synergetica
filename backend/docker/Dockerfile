@@ -1,24 +1,26 @@
 # requirements-stage
-FROM python:3.12-slim as requirement-stage
+FROM python:3.12-slim as build
 
 WORKDIR /tmp
 
-RUN pip install poetry 
+RUN pip install --upgrade pip && pip install poetry 
 
 COPY ./pyproject.toml ./poetry.lock /tmp/
 
-RUN poetry export -f requirements.txt --output requirements.txt --without-hashes
+RUN poetry config virtualenvs.create false &&\
+    poetry install --only main &&\
+    rm -rf ~/.cache
 
 # build-stage
-FROM python:3.12-slim
+FROM python:3.12-slim as app
 WORKDIR /app
 
-COPY --from=requirement-stage /tmp/requirements.txt /app/requirements.txt
-COPY ./generator /app/generator
+COPY --from=build /usr/local/lib/python3.12/site-packages /usr/local/lib/python3.12/site-packages
+COPY --from=build /usr/local/bin /usr/local/bin
+
+COPY ./generator /app/generator 
 COPY ./simulator /app/simulator
 COPY ./datasets /app/datasets
 COPY ./common /app/common
-
-RUN pip install --no-cache-dir --upgrade -r /app/requirements.txt
 
 EXPOSE 8080 8000
