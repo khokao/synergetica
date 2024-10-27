@@ -1,24 +1,7 @@
 version: '3.12'
 services:
-  gcIDE-simulator:
+  gcIDE:
     build:
       context: ./
       dockerfile: docker/Dockerfile
-    image: gc-ide-server:slim
-    command: uvicorn simulator.api.main:app --host 0.0.0.0 --port 8000
-    ports:
-      - "8000:8000"
-  
-  gcIDE-generator:
-    build:
-      context: ./
-      dockerfile: docker/Dockerfile
-    image: gc-ide-server:slim
-    environment:
-      - HF_HOME=/app/.cache/huggingface
-    command: >
-      bash -c 'huggingface-cli login --token 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 &&
-      fastapi dev generator/api/main.py --host 0.0.0.0 --port 8080'
-    ports:
-      - "8080:8080"
-    
+    image: gc-ide-server
