@@ -15,13 +15,13 @@ class SimulatorOutput(BaseModel):
 
 
 class ConverterInput(BaseModel):
-    flow_data_json_str: str
+    reactflow_object_json_str: str
 
 
 class ConverterOutput(BaseModel):
-    num_protein: int
-    proteins: dict[str, str]
+    protein_id2name: dict[str, str]
     function_str: str
+    valid: bool
 
 
 class ReactFlowChildNodeControlItem(BaseModel):

@@ -1,67 +1,15 @@
 {
-  "$schema": "../node_modules/@tauri-apps/cli/schema.json",
+  "productName": "Gene Circuit IDE",
+  "mainBinaryName": "Gene Circuit IDE",
+  "version": "0.1.0",
+  "identifier": "dev.genecircuit.ide",
   "build": {
     "beforeBuildCommand": "npm run next-build",
     "beforeDevCommand": "npm run next-dev",
-    "devPath": "http://localhost:3000",
-    "distDir": "../out"
+    "frontendDist": "../out",
+    "devUrl": "http://localhost:3000"
   },
-  "package": {
-    "productName": "Gene Circuit IDE",
-    "version": "0.1.0"
-  },
-  "tauri": {
-    "allowlist": {
-      "all": false,
-      "dialog": {
-        "all": true,
-        "open": true,
-        "save": true
-      },
-      "fs": {
-        "writeFile": true,
-        "scope": ["$RESOURCE/*"]
-      }
-    },
-    "bundle": {
-      "active": true,
-      "category": "DeveloperTool",
-      "copyright": "",
-      "deb": {
-        "depends": []
-      },
-      "externalBin": [],
-      "icon": [
-        "icons/32x32.png",
-        "icons/128x128.png",
-        "icons/128x128@2x.png",
-        "icons/icon.icns",
-        "icons/icon.ico"
-      ],
-      "identifier": "dev.genecircuit.ide",
-      "longDescription": "",
-      "macOS": {
-        "entitlements": null,
-        "exceptionDomain": "",
-        "frameworks": [],
-        "providerShortName": null,
-        "signingIdentity": null
-      },
-      "resources": ["compose.yml"],
-      "shortDescription": "",
-      "targets": "all",
-      "windows": {
-        "certificateThumbprint": null,
-        "digestAlgorithm": "sha256",
-        "timestampUrl": ""
-      }
-    },
-    "security": {
-      "csp": null
-    },
-    "updater": {
-      "active": false
-    },
+  "app": {
     "windows": [
       {
         "fullscreen": false,
@@ -69,8 +17,46 @@
         "resizable": true,
         "title": "Gene Circuit IDE",
         "width": 800,
-        "fileDropEnabled": false
+        "dragDropEnabled": false
       }
-    ]
-  }
+    ],
+    "security": {
+      "csp": null,
+    }
+  },
+  "bundle": {
+    "active": true,
+    "category": "DeveloperTool",
+    "copyright": "",
+    "targets": "all",
+    "externalBin": [],
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.icns",
+      "icons/icon.ico"
+    ],
+    "windows": {
+      "certificateThumbprint": null,
+      "digestAlgorithm": "sha256",
+      "timestampUrl": ""
+    },
+    "longDescription": "",
+    "macOS": {
+      "entitlements": null,
+      "exceptionDomain": "",
+      "frameworks": [],
+      "providerShortName": null,
+      "signingIdentity": null
+    },
+    "resources": ["compose.yml"],
+    "shortDescription": "",
+    "linux": {
+      "deb": {
+        "depends": []
+      }
+    }
+  },
+  "plugins": {}
 }
