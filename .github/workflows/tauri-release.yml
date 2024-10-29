@@ -31,8 +31,6 @@ jobs:
             args: '--target aarch64-apple-darwin'
           - platform: 'macos-latest' # for Intel based macs.
             args: '--target x86_64-apple-darwin'
-          - platform: 'windows-latest'
-            args: ''
 
     runs-on: ${{ matrix.platform }}
     steps:
@@ -60,4 +58,5 @@ jobs:
           releaseBody: 'See the assets to download this version and install.'
           releaseDraft: true
           prerelease: false
+          repo: gene-circuit-ide-release
           args: ${{ matrix.args }}
