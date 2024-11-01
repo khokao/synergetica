@@ -15,9 +15,23 @@ export default defineConfig({
       provider: "v8",
       include: ["src/**/*"],
       exclude: [
-        // GUI testing is excluded from coverage due to high cost and low value
-        "src/components/GUI/Flow.tsx",
-        "src/components/GUI/nodeActions.ts",
+        // all constants.ts
+        "src/**/constants.ts",
+        // shadcn/ui codes.
+        "src/components/ui/**/*",
+        "src/lib/utils.ts",
+        // app
+        "src/app/page.tsx",
+        "src/app/layout.tsx", // Warning: validateDOMNesting(...): <html> cannot appear as a child of <div>.
+        // components
+        "src/components/studio/studio.tsx", // just composes other components.
+        "src/components/circuit/nodes/child-node.tsx", // No integration tests for custom node.
+        "src/components/circuit/nodes/parent-node.tsx", // No integration tests for custom node.
+        "src/components/circuit/edges/custom-edge.tsx", // No integration tests for custom edge.
+        "src/components/circuit/circuit.tsx", // GUI testing is excluded due to high cost and low value
+        "src/components/circuit/hooks/use-delete-nodes-edges.ts", // GUI testing is excluded due to high cost and low value
+        "src/components/circuit/hooks/use-drag-nodes.ts", // GUI testing is excluded due to high cost and low value
+        "src/components/circuit/hooks/use-run-simulator.ts", // GUI testing is excluded due to high cost and low value
       ],
       reportsDirectory: "./coverage",
       reporter: ["text", "json", "json-summary"],
