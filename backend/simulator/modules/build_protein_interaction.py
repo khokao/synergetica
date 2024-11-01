@@ -96,7 +96,7 @@ def build_protein_interact_graph(
 
     Args:
         promoter_controlling_proteins (dict[str, list[str]]):
-            Dictionary mapping promoter IDs to lists of controlling protein IDs.
+            Dictionary mapping promoter node IDs to lists of controlling protein node IDs.
         parts_id2node_ids (dict[str, list[str]]): Mapping from part IDs to lists of node IDs related to those parts.
         node_id2data (dict[str, ReactFlowChildNodeData]):
             Mapping from node ID to detailed node data, including control information.
@@ -105,7 +105,7 @@ def build_protein_interact_graph(
     Returns:
         protein_interaction_graph (np.ndarray):
             A square matrix representing protein interaction, where [i][j] = -1 or 1
-            if protein i represses or activates protein j, and 0 otherwise.
+            if protein i is repressed or activated by protein j, and 0 otherwise.
     """
     num_protein_nodes = len(protein_node_ids)
 
@@ -121,6 +121,6 @@ def build_protein_interact_graph(
 
             for promoter_node_id in promoter_node_ids:
                 for controlled_protein_node_id in promoter_controlling_proteins.get(promoter_node_id, []):
-                    protein_interaction_graph[i, protein_node_ids.index(controlled_protein_node_id)] = control_type_int
+                    protein_interaction_graph[protein_node_ids.index(controlled_protein_node_id), i] = control_type_int
 
     return protein_interaction_graph
