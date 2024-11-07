@@ -22,6 +22,7 @@
     "coverage": "vitest run --coverage"
   },
   "dependencies": {
+    "@monaco-editor/react": "^4.6.0",
     "@radix-ui/react-dialog": "^1.1.2",
     "@radix-ui/react-dropdown-menu": "^2.1.2",
     "@radix-ui/react-hover-card": "^1.1.2",
@@ -42,6 +43,7 @@
     "human-id": "^4.1.1",
     "immer": "^10.1.1",
     "lucide-react": "^0.447.0",
+    "monaco-editor": "^0.52.0",
     "nanoid": "^5.0.7",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
@@ -50,7 +52,10 @@
     "recharts": "^2.12.7",
     "swr": "^2.2.5",
     "tailwind-merge": "^2.5.3",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "yaml": "^2.6.0",
+    "zod": "^3.23.8",
+    "zod-validation-error": "^3.4.0"
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.3",
