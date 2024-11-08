@@ -1,13 +1,14 @@
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { AlertCircle } from "lucide-react";
-import { CircleCheck } from "lucide-react";
+import { AlertCircle, CircleCheck } from "lucide-react";
 
-export const EditorConsole = ({ error }) => {
-  if (!error) {
+type ValidationError = { message: string; line: number };
+
+export const EditorConsole = ({ error }: { error: ValidationError[] }) => {
+  if (!error || error.length === 0) {
     return <NoErrorDisplay />;
   }
-  return <ErrorDisplay error={error} />;
+  return <ErrorDisplay errors={error} />;
 };
 
 const NoErrorDisplay = () => {
@@ -22,14 +23,22 @@ const NoErrorDisplay = () => {
   );
 };
 
-const ErrorDisplay = ({ error }) => {
+const ErrorDisplay = ({ errors }: { errors: ValidationError[] }) => {
   return (
     <div className="h-[125px]">
       <Alert variant="destructive" className="h-full border-none">
         <AlertCircle className="h-4 w-4" />
-        <AlertTitle>Error</AlertTitle>
+        <AlertTitle>Validation Errors</AlertTitle>
         <ScrollArea className="h-5/6">
-          <AlertDescription>{error}</AlertDescription>
+          <AlertDescription>
+            <ul className="list-disc pl-5">
+              {errors.map((error) => (
+                <li key={`${error.line}-${error.message}`}>
+                  Line {error.line}: {error.message}
+                </li>
+              ))}
+            </ul>
+          </AlertDescription>
         </ScrollArea>
       </Alert>
     </div>

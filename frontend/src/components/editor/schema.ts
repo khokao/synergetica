@@ -14,7 +14,7 @@ assertNonEmptyArray(TERMINATOR_NAMES);
 const promoterSchema = z.object({
   promoter: z.array(
     z.object({
-      name: z.enum(PROMOTER_NAMES),
+      name: z.enum(PROMOTER_NAMES, { errorMap: () => ({ message: "Invalid promoter name." }) }),
     }),
   ),
 });
@@ -22,7 +22,7 @@ const promoterSchema = z.object({
 const proteinSchema = z.object({
   protein: z.array(
     z.object({
-      name: z.enum(PROTEIN_NAMES),
+      name: z.enum(PROTEIN_NAMES, { errorMap: () => ({ message: "Invalid protein name." }) }),
     }),
   ),
 });
@@ -30,23 +30,55 @@ const proteinSchema = z.object({
 const terminatorSchema = z.object({
   terminator: z.array(
     z.object({
-      name: z.enum(TERMINATOR_NAMES),
+      name: z.enum(TERMINATOR_NAMES, { errorMap: () => ({ message: "Invalid terminator name." }) }),
     }),
   ),
 });
 
-const chainSchema = z.array(z.union([promoterSchema, proteinSchema, terminatorSchema])).superRefine((chain, ctx) => {
-  const sequence = chain.map((item) => {
-    if ("promoter" in item) return "promoter";
-    if ("protein" in item) return "protein";
-    if ("terminator" in item) return "terminator";
-    return "unknown";
+const chainItemSchema = z.union([promoterSchema, proteinSchema, terminatorSchema]);
+
+const chainSchema = z.array(z.any()).superRefine((chain, ctx) => {
+  let hasError = false;
+  const sequence = chain.map((item, index) => {
+    if (!item || typeof item !== "object") {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: "Each item in the chain must be an node object.",
+        path: [index],
+      });
+      hasError = true;
+      return "unknown";
+    }
+
+    const result = chainItemSchema.safeParse(item);
+    if (!result.success) {
+      const key = Object.keys(item)[0] || "unknown";
+      if (key === "promoter" || key === "protein" || key === "terminator") {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: `Invalid ${key} params.`,
+          path: [index],
+        });
+      } else {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: "Node key must be one of ['promoter', 'protein', 'terminator'].",
+          path: [index],
+        });
+      }
+      hasError = true;
+      return "unknown";
+    }
+    return Object.keys(item)[0];
   });
+
+  if (hasError) {
+    return;
+  }
 
   let i = 0;
   const n = sequence.length;
 
-  // Check for at least one promoter at the beginning
   if (sequence[i] !== "promoter") {
     ctx.addIssue({
       code: z.ZodIssueCode.custom,
@@ -58,16 +90,7 @@ const chainSchema = z.array(z.union([promoterSchema, proteinSchema, terminatorSc
   while (i < n && sequence[i] === "promoter") {
     i++;
   }
-  if (i === 0) {
-    ctx.addIssue({
-      code: z.ZodIssueCode.custom,
-      message: "At least one promoter is required at the beginning of the chain.",
-      path: [i],
-    });
-    return;
-  }
 
-  // Check for at least one protein after promoters
   if (i >= n || sequence[i] !== "protein") {
     ctx.addIssue({
       code: z.ZodIssueCode.custom,
@@ -80,7 +103,6 @@ const chainSchema = z.array(z.union([promoterSchema, proteinSchema, terminatorSc
     i++;
   }
 
-  // Check for exactly one terminator after proteins
   if (i >= n || sequence[i] !== "terminator") {
     ctx.addIssue({
       code: z.ZodIssueCode.custom,
@@ -98,25 +120,10 @@ const chainSchema = z.array(z.union([promoterSchema, proteinSchema, terminatorSc
     });
     return;
   }
-
-  // Ensure exactly one terminator is present
-  const terminatorCount = sequence.filter((s) => s === "terminator").length;
-  if (terminatorCount !== 1) {
-    ctx.addIssue({
-      code: z.ZodIssueCode.custom,
-      message: "Exactly one terminator is required.",
-    });
-  }
-
-  // Check for unknown elements
-  if (sequence.includes("unknown")) {
-    ctx.addIssue({
-      code: z.ZodIssueCode.custom,
-      message: "Unknown element type found in the chain.",
-    });
-  }
 });
 
-export const circuitSchema = z.object({
-  circuit: z.array(z.object({ chain: chainSchema })),
-});
+export const circuitSchema = z
+  .object({
+    circuit: z.array(z.object({ chain: chainSchema }).strict({ message: "Under 'circuit', key must be 'chain'." })),
+  })
+  .strict({ message: "Root key must be 'circuit'." });

@@ -1,8 +1,8 @@
+import { githubLightTheme } from "@/components/editor/constants";
 import { useEditorRef, useMonacoRef, useValidationError } from "@/components/editor/editor-context";
 import { EditorConsole } from "@/components/editor/error-console";
 import { useYamlValidation } from "@/components/editor/hooks/use-yaml-validation";
 import { circuitSchema } from "@/components/editor/schema";
-import { githubLightTheme } from "@/components/editor/theme/github-light";
 import { EditorTopBar } from "@/components/editor/top-bar";
 import { Separator } from "@/components/ui/separator";
 import { Editor } from "@monaco-editor/react";
@@ -33,8 +33,6 @@ export const CircuitEditor = () => {
     }
   }, [monacoRef]);
 
-  console.log(validationError);
-
   return (
     <div className="flex flex-col h-full w-full">
       <EditorTopBar />
@@ -52,6 +50,7 @@ export const CircuitEditor = () => {
           onChange={(value) => setValue(value || "")}
           options={{
             automaticLayout: true,
+            tabSize: 2,
             minimap: { enabled: false },
             scrollbar: { verticalScrollbarSize: 8, horizontal: "hidden" },
             padding: { top: 10 },
