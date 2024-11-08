@@ -12,7 +12,7 @@ export const EditorConsole = ({ error }) => {
 
 const NoErrorDisplay = () => {
   return (
-    <div className="h-[150px]">
+    <div className="h-[125px]">
       <Alert variant="default" className="h-full border-none">
         <CircleCheck className="h-4 w-4 !text-green-600" />
         <AlertTitle className="!text-green-600">All Good!</AlertTitle>
@@ -24,7 +24,7 @@ const NoErrorDisplay = () => {
 
 const ErrorDisplay = ({ error }) => {
   return (
-    <div className="h-[150px]">
+    <div className="h-[125px]">
       <Alert variant="destructive" className="h-full border-none">
         <AlertCircle className="h-4 w-4" />
         <AlertTitle>Error</AlertTitle>

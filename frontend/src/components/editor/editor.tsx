@@ -2,12 +2,13 @@ import { useEditorRef, useMonacoRef, useValidationError } from "@/components/edi
 import { EditorConsole } from "@/components/editor/error-console";
 import { useYamlValidation } from "@/components/editor/hooks/use-yaml-validation";
 import { circuitSchema } from "@/components/editor/schema";
+import { githubLightTheme } from "@/components/editor/theme/github-light";
 import { EditorTopBar } from "@/components/editor/top-bar";
 import { Separator } from "@/components/ui/separator";
 import { Editor } from "@monaco-editor/react";
 import type { Monaco } from "@monaco-editor/react";
 import type { editor } from "monaco-editor";
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 
 export const CircuitEditor = () => {
   const [value, setValue] = useState<string>("");
@@ -20,7 +21,17 @@ export const CircuitEditor = () => {
   const handleEditorDidMount = (editor: editor.IStandaloneCodeEditor, monaco: Monaco) => {
     editorRef.current = editor;
     monacoRef.current = monaco;
+
+    monaco.editor.defineTheme("github-light", githubLightTheme);
+    monaco.editor.setTheme("github-light");
   };
+
+  useEffect(() => {
+    if (monacoRef.current) {
+      monacoRef.current.editor.defineTheme("github-light", githubLightTheme);
+      monacoRef.current.editor.setTheme("github-light");
+    }
+  }, [monacoRef]);
 
   console.log(validationError);
 
@@ -28,16 +39,22 @@ export const CircuitEditor = () => {
     <div className="flex flex-col h-full w-full">
       <EditorTopBar />
       <Separator />
-      <div className="flex-grow">
+      {/*
+        [Bug] automaticLayout doesnt shrink to container within flex layout
+        https://github.com/microsoft/monaco-editor/issues/3393
+      */}
+      <div className="h-10 min-h-0 flex-1">
         <Editor
-          height="100%"
           defaultLanguage="yaml"
           value={value}
+          theme="github-light"
           onMount={handleEditorDidMount}
           onChange={(value) => setValue(value || "")}
           options={{
             automaticLayout: true,
             minimap: { enabled: false },
+            scrollbar: { verticalScrollbarSize: 8, horizontal: "hidden" },
+            padding: { top: 10 },
           }}
         />
       </div>
