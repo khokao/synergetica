@@ -1,4 +1,3 @@
-import { nullValidationError } from "@/components/editor/constants";
 import type { Monaco } from "@monaco-editor/react";
 import type { editor } from "monaco-editor";
 import type React from "react";
@@ -42,7 +41,7 @@ export const useValidationError = () => {
 export const EditorProvider = ({ children }: { children: React.ReactNode }) => {
   const editorRef = useRef<editor.IStandaloneCodeEditor | null>(null);
   const monacoRef = useRef<Monaco | null>(null);
-  const [validationError, setValidationError] = useState<ValidationError[]>(nullValidationError);
+  const [validationError, setValidationError] = useState<ValidationError[]>([]);
 
   return (
     <EditorContext.Provider value={{ editorRef, monacoRef, validationError, setValidationError }}>

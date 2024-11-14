@@ -1,4 +1,3 @@
-import { nullValidationError } from "@/components/editor/constants";
 import { useEditorRef, useMonacoRef, useValidationError } from "@/components/editor/editor-context";
 import type { editor } from "monaco-editor";
 import { useEffect } from "react";
@@ -19,25 +18,14 @@ export const useYamlValidation = (value: string, schema: ZodSchema) => {
 
       const model = editor.getModel();
 
-      if (value === null || value.trim() === "") {
-        setValidationError(nullValidationError);
-
-        model &&
-          monaco.editor.setModelMarkers(model, "owner", [
-            {
-              severity: monaco.MarkerSeverity.Error,
-              message: nullValidationError[0].message,
-              startLineNumber: 1,
-              startColumn: 1,
-              endLineNumber: 1,
-              endColumn: 1,
-            },
-          ]);
-        return;
-      }
-
       const lineCounter = new LineCounter();
       const doc = parseDocument(value, { keepSourceTokens: true, lineCounter });
+
+      if (doc.contents === null) {
+        setValidationError([]);
+        model && monaco.editor.setModelMarkers(model, "owner", []);
+        return;
+      }
 
       const result = schema.safeParse(doc.toJS());
 

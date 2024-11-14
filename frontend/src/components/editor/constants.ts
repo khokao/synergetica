@@ -1,12 +1,5 @@
 import type { editor } from "monaco-editor";
 
-export const nullValidationError = [
-  {
-    message: "Circuit configuration not found.",
-    line: 1,
-  },
-];
-
 // ref: https://github.com/brijeshb42/monaco-themes/blob/master/themes/GitHub%20Light.json
 export const githubLightTheme: editor.IStandaloneThemeData = {
   base: "vs",
