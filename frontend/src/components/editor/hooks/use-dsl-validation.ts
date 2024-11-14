@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { LineCounter, isMap, isScalar, isSeq, parseDocument } from "yaml";
 import type { ZodSchema } from "zod";
 
-export const useYamlValidation = (value: string, schema: ZodSchema) => {
+export const useDslValidation = (value: string, schema: ZodSchema) => {
   const editorRef = useEditorRef();
   const monacoRef = useMonacoRef();
   const { setValidationError } = useValidationError();
