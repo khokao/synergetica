@@ -2,29 +2,20 @@ import { EDGE_LENGTH, GROUP_NODE_MARGIN, NODE_HEIGHT, NODE_WIDTH } from "@/compo
 import { createEdge } from "@/components/circuit/hooks/utils/create-edge";
 import { createChildNode, createParentNode } from "@/components/circuit/hooks/utils/create-node";
 import { PARTS_NAME2ATTRIBUTES } from "@/components/circuit/nodes/constants";
+import { useDslParser } from "@/components/editor/hooks/use-dsl-parser";
 import { getNodesBounds, useReactFlow } from "@xyflow/react";
 import type { Edge, Node } from "@xyflow/react";
 import { produce } from "immer";
 import { useEffect } from "react";
-import { parseDocument } from "yaml";
-import type { ZodSchema } from "zod";
 
-export const useDslToCircuit = (value: string, schema: ZodSchema) => {
+export const useDslToCircuit = (value: string) => {
   const { setNodes, setEdges, fitBounds } = useReactFlow();
+  const { dsl } = useDslParser(value);
 
   useEffect(() => {
-    const doc = parseDocument(value);
-
-    if (doc.contents === null) {
+    if (!dsl) {
       setNodes([]);
       setEdges([]);
-      return;
-    }
-
-    const dsl = doc.toJS();
-    const result = schema.safeParse(dsl);
-
-    if (!result.success) {
       return;
     }
 
@@ -94,5 +85,5 @@ export const useDslToCircuit = (value: string, schema: ZodSchema) => {
     console.warn = (m, ...a) => m.includes("Please use `getNodesBounds` from") || console.warn(m, ...a);
     const bounds = getNodesBounds(nodes);
     fitBounds(bounds, { padding: 0.5 });
-  }, [value, setNodes, setEdges, fitBounds, schema]);
+  }, [dsl, setNodes, setEdges, fitBounds]);
 };

@@ -3,7 +3,6 @@ import { useEditorRef, useMonacoRef, useValidationError } from "@/components/edi
 import { EditorConsole } from "@/components/editor/error-console";
 import { useDslToCircuit } from "@/components/editor/hooks/use-dsl-to-circuit";
 import { useDslValidation } from "@/components/editor/hooks/use-dsl-validation";
-import { circuitSchema } from "@/components/editor/schema";
 import { EditorTopBar } from "@/components/editor/top-bar";
 import { Separator } from "@/components/ui/separator";
 import { Editor } from "@monaco-editor/react";
@@ -13,8 +12,8 @@ import React, { useState, useEffect } from "react";
 
 export const CircuitEditor = () => {
   const [value, setValue] = useState<string>("");
-  useDslValidation(value, circuitSchema);
-  useDslToCircuit(value, circuitSchema);
+  useDslValidation(value);
+  useDslToCircuit(value);
 
   const editorRef = useEditorRef();
   const monacoRef = useMonacoRef();
