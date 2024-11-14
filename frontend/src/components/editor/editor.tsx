@@ -1,6 +1,7 @@
 import { githubLightTheme } from "@/components/editor/constants";
 import { useEditorRef, useMonacoRef, useValidationError } from "@/components/editor/editor-context";
 import { EditorConsole } from "@/components/editor/error-console";
+import { useDslToCircuit } from "@/components/editor/hooks/use-dsl-to-circuit";
 import { useYamlValidation } from "@/components/editor/hooks/use-yaml-validation";
 import { circuitSchema } from "@/components/editor/schema";
 import { EditorTopBar } from "@/components/editor/top-bar";
@@ -13,6 +14,7 @@ import React, { useState, useEffect } from "react";
 export const CircuitEditor = () => {
   const [value, setValue] = useState<string>("");
   useYamlValidation(value, circuitSchema);
+  useDslToCircuit(value, circuitSchema);
 
   const editorRef = useEditorRef();
   const monacoRef = useMonacoRef();
