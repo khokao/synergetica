@@ -511,3 +511,8 @@ export const PARTS_NAME2CATEGORY = [...PROMOTER_DATA, ...PROTEIN_DATA, ...TERMIN
   acc[data.nodePartsName] = data.nodeCategory;
   return acc;
 }, {});
+
+export const PARTS_NAME2ATTRIBUTES = [...PROMOTER_DATA, ...PROTEIN_DATA, ...TERMINATOR_DATA].reduce((acc, data) => {
+  acc[data.nodePartsName] = data;
+  return acc;
+}, {});
