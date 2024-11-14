@@ -12,27 +12,21 @@ assertNonEmptyArray(PROTEIN_NAMES);
 assertNonEmptyArray(TERMINATOR_NAMES);
 
 const promoterSchema = z.object({
-  promoter: z.array(
-    z.object({
-      name: z.enum(PROMOTER_NAMES, { errorMap: () => ({ message: "Invalid promoter name." }) }),
-    }),
-  ),
+  promoter: z.object({
+    name: z.enum(PROMOTER_NAMES, { errorMap: () => ({ message: "Invalid promoter name." }) }),
+  }),
 });
 
 const proteinSchema = z.object({
-  protein: z.array(
-    z.object({
-      name: z.enum(PROTEIN_NAMES, { errorMap: () => ({ message: "Invalid protein name." }) }),
-    }),
-  ),
+  protein: z.object({
+    name: z.enum(PROTEIN_NAMES, { errorMap: () => ({ message: "Invalid protein name." }) }),
+  }),
 });
 
 const terminatorSchema = z.object({
-  terminator: z.array(
-    z.object({
-      name: z.enum(TERMINATOR_NAMES, { errorMap: () => ({ message: "Invalid terminator name." }) }),
-    }),
-  ),
+  terminator: z.object({
+    name: z.enum(TERMINATOR_NAMES, { errorMap: () => ({ message: "Invalid terminator name." }) }),
+  }),
 });
 
 const chainItemSchema = z.union([promoterSchema, proteinSchema, terminatorSchema]);
