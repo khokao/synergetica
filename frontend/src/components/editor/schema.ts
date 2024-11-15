@@ -12,112 +12,117 @@ assertNonEmptyArray(PROTEIN_NAMES);
 assertNonEmptyArray(TERMINATOR_NAMES);
 
 const promoterSchema = z.object({
-  promoter: z.object({
-    name: z.enum(PROMOTER_NAMES, { errorMap: () => ({ message: "Invalid promoter name." }) }),
-  }),
+  type: z.literal("promoter"),
+  name: z.enum(PROMOTER_NAMES),
 });
 
 const proteinSchema = z.object({
-  protein: z.object({
-    name: z.enum(PROTEIN_NAMES, { errorMap: () => ({ message: "Invalid protein name." }) }),
-  }),
+  type: z.literal("protein"),
+  name: z.enum(PROTEIN_NAMES),
 });
 
 const terminatorSchema = z.object({
-  terminator: z.object({
-    name: z.enum(TERMINATOR_NAMES, { errorMap: () => ({ message: "Invalid terminator name." }) }),
-  }),
+  type: z.literal("terminator"),
+  name: z.enum(TERMINATOR_NAMES),
 });
 
-const chainItemSchema = z.union([promoterSchema, proteinSchema, terminatorSchema]);
+const chainItemSchema = z.discriminatedUnion("type", [promoterSchema, proteinSchema, terminatorSchema]);
 
-const chainSchema = z.array(z.any()).superRefine((chain, ctx) => {
-  let hasError = false;
-  const sequence = chain.map((item, index) => {
-    if (!item || typeof item !== "object") {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        message: "Each item in the chain must be an node object.",
-        path: [index],
-      });
-      hasError = true;
-      return "unknown";
-    }
+const looseChainSchema = z
+  .object({
+    chain: z.array(chainItemSchema),
+  })
+  .strict({ message: "Under 'circuit', key must be 'chain'." });
 
-    const result = chainItemSchema.safeParse(item);
-    if (!result.success) {
-      const key = Object.keys(item)[0] || "unknown";
-      if (key === "promoter" || key === "protein" || key === "terminator") {
+const strictChainSchema = z
+  .object({
+    chain: z.array(chainItemSchema).superRefine((chain, ctx) => {
+      let state = "start";
+
+      for (let i = 0; i < chain.length; i++) {
+        const item = chain[i];
+
+        switch (state) {
+          case "start":
+            if (item.type === "promoter") {
+              state = "promoter";
+            } else {
+              ctx.addIssue({
+                code: z.ZodIssueCode.custom,
+                message: "Chain must start with at least one promoter.",
+                path: [i],
+              });
+              return;
+            }
+            break;
+
+          case "promoter":
+            if (item.type === "promoter") {
+              state = "promoter";
+            } else if (item.type === "protein") {
+              state = "protein";
+            } else {
+              ctx.addIssue({
+                code: z.ZodIssueCode.custom,
+                message: "A terminator cannot directly follow a promoter. At least one protein must follow.",
+                path: [i],
+              });
+              return;
+            }
+            break;
+
+          case "protein":
+            if (item.type === "protein") {
+              state = "protein";
+            } else if (item.type === "terminator") {
+              state = "terminator";
+            } else {
+              ctx.addIssue({
+                code: z.ZodIssueCode.custom,
+                message: "A promoter cannot appear after proteins.",
+                path: [i],
+              });
+              return;
+            }
+            break;
+
+          case "terminator":
+            ctx.addIssue({
+              code: z.ZodIssueCode.custom,
+              message: "No elements are allowed after the terminator.",
+              path: [i],
+            });
+            return;
+
+          default:
+            ctx.addIssue({
+              code: z.ZodIssueCode.custom,
+              message: "Invalid chain state.",
+              path: [i],
+            });
+            return;
+        }
+      }
+
+      if (state !== "terminator") {
         ctx.addIssue({
           code: z.ZodIssueCode.custom,
-          message: `Invalid ${key} params.`,
-          path: [index],
-        });
-      } else {
-        ctx.addIssue({
-          code: z.ZodIssueCode.custom,
-          message: "Node key must be one of ['promoter', 'protein', 'terminator'].",
-          path: [index],
+          message: "Chain must end with a terminator after promoters and proteins.",
+          path: [chain.length - 1],
         });
       }
-      hasError = true;
-      return "unknown";
-    }
-    return Object.keys(item)[0];
-  });
+    }),
+  })
+  .strict({ message: "Under 'circuit', key must be 'chain'." });
 
-  if (hasError) {
-    return;
-  }
-
-  let i = 0;
-  const n = sequence.length;
-
-  if (sequence[i] !== "promoter") {
-    ctx.addIssue({
-      code: z.ZodIssueCode.custom,
-      message: "The chain must start with at least one promoter.",
-      path: [i],
-    });
-    return;
-  }
-  while (i < n && sequence[i] === "promoter") {
-    i++;
-  }
-
-  if (i >= n || sequence[i] !== "protein") {
-    ctx.addIssue({
-      code: z.ZodIssueCode.custom,
-      message: "At least one protein must follow the promoter(s).",
-      path: [i],
-    });
-    return;
-  }
-  while (i < n && sequence[i] === "protein") {
-    i++;
-  }
-
-  if (i >= n || sequence[i] !== "terminator") {
-    ctx.addIssue({
-      code: z.ZodIssueCode.custom,
-      message: "A terminator must follow the protein(s).",
-      path: [i],
-    });
-    return;
-  }
-  i++;
-  if (i < n) {
-    ctx.addIssue({
-      code: z.ZodIssueCode.custom,
-      message: "No elements are allowed after the terminator.",
-      path: [i],
-    });
-    return;
-  }
-});
-
-export const circuitSchema = z
+export const looseCircuitSchema = z
   .object({
-    circuit: z.array(z.object({ chain: chainSchema }).strict({ message: "Under 'circuit', key must be 'chain'." })),
+    circuit: z.array(looseChainSchema),
+  })
+  .strict({ message: "Root key must be 'circuit'." });
+
+export const strictCircuitSchema = z
+  .object({
+    circuit: z.array(strictChainSchema),
   })
   .strict({ message: "Root key must be 'circuit'." });

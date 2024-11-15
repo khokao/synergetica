@@ -2,48 +2,66 @@ import { EDGE_LENGTH, GROUP_NODE_MARGIN, NODE_HEIGHT, NODE_WIDTH } from "@/compo
 import { createEdge } from "@/components/circuit/hooks/utils/create-edge";
 import { createChildNode, createParentNode } from "@/components/circuit/hooks/utils/create-node";
 import { PARTS_NAME2ATTRIBUTES } from "@/components/circuit/nodes/constants";
-import { useDslParser } from "@/components/editor/hooks/use-dsl-parser";
+import { looseCircuitSchema } from "@/components/editor/schema";
 import { getNodesBounds, useReactFlow } from "@xyflow/react";
 import type { Edge, Node } from "@xyflow/react";
 import { produce } from "immer";
 import { useEffect } from "react";
+import { parseDocument } from "yaml";
 
 export const useDslToCircuit = (value: string) => {
   const { setNodes, setEdges, fitBounds } = useReactFlow();
-  const { dsl } = useDslParser(value);
 
   useEffect(() => {
-    if (!dsl) {
+    const doc = parseDocument(value);
+
+    if (doc.contents === null) {
       setNodes([]);
       setEdges([]);
+      return;
+    }
+
+    const dsl = doc.toJS();
+    const result = looseCircuitSchema.safeParse(dsl);
+
+    if (!result.success) {
       return;
     }
 
     const { nodes, edges } = produce({ nodes: [] as Node[], edges: [] as Edge[] }, (draft) => {
       for (const [chainIndex, chainObj] of dsl.circuit.entries()) {
         const chain = chainObj.chain;
+        const hasParent = chain.length > 1;
 
         const parentWidth = NODE_WIDTH * chain.length + EDGE_LENGTH * (chain.length - 1) + 2 * GROUP_NODE_MARGIN;
         const parentHeight = NODE_HEIGHT + 2 * GROUP_NODE_MARGIN;
         const parentPosition = { x: 0, y: chainIndex * (NODE_HEIGHT + 3 * GROUP_NODE_MARGIN) };
         const parentNode = createParentNode(parentPosition, parentWidth, parentHeight);
-        draft.nodes.push(parentNode);
+
+        if (hasParent) {
+          draft.nodes.push(parentNode);
+        }
 
         let previousChildNodeId: string | null = null;
 
         for (const [childIndex, childObj] of chain.entries()) {
-          const childPosition = {
-            x: GROUP_NODE_MARGIN + childIndex * (NODE_WIDTH + EDGE_LENGTH),
-            y: GROUP_NODE_MARGIN,
-          };
-          const nodeCategory = Object.keys(childObj)[0];
+          const childPosition = hasParent
+            ? {
+                x: GROUP_NODE_MARGIN + childIndex * (NODE_WIDTH + EDGE_LENGTH),
+                y: GROUP_NODE_MARGIN,
+              }
+            : {
+                x: parentPosition.x + GROUP_NODE_MARGIN + childIndex * (NODE_WIDTH + EDGE_LENGTH),
+                y: parentPosition.y + GROUP_NODE_MARGIN,
+              };
+          const nodeCategory = childObj.type;
           const tempChildNode = createChildNode(childPosition, nodeCategory);
 
           const childNode = produce(tempChildNode, (childDraft) => {
-            childDraft.parentId = parentNode.id;
-            childDraft.data.nodePartsName = childObj[nodeCategory].name;
+            childDraft.parentId = hasParent ? parentNode.id : undefined;
+            childDraft.data.nodePartsName = childObj.name;
 
-            const attributes = PARTS_NAME2ATTRIBUTES[childObj[nodeCategory].name];
+            const attributes = PARTS_NAME2ATTRIBUTES[childObj.name];
             childDraft.data.description = attributes.description;
             childDraft.data.nodeSubcategory = attributes.nodeSubcategory;
             childDraft.data.sequence = attributes.sequence;
@@ -85,5 +103,5 @@ export const useDslToCircuit = (value: string) => {
     console.warn = (m, ...a) => m.includes("Please use `getNodesBounds` from") || console.warn(m, ...a);
     const bounds = getNodesBounds(nodes);
     fitBounds(bounds, { padding: 0.5 });
-  }, [dsl, setNodes, setEdges, fitBounds]);
+  }, [value, setNodes, setEdges, fitBounds]);
 };
