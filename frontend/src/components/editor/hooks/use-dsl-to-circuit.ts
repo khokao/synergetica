@@ -2,17 +2,23 @@ import { EDGE_LENGTH, GROUP_NODE_MARGIN, NODE_HEIGHT, NODE_WIDTH } from "@/compo
 import { createEdge } from "@/components/circuit/hooks/utils/create-edge";
 import { createChildNode, createParentNode } from "@/components/circuit/hooks/utils/create-node";
 import { PARTS_NAME2ATTRIBUTES } from "@/components/circuit/nodes/constants";
-import { looseCircuitSchema } from "@/components/editor/schema";
-import { getNodesBounds, useReactFlow } from "@xyflow/react";
+import { useChangeSource } from "@/components/editor/editor-context";
+import { looseCircuitSchema } from "@/components/editor/schemas/looseSchema";
+import { useReactFlow } from "@xyflow/react";
 import type { Edge, Node } from "@xyflow/react";
 import { produce } from "immer";
 import { useEffect } from "react";
 import { parseDocument } from "yaml";
 
 export const useDslToCircuit = (value: string) => {
-  const { setNodes, setEdges, fitBounds } = useReactFlow();
+  const { setNodes, setEdges } = useReactFlow();
+  const { changeSource } = useChangeSource();
 
   useEffect(() => {
+    if (changeSource !== "dsl") {
+      return;
+    }
+
     const doc = parseDocument(value);
 
     if (doc.contents === null) {
@@ -61,14 +67,16 @@ export const useDslToCircuit = (value: string) => {
             childDraft.parentId = hasParent ? parentNode.id : undefined;
             childDraft.data.nodePartsName = childObj.name;
 
-            const attributes = PARTS_NAME2ATTRIBUTES[childObj.name];
-            childDraft.data.description = attributes.description;
-            childDraft.data.nodeSubcategory = attributes.nodeSubcategory;
-            childDraft.data.sequence = attributes.sequence;
-            childDraft.data.partsId = attributes.partsId;
-            childDraft.data.controlBy = attributes.controlBy;
-            childDraft.data.controlTo = attributes.controlTo;
-            childDraft.data.meta = attributes.meta;
+            if (childObj.name in PARTS_NAME2ATTRIBUTES) {
+              const attributes = PARTS_NAME2ATTRIBUTES[childObj.name];
+              childDraft.data.description = attributes.description;
+              childDraft.data.nodeSubcategory = attributes.nodeSubcategory;
+              childDraft.data.sequence = attributes.sequence;
+              childDraft.data.partsId = attributes.partsId;
+              childDraft.data.controlBy = attributes.controlBy;
+              childDraft.data.controlTo = attributes.controlTo;
+              childDraft.data.meta = attributes.meta;
+            }
 
             if (previousChildNodeId) {
               childDraft.data.leftHandleConnected = true;
@@ -96,12 +104,5 @@ export const useDslToCircuit = (value: string) => {
 
     setNodes(nodes);
     setEdges(edges);
-
-    // NOTE: `getNodesBounds` from the `useReactFlow` hook is not working as expected, but it shows warning:
-    // "Please use `getNodesBounds` from `useReactFlow`/`useSvelteFlow` hook to ensure correct values for sub flows.
-    // If not possible, you have to provide a nodeLookup to support sub flows."
-    console.warn = (m, ...a) => m.includes("Please use `getNodesBounds` from") || console.warn(m, ...a);
-    const bounds = getNodesBounds(nodes);
-    fitBounds(bounds, { padding: 0.5 });
-  }, [value, setNodes, setEdges, fitBounds]);
+  }, [value, setNodes, setEdges, changeSource]);
 };

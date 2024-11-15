@@ -1,5 +1,5 @@
 import { useEditorRef, useMonacoRef, useValidationError } from "@/components/editor/editor-context";
-import { strictCircuitSchema } from "@/components/editor/schema";
+import { strictCircuitSchema } from "@/components/editor/schemas/strictSchema";
 import type { editor } from "monaco-editor";
 import { useEffect } from "react";
 import { LineCounter, isMap, isScalar, isSeq, parseDocument } from "yaml";
