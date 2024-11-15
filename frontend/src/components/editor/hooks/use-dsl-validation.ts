@@ -48,6 +48,15 @@ export const useDslValidation = (value: string) => {
           startPos = lineCounter.linePos(start);
           endPos = lineCounter.linePos(end);
           line = startPos.line;
+        } else {
+          const parentPath = path.slice(0, -1);
+          const parentNode = doc.getIn(parentPath, true);
+          if ((isMap(parentNode) || isSeq(parentNode) || isScalar(parentNode)) && parentNode.range != null) {
+            const [start, , end] = parentNode.range;
+            startPos = lineCounter.linePos(start);
+            endPos = lineCounter.linePos(end);
+            line = startPos.line;
+          }
         }
 
         const errorMessage = {
