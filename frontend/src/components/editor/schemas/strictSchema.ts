@@ -13,17 +13,17 @@ assertNonEmptyArray(TERMINATOR_NAMES);
 
 const promoterSchema = z.object({
   type: z.literal("promoter"),
-  name: z.enum(PROMOTER_NAMES),
+  name: z.enum(PROMOTER_NAMES, { message: "Invalid promoter name." }),
 });
 
 const proteinSchema = z.object({
   type: z.literal("protein"),
-  name: z.enum(PROTEIN_NAMES),
+  name: z.enum(PROTEIN_NAMES, { message: "Invalid protein name." }),
 });
 
 const terminatorSchema = z.object({
   type: z.literal("terminator"),
-  name: z.enum(TERMINATOR_NAMES),
+  name: z.enum(TERMINATOR_NAMES, { message: "Invalid terminator name." }),
 });
 
 const chainItemSchema = z.discriminatedUnion("type", [promoterSchema, proteinSchema, terminatorSchema]);
