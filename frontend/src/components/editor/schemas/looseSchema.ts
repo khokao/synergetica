@@ -18,10 +18,10 @@ const looseChainSchema = z
   .object({
     chain: z.array(chainItemSchema),
   })
-  .strict({ message: "Under 'circuit', key must be 'chain'." });
+  .strict();
 
 export const looseCircuitSchema = z
   .object({
     circuit: z.array(looseChainSchema),
   })
-  .strict({ message: "Root key must be 'circuit'." });
+  .strict();
