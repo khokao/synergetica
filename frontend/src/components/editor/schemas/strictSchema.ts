@@ -28,12 +28,6 @@ const terminatorSchema = z.object({
 
 const chainItemSchema = z.discriminatedUnion("type", [promoterSchema, proteinSchema, terminatorSchema]);
 
-const looseChainSchema = z
-  .object({
-    chain: z.array(chainItemSchema),
-  })
-  .strict({ message: "Under 'circuit', key must be 'chain'." });
-
 const strictChainSchema = z
   .object({
     chain: z.array(chainItemSchema).superRefine((chain, ctx) => {
@@ -114,12 +108,6 @@ const strictChainSchema = z
     }),
   })
   .strict({ message: "Under 'circuit', key must be 'chain'." });
-
-export const looseCircuitSchema = z
-  .object({
-    circuit: z.array(looseChainSchema),
-  })
-  .strict({ message: "Root key must be 'circuit'." });
 
 export const strictCircuitSchema = z
   .object({
