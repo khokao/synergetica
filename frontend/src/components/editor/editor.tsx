@@ -1,6 +1,7 @@
 import { githubLightTheme } from "@/components/editor/constants";
-import { useEditorRef, useMonacoRef, useValidationError } from "@/components/editor/editor-context";
+import { useChangeSource, useEditorRef, useMonacoRef, useValidationError } from "@/components/editor/editor-context";
 import { EditorConsole } from "@/components/editor/error-console";
+import { useCircuitToDsl } from "@/components/editor/hooks/use-circuit-to-dsl";
 import { useDslToCircuit } from "@/components/editor/hooks/use-dsl-to-circuit";
 import { useDslValidation } from "@/components/editor/hooks/use-dsl-validation";
 import { EditorTopBar } from "@/components/editor/top-bar";
@@ -14,10 +15,12 @@ export const CircuitEditor = () => {
   const [value, setValue] = useState<string>("");
   useDslValidation(value);
   useDslToCircuit(value);
+  useCircuitToDsl(setValue);
 
   const editorRef = useEditorRef();
   const monacoRef = useMonacoRef();
   const { validationError } = useValidationError();
+  const { setChangeSource } = useChangeSource();
 
   const handleEditorDidMount = (editor: editor.IStandaloneCodeEditor, monaco: Monaco) => {
     editorRef.current = editor;
@@ -34,6 +37,11 @@ export const CircuitEditor = () => {
     }
   }, [monacoRef]);
 
+  const handleChanges = (value: string) => {
+    setChangeSource("dsl");
+    setValue(value || "");
+  };
+
   return (
     <div className="flex flex-col h-full w-full">
       <EditorTopBar />
@@ -48,7 +56,7 @@ export const CircuitEditor = () => {
           value={value}
           theme="github-light"
           onMount={handleEditorDidMount}
-          onChange={(value) => setValue(value || "")}
+          onChange={handleChanges}
           options={{
             automaticLayout: true,
             tabSize: 2,

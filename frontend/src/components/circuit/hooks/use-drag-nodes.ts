@@ -6,6 +6,7 @@ import { createChildNode, createTempNode } from "@/components/circuit/hooks/util
 import { createNearestEdge } from "@/components/circuit/hooks/utils/nearest-edge";
 import { groupNodes, ungroupNodes } from "@/components/circuit/hooks/utils/ungroup-group";
 import { findRelatedNodes, isNodeOutsideParent } from "@/components/circuit/hooks/utils/utils";
+import { useChangeSource } from "@/components/editor/editor-context";
 import { useReactFlow } from "@xyflow/react";
 import type { Edge, Node } from "@xyflow/react";
 import { produce } from "immer";
@@ -16,6 +17,7 @@ export const useDragNodes = () => {
   const [dndCategory, _] = useDnD();
   const dragStartNode = useRef<Node | null>(null);
   const dragStartConnectedEdges = useRef<Edge[] | null>(null);
+  const { setChangeSource } = useChangeSource();
 
   const getDnDNodePosition = useCallback(
     (e: React.DragEvent, screenToFlowPosition: (pos: { x: number; y: number }) => { x: number; y: number }) => {
@@ -69,6 +71,8 @@ export const useDragNodes = () => {
       e.preventDefault();
       e.stopPropagation();
 
+      setChangeSource("circuit");
+
       const { screenToFlowPosition, getNodes, getEdges, setNodes, setEdges } = reactflow;
 
       const nodePosition = getDnDNodePosition(e, screenToFlowPosition);
@@ -99,13 +103,15 @@ export const useDragNodes = () => {
       setNodes(newNodes);
       setEdges(newEdges);
     },
-    [dndCategory, reactflow, updateOrAddTempNode, removeTempEdge, addTempEdge, getDnDNodePosition],
+    [dndCategory, reactflow, updateOrAddTempNode, removeTempEdge, addTempEdge, getDnDNodePosition, setChangeSource],
   );
 
   const handleDrop = useCallback(
     (e: React.DragEvent) => {
       e.preventDefault();
       e.stopPropagation();
+
+      setChangeSource("circuit");
 
       const { screenToFlowPosition, getNodes, getEdges, setNodes, setEdges } = reactflow;
 
@@ -147,7 +153,7 @@ export const useDragNodes = () => {
       setNodes(newNodes);
       setEdges(newEdges);
     },
-    [dndCategory, reactflow, removeTempNode, getDnDNodePosition, removeTempEdge],
+    [dndCategory, reactflow, removeTempNode, getDnDNodePosition, removeTempEdge, setChangeSource],
   );
 
   // Ensure temp node is removed for quick drag-and-drop operations where handleDrop might not fire.
@@ -155,6 +161,8 @@ export const useDragNodes = () => {
     (e: React.DragEvent) => {
       e.preventDefault();
       e.stopPropagation();
+
+      setChangeSource("circuit");
 
       const { getNodes, setNodes } = reactflow;
       const nodes = getNodes();
@@ -165,13 +173,15 @@ export const useDragNodes = () => {
 
       setNodes(newNodes);
     },
-    [reactflow, removeTempNode],
+    [reactflow, removeTempNode, setChangeSource],
   );
 
   const handleNodeDragStart = useCallback(
     (e: React.DragEvent, node: Node) => {
       e.preventDefault();
       e.stopPropagation();
+
+      setChangeSource("circuit");
 
       const { getEdges, setEdges } = reactflow;
       const edges = getEdges();
@@ -189,13 +199,15 @@ export const useDragNodes = () => {
 
       setEdges(newEdges);
     },
-    [reactflow],
+    [reactflow, setChangeSource],
   );
 
   const handleNodeDrag = useCallback(
     (e: React.DragEvent, node: Node) => {
       e.preventDefault();
       e.stopPropagation();
+
+      setChangeSource("circuit");
 
       const { getNodes, getEdges, setEdges } = reactflow;
 
@@ -257,13 +269,15 @@ export const useDragNodes = () => {
 
       setEdges(newEdges);
     },
-    [reactflow, removeTempEdge, addTempEdge],
+    [reactflow, removeTempEdge, addTempEdge, setChangeSource],
   );
 
   const handleNodeDragStop = useCallback(
     (e: React.DragEvent, node: Node) => {
       e.preventDefault();
       e.stopPropagation();
+
+      setChangeSource("circuit");
 
       const { getNodes, getEdges, setNodes, setEdges } = reactflow;
 
@@ -432,7 +446,7 @@ export const useDragNodes = () => {
       setNodes(newNodes);
       setEdges(newEdges);
     },
-    [reactflow, removeTempEdge],
+    [reactflow, removeTempEdge, setChangeSource],
   );
 
   return {
