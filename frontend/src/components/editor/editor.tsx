@@ -1,14 +1,14 @@
 import { GITHUB_LIGHT_THEME, INDENT_SIZE } from "@/components/editor/constants";
 import { useEditorContext } from "@/components/editor/editor-context";
 import { EditorConsole } from "@/components/editor/error-console";
-import { useReactflowToDsl } from "@/components/editor/hooks/use-reactflow-to-dsl";
 import { EditorTopBar } from "@/components/editor/top-bar";
 import { dslToReactflow } from "@/components/editor/utils/dsl-to-reactflow";
 import { validateDslContent } from "@/components/editor/utils/dsl-validation";
+import { convertReactFlowNodesToDSL } from "@/components/editor/utils/reactflow-to-dsl";
 import { Separator } from "@/components/ui/separator";
 import { Editor } from "@monaco-editor/react";
 import type { Monaco } from "@monaco-editor/react";
-import { useReactFlow } from "@xyflow/react";
+import { useNodes, useReactFlow } from "@xyflow/react";
 import type { editor } from "monaco-editor";
 import React, { useEffect, useRef } from "react";
 
@@ -16,9 +16,33 @@ export const CircuitEditor = () => {
   const { editorRef, monacoRef, editorContent, setEditorContent, setEditMode, setValidationError, editMode } =
     useEditorContext();
   const { setNodes, setEdges } = useReactFlow();
+  const nodes = useNodes();
   const prevParsedContentRef = useRef<string>("");
 
-  useReactflowToDsl();
+  useEffect(() => {
+    const editor = editorRef.current;
+    const monaco = monacoRef.current;
+
+    if (nodes.length === 0 || editMode !== "reactflow" || !editor || !monaco) {
+      return;
+    }
+
+    const dslContent = convertReactFlowNodesToDSL(nodes);
+    const { validationErrors, markers, parsedContent } = validateDslContent(dslContent);
+
+    const newParsedContent = JSON.stringify(parsedContent);
+    const prevParsedContent = prevParsedContentRef.current;
+    if (prevParsedContent === newParsedContent) {
+      return;
+    }
+    prevParsedContentRef.current = newParsedContent;
+
+    setEditorContent(dslContent);
+    setValidationError(validationErrors);
+
+    const model = editor.getModel();
+    model && monaco.editor.setModelMarkers(model, "owner", markers);
+  }, [nodes, setEditorContent, setValidationError, editMode, editorRef, monacoRef]);
 
   const handleEditorDidMount = (editor: editor.IStandaloneCodeEditor, monaco: Monaco) => {
     editorRef.current = editor;
@@ -27,6 +51,7 @@ export const CircuitEditor = () => {
     monaco.editor.defineTheme("github-light", GITHUB_LIGHT_THEME);
     monaco.editor.setTheme("github-light");
   };
+
   useEffect(() => {
     if (monacoRef.current) {
       monacoRef.current.editor.defineTheme("github-light", GITHUB_LIGHT_THEME);
