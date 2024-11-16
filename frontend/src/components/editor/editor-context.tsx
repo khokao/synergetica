@@ -3,7 +3,7 @@ import type { editor } from "monaco-editor";
 import type React from "react";
 import { createContext, useContext, useRef, useState } from "react";
 
-type ValidationError = { message: string; line: number };
+export type ValidationError = { message: string; line: number };
 
 type EditMode = "reactflow" | "monaco-editor";
 

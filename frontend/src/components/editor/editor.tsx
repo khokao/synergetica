@@ -1,21 +1,23 @@
 import { GITHUB_LIGHT_THEME, INDENT_SIZE } from "@/components/editor/constants";
 import { useEditorContext } from "@/components/editor/editor-context";
 import { EditorConsole } from "@/components/editor/error-console";
-import { useDslToReactflow } from "@/components/editor/hooks/use-dsl-to-reactflow";
-import { useDslValidation } from "@/components/editor/hooks/use-dsl-validation";
 import { useReactflowToDsl } from "@/components/editor/hooks/use-reactflow-to-dsl";
 import { EditorTopBar } from "@/components/editor/top-bar";
+import { dslToReactflow } from "@/components/editor/utils/dsl-to-reactflow";
+import { validateDslContent } from "@/components/editor/utils/dsl-validation";
 import { Separator } from "@/components/ui/separator";
 import { Editor } from "@monaco-editor/react";
 import type { Monaco } from "@monaco-editor/react";
+import { useReactFlow } from "@xyflow/react";
 import type { editor } from "monaco-editor";
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 
 export const CircuitEditor = () => {
-  const { editorRef, monacoRef, editorContent, setEditorContent, setEditMode } = useEditorContext();
+  const { editorRef, monacoRef, editorContent, setEditorContent, setEditMode, setValidationError, editMode } =
+    useEditorContext();
+  const { setNodes, setEdges } = useReactFlow();
+  const prevParsedContentRef = useRef<string>("");
 
-  useDslValidation();
-  useDslToReactflow();
   useReactflowToDsl();
 
   const handleEditorDidMount = (editor: editor.IStandaloneCodeEditor, monaco: Monaco) => {
@@ -25,7 +27,6 @@ export const CircuitEditor = () => {
     monaco.editor.defineTheme("github-light", GITHUB_LIGHT_THEME);
     monaco.editor.setTheme("github-light");
   };
-
   useEffect(() => {
     if (monacoRef.current) {
       monacoRef.current.editor.defineTheme("github-light", GITHUB_LIGHT_THEME);
@@ -33,19 +34,45 @@ export const CircuitEditor = () => {
     }
   }, [monacoRef]);
 
-  const handleChange = (editorContent: string) => {
+  const handleChange = (newEditorContent: string) => {
     setEditMode("monaco-editor");
-    setEditorContent(editorContent || "");
+    setEditorContent(newEditorContent || "");
   };
+
+  useEffect(() => {
+    const editor = editorRef.current;
+    const monaco = monacoRef.current;
+
+    if (editMode !== "monaco-editor" || !editor || !monaco) {
+      return;
+    }
+
+    const { validationErrors, markers, parsedContent } = validateDslContent(editorContent);
+
+    const newParsedContent = JSON.stringify(parsedContent);
+    const prevParsedContent = prevParsedContentRef.current;
+    if (prevParsedContent === newParsedContent) {
+      return;
+    }
+    prevParsedContentRef.current = newParsedContent;
+
+    setValidationError(validationErrors);
+
+    const model = editor.getModel();
+    model && monaco.editor.setModelMarkers(model, "owner", markers);
+
+    const reactFlowData = dslToReactflow(editorContent);
+    if (reactFlowData) {
+      const { nodes, edges } = reactFlowData;
+      setNodes(nodes);
+      setEdges(edges);
+    }
+  }, [editorContent, editMode, setNodes, setEdges, setValidationError, editorRef, monacoRef]);
 
   return (
     <div className="flex flex-col h-full w-full">
       <EditorTopBar />
       <Separator />
-      {/*
-        [Bug] automaticLayout doesnt shrink to container within flex layout
-        https://github.com/microsoft/monaco-editor/issues/3393
-      */}
       <div className="h-10 min-h-0 flex-1">
         <Editor
           defaultLanguage="yaml"
