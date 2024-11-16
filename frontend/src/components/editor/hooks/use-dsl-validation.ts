@@ -4,7 +4,7 @@ import type { editor } from "monaco-editor";
 import { useEffect } from "react";
 import { LineCounter, isMap, isScalar, isSeq, parseDocument } from "yaml";
 
-export const useDslValidation = (value: string) => {
+export const useDslValidation = (editorContent: string) => {
   const editorRef = useEditorRef();
   const monacoRef = useMonacoRef();
   const { setValidationError } = useValidationError();
@@ -19,7 +19,7 @@ export const useDslValidation = (value: string) => {
       const model = editor.getModel();
 
       const lineCounter = new LineCounter();
-      const doc = parseDocument(value, { keepSourceTokens: true, lineCounter });
+      const doc = parseDocument(editorContent, { keepSourceTokens: true, lineCounter });
 
       if (doc.contents === null) {
         setValidationError([]);
@@ -85,5 +85,5 @@ export const useDslValidation = (value: string) => {
     };
 
     validate();
-  }, [value, editorRef, monacoRef, setValidationError]);
+  }, [editorContent, editorRef, monacoRef, setValidationError]);
 };
