@@ -47,7 +47,7 @@ export const useCircuitToDsl = (setValue) => {
 
     const chains = [...parentChains, ...singleChains]
       .sort((a, b) => a.positionY - b.positionY)
-      .map(({ chain }) => ({ chain }));;
+      .map(({ chain }) => ({ chain }));
 
     const dsl = stringify(chains, { indent: INDENT_SIZE, indentSeq: false });
 
