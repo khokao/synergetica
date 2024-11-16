@@ -1,7 +1,7 @@
 import type { editor } from "monaco-editor";
 
 // ref: https://github.com/brijeshb42/monaco-themes/blob/master/themes/GitHub%20Light.json
-export const githubLightTheme: editor.IStandaloneThemeData = {
+export const GITHUB_LIGHT_THEME: editor.IStandaloneThemeData = {
   base: "vs",
   inherit: true,
   rules: [

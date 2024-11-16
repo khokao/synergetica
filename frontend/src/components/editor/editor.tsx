@@ -1,4 +1,4 @@
-import { githubLightTheme } from "@/components/editor/constants";
+import { GITHUB_LIGHT_THEME } from "@/components/editor/constants";
 import { useChangeSource, useEditorRef, useMonacoRef, useValidationError } from "@/components/editor/editor-context";
 import { EditorConsole } from "@/components/editor/error-console";
 import { useCircuitToDsl } from "@/components/editor/hooks/use-circuit-to-dsl";
@@ -26,13 +26,13 @@ export const CircuitEditor = () => {
     editorRef.current = editor;
     monacoRef.current = monaco;
 
-    monaco.editor.defineTheme("github-light", githubLightTheme);
+    monaco.editor.defineTheme("github-light", GITHUB_LIGHT_THEME);
     monaco.editor.setTheme("github-light");
   };
 
   useEffect(() => {
     if (monacoRef.current) {
-      monacoRef.current.editor.defineTheme("github-light", githubLightTheme);
+      monacoRef.current.editor.defineTheme("github-light", GITHUB_LIGHT_THEME);
       monacoRef.current.editor.setTheme("github-light");
     }
   }, [monacoRef]);
