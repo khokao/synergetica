@@ -20,8 +20,4 @@ const looseChainSchema = z
   })
   .strict();
 
-export const looseCircuitSchema = z
-  .object({
-    circuit: z.array(looseChainSchema),
-  })
-  .strict();
+export const looseCircuitSchema = z.array(looseChainSchema);

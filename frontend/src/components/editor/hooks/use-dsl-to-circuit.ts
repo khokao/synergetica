@@ -35,7 +35,7 @@ export const useDslToCircuit = (value: string) => {
     }
 
     const { nodes, edges } = produce({ nodes: [] as Node[], edges: [] as Edge[] }, (draft) => {
-      for (const [chainIndex, chainObj] of dsl.circuit.entries()) {
+      for (const [chainIndex, chainObj] of dsl.entries()) {
         const chain = chainObj.chain;
         const hasParent = chain.length > 1;
 

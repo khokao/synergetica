@@ -130,16 +130,6 @@ const strictChainSchema = z
     },
     { message: "The key must be 'chain'." },
   )
-  .strict({ message: "Under 'circuit', key must be 'chain'." });
+  .strict({ message: "Unexpected key in chain object. Only 'chain' is allowed." });
 
-export const strictCircuitSchema = z
-  .object(
-    {
-      circuit: z.array(strictChainSchema),
-    },
-    {
-      required_error: "The root key must be 'circuit'.",
-      invalid_type_error: "Invalid root key. The root key must be 'circuit'.",
-    },
-  )
-  .strict({ message: "Unexpected key in root. The root key must be 'circuit'." });
+export const strictCircuitSchema = z.array(strictChainSchema);

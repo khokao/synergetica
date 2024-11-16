@@ -48,8 +48,6 @@ export const useCircuitToDsl = (setValue) => {
       .sort((a, b) => a.positionY - b.positionY)
       .map(({ chain }) => ({ chain }));
 
-    const dsl = { circuit: chains };
-
-    setValue(stringify(dsl));
+    setValue(stringify(chains));
   }, [nodes, setValue, changeSource]);
 };
