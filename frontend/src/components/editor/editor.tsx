@@ -1,5 +1,5 @@
 import { GITHUB_LIGHT_THEME, INDENT_SIZE } from "@/components/editor/constants";
-import { useChangeSource, useEditorRef, useMonacoRef, useValidationError } from "@/components/editor/editor-context";
+import { useEditMode, useEditorRef, useMonacoRef, useValidationError } from "@/components/editor/editor-context";
 import { EditorConsole } from "@/components/editor/error-console";
 import { useCircuitToDsl } from "@/components/editor/hooks/use-circuit-to-dsl";
 import { useDslToCircuit } from "@/components/editor/hooks/use-dsl-to-circuit";
@@ -12,15 +12,15 @@ import type { editor } from "monaco-editor";
 import React, { useState, useEffect } from "react";
 
 export const CircuitEditor = () => {
-  const [value, setValue] = useState<string>("");
-  useDslValidation(value);
-  useDslToCircuit(value);
-  useCircuitToDsl(setValue);
+  const [editorContent, setEditorContent] = useState<string>("");
+  useDslValidation(editorContent);
+  useDslToCircuit(editorContent);
+  useCircuitToDsl(setEditorContent);
 
   const editorRef = useEditorRef();
   const monacoRef = useMonacoRef();
   const { validationError } = useValidationError();
-  const { setChangeSource } = useChangeSource();
+  const { setEditMode } = useEditMode();
 
   const handleEditorDidMount = (editor: editor.IStandaloneCodeEditor, monaco: Monaco) => {
     editorRef.current = editor;
@@ -37,14 +37,14 @@ export const CircuitEditor = () => {
     }
   }, [monacoRef]);
 
-  const handleChanges = (value: string) => {
-    setChangeSource("dsl");
-    setValue(value || "");
+  const handleChanges = (editorContent: string) => {
+    setEditMode("monaco-editor");
+    setEditorContent(editorContent || "");
   };
 
   return (
     <div className="flex flex-col h-full w-full">
-      <EditorTopBar value={value} setValue={setValue} />
+      <EditorTopBar editorContent={editorContent} setEditorContent={setEditorContent} />
       <Separator />
       {/*
         [Bug] automaticLayout doesnt shrink to container within flex layout
@@ -53,7 +53,7 @@ export const CircuitEditor = () => {
       <div className="h-10 min-h-0 flex-1">
         <Editor
           defaultLanguage="yaml"
-          value={value}
+          value={editorContent}
           theme="github-light"
           onMount={handleEditorDidMount}
           onChange={handleChanges}

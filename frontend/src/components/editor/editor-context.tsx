@@ -5,15 +5,15 @@ import { createContext, useContext, useRef, useState } from "react";
 
 type ValidationError = { message: string; line: number };
 
-type ChangeSource = "circuit" | "dsl";
+type EditMode = "reactflow" | "monaco-editor";
 
 type EditorContextType = {
   editorRef: React.MutableRefObject<editor.IStandaloneCodeEditor | null>;
   monacoRef: React.MutableRefObject<Monaco | null>;
   validationError: ValidationError[];
   setValidationError: (error: ValidationError[]) => void;
-  changeSource: ChangeSource;
-  setChangeSource: (source: ChangeSource) => void;
+  editMode: EditMode;
+  setEditMode: (mode: EditMode) => void;
 };
 
 const EditorContext = createContext<EditorContextType | undefined>(undefined);
@@ -42,19 +42,19 @@ export const useValidationError = () => {
   return { validationError: context.validationError, setValidationError: context.setValidationError };
 };
 
-export const useChangeSource = () => {
+export const useEditMode = () => {
   const context = useContext(EditorContext);
   if (!context) {
     throw new Error("useChangeSource must be used within an EditorProvider");
   }
-  return { changeSource: context.changeSource, setChangeSource: context.setChangeSource };
+  return { editMode: context.editMode, setEditMode: context.setEditMode };
 };
 
 export const EditorProvider = ({ children }: { children: React.ReactNode }) => {
   const editorRef = useRef<editor.IStandaloneCodeEditor | null>(null);
   const monacoRef = useRef<Monaco | null>(null);
   const [validationError, setValidationError] = useState<ValidationError[]>([]);
-  const [changeSource, setChangeSource] = useState<ChangeSource>("circuit");
+  const [editMode, setEditMode] = useState<EditMode>("reactflow");
 
   return (
     <EditorContext.Provider
@@ -63,8 +63,8 @@ export const EditorProvider = ({ children }: { children: React.ReactNode }) => {
         monacoRef,
         validationError,
         setValidationError,
-        changeSource,
-        setChangeSource,
+        editMode,
+        setEditMode,
       }}
     >
       {children}

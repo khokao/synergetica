@@ -6,7 +6,7 @@ import { createChildNode, createTempNode } from "@/components/circuit/hooks/util
 import { createNearestEdge } from "@/components/circuit/hooks/utils/nearest-edge";
 import { groupNodes, ungroupNodes } from "@/components/circuit/hooks/utils/ungroup-group";
 import { findRelatedNodes, isNodeOutsideParent } from "@/components/circuit/hooks/utils/utils";
-import { useChangeSource } from "@/components/editor/editor-context";
+import { useEditMode } from "@/components/editor/editor-context";
 import { useReactFlow } from "@xyflow/react";
 import type { Edge, Node } from "@xyflow/react";
 import { produce } from "immer";
@@ -17,7 +17,7 @@ export const useDragNodes = () => {
   const [dndCategory, _] = useDnD();
   const dragStartNode = useRef<Node | null>(null);
   const dragStartConnectedEdges = useRef<Edge[] | null>(null);
-  const { setChangeSource } = useChangeSource();
+  const { setEditMode } = useEditMode();
 
   const getDnDNodePosition = useCallback(
     (e: React.DragEvent, screenToFlowPosition: (pos: { x: number; y: number }) => { x: number; y: number }) => {
@@ -71,7 +71,7 @@ export const useDragNodes = () => {
       e.preventDefault();
       e.stopPropagation();
 
-      setChangeSource("circuit");
+      setEditMode("reactflow");
 
       const { screenToFlowPosition, getNodes, getEdges, setNodes, setEdges } = reactflow;
 
@@ -103,7 +103,7 @@ export const useDragNodes = () => {
       setNodes(newNodes);
       setEdges(newEdges);
     },
-    [dndCategory, reactflow, updateOrAddTempNode, removeTempEdge, addTempEdge, getDnDNodePosition, setChangeSource],
+    [dndCategory, reactflow, updateOrAddTempNode, removeTempEdge, addTempEdge, getDnDNodePosition, setEditMode],
   );
 
   const handleDrop = useCallback(
@@ -111,7 +111,7 @@ export const useDragNodes = () => {
       e.preventDefault();
       e.stopPropagation();
 
-      setChangeSource("circuit");
+      setEditMode("reactflow");
 
       const { screenToFlowPosition, getNodes, getEdges, setNodes, setEdges } = reactflow;
 
@@ -153,7 +153,7 @@ export const useDragNodes = () => {
       setNodes(newNodes);
       setEdges(newEdges);
     },
-    [dndCategory, reactflow, removeTempNode, getDnDNodePosition, removeTempEdge, setChangeSource],
+    [dndCategory, reactflow, removeTempNode, getDnDNodePosition, removeTempEdge, setEditMode],
   );
 
   // Ensure temp node is removed for quick drag-and-drop operations where handleDrop might not fire.
@@ -162,7 +162,7 @@ export const useDragNodes = () => {
       e.preventDefault();
       e.stopPropagation();
 
-      setChangeSource("circuit");
+      setEditMode("reactflow");
 
       const { getNodes, setNodes } = reactflow;
       const nodes = getNodes();
@@ -173,7 +173,7 @@ export const useDragNodes = () => {
 
       setNodes(newNodes);
     },
-    [reactflow, removeTempNode, setChangeSource],
+    [reactflow, removeTempNode, setEditMode],
   );
 
   const handleNodeDragStart = useCallback(
@@ -181,7 +181,7 @@ export const useDragNodes = () => {
       e.preventDefault();
       e.stopPropagation();
 
-      setChangeSource("circuit");
+      setEditMode("reactflow");
 
       const { getEdges, setEdges } = reactflow;
       const edges = getEdges();
@@ -199,7 +199,7 @@ export const useDragNodes = () => {
 
       setEdges(newEdges);
     },
-    [reactflow, setChangeSource],
+    [reactflow, setEditMode],
   );
 
   const handleNodeDrag = useCallback(
@@ -207,7 +207,7 @@ export const useDragNodes = () => {
       e.preventDefault();
       e.stopPropagation();
 
-      setChangeSource("circuit");
+      setEditMode("reactflow");
 
       const { getNodes, getEdges, setEdges } = reactflow;
 
@@ -269,7 +269,7 @@ export const useDragNodes = () => {
 
       setEdges(newEdges);
     },
-    [reactflow, removeTempEdge, addTempEdge, setChangeSource],
+    [reactflow, removeTempEdge, addTempEdge, setEditMode],
   );
 
   const handleNodeDragStop = useCallback(
@@ -277,7 +277,7 @@ export const useDragNodes = () => {
       e.preventDefault();
       e.stopPropagation();
 
-      setChangeSource("circuit");
+      setEditMode("reactflow");
 
       const { getNodes, getEdges, setNodes, setEdges } = reactflow;
 
@@ -446,7 +446,7 @@ export const useDragNodes = () => {
       setNodes(newNodes);
       setEdges(newEdges);
     },
-    [reactflow, removeTempEdge, setChangeSource],
+    [reactflow, removeTempEdge, setEditMode],
   );
 
   return {

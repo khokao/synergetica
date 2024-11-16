@@ -1,16 +1,16 @@
 import { TEMP_NODE_ID } from "@/components/circuit/constants";
 import { INDENT_SIZE } from "@/components/editor/constants";
-import { useChangeSource } from "@/components/editor/editor-context";
+import { useEditMode } from "@/components/editor/editor-context";
 import { useNodes } from "@xyflow/react";
 import { useEffect } from "react";
 import { stringify } from "yaml";
 
-export const useCircuitToDsl = (setValue) => {
+export const useCircuitToDsl = (setEditorContent) => {
   const nodes = useNodes();
-  const { changeSource } = useChangeSource();
+  const { editMode } = useEditMode();
 
   useEffect(() => {
-    if (nodes.length === 0 || changeSource !== "circuit") {
+    if (nodes.length === 0 || editMode !== "reactflow") {
       return;
     }
 
@@ -49,8 +49,7 @@ export const useCircuitToDsl = (setValue) => {
       .sort((a, b) => a.positionY - b.positionY)
       .map(({ chain }) => ({ chain }));
 
-    const dsl = stringify(chains, { indent: INDENT_SIZE, indentSeq: false });
-
-    setValue(dsl);
-  }, [nodes, setValue, changeSource]);
+    const editorContent = stringify(chains, { indent: INDENT_SIZE, indentSeq: false });
+    setEditorContent(editorContent);
+  }, [nodes, setEditorContent, editMode]);
 };

@@ -2,7 +2,7 @@ import { EDGE_LENGTH, GROUP_NODE_MARGIN, NODE_HEIGHT, NODE_WIDTH } from "@/compo
 import { createEdge } from "@/components/circuit/hooks/utils/create-edge";
 import { createChildNode, createParentNode } from "@/components/circuit/hooks/utils/create-node";
 import { PARTS_NAME2ATTRIBUTES } from "@/components/circuit/nodes/constants";
-import { useChangeSource } from "@/components/editor/editor-context";
+import { useEditMode } from "@/components/editor/editor-context";
 import { looseCircuitSchema } from "@/components/editor/schemas/looseSchema";
 import { useReactFlow } from "@xyflow/react";
 import type { Edge, Node } from "@xyflow/react";
@@ -10,16 +10,16 @@ import { produce } from "immer";
 import { useEffect } from "react";
 import { parseDocument } from "yaml";
 
-export const useDslToCircuit = (value: string) => {
+export const useDslToCircuit = (editorContent: string) => {
   const { setNodes, setEdges } = useReactFlow();
-  const { changeSource } = useChangeSource();
+  const { editMode } = useEditMode();
 
   useEffect(() => {
-    if (changeSource !== "dsl") {
+    if (editMode !== "monaco-editor") {
       return;
     }
 
-    const doc = parseDocument(value);
+    const doc = parseDocument(editorContent);
 
     if (doc.contents === null) {
       setNodes([]);
@@ -104,5 +104,5 @@ export const useDslToCircuit = (value: string) => {
 
     setNodes(nodes);
     setEdges(edges);
-  }, [value, setNodes, setEdges, changeSource]);
+  }, [editorContent, setNodes, setEdges, editMode]);
 };

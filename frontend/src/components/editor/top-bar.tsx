@@ -1,4 +1,4 @@
-import { useChangeSource } from "@/components/editor/editor-context";
+import { useEditMode } from "@/components/editor/editor-context";
 import { Button } from "@/components/ui/button";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import * as RadixTooltip from "@radix-ui/react-tooltip";
@@ -8,12 +8,12 @@ import { readTextFile, writeTextFile } from "@tauri-apps/plugin-fs";
 import { Clipboard, Download, Upload } from "lucide-react";
 import { toast } from "sonner";
 
-export const EditorTopBar = ({ value, setValue }) => {
-  const { setChangeSource } = useChangeSource();
+export const EditorTopBar = ({ editorContent, setEditorContent }) => {
+  const { setEditMode } = useEditMode();
 
   const handleCopy = async () => {
     try {
-      await writeText(value);
+      await writeText(editorContent);
       toast.success("Copied to clipboard");
     } catch (error) {
       toast.error("Failed to copy to clipboard");
@@ -36,8 +36,8 @@ export const EditorTopBar = ({ value, setValue }) => {
 
       if (path) {
         const content = await readTextFile(path);
-        setChangeSource("dsl");
-        setValue(content);
+        setEditMode("monaco-editor");
+        setEditorContent(content);
         toast.success("Imported config YAML file");
       }
     } catch (error) {
@@ -54,7 +54,7 @@ export const EditorTopBar = ({ value, setValue }) => {
       });
 
       if (path) {
-        await writeTextFile(path, value);
+        await writeTextFile(path, editorContent);
         toast.success("Exported config YAML file");
       }
     } catch (error) {
