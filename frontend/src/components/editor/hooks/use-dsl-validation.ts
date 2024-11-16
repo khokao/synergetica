@@ -1,13 +1,11 @@
-import { useEditorRef, useMonacoRef, useValidationError } from "@/components/editor/editor-context";
+import { useEditorContext } from "@/components/editor/editor-context";
 import { strictCircuitSchema } from "@/components/editor/schemas/strictSchema";
 import type { editor } from "monaco-editor";
 import { useEffect } from "react";
 import { LineCounter, isMap, isScalar, isSeq, parseDocument } from "yaml";
 
-export const useDslValidation = (editorContent: string) => {
-  const editorRef = useEditorRef();
-  const monacoRef = useMonacoRef();
-  const { setValidationError } = useValidationError();
+export const useDslValidation = () => {
+  const { editorRef, monacoRef, editorContent, setValidationError } = useEditorContext();
 
   useEffect(() => {
     const validate = () => {

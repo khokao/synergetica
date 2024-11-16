@@ -6,7 +6,7 @@ import { createChildNode, createTempNode } from "@/components/circuit/hooks/util
 import { createNearestEdge } from "@/components/circuit/hooks/utils/nearest-edge";
 import { groupNodes, ungroupNodes } from "@/components/circuit/hooks/utils/ungroup-group";
 import { findRelatedNodes, isNodeOutsideParent } from "@/components/circuit/hooks/utils/utils";
-import { useEditMode } from "@/components/editor/editor-context";
+import { useEditorContext } from "@/components/editor/editor-context";
 import { useReactFlow } from "@xyflow/react";
 import type { Edge, Node } from "@xyflow/react";
 import { produce } from "immer";
@@ -17,7 +17,7 @@ export const useDragNodes = () => {
   const [dndCategory, _] = useDnD();
   const dragStartNode = useRef<Node | null>(null);
   const dragStartConnectedEdges = useRef<Edge[] | null>(null);
-  const { setEditMode } = useEditMode();
+  const { setEditMode } = useEditorContext();
 
   const getDnDNodePosition = useCallback(
     (e: React.DragEvent, screenToFlowPosition: (pos: { x: number; y: number }) => { x: number; y: number }) => {

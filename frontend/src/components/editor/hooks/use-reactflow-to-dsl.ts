@@ -1,13 +1,13 @@
 import { TEMP_NODE_ID } from "@/components/circuit/constants";
 import { INDENT_SIZE } from "@/components/editor/constants";
-import { useEditMode } from "@/components/editor/editor-context";
+import { useEditorContext } from "@/components/editor/editor-context";
 import { useNodes } from "@xyflow/react";
 import { useEffect } from "react";
 import { stringify } from "yaml";
 
-export const useReactflowToDsl = (setEditorContent) => {
+export const useReactflowToDsl = () => {
   const nodes = useNodes();
-  const { editMode } = useEditMode();
+  const { setEditorContent, editMode } = useEditorContext();
 
   useEffect(() => {
     if (nodes.length === 0 || editMode !== "reactflow") {

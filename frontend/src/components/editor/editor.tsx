@@ -1,5 +1,5 @@
 import { GITHUB_LIGHT_THEME, INDENT_SIZE } from "@/components/editor/constants";
-import { useEditMode, useEditorRef, useMonacoRef, useValidationError } from "@/components/editor/editor-context";
+import { useEditorContext } from "@/components/editor/editor-context";
 import { EditorConsole } from "@/components/editor/error-console";
 import { useDslToReactflow } from "@/components/editor/hooks/use-dsl-to-reactflow";
 import { useDslValidation } from "@/components/editor/hooks/use-dsl-validation";
@@ -9,18 +9,14 @@ import { Separator } from "@/components/ui/separator";
 import { Editor } from "@monaco-editor/react";
 import type { Monaco } from "@monaco-editor/react";
 import type { editor } from "monaco-editor";
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 
 export const CircuitEditor = () => {
-  const [editorContent, setEditorContent] = useState<string>("");
-  useDslValidation(editorContent);
-  useDslToReactflow(editorContent);
-  useReactflowToDsl(setEditorContent);
+  const { editorRef, monacoRef, editorContent, setEditorContent, setEditMode } = useEditorContext();
 
-  const editorRef = useEditorRef();
-  const monacoRef = useMonacoRef();
-  const { validationError } = useValidationError();
-  const { setEditMode } = useEditMode();
+  useDslValidation();
+  useDslToReactflow();
+  useReactflowToDsl();
 
   const handleEditorDidMount = (editor: editor.IStandaloneCodeEditor, monaco: Monaco) => {
     editorRef.current = editor;
@@ -37,14 +33,14 @@ export const CircuitEditor = () => {
     }
   }, [monacoRef]);
 
-  const handleChanges = (editorContent: string) => {
+  const handleChange = (editorContent: string) => {
     setEditMode("monaco-editor");
     setEditorContent(editorContent || "");
   };
 
   return (
     <div className="flex flex-col h-full w-full">
-      <EditorTopBar editorContent={editorContent} setEditorContent={setEditorContent} />
+      <EditorTopBar />
       <Separator />
       {/*
         [Bug] automaticLayout doesnt shrink to container within flex layout
@@ -56,7 +52,7 @@ export const CircuitEditor = () => {
           value={editorContent}
           theme="github-light"
           onMount={handleEditorDidMount}
-          onChange={handleChanges}
+          onChange={handleChange}
           options={{
             automaticLayout: true,
             tabSize: INDENT_SIZE,
@@ -67,7 +63,7 @@ export const CircuitEditor = () => {
         />
       </div>
       <Separator />
-      <EditorConsole error={validationError} />
+      <EditorConsole />
     </div>
   );
 };

@@ -10,6 +10,8 @@ type EditMode = "reactflow" | "monaco-editor";
 type EditorContextType = {
   editorRef: React.MutableRefObject<editor.IStandaloneCodeEditor | null>;
   monacoRef: React.MutableRefObject<Monaco | null>;
+  editorContent: string;
+  setEditorContent: (content: string) => void;
   validationError: ValidationError[];
   setValidationError: (error: ValidationError[]) => void;
   editMode: EditMode;
@@ -18,41 +20,18 @@ type EditorContextType = {
 
 const EditorContext = createContext<EditorContextType | undefined>(undefined);
 
-export const useEditorRef = () => {
+export const useEditorContext = () => {
   const context = useContext(EditorContext);
   if (!context) {
-    throw new Error("useEditorRef must be used within an EditorProvider");
+    throw new Error("useEditorContext must be used within an EditorProvider");
   }
-  return context.editorRef;
-};
-
-export const useMonacoRef = () => {
-  const context = useContext(EditorContext);
-  if (!context) {
-    throw new Error("useMonacoRef must be used within an EditorProvider");
-  }
-  return context.monacoRef;
-};
-
-export const useValidationError = () => {
-  const context = useContext(EditorContext);
-  if (!context) {
-    throw new Error("useValidationError must be used within an EditorProvider");
-  }
-  return { validationError: context.validationError, setValidationError: context.setValidationError };
-};
-
-export const useEditMode = () => {
-  const context = useContext(EditorContext);
-  if (!context) {
-    throw new Error("useChangeSource must be used within an EditorProvider");
-  }
-  return { editMode: context.editMode, setEditMode: context.setEditMode };
+  return context;
 };
 
 export const EditorProvider = ({ children }: { children: React.ReactNode }) => {
   const editorRef = useRef<editor.IStandaloneCodeEditor | null>(null);
   const monacoRef = useRef<Monaco | null>(null);
+  const [editorContent, setEditorContent] = useState("");
   const [validationError, setValidationError] = useState<ValidationError[]>([]);
   const [editMode, setEditMode] = useState<EditMode>("reactflow");
 
@@ -61,6 +40,8 @@ export const EditorProvider = ({ children }: { children: React.ReactNode }) => {
       value={{
         editorRef,
         monacoRef,
+        editorContent,
+        setEditorContent,
         validationError,
         setValidationError,
         editMode,

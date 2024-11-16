@@ -1,4 +1,4 @@
-import { useEditMode } from "@/components/editor/editor-context";
+import { useEditorContext } from "@/components/editor/editor-context";
 import { Button } from "@/components/ui/button";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import * as RadixTooltip from "@radix-ui/react-tooltip";
@@ -8,8 +8,8 @@ import { readTextFile, writeTextFile } from "@tauri-apps/plugin-fs";
 import { Clipboard, Download, Upload } from "lucide-react";
 import { toast } from "sonner";
 
-export const EditorTopBar = ({ editorContent, setEditorContent }) => {
-  const { setEditMode } = useEditMode();
+export const EditorTopBar = () => {
+  const { editorContent, setEditorContent, setEditMode } = useEditorContext();
 
   const handleCopy = async () => {
     try {

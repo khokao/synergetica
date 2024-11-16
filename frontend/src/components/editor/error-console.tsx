@@ -1,14 +1,17 @@
+import { useEditorContext } from "@/components/editor/editor-context";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { AlertCircle, CircleCheck } from "lucide-react";
 
 type ValidationError = { message: string; line: number };
 
-export const EditorConsole = ({ error }: { error: ValidationError[] }) => {
-  if (!error || error.length === 0) {
+export const EditorConsole = () => {
+  const { validationError } = useEditorContext();
+
+  if (!validationError || validationError.length === 0) {
     return <NoErrorDisplay />;
   }
-  return <ErrorDisplay errors={error} />;
+  return <ErrorDisplay errors={validationError} />;
 };
 
 const NoErrorDisplay = () => {

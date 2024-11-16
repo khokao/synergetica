@@ -2,7 +2,7 @@ import { EDGE_LENGTH, GROUP_NODE_MARGIN, NODE_HEIGHT, NODE_WIDTH } from "@/compo
 import { createEdge } from "@/components/circuit/hooks/utils/create-edge";
 import { createChildNode, createParentNode } from "@/components/circuit/hooks/utils/create-node";
 import { PARTS_NAME2ATTRIBUTES } from "@/components/circuit/nodes/constants";
-import { useEditMode } from "@/components/editor/editor-context";
+import { useEditorContext } from "@/components/editor/editor-context";
 import { looseCircuitSchema } from "@/components/editor/schemas/looseSchema";
 import { useReactFlow } from "@xyflow/react";
 import type { Edge, Node } from "@xyflow/react";
@@ -10,9 +10,10 @@ import { produce } from "immer";
 import { useEffect } from "react";
 import { parseDocument } from "yaml";
 
-export const useDslToReactflow = (editorContent: string) => {
+export const useDslToReactflow = () => {
+  const { editorContent, editMode } = useEditorContext();
+
   const { setNodes, setEdges } = useReactFlow();
-  const { editMode } = useEditMode();
 
   useEffect(() => {
     if (editMode !== "monaco-editor") {
