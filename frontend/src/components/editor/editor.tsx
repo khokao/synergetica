@@ -44,7 +44,7 @@ export const CircuitEditor = () => {
 
   return (
     <div className="flex flex-col h-full w-full">
-      <EditorTopBar />
+      <EditorTopBar value={value} setValue={setValue} />
       <Separator />
       {/*
         [Bug] automaticLayout doesnt shrink to container within flex layout
