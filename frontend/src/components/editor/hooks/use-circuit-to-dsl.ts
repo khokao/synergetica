@@ -49,7 +49,9 @@ export const useCircuitToDsl = (setEditorContent) => {
       .sort((a, b) => a.positionY - b.positionY)
       .map(({ chain }) => ({ chain }));
 
-    const editorContent = stringify(chains, { indent: INDENT_SIZE, indentSeq: false });
+    const dsl = chains;
+
+    const editorContent = stringify(dsl, { indent: INDENT_SIZE, indentSeq: false });
     setEditorContent(editorContent);
   }, [nodes, setEditorContent, editMode]);
 };
