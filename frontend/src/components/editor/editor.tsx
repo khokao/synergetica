@@ -11,23 +11,25 @@ import type { Monaco } from "@monaco-editor/react";
 import { useNodes, useReactFlow } from "@xyflow/react";
 import type { editor } from "monaco-editor";
 import React, { useEffect, useRef } from "react";
+import { useDebounce } from "use-debounce";
 
 export const CircuitEditor = () => {
   const { editorRef, monacoRef, editorContent, setEditorContent, setEditMode, setValidationError, editMode } =
     useEditorContext();
   const { setNodes, setEdges } = useReactFlow();
   const nodes = useNodes();
+  const [debouncedNodes] = useDebounce(nodes, 500);
   const prevParsedContentRef = useRef<string>("");
 
   useEffect(() => {
     const editor = editorRef.current;
     const monaco = monacoRef.current;
 
-    if (nodes.length === 0 || editMode !== "reactflow" || !editor || !monaco) {
+    if (debouncedNodes.length === 0 || editMode !== "reactflow" || !editor || !monaco) {
       return;
     }
 
-    const dslContent = convertReactFlowNodesToDSL(nodes);
+    const dslContent = convertReactFlowNodesToDSL(debouncedNodes);
     const { validationErrors, markers, parsedContent } = validateDslContent(dslContent);
 
     const newParsedContent = JSON.stringify(parsedContent);
@@ -42,7 +44,7 @@ export const CircuitEditor = () => {
 
     const model = editor.getModel();
     model && monaco.editor.setModelMarkers(model, "owner", markers);
-  }, [nodes, setEditorContent, setValidationError, editMode, editorRef, monacoRef]);
+  }, [debouncedNodes, setEditorContent, setValidationError, editMode, editorRef, monacoRef]);
 
   const handleEditorDidMount = (editor: editor.IStandaloneCodeEditor, monaco: Monaco) => {
     editorRef.current = editor;
