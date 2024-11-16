@@ -21,6 +21,20 @@ export const CircuitEditor = () => {
   const [debouncedNodes] = useDebounce(nodes, 500);
   const prevParsedContentRef = useRef<string>("");
 
+  const handleEditorDidMount = (editor: editor.IStandaloneCodeEditor, monaco: Monaco) => {
+    editorRef.current = editor;
+    monacoRef.current = monaco;
+
+    monaco.editor.defineTheme("github-light", GITHUB_LIGHT_THEME);
+    monaco.editor.setTheme("github-light");
+  };
+  useEffect(() => {
+    if (monacoRef.current) {
+      monacoRef.current.editor.defineTheme("github-light", GITHUB_LIGHT_THEME);
+      monacoRef.current.editor.setTheme("github-light");
+    }
+  }, [monacoRef]);
+
   useEffect(() => {
     const editor = editorRef.current;
     const monaco = monacoRef.current;
@@ -45,21 +59,6 @@ export const CircuitEditor = () => {
     const model = editor.getModel();
     model && monaco.editor.setModelMarkers(model, "owner", markers);
   }, [debouncedNodes, setEditorContent, setValidationError, editMode, editorRef, monacoRef]);
-
-  const handleEditorDidMount = (editor: editor.IStandaloneCodeEditor, monaco: Monaco) => {
-    editorRef.current = editor;
-    monacoRef.current = monaco;
-
-    monaco.editor.defineTheme("github-light", GITHUB_LIGHT_THEME);
-    monaco.editor.setTheme("github-light");
-  };
-
-  useEffect(() => {
-    if (monacoRef.current) {
-      monacoRef.current.editor.defineTheme("github-light", GITHUB_LIGHT_THEME);
-      monacoRef.current.editor.setTheme("github-light");
-    }
-  }, [monacoRef]);
 
   const handleChange = (newEditorContent: string) => {
     setEditMode("monaco-editor");
