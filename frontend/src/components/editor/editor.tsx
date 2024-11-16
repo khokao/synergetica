@@ -1,9 +1,9 @@
 import { GITHUB_LIGHT_THEME, INDENT_SIZE } from "@/components/editor/constants";
 import { useEditMode, useEditorRef, useMonacoRef, useValidationError } from "@/components/editor/editor-context";
 import { EditorConsole } from "@/components/editor/error-console";
-import { useReactflowToDsl } from "@/components/editor/hooks/use-circuit-to-dsl";
-import { useDslToReactflow } from "@/components/editor/hooks/use-dsl-to-circuit";
+import { useDslToReactflow } from "@/components/editor/hooks/use-dsl-to-reactflow";
 import { useDslValidation } from "@/components/editor/hooks/use-dsl-validation";
+import { useReactflowToDsl } from "@/components/editor/hooks/use-reactflow-to-dsl";
 import { EditorTopBar } from "@/components/editor/top-bar";
 import { Separator } from "@/components/ui/separator";
 import { Editor } from "@monaco-editor/react";
