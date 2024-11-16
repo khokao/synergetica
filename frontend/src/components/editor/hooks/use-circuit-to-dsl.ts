@@ -1,4 +1,5 @@
 import { TEMP_NODE_ID } from "@/components/circuit/constants";
+import { INDENT_SIZE } from "@/components/editor/constants";
 import { useChangeSource } from "@/components/editor/editor-context";
 import { useNodes } from "@xyflow/react";
 import { useEffect } from "react";
@@ -46,8 +47,10 @@ export const useCircuitToDsl = (setValue) => {
 
     const chains = [...parentChains, ...singleChains]
       .sort((a, b) => a.positionY - b.positionY)
-      .map(({ chain }) => ({ chain }));
+      .map(({ chain }) => ({ chain }));;
 
-    setValue(stringify(chains));
+    const dsl = stringify(chains, { indent: INDENT_SIZE, indentSeq: false });
+
+    setValue(dsl);
   }, [nodes, setValue, changeSource]);
 };

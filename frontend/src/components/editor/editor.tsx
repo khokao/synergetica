@@ -1,4 +1,4 @@
-import { GITHUB_LIGHT_THEME } from "@/components/editor/constants";
+import { GITHUB_LIGHT_THEME, INDENT_SIZE } from "@/components/editor/constants";
 import { useChangeSource, useEditorRef, useMonacoRef, useValidationError } from "@/components/editor/editor-context";
 import { EditorConsole } from "@/components/editor/error-console";
 import { useCircuitToDsl } from "@/components/editor/hooks/use-circuit-to-dsl";
@@ -59,7 +59,7 @@ export const CircuitEditor = () => {
           onChange={handleChanges}
           options={{
             automaticLayout: true,
-            tabSize: 2,
+            tabSize: INDENT_SIZE,
             minimap: { enabled: false },
             scrollbar: { verticalScrollbarSize: 8, horizontal: "hidden" },
             padding: { top: 10 },
