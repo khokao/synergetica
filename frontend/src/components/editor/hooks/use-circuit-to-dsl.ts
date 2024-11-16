@@ -5,7 +5,7 @@ import { useNodes } from "@xyflow/react";
 import { useEffect } from "react";
 import { stringify } from "yaml";
 
-export const useCircuitToDsl = (setEditorContent) => {
+export const useReactflowToDsl = (setEditorContent) => {
   const nodes = useNodes();
   const { editMode } = useEditMode();
 

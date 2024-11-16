@@ -1,8 +1,8 @@
 import { GITHUB_LIGHT_THEME, INDENT_SIZE } from "@/components/editor/constants";
 import { useEditMode, useEditorRef, useMonacoRef, useValidationError } from "@/components/editor/editor-context";
 import { EditorConsole } from "@/components/editor/error-console";
-import { useCircuitToDsl } from "@/components/editor/hooks/use-circuit-to-dsl";
-import { useDslToCircuit } from "@/components/editor/hooks/use-dsl-to-circuit";
+import { useReactflowToDsl } from "@/components/editor/hooks/use-circuit-to-dsl";
+import { useDslToReactflow } from "@/components/editor/hooks/use-dsl-to-circuit";
 import { useDslValidation } from "@/components/editor/hooks/use-dsl-validation";
 import { EditorTopBar } from "@/components/editor/top-bar";
 import { Separator } from "@/components/ui/separator";
@@ -14,8 +14,8 @@ import React, { useState, useEffect } from "react";
 export const CircuitEditor = () => {
   const [editorContent, setEditorContent] = useState<string>("");
   useDslValidation(editorContent);
-  useDslToCircuit(editorContent);
-  useCircuitToDsl(setEditorContent);
+  useDslToReactflow(editorContent);
+  useReactflowToDsl(setEditorContent);
 
   const editorRef = useEditorRef();
   const monacoRef = useMonacoRef();

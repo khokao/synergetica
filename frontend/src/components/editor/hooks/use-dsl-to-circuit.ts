@@ -10,7 +10,7 @@ import { produce } from "immer";
 import { useEffect } from "react";
 import { parseDocument } from "yaml";
 
-export const useDslToCircuit = (editorContent: string) => {
+export const useDslToReactflow = (editorContent: string) => {
   const { setNodes, setEdges } = useReactFlow();
   const { editMode } = useEditMode();
 
