@@ -27,7 +27,8 @@ export const useDslValidation = (value: string) => {
         return;
       }
 
-      const result = strictCircuitSchema.safeParse(doc.toJS());
+      const dsl = doc.toJS();
+      const result = strictCircuitSchema.safeParse(dsl);
 
       if (result.success) {
         setValidationError([]);
