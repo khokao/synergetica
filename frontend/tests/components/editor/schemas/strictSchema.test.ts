@@ -1,22 +1,19 @@
-import { describe, it, expect } from 'vitest';
-import { strictCircuitSchema } from '@/components/editor/schemas/strictSchema';
+import { strictCircuitSchema } from "@/components/editor/schemas/strictSchema";
+import { describe, expect, it } from "vitest";
 
+const validPromoterName = "PameR";
+const validProteinName = "AmeR";
+const validTerminatorName = "L3S3P31";
 
-const validPromoterName = 'PameR';
-const validProteinName = 'AmeR';
-const validTerminatorName = 'L3S3P31';
-
-
-describe('strictCircuitSchema', () => {
-
-  it('should successfully parse a valid circuit with promoter(s), protein(s), and terminator', () => {
+describe("strictCircuitSchema", () => {
+  it("should successfully parse a valid circuit with promoter(s), protein(s), and terminator", () => {
     // Arrange
     const validCircuit = [
       {
         chain: [
-          { type: 'promoter', name: validPromoterName },
-          { type: 'protein', name: validProteinName },
-          { type: 'terminator', name: validTerminatorName },
+          { type: "promoter", name: validPromoterName },
+          { type: "protein", name: validProteinName },
+          { type: "terminator", name: validTerminatorName },
         ],
       },
     ];
@@ -28,13 +25,13 @@ describe('strictCircuitSchema', () => {
     expect(result.success).toBe(true);
   });
 
-  it('should fail when the chain does not start with a promoter', () => {
+  it("should fail when the chain does not start with a promoter", () => {
     // Arrange
     const invalidCircuit = [
       {
         chain: [
-          { type: 'protein', name: validProteinName },
-          { type: 'terminator', name: validTerminatorName },
+          { type: "protein", name: validProteinName },
+          { type: "terminator", name: validTerminatorName },
         ],
       },
     ];
@@ -46,13 +43,13 @@ describe('strictCircuitSchema', () => {
     expect(result.success).toBe(false);
   });
 
-  it('should fail when the chain does not end with a terminator', () => {
+  it("should fail when the chain does not end with a terminator", () => {
     // Arrange
     const invalidCircuit = [
       {
         chain: [
-          { type: 'promoter', name: validPromoterName },
-          { type: 'protein', name: validProteinName },
+          { type: "promoter", name: validPromoterName },
+          { type: "protein", name: validProteinName },
         ],
       },
     ];
@@ -64,15 +61,15 @@ describe('strictCircuitSchema', () => {
     expect(result.success).toBe(false);
   });
 
-  it('should fail when a promoter appears after proteins', () => {
+  it("should fail when a promoter appears after proteins", () => {
     // Arrange
     const invalidCircuit = [
       {
         chain: [
-          { type: 'promoter', name: validPromoterName },
-          { type: 'protein', name: validProteinName },
-          { type: 'promoter', name: validPromoterName },
-          { type: 'terminator', name: validTerminatorName },
+          { type: "promoter", name: validPromoterName },
+          { type: "protein", name: validProteinName },
+          { type: "promoter", name: validPromoterName },
+          { type: "terminator", name: validTerminatorName },
         ],
       },
     ];
@@ -84,14 +81,14 @@ describe('strictCircuitSchema', () => {
     expect(result.success).toBe(false);
   });
 
-  it('should fail when a terminator appears before proteins', () => {
+  it("should fail when a terminator appears before proteins", () => {
     // Arrange
     const invalidCircuit = [
       {
         chain: [
-          { type: 'promoter', name: validPromoterName },
-          { type: 'terminator', name: validTerminatorName },
-          { type: 'protein', name: validProteinName },
+          { type: "promoter", name: validPromoterName },
+          { type: "terminator", name: validTerminatorName },
+          { type: "protein", name: validProteinName },
         ],
       },
     ];
@@ -103,15 +100,15 @@ describe('strictCircuitSchema', () => {
     expect(result.success).toBe(false);
   });
 
-  it('should fail when elements appear after the terminator', () => {
+  it("should fail when elements appear after the terminator", () => {
     // Arrange
     const invalidCircuit = [
       {
         chain: [
-          { type: 'promoter', name: validPromoterName },
-          { type: 'protein', name: validProteinName },
-          { type: 'terminator', name: validTerminatorName },
-          { type: 'protein', name: validProteinName },
+          { type: "promoter", name: validPromoterName },
+          { type: "protein", name: validProteinName },
+          { type: "terminator", name: validTerminatorName },
+          { type: "protein", name: validProteinName },
         ],
       },
     ];
@@ -123,14 +120,14 @@ describe('strictCircuitSchema', () => {
     expect(result.success).toBe(false);
   });
 
-  it('should fail when chain items have invalid names', () => {
+  it("should fail when chain items have invalid names", () => {
     // Arrange
     const invalidCircuit = [
       {
         chain: [
-          { type: 'promoter', name: 'invalidPromoter' },
-          { type: 'protein', name: validProteinName },
-          { type: 'terminator', name: validTerminatorName },
+          { type: "promoter", name: "invalidPromoter" },
+          { type: "protein", name: validProteinName },
+          { type: "terminator", name: validTerminatorName },
         ],
       },
     ];
@@ -142,16 +139,16 @@ describe('strictCircuitSchema', () => {
     expect(result.success).toBe(false);
   });
 
-  it('should fail when chain has extra properties', () => {
+  it("should fail when chain has extra properties", () => {
     // Arrange
     const invalidCircuit = [
       {
         chain: [
-          { type: 'promoter', name: validPromoterName },
-          { type: 'protein', name: validProteinName },
-          { type: 'terminator', name: validTerminatorName },
+          { type: "promoter", name: validPromoterName },
+          { type: "protein", name: validProteinName },
+          { type: "terminator", name: validTerminatorName },
         ],
-        extraProperty: 'not allowed',
+        extraProperty: "not allowed",
       },
     ];
 
@@ -165,14 +162,14 @@ describe('strictCircuitSchema', () => {
     }
   });
 
-  it('should fail when chain item has extra properties', () => {
+  it("should fail when chain item has extra properties", () => {
     // Arrange
     const invalidCircuit = [
       {
         chain: [
-          { type: 'promoter', name: validPromoterName, extra: 'not allowed' },
-          { type: 'protein', name: validProteinName },
-          { type: 'terminator', name: validTerminatorName },
+          { type: "promoter", name: validPromoterName, extra: "not allowed" },
+          { type: "protein", name: validProteinName },
+          { type: "terminator", name: validTerminatorName },
         ],
       },
     ];
@@ -184,7 +181,7 @@ describe('strictCircuitSchema', () => {
     expect(result.success).toBe(false);
   });
 
-  it('should fail when chain is missing', () => {
+  it("should fail when chain is missing", () => {
     // Arrange
     const invalidCircuit = [
       {
@@ -199,7 +196,7 @@ describe('strictCircuitSchema', () => {
     expect(result.success).toBe(false);
   });
 
-  it('should fail when chain is empty', () => {
+  it("should fail when chain is empty", () => {
     // Arrange
     const invalidCircuit = [
       {
@@ -213,5 +210,4 @@ describe('strictCircuitSchema', () => {
     // Assert
     expect(result.success).toBe(false);
   });
-
 });

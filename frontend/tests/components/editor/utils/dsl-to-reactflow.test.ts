@@ -1,18 +1,16 @@
-import { describe, it, expect } from 'vitest';
-import { dslToReactflow } from '@/components/editor/utils/dsl-to-reactflow';
+import { dslToReactflow } from "@/components/editor/utils/dsl-to-reactflow";
+import { describe, expect, it } from "vitest";
 
-
-describe('dslToReactflow', () => {
-
-  it('should return empty nodes and edges for empty content', () => {
-    const content = '';
+describe("dslToReactflow", () => {
+  it("should return empty nodes and edges for empty content", () => {
+    const content = "";
 
     const result = dslToReactflow(content);
 
     expect(result).toEqual({ nodes: [], edges: [] });
   });
 
-  it('should return null for invalid DSL content', () => {
+  it("should return null for invalid DSL content", () => {
     const content = `
 - chain:
   - type: invalidType
@@ -23,7 +21,7 @@ describe('dslToReactflow', () => {
     expect(result).toBeNull();
   });
 
-  it('should generate correct nodes and edges for valid DSL content', () => {
+  it("should generate correct nodes and edges for valid DSL content", () => {
     const content = `
 - chain:
   - type: promoter
@@ -40,7 +38,7 @@ describe('dslToReactflow', () => {
     expect(result?.edges.length).toBe(2);
   });
 
-  it('should handle multiple chains correctly', () => {
+  it("should handle multiple chains correctly", () => {
     // Arrange
     const content = `
 - chain:
@@ -62,7 +60,7 @@ describe('dslToReactflow', () => {
     expect(result?.edges.length).toBe(4);
   });
 
-  it('should assign correct parentId to child nodes when chain has multiple items', () => {
+  it("should assign correct parentId to child nodes when chain has multiple items", () => {
     // Arrange
     const content = `
 - chain:
@@ -78,17 +76,17 @@ describe('dslToReactflow', () => {
     expect(result).not.toBeNull();
     const nodes = result?.nodes;
     if (nodes) {
-      const parentNode = nodes.find(node => node.type === 'parent');
+      const parentNode = nodes.find((node) => node.type === "parent");
       expect(parentNode).toBeDefined();
 
-      const childNodes = nodes.filter(node => node.type !== 'parent');
-      childNodes.forEach(node => {
+      const childNodes = nodes.filter((node) => node.type !== "parent");
+      for (const node of childNodes) {
         expect(node.parentId).toBe(parentNode?.id);
-      });
+      }
     }
   });
 
-  it('should not assign parentId when chain has only one item', () => {
+  it("should not assign parentId when chain has only one item", () => {
     // Arrange
     const content = `
 - chain:
@@ -107,7 +105,7 @@ describe('dslToReactflow', () => {
     }
   });
 
-  it('should set leftHandleConnected and rightHandleConnected correctly', () => {
+  it("should set leftHandleConnected and rightHandleConnected correctly", () => {
     // Arrange
     const content = `
 - chain:
@@ -123,9 +121,9 @@ describe('dslToReactflow', () => {
     expect(result).not.toBeNull();
     const nodes = result?.nodes;
     if (nodes) {
-      const promoterNode = nodes.find(node => node.data.nodeCategory === 'promoter');
-      const proteinNode = nodes.find(node => node.data.nodeCategory === 'protein');
-      const terminatorNode = nodes.find(node => node.data.nodeCategory === 'terminator');
+      const promoterNode = nodes.find((node) => node.data.nodeCategory === "promoter");
+      const proteinNode = nodes.find((node) => node.data.nodeCategory === "protein");
+      const terminatorNode = nodes.find((node) => node.data.nodeCategory === "terminator");
 
       expect(promoterNode?.data.leftHandleConnected).toBe(false);
       expect(promoterNode?.data.rightHandleConnected).toBe(true);
@@ -136,7 +134,7 @@ describe('dslToReactflow', () => {
     }
   });
 
-  it('should create edges between child nodes correctly', () => {
+  it("should create edges between child nodes correctly", () => {
     // Arrange
     const content = `
 - chain:
@@ -152,7 +150,7 @@ describe('dslToReactflow', () => {
     expect(result?.edges.length).toBe(2);
     const edges = result?.edges;
     if (edges && result?.nodes) {
-      const childNodes = result.nodes.filter(node => node.type !== 'parent');
+      const childNodes = result.nodes.filter((node) => node.type !== "parent");
       expect(edges[0].source).toBe(childNodes[0].id);
       expect(edges[0].target).toBe(childNodes[1].id);
       expect(edges[1].source).toBe(childNodes[1].id);
