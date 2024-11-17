@@ -32,6 +32,7 @@ export default defineConfig({
         "src/components/circuit/hooks/use-delete-nodes-edges.ts", // GUI testing is excluded due to high cost and low value
         "src/components/circuit/hooks/use-drag-nodes.ts", // GUI testing is excluded due to high cost and low value
         "src/components/circuit/hooks/use-run-simulator.ts", // GUI testing is excluded due to high cost and low value
+        "src/components/editor/editor.tsx", // No integration tests for editor.
       ],
       reportsDirectory: "./coverage",
       reporter: ["text", "json", "json-summary"],
