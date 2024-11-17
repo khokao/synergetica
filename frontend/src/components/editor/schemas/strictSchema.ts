@@ -119,7 +119,13 @@ const strictChainSchema = z
             }
           }
 
-          if (state !== "terminator") {
+          if (state === "promoter") {
+            ctx.addIssue({
+              code: z.ZodIssueCode.custom,
+              message: "After promoter(s), at least one protein must follow before a terminator.",
+              path: [chain.length - 1],
+            });
+          } else if (state !== "terminator") {
             ctx.addIssue({
               code: z.ZodIssueCode.custom,
               message: "Chain must end with a terminator.",
