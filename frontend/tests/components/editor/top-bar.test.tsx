@@ -33,6 +33,7 @@ vi.mock("sonner", () => ({
 describe("EditorTopBar", () => {
   beforeEach(() => {
     vi.resetAllMocks();
+    vi.spyOn(console, "error").mockImplementation(() => {});
   });
 
   const TestComponent = () => {
