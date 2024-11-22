@@ -41,21 +41,21 @@ export const Studio = () => {
                       <Circuit />
                     </DnDProvider>
                   </ResizablePanel>
+                  <ResizableHandle withHandle />
+                  <ResizablePanel
+                    defaultSize={0}
+                    collapsedSize={0}
+                    collapsible
+                    minSize={20.0}
+                    maxSize={30.0}
+                    // @ts-ignore
+                    ref={panelRefs.right}
+                  >
+                    <SimulatorProvider>
+                      <Simulation />
+                    </SimulatorProvider>
+                  </ResizablePanel>
                 </EditorProvider>
-                <ResizableHandle withHandle />
-                <ResizablePanel
-                  defaultSize={0}
-                  collapsedSize={0}
-                  collapsible
-                  minSize={20.0}
-                  maxSize={30.0}
-                  // @ts-ignore
-                  ref={panelRefs.right}
-                >
-                  <SimulatorProvider>
-                    <Simulation />
-                  </SimulatorProvider>
-                </ResizablePanel>
               </ResizablePanelGroup>
             </ProteinParameterProvider>
           </ConverterProvider>
