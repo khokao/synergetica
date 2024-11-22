@@ -1,6 +1,6 @@
 {
-  "identifier": "migrated",
-  "description": "permissions that were migrated from v1",
+  "identifier": "default",
+  "description": "Capability for the main window",
   "local": true,
   "windows": ["main"],
   "permissions": [
