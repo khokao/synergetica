@@ -12,8 +12,8 @@ type EditorContextType = {
   monacoRef: React.MutableRefObject<Monaco | null>;
   editorContent: string;
   setEditorContent: (content: string) => void;
-  validationError: ValidationError[];
-  setValidationError: (error: ValidationError[]) => void;
+  validationError: ValidationError[] | null;
+  setValidationError: (error: ValidationError[] | null) => void;
   editMode: EditMode;
   setEditMode: (mode: EditMode) => void;
 };
@@ -32,7 +32,7 @@ export const EditorProvider = ({ children }: { children: React.ReactNode }) => {
   const editorRef = useRef<editor.IStandaloneCodeEditor | null>(null);
   const monacoRef = useRef<Monaco | null>(null);
   const [editorContent, setEditorContent] = useState("");
-  const [validationError, setValidationError] = useState<ValidationError[]>([]);
+  const [validationError, setValidationError] = useState<ValidationError[] | null>(null);
   const [editMode, setEditMode] = useState<EditMode>("reactflow");
 
   return (

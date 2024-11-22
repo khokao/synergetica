@@ -7,7 +7,7 @@ import type { z } from "zod";
 export const validateDslContent = (
   content: string,
 ): {
-  validationErrors: ValidationError[];
+  validationErrors: ValidationError[] | null;
   markers: editor.IMarkerData[];
   parsedContent: z.infer<typeof strictCircuitSchema> | null;
 } => {
@@ -15,7 +15,7 @@ export const validateDslContent = (
   const doc = parseDocument(content, { keepSourceTokens: true, lineCounter });
 
   if (doc.contents === null) {
-    return { validationErrors: [], markers: [], parsedContent: null };
+    return { validationErrors: null, markers: [], parsedContent: null };
   }
 
   const dsl = doc.toJS();
