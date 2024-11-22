@@ -5,11 +5,13 @@
   "windows": ["main"],
   "permissions": [
     "core:default",
+    "fs:allow-read-text-file",
     "fs:allow-write-text-file",
     "dialog:allow-open",
     "dialog:allow-save",
     "dialog:allow-message",
     "dialog:allow-ask",
-    "dialog:allow-confirm"
+    "dialog:allow-confirm",
+    "clipboard-manager:allow-write-text"
   ]
 }

@@ -95,7 +95,7 @@ const SelectMenu = ({ options, selectedOption, handleSelect }) => {
 };
 
 const Container = ({ children }) => (
-  <div className="flex justify-between items-center h-1/3 px-2 py-2 bg-gray-50 rounded-b-xl">{children}</div>
+  <div className="flex justify-between items-center h-1/3 px-2 py-2 bg-gray-50">{children}</div>
 );
 
 const ChildSelectModalComponent = ({ id, data }) => {

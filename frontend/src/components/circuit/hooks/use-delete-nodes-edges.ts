@@ -1,5 +1,6 @@
 import { getConnectedComponents } from "@/components/circuit/hooks/utils/connected-components";
 import { groupNodes, ungroupNodes } from "@/components/circuit/hooks/utils/ungroup-group";
+import { useEditorContext } from "@/components/editor/editor-context";
 import { useReactFlow } from "@xyflow/react";
 import type { Edge, Node } from "@xyflow/react";
 import { produce } from "immer";
@@ -7,6 +8,7 @@ import { useCallback } from "react";
 
 export const useDeleteNodesEdges = () => {
   const reactflow = useReactFlow();
+  const { setEditMode } = useEditorContext();
 
   const disconnectHandles = useCallback((draft: Node[], deletedEdges: Edge[]) => {
     for (const edge of deletedEdges) {
@@ -54,6 +56,8 @@ export const useDeleteNodesEdges = () => {
 
   const handleDelete = useCallback(
     ({ nodes: deletedNodes, edges: deletedEdges }: { nodes: Node[]; edges: Edge[] }) => {
+      setEditMode("reactflow");
+
       const { getNodes, getEdges, setNodes } = reactflow;
 
       const allNodes = getNodes();
@@ -75,7 +79,7 @@ export const useDeleteNodesEdges = () => {
 
       setNodes(newNodes);
     },
-    [reactflow, disconnectHandles, regroupNodesOnNodeDelete, regroupNodesOnEdgeDelete],
+    [reactflow, disconnectHandles, regroupNodesOnNodeDelete, regroupNodesOnEdgeDelete, setEditMode],
   );
 
   return {

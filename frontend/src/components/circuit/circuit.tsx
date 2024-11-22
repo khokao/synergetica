@@ -37,10 +37,11 @@ export const Circuit: React.FC = () => {
         onDelete={handleDelete}
         nodeTypes={CircuitNodeTypes}
         edgeTypes={CircuitEdgeTypes}
-        defaultViewport={{ x: 0, y: 0, zoom: 1.0 }}
+        defaultViewport={{ x: 100, y: 100, zoom: 1.0 }}
         minZoom={0.5}
         maxZoom={1.5}
         proOptions={{ hideAttribution: true }}
+        colorMode="light"
       >
         <Background variant={BackgroundVariant.Dots} />
         <Panel position="top-center">

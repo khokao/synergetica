@@ -498,6 +498,10 @@ export const TERMINATOR_DATA = [
   },
 ];
 
+export const PROMOTER_NAMES = PROMOTER_DATA.map((data) => data.nodePartsName);
+export const PROTEIN_NAMES = PROTEIN_DATA.map((data) => data.nodePartsName);
+export const TERMINATOR_NAMES = TERMINATOR_DATA.map((data) => data.nodePartsName);
+
 export const PARTS_ID2NAME = [...PROMOTER_DATA, ...PROTEIN_DATA, ...TERMINATOR_DATA].reduce((acc, data) => {
   acc[data.partsId] = data.nodePartsName;
   return acc;
@@ -505,5 +509,10 @@ export const PARTS_ID2NAME = [...PROMOTER_DATA, ...PROTEIN_DATA, ...TERMINATOR_D
 
 export const PARTS_NAME2CATEGORY = [...PROMOTER_DATA, ...PROTEIN_DATA, ...TERMINATOR_DATA].reduce((acc, data) => {
   acc[data.nodePartsName] = data.nodeCategory;
+  return acc;
+}, {});
+
+export const PARTS_NAME2ATTRIBUTES = [...PROMOTER_DATA, ...PROTEIN_DATA, ...TERMINATOR_DATA].reduce((acc, data) => {
+  acc[data.nodePartsName] = data;
   return acc;
 }, {});

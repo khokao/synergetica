@@ -15,6 +15,7 @@ export const createChildNode = (position: XYPosition, nodeCategory): Node => ({
     description: undefined,
     nodeSubcategory: undefined,
     sequence: undefined,
+    partsId: undefined,
     controlBy: null,
     controlTo: null,
     meta: null,
