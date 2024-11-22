@@ -3,7 +3,6 @@ mod api;
 use api::{APIClient, ConverterResponseData, GeneratorResponseData};
 use std::collections::HashMap;
 use std::sync::Arc;
-use tauri::Builder;
 use tokio::sync::Mutex;
 use tokio_util::sync::CancellationToken;
 
@@ -51,7 +50,7 @@ pub fn run() {
         cancellation_token: CancellationToken::new(),
     }));
 
-    Builder::default()
+    tauri::Builder::default()
         .plugin(tauri_plugin_fs::init())
         .plugin(tauri_plugin_dialog::init())
         .plugin(tauri_plugin_clipboard_manager::init())
