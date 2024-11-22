@@ -1,7 +1,7 @@
+import { useEditorContext } from "@/components/editor/editor-context";
 import { GenerationButtons } from "@/components/generation/generation-buttons";
 import { Chart } from "@/components/simulation/chart";
 import { useConverter } from "@/components/simulation/contexts/converter-context";
-import { useSimulator } from "@/components/simulation/contexts/simulator-context";
 import { Sliders } from "@/components/simulation/sliders";
 import { Separator } from "@/components/ui/separator";
 import type React from "react";
@@ -20,20 +20,28 @@ const Message: React.FC<{ lines: string[] }> = ({ lines }) => {
 
 export const Simulation: React.FC = () => {
   const { convertResult } = useConverter();
-  const { simulationResult } = useSimulator();
+  const { validationError } = useEditorContext();
 
-  if (!convertResult) {
+  if (validationError === null) {
     return (
       <div className="flex items-center justify-center h-full">
-        <Message lines={["Build the circuit", "and run the simulation."]} />
+        <Message lines={["Empty circuit.", "Build the circuit first."]} />
       </div>
     );
   }
 
-  if (!convertResult.valid) {
+  if (validationError.length > 0) {
     return (
       <div className="flex items-center justify-center h-full">
-        <Message lines={["Invalid circuit.", "Please check and retry."]} />
+        <Message lines={["Invalid circuit.", "Please check the validation error."]} />
+      </div>
+    );
+  }
+
+  if (convertResult === null) {
+    return (
+      <div className="flex items-center justify-center h-full">
+        <Message lines={["No simulation data.", "Click 'Simulate' button."]} />
       </div>
     );
   }
