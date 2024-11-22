@@ -55,7 +55,7 @@ describe("validateDslContent", () => {
 
     // Assert
     expect(result.parsedContent).toBeNull();
-    expect(result.validationErrors).toHaveLength(0);
+    expect(result.validationErrors).toBeNull();
     expect(result.markers).toHaveLength(0);
   });
 
