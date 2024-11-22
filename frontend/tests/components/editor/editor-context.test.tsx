@@ -54,7 +54,7 @@ describe("EditorContext", () => {
 
     // Assert
     expect(editorContent.textContent).toBe("");
-    expect(validationError.textContent).toBe("[]");
+    expect(validationError.textContent).toBe("null");
     expect(editMode.textContent).toBe("reactflow");
   });
 
