@@ -6,7 +6,14 @@ import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, Command
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card";
 import { Separator } from "@/components/ui/separator";
-import { Background, BackgroundVariant, ReactFlow, ReactFlowProvider, useReactFlow } from "@xyflow/react";
+import {
+  Background,
+  BackgroundVariant,
+  ConnectionMode,
+  ReactFlow,
+  ReactFlowProvider,
+  useReactFlow,
+} from "@xyflow/react";
 import { produce } from "immer";
 import { ChevronDown } from "lucide-react";
 import React, { useState, useEffect, useCallback } from "react";
@@ -48,6 +55,7 @@ const CircuitPreview = ({ id }) => {
         proOptions={{ hideAttribution: true }}
         nodeTypes={CircuitNodeTypes}
         edgeTypes={CircuitEdgeTypes}
+        connectionMode={ConnectionMode.Loose}
         fitView
         fitViewOptions={{ nodes: [{ id: id }], maxZoom: 0.5 }}
         nodesDraggable={false}
