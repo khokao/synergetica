@@ -38,7 +38,7 @@ export const useGeneratorData = () => {
     populateCache: false,
   });
 
-  const generate = async () => {
+  const generate = () => {
     reset();
 
     const { getNodes, getEdges } = reactflow;
@@ -58,11 +58,7 @@ export const useGeneratorData = () => {
       rbsTargetParameters: currentProteinParameter,
     };
 
-    try {
-      await trigger(generatorRequestData);
-    } catch (error) {
-      console.error("Error occurred while calling generator API:", error);
-    }
+    return trigger(generatorRequestData);
   };
 
   const cancel = () => {
