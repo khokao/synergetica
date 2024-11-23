@@ -13,6 +13,7 @@ export const GenerationResultModal = ({ data, snapshot, isOpen, setIsOpen }) => 
         aria-describedby={undefined}
         onOpenAutoFocus={(event) => event.preventDefault()}
         onCloseAutoFocus={(event) => event.preventDefault()}
+        data-testid="generation-result-modal"
       >
         <DialogHeader>
           <DialogTitle className="text-2xl text-center tracking-wide space-x-2">

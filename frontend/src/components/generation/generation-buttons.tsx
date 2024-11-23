@@ -73,20 +73,14 @@ export const GenerationButtons = () => {
           onClick={() => setIsModalOpen(true)}
           disabled={!data}
           className="p-2 w-24 flex items-center"
-          data-testid="dna-button"
+          data-testid="result-button"
         >
           <div className="w-7 flex justify-center">
             <Dna className="w-5" />
           </div>
           <span className="flex-1 text-center">Result</span>
         </Button>
-        <GenerationResultModal
-          data={data}
-          snapshot={snapshot}
-          isOpen={isModalOpen}
-          setIsOpen={setIsModalOpen}
-          data-testid="generation-result-modal"
-        />
+        <GenerationResultModal data={data} snapshot={snapshot} isOpen={isModalOpen} setIsOpen={setIsModalOpen} />
       </CardContent>
     </Card>
   );
