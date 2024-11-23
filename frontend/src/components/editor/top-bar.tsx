@@ -5,7 +5,7 @@ import * as RadixTooltip from "@radix-ui/react-tooltip";
 import { writeText } from "@tauri-apps/plugin-clipboard-manager";
 import { open, save } from "@tauri-apps/plugin-dialog";
 import { readTextFile, writeTextFile } from "@tauri-apps/plugin-fs";
-import { Clipboard, Download, Upload } from "lucide-react";
+import { ArrowDownToLine, ArrowUpToLine, Clipboard } from "lucide-react";
 import { toast } from "sonner";
 
 export const EditorTopBar = () => {
@@ -102,7 +102,7 @@ export const EditorTopBar = () => {
                 data-testid="editor-import-button"
                 className="p-1"
               >
-                <Download className="w-4 h-4" />
+                <ArrowDownToLine className="w-4 h-4" />
               </Button>
             </TooltipTrigger>
             <RadixTooltip.Portal>
@@ -120,7 +120,7 @@ export const EditorTopBar = () => {
                 data-testid="editor-export-button"
                 className="p-1"
               >
-                <Upload className="w-4 h-4" />
+                <ArrowUpToLine className="w-4 h-4" />
               </Button>
             </TooltipTrigger>
             <RadixTooltip.Portal>
