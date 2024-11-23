@@ -2,6 +2,7 @@ import { EDGE_LENGTH, GROUP_NODE_MARGIN, NODE_HEIGHT, NODE_WIDTH } from "@/compo
 import { createEdge } from "@/components/circuit/hooks/utils/create-edge";
 import { createChildNode, createParentNode } from "@/components/circuit/hooks/utils/create-node";
 import { PARTS_NAME2ATTRIBUTES } from "@/components/circuit/nodes/constants";
+import { CHAIN_GAP_Y, CHAIN_OFFSET_X } from "@/components/editor/constants";
 import { looseCircuitSchema } from "@/components/editor/schemas/looseSchema";
 import type { Edge, Node } from "@xyflow/react";
 import { produce } from "immer";
@@ -28,7 +29,10 @@ export const dslToReactflow = (content: string): { nodes: Node[]; edges: Edge[] 
 
       const parentWidth = NODE_WIDTH * chain.length + EDGE_LENGTH * (chain.length - 1) + 2 * GROUP_NODE_MARGIN;
       const parentHeight = NODE_HEIGHT + 2 * GROUP_NODE_MARGIN;
-      const parentPosition = { x: 0, y: chainIndex * (NODE_HEIGHT + 3 * GROUP_NODE_MARGIN) };
+      const parentPosition = {
+        x: chainIndex * CHAIN_OFFSET_X,
+        y: chainIndex * (NODE_HEIGHT + CHAIN_GAP_Y),
+      };
       const parentNode = createParentNode(parentPosition, parentWidth, parentHeight);
 
       if (hasParent) {

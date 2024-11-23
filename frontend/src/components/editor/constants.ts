@@ -2,6 +2,9 @@ import type { editor } from "monaco-editor";
 
 export const INDENT_SIZE = 2;
 
+export const CHAIN_GAP_Y = 120;
+export const CHAIN_OFFSET_X = 20;
+
 // ref: https://github.com/brijeshb42/monaco-themes/blob/master/themes/GitHub%20Light.json
 export const GITHUB_LIGHT_THEME: editor.IStandaloneThemeData = {
   base: "vs",
