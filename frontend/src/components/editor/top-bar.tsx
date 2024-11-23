@@ -14,9 +14,13 @@ export const EditorTopBar = () => {
   const handleCopy = async () => {
     try {
       await writeText(editorContent);
-      toast.success("Copied to clipboard");
+      toast.success("Copied to clipboard", {
+        cancel: { label: "Close", onClick: () => {} },
+      });
     } catch (error) {
-      toast.error("Failed to copy to clipboard");
+      toast.error("Failed to copy to clipboard", {
+        cancel: { label: "Close", onClick: () => {} },
+      });
       console.error("Clipboard copy failed:", error);
     }
   };
@@ -38,10 +42,14 @@ export const EditorTopBar = () => {
         const content = await readTextFile(path);
         setEditMode("monaco-editor");
         setEditorContent(content);
-        toast.success("Imported config YAML file");
+        toast.success("Imported config YAML file", {
+          cancel: { label: "Close", onClick: () => {} },
+        });
       }
     } catch (error) {
-      toast.error("Failed to import config YAML file");
+      toast.error("Failed to import config YAML file", {
+        cancel: { label: "Close", onClick: () => {} },
+      });
       console.error("File import failed:", error);
     }
   };
@@ -55,10 +63,14 @@ export const EditorTopBar = () => {
 
       if (path) {
         await writeTextFile(path, editorContent);
-        toast.success("Exported config YAML file");
+        toast.success("Exported config YAML file", {
+          cancel: { label: "Close", onClick: () => {} },
+        });
       }
     } catch (error) {
-      toast.error("Failed to export config YAML file");
+      toast.error("Failed to export config YAML file", {
+        cancel: { label: "Close", onClick: () => {} },
+      });
       console.error("File export failed:", error);
     }
   };
