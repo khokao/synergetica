@@ -39,7 +39,7 @@ export const CircuitEditor = () => {
     const editor = editorRef.current;
     const monaco = monacoRef.current;
 
-    if (debouncedNodes.length === 0 || editMode !== "reactflow" || !editor || !monaco) {
+    if (editMode !== "reactflow" || !editor || !monaco) {
       return;
     }
 
