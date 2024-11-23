@@ -2,12 +2,51 @@ import { GenerationResultModal } from "@/components/generation/generation-result
 import { useGeneratorData } from "@/components/generation/hooks/use-generator-data";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import * as RadixTooltip from "@radix-ui/react-tooltip";
-import { Ban, Loader2, Play } from "lucide-react";
+import { Dna, Play } from "lucide-react";
+import React, { useState } from "react";
+import { toast } from "sonner";
 
 export const GenerationButtons = () => {
   const { data, snapshot, isMutating, generate, cancel } = useGeneratorData();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleGenerate = () => {
+    const toastId = toast.loading("Generating...", {
+      action: {
+        label: (
+          <div className="bg-neutral-900 text-neutral-50 hover:bg-neutral-900/90 rounded-md px-2 py-1">Cancel</div>
+        ),
+        onClick: (e) => {
+          e.preventDefault(); // prevent the toast from closing
+          cancel();
+        },
+      },
+    });
+
+    generate()
+      .then(() => {
+        toast.success("Generation successful", {
+          id: toastId,
+          action: {
+            label: (
+              <div className="bg-neutral-900 text-neutral-50 hover:bg-neutral-900/90 rounded-md px-2 py-1">
+                View Result
+              </div>
+            ),
+            onClick: () => {
+              setIsModalOpen(true);
+            },
+          },
+        });
+      })
+      .catch((error) => {
+        console.error("Error occurred during generation:", error);
+        toast.error(error === "Request was canceled" ? "Generation canceled" : "Generation failed", {
+          id: toastId,
+          action: { label: "Close", onClick: () => {} },
+        });
+      });
+  };
 
   return (
     <Card className="border-0 shadow-none h-full flex-col justify-center items-center py-2">
@@ -17,46 +56,37 @@ export const GenerationButtons = () => {
         </CardTitle>
       </CardHeader>
       <CardContent className="flex justify-center items-center space-x-4 h-2/3">
-        <TooltipProvider>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <div>
-                <Button size="icon" onClick={generate} disabled={isMutating} data-testid="run-button">
-                  {isMutating ? (
-                    <Loader2 className="w-5 h-5 animate-spin" data-testid="loader-icon" />
-                  ) : (
-                    <Play className="w-5 h-5" data-testid="play-icon" />
-                  )}
-                </Button>
-              </div>
-            </TooltipTrigger>
-
-            {/* Using RadixTooltip.Portal to avoid layout issues caused by parent styles */}
-            <RadixTooltip.Portal>
-              <TooltipContent>
-                <p>Run</p>
-              </TooltipContent>
-            </RadixTooltip.Portal>
-          </Tooltip>
-
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <div>
-                <Button size="icon" disabled={!isMutating} onClick={cancel} data-testid="cancel-button">
-                  <Ban className="w-5 h-5" />
-                </Button>
-              </div>
-            </TooltipTrigger>
-
-            <RadixTooltip.Portal>
-              <TooltipContent>
-                <p>Cancel</p>
-              </TooltipContent>
-            </RadixTooltip.Portal>
-          </Tooltip>
-
-          <GenerationResultModal data={data} snapshot={snapshot} data-testid="generation-result-modal" />
-        </TooltipProvider>
+        <Button
+          size="default"
+          onClick={handleGenerate}
+          disabled={isMutating}
+          className="p-2 w-24 flex items-center"
+          data-testid="run-button"
+        >
+          <div className="w-7 flex justify-center">
+            <Play className="w-5" />
+          </div>
+          <span className="flex-1 text-center">Run</span>
+        </Button>
+        <Button
+          size="default"
+          onClick={() => setIsModalOpen(true)}
+          disabled={!data}
+          className="p-2 w-24 flex items-center"
+          data-testid="dna-button"
+        >
+          <div className="w-7 flex justify-center">
+            <Dna className="w-5" />
+          </div>
+          <span className="flex-1 text-center">Result</span>
+        </Button>
+        <GenerationResultModal
+          data={data}
+          snapshot={snapshot}
+          isOpen={isModalOpen}
+          setIsOpen={setIsModalOpen}
+          data-testid="generation-result-modal"
+        />
       </CardContent>
     </Card>
   );
