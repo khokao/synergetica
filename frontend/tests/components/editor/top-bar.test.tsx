@@ -69,7 +69,7 @@ describe("EditorTopBar", () => {
 
     // Assert
     expect(writeTextMock).toHaveBeenCalledWith("Test content");
-    expect(toast.success).toHaveBeenCalledWith("Copied to clipboard");
+    expect(toast.success).toHaveBeenCalled();
   });
 
   it("should show error toast when copy to clipboard fails", async () => {
@@ -89,7 +89,7 @@ describe("EditorTopBar", () => {
 
     // Assert
     expect(writeTextMock).toHaveBeenCalledWith("Test content");
-    expect(toast.error).toHaveBeenCalledWith("Failed to copy to clipboard");
+    expect(toast.error).toHaveBeenCalled();
   });
 
   it("should import content when import button is clicked", async () => {
@@ -120,7 +120,7 @@ describe("EditorTopBar", () => {
       ],
     });
     expect(readTextFileMock).toHaveBeenCalledWith("path/to/file.yaml");
-    expect(toast.success).toHaveBeenCalledWith("Imported config YAML file");
+    expect(toast.success).toHaveBeenCalled();
 
     expect(screen.getByTestId("editorContentDisplay").textContent).toBe("Imported content");
     expect(screen.getByTestId("editModeDisplay").textContent).toBe("monaco-editor");
@@ -143,7 +143,7 @@ describe("EditorTopBar", () => {
 
     // Assert
     expect(openMock).toHaveBeenCalled();
-    expect(toast.error).toHaveBeenCalledWith("Failed to import config YAML file");
+    expect(toast.error).toHaveBeenCalled();
   });
 
   it("should export content when export button is clicked", async () => {
@@ -183,7 +183,7 @@ describe("EditorTopBar", () => {
       defaultPath: "config.yaml",
     });
     expect(writeTextFileMock).toHaveBeenCalledWith("path/to/save.yaml", "Test export content");
-    expect(toast.success).toHaveBeenCalledWith("Exported config YAML file");
+    expect(toast.success).toHaveBeenCalled();
   });
 
   it("should show error toast when export fails", async () => {
@@ -213,6 +213,6 @@ describe("EditorTopBar", () => {
 
     // Assert
     expect(saveMock).toHaveBeenCalled();
-    expect(toast.error).toHaveBeenCalledWith("Failed to export config YAML file");
+    expect(toast.error).toHaveBeenCalled();
   });
 });

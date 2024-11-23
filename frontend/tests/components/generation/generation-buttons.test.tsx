@@ -1,22 +1,27 @@
 import { GenerationButtons } from "@/components/generation/generation-buttons";
 import { useGeneratorData } from "@/components/generation/hooks/use-generator-data";
-import { render, screen, waitFor } from "@testing-library/react";
-import { userEvent } from "@testing-library/user-event";
+import { act, render, screen, waitFor } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import React from "react";
+import { toast } from "sonner";
 import { type Mock, describe, expect, it, vi } from "vitest";
 
 vi.mock("@/components/generation/hooks/use-generator-data");
+vi.mock("sonner", () => ({
+  toast: {
+    loading: vi.fn(),
+    success: vi.fn(),
+    error: vi.fn(),
+  },
+}));
 
 describe("GenerationButtons Component", () => {
   beforeEach(() => {
-    vi.useFakeTimers({
-      shouldAdvanceTime: true,
-    });
-  });
-  afterEach(() => {
-    vi.restoreAllMocks();
+    vi.resetAllMocks();
+    vi.spyOn(console, "error").mockImplementation(() => {});
   });
 
-  it("renders the GenerationButtons with Run button enabled and Cancel button disabled when not mutating", () => {
+  it("renders the Run button enabled and Result button disabled when not mutating and no data", () => {
     // Arrange
     (useGeneratorData as Mock).mockReturnValue({
       data: null,
@@ -31,95 +36,205 @@ describe("GenerationButtons Component", () => {
 
     // Assert
     const runButton = screen.getByTestId("run-button");
-    const cancelButton = screen.getByTestId("cancel-button");
+    const resultButton = screen.getByTestId("result-button");
 
     expect(runButton).toBeInTheDocument();
     expect(runButton).toBeEnabled();
-    expect(cancelButton).toBeInTheDocument();
-    expect(cancelButton).toBeDisabled();
+    expect(resultButton).toBeInTheDocument();
+    expect(resultButton).toBeDisabled();
   });
 
-  it("calls generate when Run button is clicked", async () => {
+  it("enables the Result button when data is available", () => {
+    // Arrange
+    (useGeneratorData as Mock).mockReturnValue({
+      data: { parent2child_details: { group1: [{ sequence: "ATGC" }] } },
+      snapshot: null,
+      isMutating: false,
+      generate: vi.fn(),
+      cancel: vi.fn(),
+    });
+
+    // Act
+    render(<GenerationButtons />);
+
+    // Assert
+    const resultButton = screen.getByTestId("result-button");
+    expect(resultButton).toBeEnabled();
+  });
+
+  it("calls generate and shows loading toast when Run button is clicked", async () => {
     // Arrange
     const mockGenerate = vi.fn().mockResolvedValue(undefined);
+    const mockCancel = vi.fn();
     (useGeneratorData as Mock).mockReturnValue({
       data: null,
       snapshot: null,
       isMutating: false,
       generate: mockGenerate,
-      cancel: vi.fn(),
-    });
-    render(<GenerationButtons />);
-
-    // Act
-    userEvent.click(screen.getByTestId("run-button"));
-
-    // Assert
-    await waitFor(() => {
-      expect(mockGenerate).toHaveBeenCalled();
-    });
-  });
-
-  it("calls cancel when Cancel button is clicked", async () => {
-    // Arrange
-    const mockCancel = vi.fn().mockResolvedValue(undefined);
-    (useGeneratorData as Mock).mockReturnValue({
-      data: null,
-      snapshot: null,
-      isMutating: true,
-      generate: vi.fn(),
       cancel: mockCancel,
     });
-    render(<GenerationButtons />);
+
+    (toast.loading as Mock).mockReturnValue("toast-id");
 
     // Act
-    userEvent.click(screen.getByTestId("cancel-button"));
+    render(<GenerationButtons />);
+    const runButton = screen.getByTestId("run-button");
+    await userEvent.click(runButton);
+
+    // Assert
+    expect(mockGenerate).toHaveBeenCalled();
+    expect(toast.loading).toHaveBeenCalled();
+  });
+
+  it("calls cancel when Cancel action in toast is clicked", async () => {
+    // Arrange
+    const mockGenerate = vi.fn().mockResolvedValue(undefined);
+    const mockCancel = vi.fn();
+    (useGeneratorData as Mock).mockReturnValue({
+      data: null,
+      snapshot: null,
+      isMutating: false,
+      generate: mockGenerate,
+      cancel: mockCancel,
+    });
+
+    (toast.loading as Mock).mockReturnValue("toast-id");
+
+    // Act
+    render(<GenerationButtons />);
+    const runButton = screen.getByTestId("run-button");
+    await userEvent.click(runButton);
+    const toastLoadingCall = (toast.loading as Mock).mock.calls[0];
+    const toastLoadingAction = toastLoadingCall[1].action;
+    act(() => {
+      toastLoadingAction.onClick({ preventDefault: () => {} });
+    });
+
+    // Assert
+    expect(mockCancel).toHaveBeenCalled();
+  });
+
+  it("shows success toast with View Result action when generate succeeds", async () => {
+    // Arrange
+    const mockGenerate = vi.fn().mockResolvedValue(undefined);
+    const mockCancel = vi.fn();
+    (useGeneratorData as Mock).mockReturnValue({
+      data: { parent2child_details: { group1: [{ sequence: "ATGC" }] } },
+      snapshot: null,
+      isMutating: false,
+      generate: mockGenerate,
+      cancel: mockCancel,
+    });
+
+    (toast.loading as Mock).mockReturnValue("toast-id");
+
+    // Act
+    render(<GenerationButtons />);
+    const runButton = screen.getByTestId("run-button");
+    await userEvent.click(runButton);
+
+    // Assert
+    await waitFor(() => expect(mockGenerate).toHaveBeenCalled());
+    expect(toast.success).toHaveBeenCalled();
+  });
+
+  it("opens the modal when View Result action in success toast is clicked", async () => {
+    // Arrange
+    const mockGenerate = vi.fn().mockResolvedValue(undefined);
+    const mockCancel = vi.fn();
+    (useGeneratorData as Mock).mockReturnValue({
+      data: { parent2child_details: { group1: [{ sequence: "ATGC" }] } },
+      snapshot: null,
+      isMutating: false,
+      generate: mockGenerate,
+      cancel: mockCancel,
+    });
+
+    (toast.loading as Mock).mockReturnValue("toast-id");
+
+    // Act
+    render(<GenerationButtons />);
+    const runButton = screen.getByTestId("run-button");
+    await userEvent.click(runButton);
+    await waitFor(() => expect(mockGenerate).toHaveBeenCalled());
+    const toastSuccessCall = (toast.success as Mock).mock.calls[0];
+    const toastSuccessAction = toastSuccessCall[1].action;
+    act(() => {
+      toastSuccessAction.onClick();
+    });
 
     // Assert
     await waitFor(() => {
-      expect(mockCancel).toHaveBeenCalled();
+      expect(screen.getByTestId("generation-result-modal")).toBeInTheDocument();
     });
   });
 
-  it("displays 'Run' tooltip on hover over run button", async () => {
+  it("opens the modal when Result button is clicked", async () => {
     // Arrange
     (useGeneratorData as Mock).mockReturnValue({
-      data: null,
+      data: { parent2child_details: { group1: [{ sequence: "ATGC" }] } },
       snapshot: null,
       isMutating: false,
       generate: vi.fn(),
       cancel: vi.fn(),
     });
-    render(<GenerationButtons />);
 
     // Act
-    await userEvent.hover(screen.getByTestId("run-button"));
-    vi.advanceTimersByTime(500);
+    render(<GenerationButtons />);
+    const resultButton = screen.getByTestId("result-button");
+    await userEvent.click(resultButton);
 
     // Assert
     await waitFor(() => {
-      expect(screen.getByRole("tooltip", { name: "Run" })).toBeInTheDocument();
+      expect(screen.getByTestId("generation-result-modal")).toBeInTheDocument();
     });
   });
 
-  it("displays 'Cancel' tooltip on hover over cancel button", async () => {
+  it("shows 'Generation canceled' toast when generation is canceled", async () => {
     // Arrange
+    const mockGenerate = vi.fn().mockRejectedValue(new Error("Request was canceled"));
+    const mockCancel = vi.fn();
     (useGeneratorData as Mock).mockReturnValue({
       data: null,
       snapshot: null,
       isMutating: false,
-      generate: vi.fn(),
-      cancel: vi.fn(),
+      generate: mockGenerate,
+      cancel: mockCancel,
     });
-    render(<GenerationButtons />);
+
+    (toast.loading as Mock).mockReturnValue("toast-id");
 
     // Act
-    await userEvent.hover(screen.getByTestId("cancel-button"));
-    vi.advanceTimersByTime(500);
+    render(<GenerationButtons />);
+    const runButton = screen.getByTestId("run-button");
+    await userEvent.click(runButton);
 
     // Assert
-    await waitFor(() => {
-      expect(screen.getByRole("tooltip", { name: "Cancel" })).toBeInTheDocument();
+    await waitFor(() => expect(mockGenerate).toHaveBeenCalled());
+    expect(toast.error).toHaveBeenCalled();
+  });
+
+  it("shows 'Generation failed' toast when generation fails", async () => {
+    // Arrange
+    const mockGenerate = vi.fn().mockRejectedValue(new Error("Some error"));
+    const mockCancel = vi.fn();
+    (useGeneratorData as Mock).mockReturnValue({
+      data: null,
+      snapshot: null,
+      isMutating: false,
+      generate: mockGenerate,
+      cancel: mockCancel,
     });
+
+    (toast.loading as Mock).mockReturnValue("toast-id");
+
+    // Act
+    render(<GenerationButtons />);
+    const runButton = screen.getByTestId("run-button");
+    await userEvent.click(runButton);
+
+    // Assert
+    await waitFor(() => expect(mockGenerate).toHaveBeenCalled());
+    expect(toast.error).toHaveBeenCalled();
   });
 });

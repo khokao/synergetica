@@ -3,6 +3,7 @@ import { save } from "@tauri-apps/plugin-dialog";
 import { writeTextFile } from "@tauri-apps/plugin-fs";
 import { ArrowUpToLine } from "lucide-react";
 import type React from "react";
+import { toast } from "sonner";
 
 export const ExportButton = ({ data }) => {
   const handleExportFASTA = async () => {
@@ -16,14 +17,20 @@ export const ExportButton = ({ data }) => {
       .join("\n\n");
 
     try {
-      const filePath = await save({
+      const path = await save({
         filters: [{ name: "FASTA", extensions: ["fasta", "fa"] }],
         defaultPath: "sequence.fasta",
       });
-      if (filePath) {
-        await writeTextFile(filePath, fastaContent);
+      if (path) {
+        await writeTextFile(path, fastaContent);
+        toast.success("Exported FASTA file", {
+          cancel: { label: "Close", onClick: () => {} },
+        });
       }
     } catch (error) {
+      toast.error("Failed to export FASTA file", {
+        cancel: { label: "Close", onClick: () => {} },
+      });
       console.error("Error while exporting FASTA file:", error);
     }
   };

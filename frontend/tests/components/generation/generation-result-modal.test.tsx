@@ -1,8 +1,7 @@
 import { GenerationResultModal } from "@/components/generation/generation-result-modal";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import { render, screen, waitFor } from "@testing-library/react";
-import { userEvent } from "@testing-library/user-event";
-import { describe, expect, it, vi } from "vitest";
+import { render, screen } from "@testing-library/react";
+import React from "react";
+import { describe, expect, it } from "vitest";
 
 vi.mock("@/components/generation/circuit-preview", () => ({
   CircuitPreview: () => <div data-testid="circuit-preview" />,
@@ -25,7 +24,7 @@ vi.mock("@/components/generation/export-button", () => ({
 }));
 
 describe("GenerationResultModal Component", () => {
-  it("renders the trigger button and opens modal when clicked", async () => {
+  it("renders the modal content when isOpen is true", () => {
     // Arrange
     const mockData = { parent2child_details: { group1: [{ sequence: "ATGC" }] } };
     const mockSnapshot = {
@@ -34,38 +33,36 @@ describe("GenerationResultModal Component", () => {
       proteinParameter: {},
     };
 
+    const setIsOpen = vi.fn();
+
     // Act
-    render(
-      <TooltipProvider>
-        <GenerationResultModal data={mockData} snapshot={mockSnapshot} />
-      </TooltipProvider>,
-    );
-    userEvent.click(screen.getByTestId("dna-button"));
+    render(<GenerationResultModal data={mockData} snapshot={mockSnapshot} isOpen={true} setIsOpen={setIsOpen} />);
 
     // Assert
-    waitFor(() => {
-      expect(screen.getByTestId("circuit-preview")).toBeInTheDocument();
-      expect(screen.getByTestId("parameter-preview")).toBeInTheDocument();
-      expect(screen.getByTestId("sequence-preview")).toBeInTheDocument();
-      expect(screen.getByTestId("export-button")).toBeInTheDocument();
-    });
+    expect(screen.getByTestId("circuit-preview")).toBeInTheDocument();
+    expect(screen.getByTestId("parameter-preview")).toBeInTheDocument();
+    expect(screen.getByTestId("sequence-preview")).toBeInTheDocument();
+    expect(screen.getByTestId("export-button")).toBeInTheDocument();
   });
 
-  it("disables the trigger button when data is null", () => {
+  it("does not render the modal content when isOpen is false", () => {
     // Arrange
-    const mockData = null;
-    const mockSnapshot = null;
+    const mockData = { parent2child_details: { group1: [{ sequence: "ATGC" }] } };
+    const mockSnapshot = {
+      nodes: [],
+      edges: [],
+      proteinParameter: {},
+    };
+
+    const setIsOpen = vi.fn();
 
     // Act
-    render(
-      <TooltipProvider>
-        <GenerationResultModal data={mockData} snapshot={mockSnapshot} />
-      </TooltipProvider>,
-    );
+    render(<GenerationResultModal data={mockData} snapshot={mockSnapshot} isOpen={false} setIsOpen={setIsOpen} />);
 
     // Assert
-    const triggerButton = screen.getByTestId("dna-button");
-    expect(triggerButton).toBeInTheDocument();
-    expect(triggerButton).toBeDisabled();
+    expect(screen.queryByTestId("circuit-preview")).not.toBeInTheDocument();
+    expect(screen.queryByTestId("parameter-preview")).not.toBeInTheDocument();
+    expect(screen.queryByTestId("sequence-preview")).not.toBeInTheDocument();
+    expect(screen.queryByTestId("export-button")).not.toBeInTheDocument();
   });
 });

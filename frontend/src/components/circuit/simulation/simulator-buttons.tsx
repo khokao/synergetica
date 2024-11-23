@@ -37,7 +37,6 @@ export const SimulatorButtons = () => {
         <Button
           key={testId}
           variant="default"
-          size="icon"
           disabled={disabled}
           onClick={onClick}
           className="p-2 w-28 flex items-center"

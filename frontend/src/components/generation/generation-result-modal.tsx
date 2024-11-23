@@ -2,39 +2,18 @@ import { CircuitPreview } from "@/components/generation/circuit-preview";
 import { ExportButton } from "@/components/generation/export-button";
 import { ParameterPreview } from "@/components/generation/parameter-preview";
 import { SequencePreview } from "@/components/generation/sequence-preview";
-import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Separator } from "@/components/ui/separator";
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
-import * as RadixTooltip from "@radix-ui/react-tooltip";
-import { Dna } from "lucide-react";
 
-export const GenerationResultModal = ({ data, snapshot }) => {
+export const GenerationResultModal = ({ data, snapshot, isOpen, setIsOpen }) => {
   return (
-    <Dialog>
-      <Tooltip>
-        <TooltipTrigger asChild>
-          <div>
-            <DialogTrigger asChild>
-              <Button size="icon" disabled={!data} data-testid="dna-button">
-                <Dna className="w-5 h-5" />
-              </Button>
-            </DialogTrigger>
-          </div>
-        </TooltipTrigger>
-
-        <RadixTooltip.Portal>
-          <TooltipContent>
-            <p>View Result</p>
-          </TooltipContent>
-        </RadixTooltip.Portal>
-      </Tooltip>
-
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogContent
         className="max-w-none h-[80vh] w-[80vw] flex flex-col"
         aria-describedby={undefined}
         onOpenAutoFocus={(event) => event.preventDefault()}
         onCloseAutoFocus={(event) => event.preventDefault()}
+        data-testid="generation-result-modal"
       >
         <DialogHeader>
           <DialogTitle className="text-2xl text-center tracking-wide space-x-2">
