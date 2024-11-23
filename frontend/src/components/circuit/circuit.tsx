@@ -5,7 +5,15 @@ import { useDragNodes } from "@/components/circuit/hooks/use-drag-nodes";
 import { Operator } from "@/components/circuit/operator/operator";
 import { ExpandCollapseButton } from "@/components/circuit/resizable-panel/expand-collapse";
 import { SimulatorButtons } from "@/components/circuit/simulation/simulator-buttons";
-import { Background, BackgroundVariant, Panel, ReactFlow, useEdgesState, useNodesState } from "@xyflow/react";
+import {
+Background,
+BackgroundVariant,
+  ConnectionMode,
+Panel,
+ReactFlow,
+useEdgesState,
+useNodesState,
+} from "@xyflow/react";
 import type { Edge, Node } from "@xyflow/react";
 import type React from "react";
 
@@ -37,6 +45,7 @@ export const Circuit: React.FC = () => {
         onDelete={handleDelete}
         nodeTypes={CircuitNodeTypes}
         edgeTypes={CircuitEdgeTypes}
+connectionMode={ConnectionMode.Loose}
         defaultViewport={{ x: 100, y: 100, zoom: 1.0 }}
         minZoom={0.5}
         maxZoom={1.5}
