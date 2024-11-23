@@ -4,6 +4,10 @@ import type { Node } from "@xyflow/react";
 import { stringify } from "yaml";
 
 export const convertReactFlowNodesToDSL = (nodes: Node[]): string => {
+  if (nodes.length === 0) {
+    return "";
+  }
+
   const parentNodes = nodes.filter((node) => node.type === "parent" && node.id !== TEMP_NODE_ID);
   const childNodes = nodes.filter((node) => node.type === "child" && node.id !== TEMP_NODE_ID);
 
