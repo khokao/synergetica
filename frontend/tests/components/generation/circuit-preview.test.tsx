@@ -8,6 +8,7 @@ vi.mock("@xyflow/react", () => ({
   ReactFlowProvider: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
   Background: vi.fn(),
   BackgroundVariant: vi.fn(),
+  ConnectionMode: vi.fn(),
 }));
 
 describe("CircuitPreview Component", () => {
