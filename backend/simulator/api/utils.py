@@ -19,7 +19,7 @@ def get_protein_id2parts_name(
     parts_name_count = defaultdict(int)  # type: dict[str, int]
     protein_id2display_name = {}
     for protein_node_id in protein_node_ids:
-        protein_parts_name = node_id2data[protein_node_id].nodePartsName
+        protein_parts_name = node_id2data[protein_node_id].name
         parts_name_count[protein_parts_name] += 1
 
         count = parts_name_count[protein_parts_name]

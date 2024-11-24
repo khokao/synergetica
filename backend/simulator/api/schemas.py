@@ -21,22 +21,19 @@ class ConverterInput(BaseModel):
 class ConverterOutput(BaseModel):
     protein_id2name: dict[str, str]
     function_str: str
-    valid: bool
 
 
 class ReactFlowChildNodeControlItem(BaseModel):
-    partsId: str
-    controlType: Literal['Repression', 'Activation']
+    name: str
+    type: Literal['repression', 'activation']
 
 
 class ReactFlowChildNodeData(BaseModel):
-    nodeCategory: Literal['protein', 'promoter', 'terminator']
-    nodeSubcategory: Literal['RepressorProtein', 'RepressivePromoter', 'StandardTerminator']
-    nodePartsName: str
+    name: str
+    category: Literal['protein', 'promoter', 'terminator']
     sequence: str
-    partsId: str
-    controlTo: list[ReactFlowChildNodeControlItem] | None
-    controlBy: list[ReactFlowChildNodeControlItem] | None
+    controlTo: list[ReactFlowChildNodeControlItem]
+    controlBy: list[ReactFlowChildNodeControlItem]
     meta: dict[str, float] | None
 
 
@@ -61,3 +58,11 @@ class ReactFlowObject(BaseModel):
             raise ValueError('Nodes should be a list')
         child_nodes = [n for n in v if n['type'] == 'child']
         return child_nodes
+
+    @field_validator('edges', mode='before')
+    @classmethod
+    def filter_edges(cls, v: list) -> list:
+        if not isinstance(v, list):
+            raise ValueError('Edges should be a list')
+        custom_edges = [e for e in v if e['type'] == 'custom']
+        return custom_edges

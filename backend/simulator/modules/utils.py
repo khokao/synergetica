@@ -3,19 +3,19 @@ from collections import defaultdict
 from ..api.schemas import ReactFlowChildNode, ReactFlowChildNodeData
 
 
-def get_parts_id2node_ids(nodes: list[ReactFlowChildNode]) -> dict[str, list[str]]:
-    """Create a mapping from part IDs to lists of node IDs.
+def get_parts_name2node_ids(nodes: list[ReactFlowChildNode]) -> dict[str, list[str]]:
+    """Create a mapping from part names to lists of node IDs.
 
     Args:
         nodes (list[ReactFlowChildNode]): List of ReactFlowChildNode objects.
 
     Returns:
-        dict[str, list[str]]: Dictionary where keys are part IDs and values are lists of associated node IDs.
+        dict[str, list[str]]: Dictionary where keys are part names and values are lists of associated node IDs.
     """
-    parts_id2node_ids = defaultdict(list)
+    parts_name2node_ids = defaultdict(list)
     for node in nodes:
-        parts_id2node_ids[node.data.partsId].append(node.id)
-    return dict(parts_id2node_ids)
+        parts_name2node_ids[node.data.name].append(node.id)
+    return dict(parts_name2node_ids)
 
 
 def get_node_id2data(nodes: list[ReactFlowChildNode]) -> dict[str, ReactFlowChildNodeData]:
@@ -31,7 +31,7 @@ def get_node_id2data(nodes: list[ReactFlowChildNode]) -> dict[str, ReactFlowChil
     return node_id2data
 
 
-def get_specific_category_node_ids(nodes: list[ReactFlowChildNode], node_category: str) -> list[str]:
+def get_specific_category_node_ids(nodes: list[ReactFlowChildNode], category: str) -> list[str]:
     """get node ids of specific category from the list of ReactFlowChildNode.
 
     Args:
@@ -41,5 +41,5 @@ def get_specific_category_node_ids(nodes: list[ReactFlowChildNode], node_categor
     Returns:
         node_ids (list[str]): List of node id of the specific category.
     """
-    node_ids = [node.id for node in nodes if node.data.nodeCategory == node_category]
+    node_ids = [node.id for node in nodes if node.data.category == category]
     return node_ids
