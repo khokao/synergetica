@@ -2,8 +2,8 @@ from generator.api.schemas import ReactFlowObject
 from generator.api.utils.parse_flow import get_child_id2key, get_parent2ordered_children
 
 
-def test_parent2children_is_ordered(test_circuit, parent_ids, child_ids):
-    parent_ids_order = ['sad-apples-appear', 'soft-rabbits-boil']
+def test_parent2children_is_ordered(test_circuit, child_ids):
+    parent_ids_order = ['true-friends-say', 'fast-baboons-wink']
     reactflow_object = ReactFlowObject(**test_circuit)
 
     parent2ordered_children = get_parent2ordered_children(reactflow_object.nodes)
