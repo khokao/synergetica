@@ -2,7 +2,7 @@ import { z } from "zod";
 
 const ControlRelationSchema = z.object({
   name: z.string(),
-  type: z.string(),
+  type: z.enum(["activation", "repression"]),
 });
 
 const MetaSchema = z
@@ -19,8 +19,8 @@ const MetaSchema = z
 export const PartSchema = z.object({
   name: z.string(),
   description: z.string(),
-  category: z.string(),
-  sequence: z.string(),
+  category: z.enum(["promoter", "protein", "terminator"]),
+  sequence: z.string().regex(/^[ATCGatcg]+$/),
   controlBy: z.array(ControlRelationSchema),
   controlTo: z.array(ControlRelationSchema),
   meta: MetaSchema,
