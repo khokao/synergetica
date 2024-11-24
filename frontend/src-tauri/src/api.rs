@@ -67,5 +67,4 @@ pub struct GeneratorResponseData {
 pub struct ConverterResponseData {
     pub protein_id2name: HashMap<String, String>,
     pub function_str: String,
-    pub valid: bool,
 }
