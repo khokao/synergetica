@@ -22,6 +22,7 @@ export const createRepressionEdge = (sourceId: string, targetId: string): Edge =
   style: { strokeWidth: 4, stroke: RepressionColor },
   markerEnd: "repression",
   zIndex: 0,
+  selectable: false,
 });
 
 export const createActivationEdge = (sourceId: string, targetId: string): Edge => ({
@@ -32,6 +33,7 @@ export const createActivationEdge = (sourceId: string, targetId: string): Edge =
   style: { strokeWidth: 4, stroke: ActivationColor },
   markerEnd: "activation",
   zIndex: 0,
+  selectable: false,
 });
 
 export const createTempEdge = (sourceId: string, targetId: string): Edge => {
