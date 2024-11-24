@@ -1,5 +1,5 @@
 import { CircuitEdgeTypes, CircuitNodeTypes } from "@/components/circuit/constants";
-import { Background, BackgroundVariant, ReactFlow, ReactFlowProvider } from "@xyflow/react";
+import { Background, BackgroundVariant, ConnectionMode, ReactFlow, ReactFlowProvider } from "@xyflow/react";
 import type { Edge, Node } from "@xyflow/react";
 import { produce } from "immer";
 import type React from "react";
@@ -36,6 +36,7 @@ export const CircuitPreview: React.FC<CircuitPreviewProps> = ({ snapshot }) => {
         proOptions={{ hideAttribution: true }}
         nodeTypes={CircuitNodeTypes}
         edgeTypes={CircuitEdgeTypes}
+        connectionMode={ConnectionMode.Loose}
         fitView
         nodesDraggable={false}
         nodesConnectable={false}

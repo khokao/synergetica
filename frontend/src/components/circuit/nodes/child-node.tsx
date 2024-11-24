@@ -22,8 +22,9 @@ export const CustomChildNode = ({ id, selected, data }: NodeProps) => {
       <ChildSelectModal id={id} data={data} />
       <ChildFooter id={id} />
       <Handle
-        type="target"
+        type="source"
         position={Position.Left}
+        id="left"
         className={`w-2 h-2 rounded-full border-2 border-gray-400 ${
           data.leftHandleConnected ? "bg-gray-400" : "bg-white"
         }`}
@@ -31,10 +32,13 @@ export const CustomChildNode = ({ id, selected, data }: NodeProps) => {
       <Handle
         type="source"
         position={Position.Right}
+        id="right"
         className={`w-2 h-2 rounded-full border-2 border-gray-400 ${
           data.rightHandleConnected ? "bg-gray-400" : "bg-white"
         }`}
       />
+      <Handle type="source" position={Position.Top} id="top" className="opacity-0" />
+      <Handle type="source" position={Position.Bottom} id="bottom" className="opacity-0" />
     </div>
   );
 };
