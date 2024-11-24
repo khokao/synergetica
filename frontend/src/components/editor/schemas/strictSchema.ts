@@ -1,4 +1,4 @@
-import { PROMOTER_NAMES, PROTEIN_NAMES, TERMINATOR_NAMES } from "@/components/circuit/nodes/constants";
+import { PROMOTER_PARTS, PROTEIN_PARTS, TERMINATOR_PARTS } from "@/components/circuit/parts/constants";
 import { z } from "zod";
 
 function assertNonEmptyArray<T>(array: T[]): asserts array is [T, ...T[]] {
@@ -7,14 +7,18 @@ function assertNonEmptyArray<T>(array: T[]): asserts array is [T, ...T[]] {
   }
 }
 
-assertNonEmptyArray(PROMOTER_NAMES);
-assertNonEmptyArray(PROTEIN_NAMES);
-assertNonEmptyArray(TERMINATOR_NAMES);
+const promoterNames = Object.keys(PROMOTER_PARTS);
+const proteinNames = Object.keys(PROTEIN_PARTS);
+const terminatorNames = Object.keys(TERMINATOR_PARTS);
+
+assertNonEmptyArray(promoterNames);
+assertNonEmptyArray(proteinNames);
+assertNonEmptyArray(terminatorNames);
 
 const promoterSchema = z
   .object({
     type: z.literal("promoter"),
-    name: z.enum(PROMOTER_NAMES, {
+    name: z.enum(promoterNames, {
       required_error: "Missing required key: name",
       invalid_type_error: "Invalid promoter name.",
     }),
@@ -26,7 +30,7 @@ const promoterSchema = z
 const proteinSchema = z
   .object({
     type: z.literal("protein"),
-    name: z.enum(PROTEIN_NAMES, {
+    name: z.enum(proteinNames, {
       required_error: "Missing required key: name",
       invalid_type_error: "Invalid protein name.",
     }),
@@ -38,7 +42,7 @@ const proteinSchema = z
 const terminatorSchema = z
   .object({
     type: z.literal("terminator"),
-    name: z.enum(TERMINATOR_NAMES, {
+    name: z.enum(terminatorNames, {
       required_error: "Missing required key: name",
       invalid_type_error: "Invalid terminator name.",
     }),

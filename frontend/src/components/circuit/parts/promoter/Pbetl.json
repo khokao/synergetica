@@ -1,0 +1,14 @@
+{
+  "name": "Pbetl",
+  "description": "Regulated Promoter repressed by BetI",
+  "category": "promoter",
+  "sequence": "agcgcgggtgagagggattcgttaccaattgacaattgattggacgttcaatataatgctagc",
+  "controlBy": [
+    {
+      "name": "BetI",
+      "type": "repression"
+    }
+  ],
+  "controlTo": [],
+  "meta": null
+}

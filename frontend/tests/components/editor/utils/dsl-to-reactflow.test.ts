@@ -121,9 +121,9 @@ describe("dslToReactflow", () => {
     expect(result).not.toBeNull();
     const nodes = result?.nodes;
     if (nodes) {
-      const promoterNode = nodes.find((node) => node.data.nodeCategory === "promoter");
-      const proteinNode = nodes.find((node) => node.data.nodeCategory === "protein");
-      const terminatorNode = nodes.find((node) => node.data.nodeCategory === "terminator");
+      const promoterNode = nodes.find((node) => node.data.category === "promoter");
+      const proteinNode = nodes.find((node) => node.data.category === "protein");
+      const terminatorNode = nodes.find((node) => node.data.category === "terminator");
 
       expect(promoterNode?.data.leftHandleConnected).toBe(false);
       expect(promoterNode?.data.rightHandleConnected).toBe(true);

@@ -1,0 +1,14 @@
+{
+  "name": "PlmrA",
+  "description": "Regulated Promoter repressed by LmrA",
+  "category": "promoter",
+  "sequence": "tctgattcgttaccaattgacaactggtggtcgaatcaagataatagaccagtcactatattt",
+  "controlBy": [
+    {
+      "name": "LmrA",
+      "type": "repression"
+    }
+  ],
+  "controlTo": [],
+  "meta": null
+}

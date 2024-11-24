@@ -5,13 +5,13 @@ import { RiText } from "@remixicon/react";
 import { CornerUpRight, RectangleHorizontal } from "lucide-react";
 import React, { useState } from "react";
 
-const IconTooltip = ({ label, icon, color, nodeCategory, onDragStart }) => {
+const IconTooltip = ({ label, icon, color, category, onDragStart }) => {
   const [tooltipVisible, setTooltipVisible] = useState(false);
 
   const handleDragStart = () => {
     // Tooltip is hidden when dragging starts to prevent it from persisting during drag events
     setTooltipVisible(false);
-    onDragStart(nodeCategory);
+    onDragStart(category);
   };
 
   return (
@@ -23,7 +23,7 @@ const IconTooltip = ({ label, icon, color, nodeCategory, onDragStart }) => {
           onDragStart={handleDragStart}
           onPointerEnter={() => setTooltipVisible(true)}
           onPointerLeave={() => setTooltipVisible(false)}
-          data-testid={`icon-${nodeCategory}`}
+          data-testid={`icon-${category}`}
         >
           {icon}
         </div>
@@ -40,9 +40,9 @@ const IconTooltip = ({ label, icon, color, nodeCategory, onDragStart }) => {
 export const DnDPanel = () => {
   const [_, setDnDCategory] = useDnD();
 
-  const handleDragStart = (nodeCategory) => {
+  const handleDragStart = (category) => {
     if (!setDnDCategory) return;
-    setDnDCategory(nodeCategory);
+    setDnDCategory(category);
   };
 
   return (
@@ -52,21 +52,21 @@ export const DnDPanel = () => {
           label="Promoter"
           icon={<CornerUpRight className="text-blue-800" />}
           color="bg-blue-200"
-          nodeCategory="promoter"
+          category="promoter"
           onDragStart={handleDragStart}
         />
         <IconTooltip
           label="Protein"
           icon={<RectangleHorizontal className="text-green-800" />}
           color="bg-green-200"
-          nodeCategory="protein"
+          category="protein"
           onDragStart={handleDragStart}
         />
         <IconTooltip
           label="Terminator"
           icon={<RiText className="text-red-800" />}
           color="bg-red-200"
-          nodeCategory="terminator"
+          category="terminator"
           onDragStart={handleDragStart}
         />
       </div>

@@ -4,7 +4,7 @@ from pydantic import BaseModel, ValidationError, ValidationInfo, field_validator
 
 
 class ReactFlowNodeData(BaseModel):
-    nodeCategory: str | None = None  # Parent node does not have this key.
+    category: str | None = None  # Parent node does not have this key.
     sequence: str | None = None  # Parent node does not have this key.
 
 

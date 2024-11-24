@@ -1,0 +1,21 @@
+{
+  "name": "HlyIIR",
+  "description": "Repressor Protein of PhyllR",
+  "category": "protein",
+  "sequence": "atgaaatacatcctgtttgaggtgtgcgaaatgggtaaaagccgtgaacagaccatggaaaatattctgaaagcagccaaaaagaaattcggcgaacgtggttatgaaggcaccagcattcaagaaattaccaaagaagccaaagttaacgttgcaatggccagctattactttaatggcaaagagaacctgtactacgaggtgttcaaaaaatacggtctggcaaatgaactgccgaactttctggaaaaaaaccagtttaatccgattaatgccctgcgtgaatatctgaccgtttttaccacccacattaaagaaaatccggaaattggcaccctggcctatgaagaaattatcaaagaaagcgcacgcctggaaaaaatcaaaccgtattttatcggcagcttcgaacagctgaaagaaattctgcaagagggtgaaaaacagggtgtgtttcacttttttagcatcaaccataccatccattggattaccagcattgttctgtttccgaaattcaaaaaattcatcgatagcctgggtccgaatgaaaccaatgataccaatcatgaatggatgccggaagatctggttagccgtattattagcgcactgaccgataaaccgaacatttaa",
+  "controlBy": [],
+  "controlTo": [
+    {
+      "name": "PhyllR",
+      "type": "repression"
+    }
+  ],
+  "meta": {
+    "Pmax": 0.0001175422388,
+    "Ymax": 2.5,
+    "Ymin": 0.07,
+    "K": 0.19,
+    "n": 2.6,
+    "Dp": 0.35022871
+  }
+}

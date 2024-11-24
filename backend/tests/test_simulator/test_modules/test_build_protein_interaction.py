@@ -7,7 +7,7 @@ from simulator.modules.build_protein_interaction import (
     extract_promoter_controlling_proteins,
     search_all_connected_components,
 )
-from simulator.modules.utils import get_node_id2data, get_parts_id2node_ids
+from simulator.modules.utils import get_node_id2data, get_parts_name2node_ids
 
 
 def test_create_adjacency_matrix_creates_correct_matrix(test_circuit, child_ids):
@@ -50,7 +50,7 @@ def test_extract_promoter_controlling_proteins_correctly_extracts_proteins(test_
     adjacency_matrix = create_adjacency_matrix(reactflow_object.edges, node_id2idx)
     connected_components = search_all_connected_components(adjacency_matrix)
     node_idx2id = {idx: node.id for idx, node in enumerate(reactflow_object.nodes)}
-    node_idx2category = {idx: node.data.nodeCategory for idx, node in enumerate(reactflow_object.nodes)}
+    node_idx2category = {idx: node.data.category for idx, node in enumerate(reactflow_object.nodes)}
 
     # Act
     promoter_controlling_proteins = extract_promoter_controlling_proteins(
@@ -59,8 +59,8 @@ def test_extract_promoter_controlling_proteins_correctly_extracts_proteins(test_
 
     # Assert
     expected_promoter_controlling_proteins = {
-        '03PeAEAA3uRVcCqVHwftQ': ['RPp8K6j_urCFeMtsm2pZv'],
-        'bbV7AW66sYRL9UJFXq7uH': ['QaBV3nMXJxcNaNN_hE6ji'],
+        'zMHtvnldTXSJIWtVgBhUt': ['GGwPR58MCezysPUWtA1bl'],
+        'n2iZ_CHolZnqJHB3qJwXd': ['8r73zQJfh4qLjcA97ucBq'],
     }
     assert promoter_controlling_proteins == expected_promoter_controlling_proteins
 
@@ -68,17 +68,17 @@ def test_extract_promoter_controlling_proteins_correctly_extracts_proteins(test_
 def test_build_protein_interact_graph_creates_correct_graph(test_circuit, protein_ids):
     # Arrange
     reactflow_object = ReactFlowObject(**test_circuit)
-    parts_id2node_ids = get_parts_id2node_ids(reactflow_object.nodes)
+    parts_name2node_ids = get_parts_name2node_ids(reactflow_object.nodes)
     node_id2data = get_node_id2data(reactflow_object.nodes)
     promoter_controlling_proteins = {
-        '03PeAEAA3uRVcCqVHwftQ': ['RPp8K6j_urCFeMtsm2pZv'],
-        'bbV7AW66sYRL9UJFXq7uH': ['QaBV3nMXJxcNaNN_hE6ji'],
+        'zMHtvnldTXSJIWtVgBhUt': ['GGwPR58MCezysPUWtA1bl'],
+        'n2iZ_CHolZnqJHB3qJwXd': ['8r73zQJfh4qLjcA97ucBq'],
     }
 
     # Act
     protein_interact_graph = build_protein_interact_graph(
         promoter_controlling_proteins=promoter_controlling_proteins,
-        parts_id2node_ids=parts_id2node_ids,
+        parts_name2node_ids=parts_name2node_ids,
         node_id2data=node_id2data,
         protein_node_ids=protein_ids,
     )

@@ -1,0 +1,14 @@
+{
+  "name": "PpsrA",
+  "description": "Regulated Promoter repressed by PsrA",
+  "category": "promoter",
+  "sequence": "aggaacaaacgtttgattgacagctagctcagtcctaggtataatgctagc",
+  "controlBy": [
+    {
+      "name": "PsrA",
+      "type": "repression"
+    }
+  ],
+  "controlTo": [],
+  "meta": null
+}

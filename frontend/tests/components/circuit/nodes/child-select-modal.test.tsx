@@ -19,7 +19,7 @@ vi.mock("@xyflow/react", async () => {
 
 describe("ChildSelectModal", () => {
   const defaultId = "test-id";
-  const defaultData = { nodeCategory: "promoter", nodePartsName: "test-name" };
+  const defaultData = { category: "promoter", name: "test-name" };
 
   const renderComponent = () => {
     render(<ChildSelectModal id={defaultId} data={defaultData} />);

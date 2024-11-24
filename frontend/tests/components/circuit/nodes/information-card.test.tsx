@@ -2,16 +2,11 @@ import { InformationCard } from "@/components/circuit/nodes/information-card";
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
-vi.mock("@/components/circuit/nodes/constants", () => ({
-  PARTS_ID2NAME: {
-    "part-1": "Part 1 Name",
-    "part-2": "Part 2 Name",
-    "part-3": "Part 3 Name",
-  },
-  PARTS_NAME2CATEGORY: {
-    "Part 1 Name": "protein",
-    "Part 2 Name": "promoter",
-    "Part 3 Name": "promoter",
+vi.mock("@/components/circuit/parts/constants", () => ({
+  ALL_PARTS: {
+    "Part 1 Name": { name: "Part 1 Name", description: "Part 1 Description", category: "protein" },
+    "Part 2 Name": { name: "Part 2 Name", description: "Part 2 Description", category: "promoter" },
+    "Part 3 Name": { name: "Part 3 Name", description: "Part 3 Description", category: "promoter" },
   },
 }));
 
@@ -19,9 +14,9 @@ describe("InformationCard", () => {
   it("renders the nodePartsName and description", () => {
     // Arrange
     const data = {
-      nodePartsName: "Test Name",
+      name: "Test Name",
       description: "This is a test description",
-      nodeCategory: "promoter",
+      category: "promoter",
       controlBy: [],
       controlTo: [],
     };
@@ -37,12 +32,11 @@ describe("InformationCard", () => {
   it("renders control buttons with correct parts names and icons", () => {
     // Arrange
     const data = {
-      nodePartsName: "Test Name",
+      name: "Part 1 Name",
       description: "This is a test description",
-      nodeCategory: "protein",
-      partsId: "part-1",
-      controlBy: [{ partsId: "part-2", controlType: "Repression" }],
-      controlTo: [{ partsId: "part-3", controlType: "Activation" }],
+      category: "protein",
+      controlBy: [{ name: "Part 2 Name", type: "repression" }],
+      controlTo: [{ name: "Part 3 Name", type: "activation" }],
     };
 
     // Act

@@ -6,8 +6,8 @@ import numpy as np
 from ..api.schemas import ReactFlowChildNodeData, ReactFlowEdge
 
 CONTROL_TYPE_STR2INT = {
-    'Repression': -1,
-    'Activation': 1,
+    'repression': -1,
+    'activation': 1,
 }
 
 
@@ -88,7 +88,7 @@ def extract_promoter_controlling_proteins(
 
 def build_protein_interact_graph(
     promoter_controlling_proteins: dict[str, list[str]],
-    parts_id2node_ids: dict[str, list[str]],
+    parts_name2node_ids: dict[str, list[str]],
     node_id2data: dict[str, ReactFlowChildNodeData],
     protein_node_ids: list[str],
 ) -> np.ndarray:
@@ -97,7 +97,7 @@ def build_protein_interact_graph(
     Args:
         promoter_controlling_proteins (dict[str, list[str]]):
             Dictionary mapping promoter node IDs to lists of controlling protein node IDs.
-        parts_id2node_ids (dict[str, list[str]]): Mapping from part IDs to lists of node IDs related to those parts.
+        parts_name2node_ids (dict[str, list[str]]): Mapping from part names to lists of node IDs related to those parts.
         node_id2data (dict[str, ReactFlowChildNodeData]):
             Mapping from node ID to detailed node data, including control information.
         protein_node_ids (list[str]): List of all protein node IDs.
@@ -112,12 +112,10 @@ def build_protein_interact_graph(
     protein_interaction_graph = np.zeros((num_protein_nodes, num_protein_nodes), dtype=int)
     for i, protein_node_id in enumerate(protein_node_ids):
         control_to_list = node_id2data[protein_node_id].controlTo
-        if control_to_list is None:
-            continue
 
         for control_to_item in control_to_list:
-            control_type_int = CONTROL_TYPE_STR2INT[control_to_item.controlType]
-            promoter_node_ids = parts_id2node_ids.get(control_to_item.partsId, [])
+            control_type_int = CONTROL_TYPE_STR2INT[control_to_item.type]
+            promoter_node_ids = parts_name2node_ids.get(control_to_item.name, [])
 
             for promoter_node_id in promoter_node_ids:
                 for controlled_protein_node_id in promoter_controlling_proteins.get(promoter_node_id, []):

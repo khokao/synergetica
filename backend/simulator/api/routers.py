@@ -13,7 +13,7 @@ from ..modules.build_protein_interaction import (
 )
 from ..modules.dynamic_formulation import build_function_as_str
 from ..modules.euler import solve_ode_with_euler
-from ..modules.utils import get_node_id2data, get_parts_id2node_ids, get_specific_category_node_ids
+from ..modules.utils import get_node_id2data, get_parts_name2node_ids, get_specific_category_node_ids
 from .schemas import ConverterInput, ConverterOutput, ReactFlowObject
 from .utils import get_protein_id2parts_name
 
@@ -30,19 +30,19 @@ async def convert_gui_circuit(data: ConverterInput) -> ConverterOutput:
     all_connected_components = search_all_connected_components(adjacency_matrix=adjacency_matrix)
 
     node_idx2id = {idx: node.id for idx, node in enumerate(reactflow_object.nodes)}
-    node_idx2category = {idx: node.data.nodeCategory for idx, node in enumerate(reactflow_object.nodes)}
+    node_idx2category = {idx: node.data.category for idx, node in enumerate(reactflow_object.nodes)}
     promoter_controlling_proteins = extract_promoter_controlling_proteins(
         all_connected_components=all_connected_components,
         node_idx2category=node_idx2category,
         node_idx2id=node_idx2id,
     )
 
-    parts_id2node_ids = get_parts_id2node_ids(reactflow_object.nodes)
+    parts_name2node_ids = get_parts_name2node_ids(reactflow_object.nodes)
     node_id2data = get_node_id2data(reactflow_object.nodes)
-    protein_node_ids = get_specific_category_node_ids(reactflow_object.nodes, node_category='protein')
+    protein_node_ids = get_specific_category_node_ids(reactflow_object.nodes, category='protein')
     protein_interact_graph = build_protein_interact_graph(
         promoter_controlling_proteins=promoter_controlling_proteins,
-        parts_id2node_ids=parts_id2node_ids,
+        parts_name2node_ids=parts_name2node_ids,
         node_id2data=node_id2data,
         protein_node_ids=protein_node_ids,
     )
@@ -50,7 +50,7 @@ async def convert_gui_circuit(data: ConverterInput) -> ConverterOutput:
 
     protein_id2display_name = get_protein_id2parts_name(protein_node_ids=protein_node_ids, node_id2data=node_id2data)
 
-    return ConverterOutput(protein_id2name=protein_id2display_name, function_str=function_str, valid=True)
+    return ConverterOutput(protein_id2name=protein_id2display_name, function_str=function_str)
 
 
 @router.websocket('/ws/simulation')

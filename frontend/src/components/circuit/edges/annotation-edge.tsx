@@ -1,4 +1,4 @@
-import { ANNOTATION_HANDLE_OFFSET, NODE_HEIGHT } from "@/components/circuit/constants";
+import { ANNOTATION_BEZIER_OFFSET, ANNOTATION_HANDLE_OFFSET, NODE_HEIGHT } from "@/components/circuit/constants";
 import { getBetterBezierPath } from "@/components/circuit/edges/get-better-bezier-path";
 import { Position, useInternalNode } from "@xyflow/react";
 import type { EdgeProps } from "@xyflow/react";
@@ -21,7 +21,7 @@ export const AnnotationEdge = ({ id, source, target, style = {}, markerEnd }: Ed
     targetX: tx,
     targetY: ty,
     targetPosition: targetPos,
-    offset: 120,
+    offset: ANNOTATION_BEZIER_OFFSET,
   });
 
   return (

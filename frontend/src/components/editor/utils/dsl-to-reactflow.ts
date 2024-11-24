@@ -1,7 +1,7 @@
 import { EDGE_LENGTH, GROUP_NODE_MARGIN, NODE_HEIGHT, NODE_WIDTH } from "@/components/circuit/constants";
 import { createEdge } from "@/components/circuit/hooks/utils/create-edge";
 import { createChildNode, createParentNode } from "@/components/circuit/hooks/utils/create-node";
-import { PARTS_NAME2ATTRIBUTES } from "@/components/circuit/nodes/constants";
+import { ALL_PARTS } from "@/components/circuit/parts/constants";
 import { CHAIN_GAP_Y, CHAIN_OFFSET_X } from "@/components/editor/constants";
 import { looseCircuitSchema } from "@/components/editor/schemas/looseSchema";
 import type { Edge, Node } from "@xyflow/react";
@@ -51,19 +51,17 @@ export const dslToReactflow = (content: string): { nodes: Node[]; edges: Edge[] 
               x: parentPosition.x + GROUP_NODE_MARGIN + childIndex * (NODE_WIDTH + EDGE_LENGTH),
               y: parentPosition.y + GROUP_NODE_MARGIN,
             };
-        const nodeCategory = childObj.type;
-        const tempChildNode = createChildNode(childPosition, nodeCategory);
+        const tempChildNode = createChildNode(childPosition, childObj.type);
 
         const childNode = produce(tempChildNode, (childDraft) => {
           childDraft.parentId = hasParent ? parentNode.id : undefined;
-          childDraft.data.nodePartsName = childObj.name;
 
-          if (childObj.name in PARTS_NAME2ATTRIBUTES) {
-            const attributes = PARTS_NAME2ATTRIBUTES[childObj.name];
+          if (childObj.name in ALL_PARTS) {
+            const attributes = ALL_PARTS[childObj.name];
+            childDraft.data.name = attributes.name;
             childDraft.data.description = attributes.description;
-            childDraft.data.nodeSubcategory = attributes.nodeSubcategory;
+            childDraft.data.category = attributes.category;
             childDraft.data.sequence = attributes.sequence;
-            childDraft.data.partsId = attributes.partsId;
             childDraft.data.controlBy = attributes.controlBy;
             childDraft.data.controlTo = attributes.controlTo;
             childDraft.data.meta = attributes.meta;

@@ -18,21 +18,21 @@ describe("convertReactFlowNodesToDSL", () => {
         type: "child",
         parentId: "parent1",
         position: { x: 100, y: 0 },
-        data: { nodeCategory: "promoter", nodePartsName: "promoter1" },
+        data: { category: "promoter", name: "promoter1" },
       },
       {
         id: "child2",
         type: "child",
         parentId: "parent1",
         position: { x: 200, y: 0 },
-        data: { nodeCategory: "protein", nodePartsName: "protein1" },
+        data: { category: "protein", name: "protein1" },
       },
       {
         id: "child3",
         type: "child",
         parentId: "parent1",
         position: { x: 300, y: 0 },
-        data: { nodeCategory: "terminator", nodePartsName: "terminator1" },
+        data: { category: "terminator", name: "terminator1" },
       },
     ];
 
@@ -58,13 +58,13 @@ describe("convertReactFlowNodesToDSL", () => {
         id: "child1",
         type: "child",
         position: { x: 0, y: 0 },
-        data: { nodeCategory: "promoter", nodePartsName: "promoter1" },
+        data: { category: "promoter", name: "promoter1" },
       },
       {
         id: "child2",
         type: "child",
         position: { x: 0, y: 100 },
-        data: { nodeCategory: "protein", nodePartsName: "protein1" },
+        data: { category: "protein", name: "protein1" },
       },
     ];
 
@@ -90,13 +90,13 @@ describe("convertReactFlowNodesToDSL", () => {
         type: "child",
         parentId: TEMP_NODE_ID,
         position: { x: 100, y: 0 },
-        data: { nodeCategory: "promoter", nodePartsName: "promoter1" },
+        data: { category: "promoter", name: "promoter1" },
       },
       {
         id: "child2",
         type: "child",
         position: { x: 0, y: 100 },
-        data: { nodeCategory: "protein", nodePartsName: "protein1" },
+        data: { category: "protein", name: "protein1" },
       },
     ];
 
@@ -119,14 +119,14 @@ describe("convertReactFlowNodesToDSL", () => {
         type: "child",
         parentId: undefined,
         position: { x: 100, y: 100 },
-        data: { nodeCategory: "terminator", nodePartsName: "terminator1" },
+        data: { category: "terminator", name: "terminator1" },
       },
       {
         id: "child1",
         type: "child",
         parentId: undefined,
         position: { x: 100, y: 0 },
-        data: { nodeCategory: "promoter", nodePartsName: "promoter1" },
+        data: { category: "promoter", name: "promoter1" },
       },
     ];
 

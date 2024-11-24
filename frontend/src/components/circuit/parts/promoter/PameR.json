@@ -1,0 +1,14 @@
+{
+  "name": "PameR",
+  "description": "Regulated Promoter repressed by AmeR",
+  "category": "promoter",
+  "sequence": "gatagtgacaaacttgacaactcatcacttcctaggtataatgctagc",
+  "controlBy": [
+    {
+      "name": "AmeR",
+      "type": "repression"
+    }
+  ],
+  "controlTo": [],
+  "meta": null
+}

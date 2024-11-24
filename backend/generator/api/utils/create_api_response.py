@@ -7,7 +7,7 @@ def create_parent2child_details(
     nodes: list[ReactFlowNode],
 ) -> dict[str, list[OutputChildNodeDetails]]:
     parent2ordered_children = get_parent2ordered_children(nodes=nodes)
-    child_id2category = get_child_id2key(nodes=nodes, key='nodeCategory')
+    child_id2category = get_child_id2key(nodes=nodes, key='category')
     child_id2sequence = get_child_id2key(nodes=nodes, key='sequence')
 
     parent2child_details = {}  # type: dict[str, list[OutputChildNodeDetails]]

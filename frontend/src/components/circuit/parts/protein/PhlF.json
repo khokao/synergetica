@@ -1,0 +1,21 @@
+{
+  "name": "PhlF",
+  "description": "Repressor Protein of PphlF",
+  "category": "protein",
+  "sequence": "atggcacgtaccccgagccgtagcagcattggtagcctgcgtagtccgcatacccataaagcaattctgaccagcaccattgaaatcctgaaagaatgtggttatagcggtctgagcattgaaagcgttgcacgtcgtgccggtgcaagcaaaccgaccatttatcgttggtggaccaataaagcagcactgattgccgaagtgtatgaaaatgaaagcgaacaggtgcgtaaatttccggatctgggtagctttaaagccgatctggattttctgctgcgtaatctgtggaaagtttggcgtgaaaccatttgtggtgaagcatttcgttgtgttattgcagaagcacagctggaccctgcaaccctgacccagctgaaagatcagtttatggaacgtcgtcgtgagatgccgaaaaaactggttgaaaatgccattagcaatggtgaactgccgaaagataccaatcgtgaactgctgctggatatgatttttggtttttgttggtatcgcctgctgaccgaacagctgaccgttgaacaggatattgaagaatttaccttcctgctgattaatggtgtttgtccgggtacacagcgttaa",
+  "controlBy": [],
+  "controlTo": [
+    {
+      "name": "PphlF",
+      "type": "repression"
+    }
+  ],
+  "meta": {
+    "Pmax": 0.0000558171088,
+    "Ymax": 3.9,
+    "Ymin": 0.01,
+    "K": 0.03,
+    "n": 4,
+    "Dp": 1.15054329
+  }
+}

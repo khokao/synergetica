@@ -1,0 +1,14 @@
+{
+  "name": "PamtR",
+  "description": "Regulated Promoter repressed by AmtR",
+  "category": "promoter",
+  "sequence": "gattcgttaccaattgacagtttctatcgatctatagataatgctagc",
+  "controlBy": [
+    {
+      "name": "AmtR",
+      "type": "repression"
+    }
+  ],
+  "controlTo": [],
+  "meta": null
+}
