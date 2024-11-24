@@ -1,5 +1,6 @@
-import { ANNOTATION_HANDLE_OFFSET, ActivationColor, NODE_HEIGHT } from "@/components/circuit/constants";
-import { Position, getSmoothStepPath, useInternalNode } from "@xyflow/react";
+import { ANNOTATION_HANDLE_OFFSET, NODE_HEIGHT } from "@/components/circuit/constants";
+import { getBetterBezierPath } from "@/components/circuit/edges/get-better-bezier-path";
+import { Position, useInternalNode } from "@xyflow/react";
 import type { EdgeProps } from "@xyflow/react";
 
 export const AnnotationEdge = ({ id, source, target, style = {}, markerEnd }: EdgeProps) => {
@@ -13,16 +14,14 @@ export const AnnotationEdge = ({ id, source, target, style = {}, markerEnd }: Ed
   const [sx, sy, sourcePos] = getParams(sourceNode, targetNode);
   const [tx, ty, targetPos] = getParams(targetNode, sourceNode);
 
-  const edgeCenterOffset = style.stroke === ActivationColor ? Math.abs(sy - ty) / 10 : -Math.abs(sy - ty) / 10;
-
-  const [edgePath] = getSmoothStepPath({
+  const [edgePath] = getBetterBezierPath({
     sourceX: sx,
     sourceY: sy,
     sourcePosition: sourcePos,
-    targetPosition: targetPos,
     targetX: tx,
     targetY: ty,
-    centerY: (sy + ty) / 2 + edgeCenterOffset,
+    targetPosition: targetPos,
+    offset: 120,
   });
 
   return (
