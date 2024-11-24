@@ -1,4 +1,4 @@
-export const PROMOTER_DATA = [
+const PROMOTER_DATA = [
   {
     nodePartsName: "PameR",
     description: "Regulated Promoter repressed by AmeR",
@@ -193,7 +193,7 @@ export const PROMOTER_DATA = [
   },
 ];
 
-export const PROTEIN_DATA = [
+const PROTEIN_DATA = [
   {
     nodePartsName: "AmeR",
     description: "Repressor Protein of PameR",
@@ -484,7 +484,7 @@ export const PROTEIN_DATA = [
   },
 ];
 
-export const TERMINATOR_DATA = [
+const TERMINATOR_DATA = [
   {
     nodePartsName: "L3S3P31",
     description: "Standard Terminator",
@@ -497,22 +497,3 @@ export const TERMINATOR_DATA = [
     meta: null,
   },
 ];
-
-export const PROMOTER_NAMES = PROMOTER_DATA.map((data) => data.nodePartsName);
-export const PROTEIN_NAMES = PROTEIN_DATA.map((data) => data.nodePartsName);
-export const TERMINATOR_NAMES = TERMINATOR_DATA.map((data) => data.nodePartsName);
-
-export const PARTS_ID2NAME = [...PROMOTER_DATA, ...PROTEIN_DATA, ...TERMINATOR_DATA].reduce((acc, data) => {
-  acc[data.partsId] = data.nodePartsName;
-  return acc;
-}, {});
-
-export const PARTS_NAME2CATEGORY = [...PROMOTER_DATA, ...PROTEIN_DATA, ...TERMINATOR_DATA].reduce((acc, data) => {
-  acc[data.nodePartsName] = data.nodeCategory;
-  return acc;
-}, {});
-
-export const PARTS_NAME2ATTRIBUTES = [...PROMOTER_DATA, ...PROTEIN_DATA, ...TERMINATOR_DATA].reduce((acc, data) => {
-  acc[data.nodePartsName] = data;
-  return acc;
-}, {});
