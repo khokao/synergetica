@@ -1,4 +1,4 @@
-import { ActivationColor, RepressionColor, TEMP_EDGE_ID } from "@/components/circuit/constants";
+import { ACTIVATION_COLOR, REPRESSION_COLOR, TEMP_EDGE_ID } from "@/components/circuit/constants";
 import type { Edge } from "@xyflow/react";
 import { nanoid } from "nanoid";
 
@@ -19,7 +19,7 @@ export const createRepressionEdge = (sourceId: string, targetId: string): Edge =
   type: "annotation",
   source: sourceId,
   target: targetId,
-  style: { strokeWidth: 4, stroke: RepressionColor },
+  style: { strokeWidth: 4, stroke: REPRESSION_COLOR },
   markerEnd: "repression",
   zIndex: 0,
   selectable: false,
@@ -30,7 +30,7 @@ export const createActivationEdge = (sourceId: string, targetId: string): Edge =
   type: "annotation",
   source: sourceId,
   target: targetId,
-  style: { strokeWidth: 4, stroke: ActivationColor },
+  style: { strokeWidth: 4, stroke: ACTIVATION_COLOR },
   markerEnd: "activation",
   zIndex: 0,
   selectable: false,

@@ -25,5 +25,5 @@ export const NODE_CONNECT_DISTANCE = 150;
 export const GROUP_NODE_MARGIN = 20;
 
 export const ANNOTATION_HANDLE_OFFSET = 30;
-export const RepressionColor = "#818cf8"; // indigo-400
-export const ActivationColor = "#f87171"; // red-400
+export const REPRESSION_COLOR = "#818cf8"; // indigo-400
+export const ACTIVATION_COLOR = "#f87171"; // red-400
