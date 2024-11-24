@@ -12,7 +12,7 @@ client = TestClient(app)
 
 @pytest.fixture
 def convert_result_example():
-    protein_id2name = {'RPp8K6j_urCFeMtsm2pZv': 'BM3R1', 'QaBV3nMXJxcNaNN_hE6ji': 'AmeR'}
+    protein_id2name = {'GGwPR58MCezysPUWtA1bl': 'BM3R1', '8r73zQJfh4qLjcA97ucBq': 'AmeR'}
     function_str = 'def ODEtoSolve(var:list[float],t:float,TIR1:float,TIR3:float):\n\td0dt = 300 * 0.5 * ((0.2 + ((1.0-0.2) * 3.0 ** 2.0) / ( var[3] ** 2.0 + 3.0 ** 2.0)) / 1.0) * 15 - 0.012145749 * var[0]\n\td1dt = 0.01 * TIR1 * var[0] - 0.1 * var[1]\n\td2dt = 300 * 0.5 * ((0.2 + ((1.0-0.2) * 3.0 ** 2.0) / ( var[1] ** 2.0 + 3.0 ** 2.0)) / 1.0) * 15 - 0.012145749 * var[2]\n\td3dt = 0.01 * TIR3 * var[2] - 0.1 * var[3]\n\treturn (d0dt, d1dt,d2dt, d3dt)'  # noqa: E501
 
     yield {'protein_id2name': protein_id2name, 'function_str': function_str}
@@ -31,7 +31,7 @@ def test_convert_gui_circuit_returns_correct_output(test_circuit):
     # Assert
     assert response.status_code == HTTPStatus.OK
     ConverterOutput(**response_data)
-    assert response_data['protein_id2name'] == {'RPp8K6j_urCFeMtsm2pZv': 'BM3R1', 'QaBV3nMXJxcNaNN_hE6ji': 'AmeR'}
+    assert response_data['protein_id2name'] == {'GGwPR58MCezysPUWtA1bl': 'BM3R1', '8r73zQJfh4qLjcA97ucBq': 'AmeR'}
 
 
 def test_websocket_simulation(convert_result_example):
@@ -45,7 +45,7 @@ def test_websocket_simulation(convert_result_example):
         assert "Function 'ODEtoSolve' defined." in response
 
         # Act
-        simulation_params = {'params': {'RPp8K6j_urCFeMtsm2pZv': 100, 'QaBV3nMXJxcNaNN_hE6ji': 200}}
+        simulation_params = {'params': {'GGwPR58MCezysPUWtA1bl': 100, '8r73zQJfh4qLjcA97ucBq': 200}}
         websocket.send_text(json.dumps(simulation_params))
         response = websocket.receive_text()
 
