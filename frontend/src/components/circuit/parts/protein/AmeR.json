@@ -1,0 +1,21 @@
+{
+  "name": "AmeR",
+  "description": "Repressor Protein of PameR",
+  "category": "protein",
+  "sequence": "atgaacaaaaccattgatcaggtgcgtaaaggtgatcgtaaaagcgatctgccggttcgtcgtcgtccgcgtcgtagtgccgaagaaacccgtcgtgatattctggcaaaagccgaagaactgtttcgtgaacgtggttttaatgcagttgccattgcagatattgcaagcgcactgaatatgagtccggcaaatgtgtttaaacattttagcagcaaaaacgcactggttgatgcaattggttttggtcagattggtgtttttgaacgtcagatttgtccgctggataaaagccatgcaccgctggatcgtctgcgtcatctggcacgtaatctgatggaacagcatcatcaggatcatttcaaacacatacgggtttttattcagatcctgatgaccgccaaacaggatatgaaatgtggcgattattacaaaagcgtgattgcaaaactgctggccgaaattattcgtgatggtgttgaagcaggtctgtatattgcaaccgatattccggttctggcagaaaccgttctgcatgcactgaccagcgttattcatccggttctgattgcacaagaagatattggtaatctggcaacccgttgtgatcagctggttgatctgattgatgcaggtctgcgtaatccgctggcaaaataa",
+  "controlBy": [],
+  "controlTo": [
+    {
+      "name": "PameR",
+      "type": "repression"
+    }
+  ],
+  "meta": {
+    "Pmax": 0.00008389048759,
+    "Ymax": 3.8,
+    "Ymin": 0.2,
+    "K": 0.09,
+    "n": 1.4,
+    "Dp": 0.74589307
+  }
+}

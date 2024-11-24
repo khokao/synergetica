@@ -1,0 +1,21 @@
+{
+  "name": "BM3R1",
+  "description": "Repressor Protein of Pbm3R1",
+  "category": "protein",
+  "sequence": "atggaaagcaccccgaccaaacagaaagcaatttttagcgcaagcctgctgctgtttgcagaacgtggttttgatgcaaccaccatgccgatgattgcagaaaatgcaaaagttggtgcaggcaccatttatcgctatttcaaaaacaaagaaagcctggtgaacgaactgtttcagcagcatgttaatgaatttctgcagtgtattgaaagcggtctggcaaatgaacgtgatggttatcgtgatggctttcatcacatttttgaaggtatggtgacctttaccaaaaatcatccgcgtgcactgggttttatcaaaacccatagccagggcacctttctgaccgaagaaagccgtctggcatatcagaaactggttgaatttgtgtgcaccttttttcgtgaaggtcagaaacagggtgtgattcgtaatctgccggaaaatgcactgattgcaattctgtttggcagctttatggaagtgtatgaaatgatcgagaacgattatctgagcctgaccgatgaactgctgaccggtgttgaagaaagcctgtgggcagcactgagccgtcagagctaa",
+  "controlBy": [],
+  "controlTo": [
+    {
+      "name": "Pbm3r1",
+      "type": "repression"
+    }
+  ],
+  "meta": {
+    "Pmax": 0.00005590683685,
+    "Ymax": 0.5,
+    "Ymin": 0.004,
+    "K": 0.04,
+    "n": 3.4,
+    "Dp": 0.14726881
+  }
+}
