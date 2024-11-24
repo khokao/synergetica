@@ -21,8 +21,8 @@ const headerMap = {
 };
 
 export const ChildHeader = ({ data }) => {
-  const { nodeCategory } = data;
-  const { text, bgColor, icon } = headerMap[nodeCategory];
+  const { category } = data;
+  const { text, bgColor, icon } = headerMap[category];
 
   return (
     <div className={`flex justify-between items-center h-1/3 px-3 py-1 text-black font-medium rounded-t-xl ${bgColor}`}>

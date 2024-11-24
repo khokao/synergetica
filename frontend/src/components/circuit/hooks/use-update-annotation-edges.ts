@@ -28,7 +28,7 @@ export const useUpdateAnnotationEdges = () => {
         const processControls = (controls, isControlBy) => {
           if (Array.isArray(controls)) {
             for (const control of controls) {
-              const relatedNode = debouncedNodes.find((nn) => nn.data.partsId === control.partsId);
+              const relatedNode = debouncedNodes.find((nn) => nn.data.name === control.name);
 
               if (relatedNode) {
                 const sourceId = isControlBy ? relatedNode.id : n.id;
@@ -36,9 +36,9 @@ export const useUpdateAnnotationEdges = () => {
 
                 if (!edgeExists(sourceId, targetId)) {
                   let edge: Edge | undefined;
-                  if (control.controlType === "Activation") {
+                  if (control.type === "activation") {
                     edge = createActivationEdge(sourceId, targetId);
-                  } else if (control.controlType === "Repression") {
+                  } else if (control.type === "repression") {
                     edge = createRepressionEdge(sourceId, targetId);
                   }
                   if (edge) draft.push(edge);

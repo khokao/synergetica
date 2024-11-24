@@ -2,7 +2,7 @@ import { MiniMap } from "@xyflow/react";
 import type { FC } from "react";
 
 const nodeColor = (node) => {
-  switch (node.data.nodeCategory) {
+  switch (node.data.category) {
     case "promoter":
       return "#bfdbfe";
     case "protein":

@@ -1,6 +1,6 @@
 import { CircuitEdgeTypes, CircuitNodeTypes, TEMP_NODE_ID } from "@/components/circuit/constants";
-import { PROMOTER_DATA, PROTEIN_DATA, TERMINATOR_DATA } from "@/components/circuit/nodes/constants";
 import { InformationCard } from "@/components/circuit/nodes/information-card";
+import { PROMOTER_PARTS, PROTEIN_PARTS, TERMINATOR_PARTS } from "@/components/circuit/parts/constants";
 import { Button } from "@/components/ui/button";
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
@@ -23,19 +23,19 @@ const modalMap = {
     title: "Select Promoter",
     underlineColor: "border-blue-800",
     highlightColor: "text-blue-600",
-    options: PROMOTER_DATA,
+    options: Object.values(PROMOTER_PARTS),
   },
   protein: {
     title: "Select Protein",
     underlineColor: "border-green-800",
     highlightColor: "text-green-600",
-    options: PROTEIN_DATA,
+    options: Object.values(PROTEIN_PARTS),
   },
   terminator: {
     title: "Select Terminator",
     underlineColor: "border-red-800",
     highlightColor: "text-red-600",
-    options: TERMINATOR_DATA,
+    options: Object.values(TERMINATOR_PARTS),
   },
 };
 
@@ -81,14 +81,9 @@ const SelectMenu = ({ options, selectedOption, handleSelect }) => {
         <CommandGroup className="h-full">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {options.map((o) => {
-              const isSelected = selectedOption && o.nodePartsName === selectedOption.nodePartsName;
+              const isSelected = selectedOption && o.name === selectedOption.name;
               return (
-                <CommandItem
-                  key={o.nodePartsName}
-                  value={`${o.nodePartsName} ${o.description}`}
-                  onSelect={() => handleSelect(o)}
-                  asChild
-                >
+                <CommandItem key={o.name} value={`${o.name} ${o.description}`} onSelect={() => handleSelect(o)} asChild>
                   <div className={`cursor-pointer ${isSelected ? "border-2 border-gray-500 bg-gray-100" : ""}`}>
                     <InformationCard data={o} />
                   </div>
@@ -118,15 +113,15 @@ const ChildSelectModalComponent = ({ id, data }) => {
     );
   }
 
-  const { nodeCategory, nodePartsName } = data;
+  const { category, name } = data;
 
   const reactflow = useReactFlow();
 
   const [isOpen, setIsOpen] = useState(false);
   const [isHighlighted, setIsHighlighted] = useState(false);
 
-  const { title, underlineColor, highlightColor, options } = modalMap[nodeCategory];
-  const selectedOption = options.find((option) => option.nodePartsName === nodePartsName);
+  const { title, underlineColor, highlightColor, options } = modalMap[category];
+  const selectedOption = options.find((option) => option.name === name);
 
   const handleSelect = useCallback(
     (option) => {
@@ -134,11 +129,9 @@ const ChildSelectModalComponent = ({ id, data }) => {
       const newNodes = produce(getNodes(), (draft) => {
         for (const node of draft) {
           if (node.id === id) {
-            node.data.nodePartsName = option.nodePartsName;
+            node.data.name = option.name;
             node.data.description = option.description;
-            node.data.nodeSubcategory = option.nodeSubcategory;
             node.data.sequence = option.sequence;
-            node.data.partsId = option.partsId;
             node.data.controlBy = option.controlBy;
             node.data.controlTo = option.controlTo;
             node.data.meta = option.meta;
@@ -170,7 +163,7 @@ const ChildSelectModalComponent = ({ id, data }) => {
       <span
         className={`tracking-wider text-black font-extrabold text-lg duration-300 ${isHighlighted ? highlightColor : ""}`}
       >
-        {selectedOption ? selectedOption.nodePartsName : ""}
+        {selectedOption ? selectedOption.name : ""}
       </span>
       <ChevronDown />
     </Button>
@@ -179,7 +172,7 @@ const ChildSelectModalComponent = ({ id, data }) => {
   return (
     <Container>
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
-        {data.nodePartsName && !isOpen ? (
+        {data.name && !isOpen ? (
           <HoverCard>
             <HoverCardTrigger asChild>
               <DialogTrigger asChild>{buttonContent}</DialogTrigger>

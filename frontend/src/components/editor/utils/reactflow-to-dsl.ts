@@ -19,8 +19,8 @@ export const convertReactFlowNodesToDSL = (nodes: Node[]): string => {
       .filter((child) => child.parentId === parent.id)
       .sort((a, b) => a.position.x - b.position.x)
       .map((child) => ({
-        type: child.data.nodeCategory,
-        name: child.data.nodePartsName,
+        type: child.data.category,
+        name: child.data.name,
       }));
 
     return {
@@ -32,8 +32,8 @@ export const convertReactFlowNodesToDSL = (nodes: Node[]): string => {
   const singleChains = childNodesWithoutParent.map((child) => ({
     chain: [
       {
-        type: child.data.nodeCategory,
-        name: child.data.nodePartsName,
+        type: child.data.category,
+        name: child.data.name,
       },
     ],
     positionY: child.position.y,

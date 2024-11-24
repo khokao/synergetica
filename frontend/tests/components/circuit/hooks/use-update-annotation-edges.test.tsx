@@ -17,15 +17,15 @@ describe("useUpdateAnnotationEdges", () => {
       id: "nodeA",
       type: "child",
       data: {
-        partsId: "partA",
-        controlTo: [{ partsId: "partB", controlType: "Activation" }],
+        name: "partA",
+        controlTo: [{ name: "partB", controlType: "activation" }],
         controlBy: [],
       },
     };
     const nodeB = {
       id: "nodeB",
       type: "child",
-      data: { partsId: "partB", controlTo: [], controlBy: [] },
+      data: { name: "partB", controlTo: [], controlBy: [] },
     };
     (useNodes as Mock).mockReturnValue([nodeA, nodeB]);
     (useReactFlow as Mock).mockReturnValue({
@@ -48,15 +48,15 @@ describe("useUpdateAnnotationEdges", () => {
       id: "nodeA",
       type: "child",
       data: {
-        partsId: "partA",
+        name: "partA",
         controlTo: [],
-        controlBy: [{ partsId: "partB", controlType: "Repression" }],
+        controlBy: [{ name: "partB", controlType: "Repression" }],
       },
     };
     const nodeB = {
       id: "nodeB",
       type: "child",
-      data: { partsId: "partB", controlTo: [], controlBy: [] },
+      data: { name: "partB", controlTo: [], controlBy: [] },
     };
     (useNodes as Mock).mockReturnValue([nodeA, nodeB]);
     (useReactFlow as Mock).mockReturnValue({
@@ -78,12 +78,12 @@ describe("useUpdateAnnotationEdges", () => {
     const nodeA = {
       id: "nodeA",
       type: "child",
-      data: { partsId: "partA", controlTo: [], controlBy: [] },
+      data: { name: "partA", controlTo: [], controlBy: [] },
     };
     const nodeB = {
       id: "nodeB",
       type: "child",
-      data: { partsId: "partB", controlTo: [], controlBy: [] },
+      data: { name: "partB", controlTo: [], controlBy: [] },
     };
     (useNodes as Mock).mockReturnValue([nodeA, nodeB]);
     (useReactFlow as Mock).mockReturnValue({
@@ -112,15 +112,19 @@ describe("useUpdateAnnotationEdges", () => {
       id: "nodeA",
       type: "child",
       data: {
-        partsId: "partA",
-        controlTo: [{ partsId: "partB", controlType: "Activation" }],
+        name: "partA",
+        controlTo: [{ name: "partB", type: "activation" }],
         controlBy: [],
       },
     };
     const nodeB = {
       id: "nodeB",
       type: "child",
-      data: { partsId: "partB", controlTo: [], controlBy: [] },
+      data: {
+        name: "partB",
+        controlTo: [],
+        controlBy: [{ name: "partA", type: "activation" }],
+      },
     };
     (useNodes as Mock).mockReturnValue([nodeA, nodeB]);
     (useReactFlow as Mock).mockReturnValue({
