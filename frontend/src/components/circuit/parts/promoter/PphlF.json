@@ -1,0 +1,14 @@
+{
+  "name": "PphlF",
+  "description": "Regulated Promoter repressed by PhlF",
+  "category": "promoter",
+  "sequence": "tctgattcgttaccaattgacatgatacgaaacgtaccgtatcgttaaggt",
+  "controlBy": [
+    {
+      "name": "PhlF",
+      "type": "repression"
+    }
+  ],
+  "controlTo": [],
+  "meta": null
+}

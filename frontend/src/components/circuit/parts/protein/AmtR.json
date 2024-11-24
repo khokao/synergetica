@@ -1,0 +1,21 @@
+{
+  "name": "AmtR",
+  "description": "Repressor Protein of PamtR",
+  "category": "protein",
+  "sequence": "atggcaggcgcagttggtcgtccgcgtcgtagtgcaccgcgtcgtgcaggtaaaaatccgcgtgaagaaattctggatgcaagcgcagaactgtttacccgtcagggttttgcaaccaccagtacccatcagattgcagatgcagttggtattcgtcaggcaagcctgtattatcattttccgagcaaaaccgaaatctttctgaccctgctgaaaagcaccgttgaaccgagcaccgttctggcagaagatctgagcaccctggatgcaggtccggaaatgcgtctgtgggcaattgttgcaagcgaagttcgtctgctgctgagcaccaaatggaatgttggtcgtctgtatcagctgccgattgttggtagcgaagaatttgcagaatatcatagccagcgtgaagcactgaccaatgtttttcgtgatctggcaaccgaaattgttggtgatgatccgcgtgcagaactgccgtttcatattaccatgagcgttattgaaatgcgtcgcaatgatggtaaaattccgagtccgctgagcgcagatagcctgccggaaaccgcaattatgctggcagatgcaagcctggcagttctgggtgcaccgctgcctgcagatcgtgttgaaaaaaccctggaactgattaaacaggcagatgcaaaataa",
+  "controlBy": [],
+  "controlTo": [
+    {
+      "name": "PamtR",
+      "type": "repression"
+    }
+  ],
+  "meta": {
+    "Pmax": 0.0002378448751,
+    "Ymax": 3.8,
+    "Ymin": 0.08,
+    "K": 0.07,
+    "n": 1.6,
+    "Dp": 0.26308464
+  }
+}

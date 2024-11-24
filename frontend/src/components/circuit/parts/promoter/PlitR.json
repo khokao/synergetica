@@ -1,0 +1,14 @@
+{
+  "name": "PlitR",
+  "description": "Regulated Promoter repressed by LitR",
+  "category": "promoter",
+  "sequence": "gattcgttaccaattgacaaatttataaattgtcagtataatgctagc",
+  "controlBy": [
+    {
+      "name": "LitR",
+      "type": "repression"
+    }
+  ],
+  "controlTo": [],
+  "meta": null
+}

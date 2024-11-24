@@ -1,0 +1,21 @@
+{
+  "name": "LmrA",
+  "description": "Repressor Protein of PlmrA",
+  "category": "protein",
+  "sequence": "atgagctatggtgatagccgtgaaaaaattctgagcgcagcaacccgtctgtttcagctgcagggttattatggcaccggtctgaatcagattatcaaagaaagcggtgcaccgaaaggtagcctgtattatcattttccgggtggtaaagaacagctggcaattgaagcagtgaacgaaatgaaagaatatatccgccagaaaatcgccgattgtatggaagcatgtaccgatccggcagaaggtattcaggcatttctgaaagaactgagctgtcagtttagctgtaccgaagatattgaaggtctgccggttggtctgctggcagcagaaaccagcctgaaaagcgaaccgctgcgtgaagcatgtcatgaagcatataaagaatgggccagcgtgtatgaagaaaaactgcgtcagaccggttgtagcgaaagccgtgcaaaagaagcaagcaccgttgttaatgcaatgattgaaggtggtattctgctgagcctgaccgcaaaaaatagcacaccgctgctgcatattagcagctgtattccggatctgctgaaacgttaa",
+  "controlBy": [],
+  "controlTo": [
+    {
+      "name": "PlmrA",
+      "type": "repression"
+    }
+  ],
+  "meta": {
+    "Pmax": 0.0001025727101,
+    "Ymax": 2.2,
+    "Ymin": 0.2,
+    "K": 0.18,
+    "n": 2.1,
+    "Dp": 0.35318036
+  }
+}

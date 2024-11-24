@@ -1,0 +1,14 @@
+{
+  "name": "PhyllR",
+  "description": "Regulated Promoters repressed by HylIR",
+  "category": "promoter",
+  "sequence": "gattcgttaccaattgacatatttaaaattcttgtttaaaatgctagc",
+  "controlBy": [
+    {
+      "name": "HlyIIR",
+      "type": "repression"
+    }
+  ],
+  "controlTo": [],
+  "meta": null
+}

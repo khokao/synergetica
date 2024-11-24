@@ -1,0 +1,21 @@
+{
+  "name": "PsrA",
+  "description": "Repressor Protein of PpsrA",
+  "category": "protein",
+  "sequence": "atggcacagagcgaaaccgttgaacgtattctggatgcagcagaacagctgtttgcagaacgtggttttgcagaaaccagcctgcgtctgattaccagcaaagccggtgttaatctggcagcagtgaattatcattttggcagcaaaaaagcactgattcaggcagtttttagccgttttctgggtccgttttgtgcaagcctggaacgtgaactggaacgtcgtcaggcacgtccggaacagaaaccgagcctggaagaactgctggaaatgctggttgaacaggcactggcagttcagcctcgtagcaataatgatctgagcatttttatgcgtctgctgggtctggcatttagccagagccagggtcatctgcgtcgttatctggaagatatgtatggtaaagtgttccgtcgttatatgctgctggttaatgaagcagcaccgcgtgttccgcctctggaactgttttggcgtgttcattttatgctgggtgcagcagcatttagcatgagcggtattaaagcactgcgtgcaattgcagaaaccgattttggtattaacaccagcattgaacaggttatgcgtctgatggttccgtttctggcagcaggtatgcgtgcagatagcggtgttaccgatgaagcaatggcagcagcacagctgcgtccgcgtagcaaaaccagcaccagcgcaaccaccgcaaaagcataa",
+  "controlBy": [],
+  "controlTo": [
+    {
+      "name": "PpsrA",
+      "type": "repression"
+    }
+  ],
+  "meta": {
+    "Pmax": 0.00006641137683,
+    "Ymax": 5.9,
+    "Ymin": 0.2,
+    "K": 0.19,
+    "n": 1.8,
+    "Dp": 1.46290196
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "name": "SrpR",
+  "description": "Repressor Protein of PsrpR",
+  "category": "protein",
+  "sequence": "atggcacgtaaaaccgcagcagaagcagaagaaacccgtcagcgtattattgatgcagcactggaagtttttgttgcacagggtgttagtgatgcaaccctggatcagattgcacgtaaagccggtgttacccgtggtgcagtttattggcattttaatggtaaactggaagttctgcaggcagttctggcaagccgtcagcatccgctggaactggattttacaccggatctgggtattgaacgtagctgggaagcagttgttgttgcaatgctggatgcagttcatagtccgcagagcaaacagtttagcgaaattctgatttatcagggtctggatgaaagcggtctgattcataatcgtatggttcaggcaagcgatcgttttctgcagtatattcatcaggttctgcgtcatgcagttacccagggtgaactgccgattaatctggatctgcagaccagcattggtgtttttaaaggtctgattaccggtctgctgtatgaaggtctgcgtagcaaagatcagcaggcacagattatcaaagttgcactgggtagcttttgggcactgctgcgtgaaccgcctcgttttctgctgtgtgaagaagcacagattaaacaggtgaaatccttcgaataa",
+  "controlBy": [],
+  "controlTo": [
+    {
+      "name": "PsrpR",
+      "type": "repression"
+    }
+  ],
+  "meta": {
+    "Pmax": 0.0000304105203,
+    "Ymax": 2.1,
+    "Ymin": 0.003,
+    "K": 0.04,
+    "n": 2.5,
+    "Dp": 1.13710649
+  }
+}

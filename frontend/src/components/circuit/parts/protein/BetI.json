@@ -1,0 +1,21 @@
+{
+  "name": "BetI",
+  "description": "Repressor Protein of Betl",
+  "category": "protein",
+  "sequence": "atgccgaaactgggtatgcagagcattcgtcgtcgtcagctgattgatgcaaccctggaagcaattaatgaagttggtatgcatgatgcaaccattgcacagattgcacgtcgtgccggtgttagcaccggtattattagccattatttccgcgataaaaacggtctgctggaagcaaccatgcgtgatattaccagccagctgcgtgatgcagttctgaatcgtctgcatgcactgccgcagggtagcgcagaacagcgtctgcaggcaattgttggtggtaattttgatgaaacccaggttagcagcgcagcaatgaaagcatggctggcattttgggcaagcagcatgcatcagccgatgctgtatcgtctgcagcaggttagcagtcgtcgtctgctgagcaatctggttagcgaatttcgtcgtgaactgcctcgtgaacaggcacaagaggcaggttatggtctggcagcactgattgatggtctgtggctgcgtgcagcactgagcggtaaaccgctggataaaacccgtgcaaatagcctgacccgtcattttatcacccagcatctgccgaccgattaa",
+  "controlBy": [],
+  "controlTo": [
+    {
+      "name": "Pbetl",
+      "type": "repression"
+    }
+  ],
+  "meta": {
+    "Pmax": 0.0004845146566,
+    "Ymax": 3.8,
+    "Ymin": 0.07,
+    "K": 0.41,
+    "n": 2.4,
+    "Dp": 0.12914642
+  }
+}
