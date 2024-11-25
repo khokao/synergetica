@@ -1,16 +1,7 @@
-import type { ValidationError } from "@/components/editor/editor-context";
-import { strictCircuitSchema } from "@/components/editor/schemas/strictSchema";
 import type { editor } from "monaco-editor";
 import { LineCounter, isMap, isScalar, isSeq, parseDocument } from "yaml";
-import type { z } from "zod";
 
-export const validateDslContent = (
-  content: string,
-): {
-  validationErrors: ValidationError[] | null;
-  markers: editor.IMarkerData[];
-  parsedContent: z.infer<typeof strictCircuitSchema> | null;
-} => {
+export const validateDslContent = (content, schema) => {
   const lineCounter = new LineCounter();
   const doc = parseDocument(content, { keepSourceTokens: true, lineCounter });
 
@@ -19,7 +10,7 @@ export const validateDslContent = (
   }
 
   const dsl = doc.toJS();
-  const result = strictCircuitSchema.safeParse(dsl);
+  const result = schema.safeParse(dsl);
 
   if (result.success) {
     return { validationErrors: [], markers: [], parsedContent: dsl };
