@@ -25,3 +25,7 @@ export const PartSchema = z.object({
   controlTo: z.array(ControlRelationSchema),
   meta: MetaSchema,
 });
+
+export const PartsCollectionSchema = z
+  .record(z.string(), PartSchema)
+  .refine((p) => Object.entries(p).every(([key, value]) => key === value.name));
