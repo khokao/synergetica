@@ -1,4 +1,4 @@
-import { PartSchema, PartsCollectionSchema } from "@/components/circuit/parts/schema";
+import { PartsCollectionSchema } from "@/components/circuit/parts/schema";
 
 import PameRData from "@/components/circuit/parts/promoter/PameR.json";
 import PamtRData from "@/components/circuit/parts/promoter/PamtR.json";
@@ -29,31 +29,31 @@ import SrpRData from "@/components/circuit/parts/protein/SrpR.json";
 import L3S3P31Data from "@/components/circuit/parts/terminator/L3S3P31.json";
 
 export const initialParts = PartsCollectionSchema.parse({
-  PameR: PartSchema.parse(PameRData),
-  PamtR: PartSchema.parse(PamtRData),
-  Pbetl: PartSchema.parse(PbetlData),
-  Pbm3r1: PartSchema.parse(Pbm3r1Data),
-  PhyllR: PartSchema.parse(PhyllRData),
-  PlcaRA: PartSchema.parse(PlcaRAData),
-  PlitR: PartSchema.parse(PlitRData),
-  PlmrA: PartSchema.parse(PlmrAData),
-  PphlF: PartSchema.parse(PphlFData),
-  PpsrA: PartSchema.parse(PpsrAData),
-  PqacR: PartSchema.parse(PqacRData),
-  PsrpR: PartSchema.parse(PsrpRData),
+  PameR: PameRData,
+  PamtR: PamtRData,
+  Pbetl: PbetlData,
+  Pbm3r1: Pbm3r1Data,
+  PhyllR: PhyllRData,
+  PlcaRA: PlcaRAData,
+  PlitR: PlitRData,
+  PlmrA: PlmrAData,
+  PphlF: PphlFData,
+  PpsrA: PpsrAData,
+  PqacR: PqacRData,
+  PsrpR: PsrpRData,
 
-  AmeR: PartSchema.parse(AmeRData),
-  AmtR: PartSchema.parse(AmtRData),
-  BM3R1: PartSchema.parse(BM3R1Data),
-  BetI: PartSchema.parse(BetIData),
-  HlyIIR: PartSchema.parse(HlyIIRData),
-  IcaRA: PartSchema.parse(IcaRAData),
-  LitR: PartSchema.parse(LitRData),
-  LmrA: PartSchema.parse(LmrAData),
-  PhlF: PartSchema.parse(PhlFData),
-  PsrA: PartSchema.parse(PsrAData),
-  QacR: PartSchema.parse(QacRData),
-  SrpR: PartSchema.parse(SrpRData),
+  AmeR: AmeRData,
+  AmtR: AmtRData,
+  BM3R1: BM3R1Data,
+  BetI: BetIData,
+  HlyIIR: HlyIIRData,
+  IcaRA: IcaRAData,
+  LitR: LitRData,
+  LmrA: LmrAData,
+  PhlF: PhlFData,
+  PsrA: PsrAData,
+  QacR: QacRData,
+  SrpR: SrpRData,
 
-  L3S3P31: PartSchema.parse(L3S3P31Data),
+  L3S3P31: L3S3P31Data,
 });
