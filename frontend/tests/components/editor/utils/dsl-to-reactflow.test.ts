@@ -1,11 +1,45 @@
 import { dslToReactflow } from "@/components/editor/utils/dsl-to-reactflow";
 import { describe, expect, it } from "vitest";
 
+const parts = {
+  testPromoterName: {
+    name: "testPromoterName",
+    description: "Test Promoter Description",
+    category: "promoter",
+    controlBy: [
+      {
+        name: "testProteinName",
+        type: "repression",
+      },
+    ],
+    controlTo: [],
+  },
+  testProteinName: {
+    name: "testProteinName",
+    description: "Test Protein Description",
+    category: "protein",
+    controlBy: [],
+    controlTo: [
+      {
+        name: "testPromoterName",
+        type: "repression",
+      },
+    ],
+  },
+  testTerminatorName: {
+    name: "testTerminatorName",
+    description: "Test Terminator Description",
+    category: "terminator",
+    controlBy: [],
+    controlTo: [],
+  },
+};
+
 describe("dslToReactflow", () => {
   it("should return empty nodes and edges for empty content", () => {
     const content = "";
 
-    const result = dslToReactflow(content);
+    const result = dslToReactflow(content, parts);
 
     expect(result).toEqual({ nodes: [], edges: [] });
   });
@@ -16,7 +50,7 @@ describe("dslToReactflow", () => {
   - type: invalidType
 `;
 
-    const result = dslToReactflow(content);
+    const result = dslToReactflow(content, parts);
 
     expect(result).toBeNull();
   });
@@ -30,7 +64,7 @@ describe("dslToReactflow", () => {
 `;
 
     // Act
-    const result = dslToReactflow(content);
+    const result = dslToReactflow(content, parts);
 
     // Assert
     expect(result).not.toBeNull();
@@ -52,7 +86,7 @@ describe("dslToReactflow", () => {
 `;
 
     // Act
-    const result = dslToReactflow(content);
+    const result = dslToReactflow(content, parts);
 
     // Assert
     expect(result).not.toBeNull();
@@ -70,7 +104,7 @@ describe("dslToReactflow", () => {
 `;
 
     // Act
-    const result = dslToReactflow(content);
+    const result = dslToReactflow(content, parts);
 
     // Assert
     expect(result).not.toBeNull();
@@ -94,7 +128,7 @@ describe("dslToReactflow", () => {
 `;
 
     // Act
-    const result = dslToReactflow(content);
+    const result = dslToReactflow(content, parts);
 
     // Assert
     expect(result).not.toBeNull();
@@ -115,7 +149,7 @@ describe("dslToReactflow", () => {
 `;
 
     // Act
-    const result = dslToReactflow(content);
+    const result = dslToReactflow(content, parts);
 
     // Assert
     expect(result).not.toBeNull();
@@ -144,7 +178,7 @@ describe("dslToReactflow", () => {
 `;
 
     // Act
-    const result = dslToReactflow(content);
+    const result = dslToReactflow(content, parts);
 
     // Assert
     expect(result?.edges.length).toBe(2);
