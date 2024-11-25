@@ -2,6 +2,7 @@ import { initialParts } from "@/components/circuit/parts/initial-parts";
 import { PartSchema, PartsCollectionSchema } from "@/components/circuit/parts/schema";
 import type React from "react";
 import { createContext, useContext, useState } from "react";
+import { toast } from "sonner";
 import type { z } from "zod";
 
 type Part = z.infer<typeof PartSchema>;
@@ -23,39 +24,57 @@ export const PartsProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const [parts, setParts] = useState<PartsCollection>(initialParts);
 
   const addPart = (part: Part): void => {
-    const parsedPart = PartSchema.parse(part);
-    if (parts[parsedPart.name]) {
-      throw new Error(`Part with name ${parsedPart.name} already exists.`);
+    try {
+      const parsedPart = PartSchema.parse(part);
+      if (parts[parsedPart.name]) {
+        throw new Error(`Part with name ${parsedPart.name} already exists.`);
+      }
+      setParts((prevParts) => {
+        const newParts = { ...prevParts, [parsedPart.name]: parsedPart };
+        PartsCollectionSchema.parse(newParts);
+        return newParts;
+      });
+      toast.success(`New part "${parsedPart.name}" has been created!`);
+    } catch (error) {
+      toast.error(`Error: The part "${part.name}" could not be added.`);
+      throw error;
     }
-    setParts((prevParts) => {
-      const newParts = { ...prevParts, [parsedPart.name]: parsedPart };
-      PartsCollectionSchema.parse(newParts);
-      return newParts;
-    });
   };
 
   const editPart = (partName: string, updatedPart: Part): void => {
-    const parsedPart = PartSchema.parse(updatedPart);
-    if (!parts[partName]) {
-      throw new Error(`Part with name ${partName} does not exist.`);
+    try {
+      const parsedPart = PartSchema.parse(updatedPart);
+      if (!parts[partName]) {
+        throw new Error(`Part with name ${partName} does not exist.`);
+      }
+      setParts((prevParts) => {
+        const newParts = { ...prevParts, [partName]: parsedPart };
+        PartsCollectionSchema.parse(newParts);
+        return newParts;
+      });
+      toast.success(`Part "${partName}" has been updated!`);
+    } catch (error) {
+      toast.error(`Error: The part "${partName}" could not be edited.`);
+      throw error;
     }
-    setParts((prevParts) => {
-      const newParts = { ...prevParts, [partName]: parsedPart };
-      PartsCollectionSchema.parse(newParts);
-      return newParts;
-    });
   };
 
   const deletePart = (partName: string): void => {
-    if (!parts[partName]) {
-      throw new Error(`Part with name ${partName} does not exist.`);
+    try {
+      if (!parts[partName]) {
+        throw new Error(`Part with name ${partName} does not exist.`);
+      }
+      setParts((prevParts) => {
+        const newParts = { ...prevParts };
+        delete newParts[partName];
+        PartsCollectionSchema.parse(newParts);
+        return newParts;
+      });
+      toast.success(`Part "${partName}" has been removed.`);
+    } catch (error) {
+      toast.error(`Error: The part "${partName}" could not be removed.`);
+      throw error;
     }
-    setParts((prevParts) => {
-      const newParts = { ...prevParts };
-      delete newParts[partName];
-      PartsCollectionSchema.parse(newParts);
-      return newParts;
-    });
   };
 
   const promoterParts = Object.fromEntries(Object.entries(parts).filter(([_, part]) => part.category === "promoter"));
