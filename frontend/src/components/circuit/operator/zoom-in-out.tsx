@@ -11,20 +11,23 @@ export const ZoomInOut: FC = () => {
 
   return (
     <TooltipProvider>
-      <div className="flex bg-gray-100 rounded-xl shadow-lg border border-gray-300" data-testid="zoom-in-out">
+      <div
+        className="flex bg-gray-100 rounded-lg shadow-lg border border-gray-300 p-0.5 space-x-0.5"
+        data-testid="zoom-in-out"
+      >
         <Tooltip>
           <TooltipTrigger asChild>
             <Button
               variant="ghost"
               size="icon"
-              className="w-8 h-8 p-0 hover:bg-black/5"
+              className="p-0 w-7 h-7 hover:bg-black/5"
               onClick={(e) => {
                 e.stopPropagation();
                 zoomOut();
               }}
               aria-label="zoom out"
             >
-              <ZoomOut className="w-6 h-6 text-gray-500" />
+              <ZoomOut className="w-5 h-5 text-gray-500" />
             </Button>
           </TooltipTrigger>
           {/* Using RadixTooltip.Portal to avoid layout issues caused by parent styles */}
@@ -35,21 +38,23 @@ export const ZoomInOut: FC = () => {
           </RadixTooltip.Portal>
         </Tooltip>
 
-        <div className="flex items-center justify-center text-gray-500 w-10">{Math.round(zoom * 100)}%</div>
+        <div className="flex items-center justify-center text-gray-500 w-10 cursor-default">
+          {Math.round(zoom * 100)}%
+        </div>
 
         <Tooltip>
           <TooltipTrigger asChild>
             <Button
               variant="ghost"
               size="icon"
-              className="w-8 h-8 p-0 hover:bg-black/5"
+              className="p-0 w-7 h-7 hover:bg-black/5"
               onClick={(e) => {
                 e.stopPropagation();
                 zoomIn();
               }}
               aria-label="zoom in"
             >
-              <ZoomIn className="w-6 h-6 text-gray-500" />
+              <ZoomIn className="w-5 h-5 text-gray-500" />
             </Button>
           </TooltipTrigger>
           {/* Using RadixTooltip.Portal to avoid layout issues caused by parent styles */}
