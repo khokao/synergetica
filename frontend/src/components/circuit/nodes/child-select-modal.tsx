@@ -1,6 +1,6 @@
 import { CircuitEdgeTypes, CircuitNodeTypes, TEMP_NODE_ID } from "@/components/circuit/constants";
 import { InformationCard } from "@/components/circuit/nodes/information-card";
-import { PROMOTER_PARTS, PROTEIN_PARTS, TERMINATOR_PARTS } from "@/components/circuit/parts/constants";
+import { useParts } from "@/components/circuit/parts/parts-context";
 import { Button } from "@/components/ui/button";
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
@@ -17,27 +17,6 @@ import {
 import { produce } from "immer";
 import { ChevronDown } from "lucide-react";
 import React, { useState, useEffect, useCallback } from "react";
-
-const modalMap = {
-  promoter: {
-    title: "Select Promoter",
-    underlineColor: "border-blue-800",
-    highlightColor: "text-blue-600",
-    options: Object.values(PROMOTER_PARTS),
-  },
-  protein: {
-    title: "Select Protein",
-    underlineColor: "border-green-800",
-    highlightColor: "text-green-600",
-    options: Object.values(PROTEIN_PARTS),
-  },
-  terminator: {
-    title: "Select Terminator",
-    underlineColor: "border-red-800",
-    highlightColor: "text-red-600",
-    options: Object.values(TERMINATOR_PARTS),
-  },
-};
 
 const CircuitPreview = ({ id }) => {
   const reactflow = useReactFlow();
@@ -116,6 +95,28 @@ const ChildSelectModalComponent = ({ id, data }) => {
   const { category, name } = data;
 
   const reactflow = useReactFlow();
+  const { promoterParts, proteinParts, terminatorParts } = useParts();
+
+  const modalMap = {
+    promoter: {
+      title: "Select Promoter",
+      underlineColor: "border-blue-800",
+      highlightColor: "text-blue-600",
+      options: Object.values(promoterParts),
+    },
+    protein: {
+      title: "Select Protein",
+      underlineColor: "border-green-800",
+      highlightColor: "text-green-600",
+      options: Object.values(proteinParts),
+    },
+    terminator: {
+      title: "Select Terminator",
+      underlineColor: "border-red-800",
+      highlightColor: "text-red-600",
+      options: Object.values(terminatorParts),
+    },
+  };
 
   const [isOpen, setIsOpen] = useState(false);
   const [isHighlighted, setIsHighlighted] = useState(false);
