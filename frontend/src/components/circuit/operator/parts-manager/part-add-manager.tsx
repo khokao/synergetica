@@ -9,7 +9,6 @@ import { partSchema } from "@/components/circuit/parts/schema";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
-  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
@@ -23,10 +22,11 @@ import { Separator } from "@/components/ui/separator";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CirclePlus } from "lucide-react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-const PartAddForm = () => {
+const PartAddForm = ({ closeDialog }) => {
   const { parts, addPart } = useParts();
 
   const uniqueNamePartSchema = partSchema.merge(
@@ -37,6 +37,7 @@ const PartAddForm = () => {
 
   const handleSave = (values: z.infer<typeof uniqueNamePartSchema>) => {
     addPart(values);
+    closeDialog();
   };
 
   const form = useForm<z.infer<typeof uniqueNamePartSchema>>({
@@ -133,14 +134,12 @@ const PartAddForm = () => {
           </form>
         </ScrollArea>
         <DialogFooter>
-          <DialogClose asChild>
-            <Button variant="secondary">Cancel</Button>
-          </DialogClose>
-          <DialogClose asChild>
-            <Button variant="default" onClick={form.handleSubmit(handleSave)}>
-              Save
-            </Button>
-          </DialogClose>
+          <Button variant="secondary" onClick={() => closeDialog()}>
+            Cancel
+          </Button>
+          <Button variant="default" onClick={form.handleSubmit(handleSave)}>
+            Save
+          </Button>
         </DialogFooter>
       </Form>
     </>
@@ -148,9 +147,11 @@ const PartAddForm = () => {
 };
 
 export const PartAddManager = () => {
+  const [open, setOpen] = useState(false);
+
   return (
     <>
-      <Dialog>
+      <Dialog open={open} onOpenChange={setOpen}>
         <Tooltip>
           <TooltipTrigger asChild>
             <DialogTrigger asChild>
@@ -169,7 +170,7 @@ export const PartAddManager = () => {
           onCloseAutoFocus={(event) => event.preventDefault()}
           tabIndex={undefined} // fix focus issue: https://github.com/shadcn-ui/ui/issues/1288#issuecomment-1819808273
         >
-          <PartAddForm />
+          <PartAddForm closeDialog={() => setOpen(false)} />
         </DialogContent>
       </Dialog>
     </>
