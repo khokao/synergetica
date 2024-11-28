@@ -8,8 +8,10 @@ nav:
     - Tutorial: pages/getting_starts/tutorial.md
   - Guide:
     - GUI circuit design: pages/guide/gui.md
+    - DSL: pages/guide/dsl.md
     - Simulation: pages/guide/simulation.md
     - Seqence Generation: pages/guide/generation.md
+
 
 
 theme:
