@@ -1,22 +1,35 @@
 site_name: MaGesty
 site_url: https://MaGesty.org/MaGesty
+
 nav:
-  - Home: pages/index.md
-  - Installation: pages/installation.md
+  - Home: pages/home.md
+  - Getting Started:
+    - Install : pages/getting_starts/install.md
+    - Tutorial: pages/getting_starts/tutorial.md
+  - Guide:
+    - GUI circuit design: pages/guide/gui.md
+    - Simulation: pages/guide/simulation.md
+    - Seqence Generation: pages/guide/generation.md
+
+
 theme:
   name: material
-  logo: assets/demo.svg
-  favicon: assets/demo2.png
+  logo: img/demo.svg
+  favicon: img/demo2.png
   languages: en
   palette:
     # Palette toggle for light mode
     - scheme: default
+      primary: cyan
+      accent: cyan
       toggle:
         icon: material/toggle-switch
         name: Switch to dark mode
 
     # Palette toggle for dark mode
     - scheme: slate
+      primary: cyan
+      accent: cyan
       toggle:
         icon: material/toggle-switch-off-outline
         name: Switch to light mode
