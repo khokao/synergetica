@@ -1,34 +1,53 @@
+import { PartsCommandList } from "@/components/circuit/operator/parts-manager/parts-command-list";
 import { useParts } from "@/components/circuit/parts/parts-context";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-  CommandList,
-  CommandSeparator,
-} from "@/components/ui/command";
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
-import { RiText } from "@remixicon/react";
-import { CircleMinus, CornerUpRight, RectangleHorizontal } from "lucide-react";
+import { CircleMinus } from "lucide-react";
 import { useState } from "react";
 
-export const PartDeleteManager = () => {
-  const { promoterParts, proteinParts, terminatorParts, deletePart } = useParts();
+const PartDeleteDialog = ({ selectedPartName, setSelectedPartName }) => {
+  const { deletePart } = useParts();
 
-  const [selectedPart, setSelectedPart] = useState<string | null>(null);
+  const handleCancel = () => {
+    setSelectedPartName(null);
+  };
+
+  const handleDelete = () => {
+    deletePart(selectedPartName);
+    setSelectedPartName(null);
+  };
+
+  return (
+    <Dialog open={selectedPartName !== null} onOpenChange={handleCancel}>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Delete {selectedPartName}</DialogTitle>
+          <DialogDescription>Are you sure you want to delete this part?</DialogDescription>
+        </DialogHeader>
+        <DialogFooter>
+          <Button variant="secondary" onClick={handleCancel}>
+            Cancel
+          </Button>
+          <Button variant="default" onClick={handleDelete}>
+            Delete
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  );
+};
+
+export const PartDeleteManager = () => {
+  const [selectedPartName, setSelectedPartName] = useState<string | null>(null);
 
   return (
     <>
@@ -46,76 +65,12 @@ export const PartDeleteManager = () => {
           </TooltipContent>
         </Tooltip>
         <PopoverContent className="w-[150px] p-0" side="top" align="center">
-          <Command>
-            <CommandInput placeholder="Search parts..." />
-            <CommandList>
-              <CommandEmpty>No results found.</CommandEmpty>
-              <CommandGroup heading="Promoter">
-                {Object.keys(promoterParts).map((p) => (
-                  <CommandItem
-                    key={p}
-                    onSelect={() => {
-                      setSelectedPart(p);
-                    }}
-                  >
-                    <CornerUpRight className="text-blue-800" />
-                    <span>{p}</span>
-                  </CommandItem>
-                ))}
-              </CommandGroup>
-              <CommandSeparator />
-              <CommandGroup heading="Protein">
-                {Object.keys(proteinParts).map((p) => (
-                  <CommandItem
-                    key={p}
-                    onSelect={() => {
-                      setSelectedPart(p);
-                    }}
-                  >
-                    <RectangleHorizontal className="text-green-800" />
-                    <span>{p}</span>
-                  </CommandItem>
-                ))}
-              </CommandGroup>
-              <CommandSeparator />
-              <CommandGroup heading="Terminator">
-                {Object.keys(terminatorParts).map((p) => (
-                  <CommandItem
-                    key={p}
-                    onSelect={() => {
-                      setSelectedPart(p);
-                    }}
-                  >
-                    <RiText className="text-red-800" />
-                    <span>{p}</span>
-                  </CommandItem>
-                ))}
-              </CommandGroup>
-            </CommandList>
-          </Command>
+          <PartsCommandList onSelect={setSelectedPartName} />
         </PopoverContent>
       </Popover>
 
-      {selectedPart && (
-        <AlertDialog open={true} onOpenChange={() => setSelectedPart(null)}>
-          <AlertDialogContent>
-            <AlertDialogHeader>
-              <AlertDialogTitle>{selectedPart} will be deleted</AlertDialogTitle>
-              <AlertDialogDescription>This operation cannot be undone.</AlertDialogDescription>
-            </AlertDialogHeader>
-            <AlertDialogFooter>
-              <AlertDialogCancel onClick={() => setSelectedPart(null)}>Cancel</AlertDialogCancel>
-              <AlertDialogAction
-                onClick={() => {
-                  deletePart(selectedPart);
-                  setSelectedPart(null);
-                }}
-              >
-                Delete
-              </AlertDialogAction>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialog>
+      {selectedPartName && (
+        <PartDeleteDialog selectedPartName={selectedPartName} setSelectedPartName={setSelectedPartName} />
       )}
     </>
   );
