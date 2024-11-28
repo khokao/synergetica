@@ -73,6 +73,7 @@ const PartEditFormDialog = ({ selectedPartName, setSelectedPartName }) => {
                 fieldName="sequence"
                 form={form}
                 type="text"
+                placeholder="atgcATGC"
               />
 
               <Separator />

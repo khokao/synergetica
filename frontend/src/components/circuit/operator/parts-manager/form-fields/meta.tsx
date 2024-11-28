@@ -11,31 +11,37 @@ export const MetaFields = ({ form }) => {
       label: "Pmax",
       description: "Pmax description",
       fieldName: `${fieldName}.Pmax`,
+      placeholder: "",
     },
     {
       label: "Ymax",
       description: "Ymax description",
       fieldName: `${fieldName}.Ymax`,
+      placeholder: "",
     },
     {
       label: "Ymin",
       description: "Ymin description",
       fieldName: `${fieldName}.Pmax`,
+      placeholder: "",
     },
     {
       label: "K",
       description: "K description",
       fieldName: `${fieldName}.K`,
+      placeholder: "",
     },
     {
       label: "n",
       description: "n description",
       fieldName: `${fieldName}.n`,
+      placeholder: "",
     },
     {
       label: "Dp",
       description: "Dp description",
       fieldName: `${fieldName}.Dp`,
+      placeholder: "",
     },
   ];
 
@@ -52,6 +58,7 @@ export const MetaFields = ({ form }) => {
             fieldName={item.fieldName}
             form={form}
             type="number"
+            placeholder={item.placeholder}
           />
         ))}
       </div>

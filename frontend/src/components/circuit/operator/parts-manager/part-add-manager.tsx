@@ -64,7 +64,14 @@ const PartAddForm = () => {
       <Form {...form}>
         <ScrollArea className="h-full">
           <form className="flex flex-col space-y-8 px-4">
-            <InputField label="Name" description="Unique name of the part" fieldName="name" form={form} type="text" />
+            <InputField
+              label="Name"
+              description="Unique name of the part"
+              fieldName="name"
+              form={form}
+              type="text"
+              placeholder="New part name"
+            />
 
             <Separator />
 
@@ -74,6 +81,7 @@ const PartAddForm = () => {
               fieldName=""
               form={form}
               type="text"
+              placeholder="New part description."
             />
 
             <Separator />
@@ -83,7 +91,7 @@ const PartAddForm = () => {
               description="Category of the part"
               fieldName="category"
               form={form}
-              placeholder={"Select category"}
+              placeholder="Select category"
               options={["promoter", "protein", "terminator"]}
             />
 
@@ -95,6 +103,7 @@ const PartAddForm = () => {
               fieldName="sequence"
               form={form}
               type="text"
+              placeholder="atgcATGC"
             />
 
             <Separator />
