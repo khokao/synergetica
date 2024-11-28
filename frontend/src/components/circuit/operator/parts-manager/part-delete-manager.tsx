@@ -75,9 +75,7 @@ export const PartDeleteManager = () => {
         </PopoverContent>
       </Popover>
 
-      {selectedPartName && (
-        <PartDeleteDialog selectedPartName={selectedPartName} setSelectedPartName={setSelectedPartName} />
-      )}
+      <PartDeleteDialog selectedPartName={selectedPartName} setSelectedPartName={setSelectedPartName} />
     </>
   );
 };
