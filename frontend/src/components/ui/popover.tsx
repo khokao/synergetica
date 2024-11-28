@@ -13,6 +13,7 @@ const PopoverContent = React.forwardRef<
 >(({ className, align = "center", sideOffset = 4, ...props }, ref) => (
   <PopoverPrimitive.Portal>
     <PopoverPrimitive.Content
+      onWheel={(e) => e.stopPropagation()}  // workaround: https://github.com/shadcn-ui/ui/issues/607#issuecomment-2481290015
       ref={ref}
       align={align}
       sideOffset={sideOffset}
