@@ -1,12 +1,12 @@
 import { initialParts } from "@/components/circuit/parts/initial-parts";
-import { PartSchema, PartsCollectionSchema } from "@/components/circuit/parts/schema";
+import { partSchema, partsCollectionSchema } from "@/components/circuit/parts/schema";
 import type React from "react";
 import { createContext, useContext, useState } from "react";
 import { toast } from "sonner";
 import type { z } from "zod";
 
-type Part = z.infer<typeof PartSchema>;
-type PartsCollection = z.infer<typeof PartsCollectionSchema>;
+type Part = z.infer<typeof partSchema>;
+type PartsCollection = z.infer<typeof partsCollectionSchema>;
 
 interface PartsContextType {
   parts: PartsCollection;
@@ -25,13 +25,13 @@ export const PartsProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
   const addPart = (part: Part): void => {
     try {
-      const parsedPart = PartSchema.parse(part);
+      const parsedPart = partSchema.parse(part);
       if (parts[parsedPart.name]) {
         throw new Error(`Part with name ${parsedPart.name} already exists.`);
       }
       setParts((prevParts) => {
         const newParts = { ...prevParts, [parsedPart.name]: parsedPart };
-        PartsCollectionSchema.parse(newParts);
+        partsCollectionSchema.parse(newParts);
         return newParts;
       });
       toast.success(`New part "${parsedPart.name}" has been created!`);
@@ -43,13 +43,13 @@ export const PartsProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
   const editPart = (partName: string, updatedPart: Part): void => {
     try {
-      const parsedPart = PartSchema.parse(updatedPart);
+      const parsedPart = partSchema.parse(updatedPart);
       if (!parts[partName]) {
         throw new Error(`Part with name ${partName} does not exist.`);
       }
       setParts((prevParts) => {
         const newParts = { ...prevParts, [partName]: parsedPart };
-        PartsCollectionSchema.parse(newParts);
+        partsCollectionSchema.parse(newParts);
         return newParts;
       });
       toast.success(`Part "${partName}" has been updated!`);
@@ -67,7 +67,7 @@ export const PartsProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       setParts((prevParts) => {
         const newParts = { ...prevParts };
         delete newParts[partName];
-        PartsCollectionSchema.parse(newParts);
+        partsCollectionSchema.parse(newParts);
         return newParts;
       });
       toast.success(`Part "${partName}" has been removed.`);

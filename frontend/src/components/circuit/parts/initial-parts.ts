@@ -1,4 +1,4 @@
-import { PartsCollectionSchema } from "@/components/circuit/parts/schema";
+import { partsCollectionSchema } from "@/components/circuit/parts/schema";
 
 import PameRData from "@/components/circuit/parts/promoter/PameR.json";
 import PamtRData from "@/components/circuit/parts/promoter/PamtR.json";
@@ -28,7 +28,7 @@ import SrpRData from "@/components/circuit/parts/protein/SrpR.json";
 
 import L3S3P31Data from "@/components/circuit/parts/terminator/L3S3P31.json";
 
-export const initialParts = PartsCollectionSchema.parse({
+export const initialParts = partsCollectionSchema.parse({
   PameR: PameRData,
   PamtR: PamtRData,
   Pbetl: PbetlData,

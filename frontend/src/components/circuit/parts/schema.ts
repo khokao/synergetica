@@ -7,16 +7,17 @@ const ControlRelationSchema = z.object({
 
 const MetaSchema = z
   .object({
-    Pmax: z.number(),
-    Ymax: z.number(),
-    Ymin: z.number(),
-    K: z.number(),
-    n: z.number(),
-    Dp: z.number(),
+    // use the coerce helper: https://github.com/shadcn-ui/ui/issues/421#issuecomment-1561080201
+    Pmax: z.coerce.number().positive(),
+    Ymax: z.coerce.number().positive(),
+    Ymin: z.coerce.number().positive(),
+    K: z.coerce.number().positive(),
+    n: z.coerce.number().positive(),
+    Dp: z.coerce.number().positive(),
   })
   .nullable();
 
-export const PartSchema = z.object({
+export const partSchema = z.object({
   name: z.string(),
   description: z.string(),
   category: z.enum(["promoter", "protein", "terminator"]),
@@ -26,6 +27,6 @@ export const PartSchema = z.object({
   meta: MetaSchema,
 });
 
-export const PartsCollectionSchema = z
-  .record(z.string(), PartSchema)
+export const partsCollectionSchema = z
+  .record(z.string(), partSchema)
   .refine((p) => Object.entries(p).every(([key, value]) => key === value.name));
