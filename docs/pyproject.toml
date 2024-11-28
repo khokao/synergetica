@@ -1,0 +1,46 @@
+[tool.poetry]
+name = "gene-circuit-ide-document"
+version = "0.0.0"
+description = "Document for Gene Circuit IDE"
+authors = ["Koki Hokao", "Kanta Suga", "Sota Okuda"]
+license = "MIT"
+readme = "README.md"
+
+
+[tool.poetry.dependencies]
+python = ">=3.12,<4"
+mkdocs = "*"
+mkdocs-material = "*"
+
+[tool.poetry.group.dev.dependencies]
+ruff = "*"
+
+[tool.ruff]
+line-length = 120
+
+exclude = [
+    "*/__init__.py",
+]
+
+[tool.ruff.lint]
+# All rules are listed on https://docs.astral.sh/ruff/rules/
+select = [
+    "E",  # pycodestyle errors
+    "W",  # pycodestyle warnings
+    "F",  # pyflakes
+    "I",  # isort
+    "C",  # flake8-comprehensions
+    "B",  # flake8-bugbear
+    "UP", # pyupgrade
+]
+
+[tool.ruff.lint.isort]
+
+
+[tool.ruff.format]
+quote-style = "single"
+
+
+[build-system]
+requires = ["poetry"]
+build-backend = "poetry.masonry.api"
