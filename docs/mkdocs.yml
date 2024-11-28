@@ -2,7 +2,7 @@ site_name: MaGesty
 site_url: https://MaGesty.org/MaGesty
 
 nav:
-  - Home: pages/home.md
+  - Home: index.md
   - Getting Started:
     - Install : pages/getting_starts/install.md
     - Tutorial: pages/getting_starts/tutorial.md
