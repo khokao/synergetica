@@ -64,7 +64,13 @@ export const PartDeleteManager = () => {
             <p>Delete parts</p>
           </TooltipContent>
         </Tooltip>
-        <PopoverContent className="w-[150px] p-0" side="top" align="center">
+        <PopoverContent
+          className="w-[150px] p-0"
+          side="top"
+          align="center"
+          onOpenAutoFocus={(event) => event.preventDefault()}
+          onCloseAutoFocus={(event) => event.preventDefault()}
+        >
           <PartsCommandList onSelect={setSelectedPartName} />
         </PopoverContent>
       </Popover>
