@@ -22,13 +22,13 @@ import { Separator } from "@/components/ui/separator";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Pencil } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import type { z } from "zod";
 
 const PartEditFormDialog = ({ selectedPartName, setSelectedPartName }) => {
   const { parts, editPart } = useParts();
-  const selectedPart = parts[selectedPartName];
+  const selectedPart = selectedPartName ? parts[selectedPartName] : null;
 
   const handleCancel = () => {
     setSelectedPartName(null);
@@ -42,23 +42,38 @@ const PartEditFormDialog = ({ selectedPartName, setSelectedPartName }) => {
   const form = useForm<z.infer<typeof partSchema>>({
     resolver: zodResolver(partSchema),
     defaultValues: {
-      name: selectedPart.name,
-      description: selectedPart.description,
-      category: selectedPart.category,
-      sequence: selectedPart.sequence,
-      controlBy: selectedPart.controlBy,
-      controlTo: selectedPart.controlTo,
-      meta: selectedPart.meta,
+      name: "",
+      description: "",
+      // @ts-ignore
+      category: "",
+      sequence: "",
+      controlBy: [],
+      controlTo: [],
+      meta: null,
     },
   });
 
+  useEffect(() => {
+    if (selectedPart) {
+      form.reset({
+        name: selectedPart.name,
+        description: selectedPart.description,
+        category: selectedPart.category,
+        sequence: selectedPart.sequence,
+        controlBy: selectedPart.controlBy,
+        controlTo: selectedPart.controlTo,
+        meta: selectedPart.meta,
+      });
+    }
+  }, [selectedPart, form]);
+
   return (
-    <Dialog open={selectedPart !== null} onOpenChange={handleCancel}>
+    <Dialog open={selectedPartName !== null} onOpenChange={handleCancel}>
       <DialogContent
         className="h-[70vh] flex flex-col"
         onOpenAutoFocus={(event) => event.preventDefault()}
         onCloseAutoFocus={(event) => event.preventDefault()}
-        tabIndex={undefined} // fix focus issue: https://github.com/shadcn-ui/ui/issues/1288#issuecomment-1819808273
+        tabIndex={undefined}
       >
         <DialogHeader>
           <DialogTitle>Edit {selectedPartName}</DialogTitle>
@@ -145,9 +160,7 @@ export const PartEditManager = () => {
         </PopoverContent>
       </Popover>
 
-      {selectedPartName && (
-        <PartEditFormDialog selectedPartName={selectedPartName} setSelectedPartName={setSelectedPartName} />
-      )}
+      <PartEditFormDialog selectedPartName={selectedPartName} setSelectedPartName={setSelectedPartName} />
     </>
   );
 };
