@@ -59,7 +59,7 @@ def search_all_connected_components(adjacency_matrix: np.ndarray) -> list[list[i
 def extract_promoter_controlling_proteins(
     all_connected_components: list[list[int]],
     node_idx2id: dict[int, str],
-    node_idx2category: dict[int, Literal['protein', 'promoter', 'terminator']],
+    node_idx2category: dict[int, Literal['Protein', 'Promoter', 'Terminator']],
 ) -> dict[str, list[str]]:
     """Extract the proteins that control each promoter based on the connected components.
 
