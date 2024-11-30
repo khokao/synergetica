@@ -23,7 +23,7 @@ const TestComponent = () => {
           addPart({
             name: "TestPart",
             description: "A test part",
-            category: "promoter",
+            category: "Promoter",
             sequence: "ATGC",
             controlBy: [],
             controlTo: [],
@@ -44,7 +44,7 @@ const TestComponent = () => {
           editPart("TestPart", {
             name: "TestPart",
             description: "An edited test part",
-            category: "protein",
+            category: "Protein",
             sequence: "CGTA",
             controlBy: [],
             controlTo: [],
@@ -130,7 +130,7 @@ describe("PartsContext", () => {
     const parsedParts = JSON.parse(parts.textContent || "{}");
     expect(parsedParts).toHaveProperty("TestPart");
     expect(parsedParts.TestPart.description).toBe("An edited test part");
-    expect(parsedParts.TestPart.category).toBe("protein");
+    expect(parsedParts.TestPart.category).toBe("Protein");
   });
 
   it("should delete an existing part successfully", async () => {

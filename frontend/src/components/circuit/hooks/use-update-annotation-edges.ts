@@ -37,9 +37,9 @@ export const useUpdateAnnotationEdges = () => {
 
                 if (!edgeExists(sourceId, targetId)) {
                   let edge: Edge | undefined;
-                  if (control.type === "activation") {
+                  if (control.type === "Activation") {
                     edge = createActivationEdge(sourceId, targetId);
-                  } else if (control.type === "repression") {
+                  } else if (control.type === "Repression") {
                     edge = createRepressionEdge(sourceId, targetId);
                   }
                   if (edge) draft.push(edge);

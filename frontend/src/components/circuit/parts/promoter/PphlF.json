@@ -1,12 +1,12 @@
 {
   "name": "PphlF",
   "description": "Regulated Promoter repressed by PhlF",
-  "category": "promoter",
+  "category": "Promoter",
   "sequence": "tctgattcgttaccaattgacatgatacgaaacgtaccgtatcgttaaggt",
   "controlBy": [
     {
       "name": "PhlF",
-      "type": "repression"
+      "type": "Repression"
     }
   ],
   "controlTo": [],

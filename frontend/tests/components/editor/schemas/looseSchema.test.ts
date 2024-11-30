@@ -7,7 +7,7 @@ describe("looseCircuitSchema", () => {
     // Arrange
     const validSchema = [
       {
-        chain: [{ type: "promoter" }, { type: "protein" }, { type: "terminator" }],
+        chain: [{ type: "Promoter" }, { type: "Protein" }, { type: "Terminator" }],
       },
     ];
 
@@ -22,7 +22,7 @@ describe("looseCircuitSchema", () => {
     // Arrange
     const invalidSchema = [
       {
-        chain: [{ type: "promoter" }, { type: "invalidType" }],
+        chain: [{ type: "Promoter" }, { type: "invalidType" }],
       },
     ];
 
@@ -52,7 +52,7 @@ describe("looseCircuitSchema", () => {
     // Arrange
     const invalidSchema = [
       {
-        chain: [{ type: "promoter" }],
+        chain: [{ type: "Promoter" }],
         extraProperty: "not allowed",
       },
     ];

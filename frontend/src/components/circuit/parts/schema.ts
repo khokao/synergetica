@@ -2,7 +2,7 @@ import { z } from "zod";
 
 const ControlRelationSchema = z.object({
   name: z.string().min(1, { message: "Control part name is required." }),
-  type: z.enum(["activation", "repression"], { message: "Control type must be 'activation' or 'repression'." }),
+  type: z.enum(["Activation", "Repression"], { message: "Control type must be 'Activation' or 'Repression'." }),
 });
 
 const MetaSchema = z
@@ -20,8 +20,8 @@ const MetaSchema = z
 export const partSchema = z.object({
   name: z.string().min(1, { message: "Name is required." }),
   description: z.string({ message: "Description must be a string." }),
-  category: z.enum(["promoter", "protein", "terminator"], {
-    message: "Category must be 'promoter', 'protein', or 'terminator'.",
+  category: z.enum(["Promoter", "Protein", "Terminator"], {
+    message: "Category must be 'Promoter', 'Protein', or 'Terminator'.",
   }),
   sequence: z.string().regex(/^[ATCGatcg]+$/, { message: "DNA sequence must contain only A, T, C, or G." }),
   controlBy: z.array(ControlRelationSchema, { message: "controlBy must be an array." }),

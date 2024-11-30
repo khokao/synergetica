@@ -10,10 +10,10 @@ export const useStrictSchema = () => {
 
   const promoterSchema = z
     .object({
-      type: z.literal("promoter"),
+      type: z.literal("Promoter"),
       name: z.enum(promoterNames as [string, ...string[]], {
         required_error: "Missing required key: name",
-        invalid_type_error: "Invalid promoter name.",
+        invalid_type_error: "Invalid Promoter name.",
       }),
     })
     .strict({
@@ -22,10 +22,10 @@ export const useStrictSchema = () => {
 
   const proteinSchema = z
     .object({
-      type: z.literal("protein"),
+      type: z.literal("Protein"),
       name: z.enum(proteinNames as [string, ...string[]], {
         required_error: "Missing required key: name",
-        invalid_type_error: "Invalid protein name.",
+        invalid_type_error: "Invalid Protein name.",
       }),
     })
     .strict({
@@ -34,10 +34,10 @@ export const useStrictSchema = () => {
 
   const terminatorSchema = z
     .object({
-      type: z.literal("terminator"),
+      type: z.literal("Terminator"),
       name: z.enum(terminatorNames as [string, ...string[]], {
         required_error: "Missing required key: name",
-        invalid_type_error: "Invalid terminator name.",
+        invalid_type_error: "Invalid Terminator name.",
       }),
     })
     .strict({
@@ -45,7 +45,7 @@ export const useStrictSchema = () => {
     });
 
   const chainItemSchema = z.discriminatedUnion("type", [promoterSchema, proteinSchema, terminatorSchema], {
-    errorMap: () => ({ message: "Invalid 'type' value. Expected 'promoter', 'protein', or 'terminator'." }),
+    errorMap: () => ({ message: "Invalid 'type' value. Expected 'Promoter', 'Protein', or 'Terminator'." }),
   });
 
   const strictChainSchema = z
@@ -61,52 +61,52 @@ export const useStrictSchema = () => {
 
               switch (state) {
                 case "start":
-                  if (item.type === "promoter") {
-                    state = "promoter";
+                  if (item.type === "Promoter") {
+                    state = "Promoter";
                   } else {
                     ctx.addIssue({
                       code: z.ZodIssueCode.custom,
-                      message: "Chain must start with a promoter.",
+                      message: "Chain must start with a Promoter.",
                       path: [i],
                     });
                     return;
                   }
                   break;
 
-                case "promoter":
-                  if (item.type === "promoter") {
-                    state = "promoter";
-                  } else if (item.type === "protein") {
-                    state = "protein";
+                case "Promoter":
+                  if (item.type === "Promoter") {
+                    state = "Promoter";
+                  } else if (item.type === "Protein") {
+                    state = "Protein";
                   } else {
                     ctx.addIssue({
                       code: z.ZodIssueCode.custom,
-                      message: "A terminator cannot directly follow a promoter. At least one protein must follow.",
+                      message: "A Terminator cannot directly follow a Promoter. At least one Protein must follow.",
                       path: [i],
                     });
                     return;
                   }
                   break;
 
-                case "protein":
-                  if (item.type === "protein") {
-                    state = "protein";
-                  } else if (item.type === "terminator") {
-                    state = "terminator";
+                case "Protein":
+                  if (item.type === "Protein") {
+                    state = "Protein";
+                  } else if (item.type === "Terminator") {
+                    state = "Terminator";
                   } else {
                     ctx.addIssue({
                       code: z.ZodIssueCode.custom,
-                      message: "A promoter cannot appear after proteins.",
+                      message: "A Promoter cannot appear after Proteins.",
                       path: [i],
                     });
                     return;
                   }
                   break;
 
-                case "terminator":
+                case "Terminator":
                   ctx.addIssue({
                     code: z.ZodIssueCode.custom,
-                    message: "No elements are allowed after the terminator.",
+                    message: "No elements are allowed after the Terminator.",
                     path: [i],
                   });
                   return;
@@ -116,16 +116,16 @@ export const useStrictSchema = () => {
               }
             }
 
-            if (state === "promoter") {
+            if (state === "Promoter") {
               ctx.addIssue({
                 code: z.ZodIssueCode.custom,
-                message: "After promoter(s), at least one protein must follow before a terminator.",
+                message: "After Promoter(s), at least one Protein must follow before a Terminator.",
                 path: [chain.length - 1],
               });
-            } else if (state !== "terminator") {
+            } else if (state !== "Terminator") {
               ctx.addIssue({
                 code: z.ZodIssueCode.custom,
-                message: "Chain must end with a terminator.",
+                message: "Chain must end with a Terminator.",
                 path: [chain.length - 1],
               });
             }

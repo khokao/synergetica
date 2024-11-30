@@ -1,13 +1,13 @@
 {
   "name": "PsrA",
   "description": "Repressor Protein of PpsrA",
-  "category": "protein",
+  "category": "Protein",
   "sequence": "atggcacagagcgaaaccgttgaacgtattctggatgcagcagaacagctgtttgcagaacgtggttttgcagaaaccagcctgcgtctgattaccagcaaagccggtgttaatctggcagcagtgaattatcattttggcagcaaaaaagcactgattcaggcagtttttagccgttttctgggtccgttttgtgcaagcctggaacgtgaactggaacgtcgtcaggcacgtccggaacagaaaccgagcctggaagaactgctggaaatgctggttgaacaggcactggcagttcagcctcgtagcaataatgatctgagcatttttatgcgtctgctgggtctggcatttagccagagccagggtcatctgcgtcgttatctggaagatatgtatggtaaagtgttccgtcgttatatgctgctggttaatgaagcagcaccgcgtgttccgcctctggaactgttttggcgtgttcattttatgctgggtgcagcagcatttagcatgagcggtattaaagcactgcgtgcaattgcagaaaccgattttggtattaacaccagcattgaacaggttatgcgtctgatggttccgtttctggcagcaggtatgcgtgcagatagcggtgttaccgatgaagcaatggcagcagcacagctgcgtccgcgtagcaaaaccagcaccagcgcaaccaccgcaaaagcataa",
   "controlBy": [],
   "controlTo": [
     {
       "name": "PpsrA",
-      "type": "repression"
+      "type": "Repression"
     }
   ],
   "meta": {

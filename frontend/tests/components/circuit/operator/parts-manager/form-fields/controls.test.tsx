@@ -8,7 +8,7 @@ vi.mock("@/components/circuit/parts/parts-context", () => {
     testPromoterName: {
       name: "testPromoterName",
       description: "Test Promoter Description",
-      category: "promoter",
+      category: "Promoter",
       controlBy: [],
       controlTo: [],
     },
@@ -17,7 +17,7 @@ vi.mock("@/components/circuit/parts/parts-context", () => {
     testProteinName: {
       name: "testProteinName",
       description: "Test Protein Description",
-      category: "protein",
+      category: "Protein",
       controlBy: [],
       controlTo: [],
     },
@@ -26,7 +26,7 @@ vi.mock("@/components/circuit/parts/parts-context", () => {
     testTerminatorName: {
       name: "testTerminatorName",
       description: "Test Terminator Description",
-      category: "terminator",
+      category: "Terminator",
       controlBy: [],
       controlTo: [],
     },
@@ -101,7 +101,7 @@ describe("ControlFields Component", () => {
     const TestComponent = () => {
       const form = useForm({
         defaultValues: {
-          controls: [{ name: "part1", type: "repression" }],
+          controls: [{ name: "part1", type: "Repression" }],
         },
       });
       return (
@@ -142,10 +142,10 @@ describe("ControlFields Component", () => {
     fireEvent.click(screen.getByText("testPromoterName"));
 
     fireEvent.click(screen.getByText("Select type"));
-    fireEvent.click(screen.getByText("repression"));
+    fireEvent.click(screen.getByText("Repression"));
 
     // Assert
     expect(screen.getByText("testPromoterName")).toBeInTheDocument();
-    expect(screen.getByText("repression")).toBeInTheDocument();
+    expect(screen.getByText("Repression")).toBeInTheDocument();
   });
 });

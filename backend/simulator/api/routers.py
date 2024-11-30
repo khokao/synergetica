@@ -39,7 +39,7 @@ async def convert_gui_circuit(data: ConverterInput) -> ConverterOutput:
 
     parts_name2node_ids = get_parts_name2node_ids(reactflow_object.nodes)
     node_id2data = get_node_id2data(reactflow_object.nodes)
-    protein_node_ids = get_specific_category_node_ids(reactflow_object.nodes, category='protein')
+    protein_node_ids = get_specific_category_node_ids(reactflow_object.nodes, category='Protein')
     protein_interact_graph = build_protein_interact_graph(
         promoter_controlling_proteins=promoter_controlling_proteins,
         parts_name2node_ids=parts_name2node_ids,

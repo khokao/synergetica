@@ -10,7 +10,7 @@ def test_circuit():
 def protein_ids():
     protein_ids = []
     for node in TEST_CIRCUIT['nodes']:
-        if node['type'] == 'child' and node['data']['category'] == 'protein':  # type: ignore
+        if node['type'] == 'child' and node['data']['category'] == 'Protein':  # type: ignore
             protein_ids.append(node['id'])  # type: ignore
     return protein_ids
 
@@ -52,11 +52,11 @@ TEST_CIRCUIT = {
             'width': 180,
             'height': 126,
             'data': {
-                'category': 'promoter',
+                'category': 'Promoter',
                 'name': 'PameR',
                 'description': 'Regulated Promoter repressed by AmeR',
                 'sequence': 'gatagtgacaaacttgacaactcatcacttcctaggtataatgctagc',
-                'controlBy': [{'name': 'AmeR', 'type': 'repression'}],
+                'controlBy': [{'name': 'AmeR', 'type': 'Repression'}],
                 'controlTo': [],
                 'meta': None,
                 'leftHandleConnected': False,
@@ -73,12 +73,12 @@ TEST_CIRCUIT = {
             'width': 180,
             'height': 126,
             'data': {
-                'category': 'protein',
+                'category': 'Protein',
                 'name': 'BM3R1',
                 'description': 'Repressor Protein of Pbm3R1',
                 'sequence': 'atggaaagcaccccgaccaaacagaaagcaatttttagcgcaagcctgctgctgtttgcagaacgtggttttgatgcaaccaccatgccgatgattgcagaaaatgcaaaagttggtgcaggcaccatttatcgctatttcaaaaacaaagaaagcctggtgaacgaactgtttcagcagcatgttaatgaatttctgcagtgtattgaaagcggtctggcaaatgaacgtgatggttatcgtgatggctttcatcacatttttgaaggtatggtgacctttaccaaaaatcatccgcgtgcactgggttttatcaaaacccatagccagggcacctttctgaccgaagaaagccgtctggcatatcagaaactggttgaatttgtgtgcaccttttttcgtgaaggtcagaaacagggtgtgattcgtaatctgccggaaaatgcactgattgcaattctgtttggcagctttatggaagtgtatgaaatgatcgagaacgattatctgagcctgaccgatgaactgctgaccggtgttgaagaaagcctgtgggcagcactgagccgtcagagctaa',  # noqa
                 'controlBy': [],
-                'controlTo': [{'name': 'Pbm3r1', 'type': 'repression'}],
+                'controlTo': [{'name': 'Pbm3r1', 'type': 'Repression'}],
                 'meta': {'Pmax': 5.590683685e-05, 'Ymax': 0.5, 'Ymin': 0.004, 'K': 0.04, 'n': 3.4, 'Dp': 0.14726881},
                 'leftHandleConnected': True,
                 'rightHandleConnected': True,
@@ -94,7 +94,7 @@ TEST_CIRCUIT = {
             'width': 180,
             'height': 126,
             'data': {
-                'category': 'terminator',
+                'category': 'Terminator',
                 'name': 'L3S3P31',
                 'description': 'Standard Terminator',
                 'sequence': 'ccaattattgaacaccctaacgggtgtttttttttttttggtctacc',
@@ -126,11 +126,11 @@ TEST_CIRCUIT = {
             'width': 180,
             'height': 126,
             'data': {
-                'category': 'promoter',
+                'category': 'Promoter',
                 'name': 'Pbm3r1',
                 'description': 'Regulated Promoter repressed by BM3R1',
                 'sequence': 'tctgattcgttaccaattgacggaatgaacgttcattccgataatgctagc',
-                'controlBy': [{'name': 'BM3R1', 'type': 'repression'}],
+                'controlBy': [{'name': 'BM3R1', 'type': 'Repression'}],
                 'controlTo': [],
                 'meta': None,
                 'leftHandleConnected': False,
@@ -147,12 +147,12 @@ TEST_CIRCUIT = {
             'width': 180,
             'height': 126,
             'data': {
-                'category': 'protein',
+                'category': 'Protein',
                 'name': 'AmeR',
                 'description': 'Repressor Protein of PameR',
                 'sequence': 'atgaacaaaaccattgatcaggtgcgtaaaggtgatcgtaaaagcgatctgccggttcgtcgtcgtccgcgtcgtagtgccgaagaaacccgtcgtgatattctggcaaaagccgaagaactgtttcgtgaacgtggttttaatgcagttgccattgcagatattgcaagcgcactgaatatgagtccggcaaatgtgtttaaacattttagcagcaaaaacgcactggttgatgcaattggttttggtcagattggtgtttttgaacgtcagatttgtccgctggataaaagccatgcaccgctggatcgtctgcgtcatctggcacgtaatctgatggaacagcatcatcaggatcatttcaaacacatacgggtttttattcagatcctgatgaccgccaaacaggatatgaaatgtggcgattattacaaaagcgtgattgcaaaactgctggccgaaattattcgtgatggtgttgaagcaggtctgtatattgcaaccgatattccggttctggcagaaaccgttctgcatgcactgaccagcgttattcatccggttctgattgcacaagaagatattggtaatctggcaacccgttgtgatcagctggttgatctgattgatgcaggtctgcgtaatccgctggcaaaataa',  # noqa
                 'controlBy': [],
-                'controlTo': [{'name': 'PameR', 'type': 'repression'}],
+                'controlTo': [{'name': 'PameR', 'type': 'Repression'}],
                 'meta': {'Pmax': 8.389048759e-05, 'Ymax': 3.8, 'Ymin': 0.2, 'K': 0.09, 'n': 1.4, 'Dp': 0.74589307},
                 'leftHandleConnected': True,
                 'rightHandleConnected': True,
@@ -168,7 +168,7 @@ TEST_CIRCUIT = {
             'width': 180,
             'height': 126,
             'data': {
-                'category': 'terminator',
+                'category': 'Terminator',
                 'name': 'L3S3P31',
                 'description': 'Standard Terminator',
                 'sequence': 'ccaattattgaacaccctaacgggtgtttttttttttttggtctacc',

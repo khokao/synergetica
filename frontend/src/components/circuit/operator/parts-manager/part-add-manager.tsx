@@ -96,7 +96,7 @@ const PartAddForm = ({ closeDialog }) => {
               fieldName="category"
               form={form}
               placeholder="Select category"
-              options={["promoter", "protein", "terminator"]}
+              options={["Promoter", "Protein", "Terminator"]}
             />
 
             <Separator />
@@ -128,7 +128,7 @@ const PartAddForm = ({ closeDialog }) => {
               form={form}
             />
 
-            {category === "protein" && (
+            {category === "Protein" && (
               <>
                 <Separator />
                 <MetaFields form={form} />

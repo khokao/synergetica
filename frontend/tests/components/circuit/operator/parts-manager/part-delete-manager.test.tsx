@@ -12,7 +12,7 @@ vi.mock("@/components/circuit/parts/parts-context", () => {
     testPromoterName: {
       name: "testPromoterName",
       description: "Test Promoter Description",
-      category: "promoter",
+      category: "Promoter",
       controlBy: [],
       controlTo: [],
     },
@@ -21,7 +21,7 @@ vi.mock("@/components/circuit/parts/parts-context", () => {
     testProteinName: {
       name: "testProteinName",
       description: "Test Protein Description",
-      category: "protein",
+      category: "Protein",
       controlBy: [],
       controlTo: [],
     },
@@ -30,7 +30,7 @@ vi.mock("@/components/circuit/parts/parts-context", () => {
     testTerminatorName: {
       name: "testTerminatorName",
       description: "Test Terminator Description",
-      category: "terminator",
+      category: "Terminator",
       controlBy: [],
       controlTo: [],
     },

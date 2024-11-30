@@ -25,12 +25,12 @@ class ConverterOutput(BaseModel):
 
 class ReactFlowChildNodeControlItem(BaseModel):
     name: str
-    type: Literal['repression', 'activation']
+    type: Literal['Repression', 'Activation']
 
 
 class ReactFlowChildNodeData(BaseModel):
     name: str
-    category: Literal['protein', 'promoter', 'terminator']
+    category: Literal['Protein', 'Promoter', 'Terminator']
     sequence: str
     controlTo: list[ReactFlowChildNodeControlItem]
     controlBy: list[ReactFlowChildNodeControlItem]

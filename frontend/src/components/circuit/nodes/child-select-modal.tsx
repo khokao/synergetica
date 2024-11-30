@@ -98,19 +98,19 @@ const ChildSelectModalComponent = ({ id, data }) => {
   const { promoterParts, proteinParts, terminatorParts } = useParts();
 
   const modalMap = {
-    promoter: {
+    Promoter: {
       title: "Select Promoter",
       underlineColor: "border-blue-800",
       highlightColor: "text-blue-600",
       options: Object.values(promoterParts),
     },
-    protein: {
+    Protein: {
       title: "Select Protein",
       underlineColor: "border-green-800",
       highlightColor: "text-green-600",
       options: Object.values(proteinParts),
     },
-    terminator: {
+    Terminator: {
       title: "Select Terminator",
       underlineColor: "border-red-800",
       highlightColor: "text-red-600",

@@ -18,7 +18,7 @@ describe("useUpdateAnnotationEdges", () => {
       type: "child",
       data: {
         name: "partA",
-        controlTo: [{ name: "partB", controlType: "activation" }],
+        controlTo: [{ name: "partB", controlType: "Activation" }],
         controlBy: [],
       },
     };
@@ -113,7 +113,7 @@ describe("useUpdateAnnotationEdges", () => {
       type: "child",
       data: {
         name: "partA",
-        controlTo: [{ name: "partB", type: "activation" }],
+        controlTo: [{ name: "partB", type: "Activation" }],
         controlBy: [],
       },
     };
@@ -123,7 +123,7 @@ describe("useUpdateAnnotationEdges", () => {
       data: {
         name: "partB",
         controlTo: [],
-        controlBy: [{ name: "partA", type: "activation" }],
+        controlBy: [{ name: "partA", type: "Activation" }],
       },
     };
     (useNodes as Mock).mockReturnValue([nodeA, nodeB]);

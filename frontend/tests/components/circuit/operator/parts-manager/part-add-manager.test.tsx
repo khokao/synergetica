@@ -11,7 +11,7 @@ vi.mock("@/components/circuit/parts/parts-context", () => {
     testPromoterName: {
       name: "testPromoterName",
       description: "Test Promoter Description",
-      category: "promoter",
+      category: "Promoter",
       sequence: "ATGC",
       controlBy: [],
       controlTo: [],
@@ -22,7 +22,7 @@ vi.mock("@/components/circuit/parts/parts-context", () => {
     testProteinName: {
       name: "testProteinName",
       description: "Test Protein Description",
-      category: "protein",
+      category: "Protein",
       sequence: "ATGC",
       controlBy: [],
       controlTo: [],
@@ -40,7 +40,7 @@ vi.mock("@/components/circuit/parts/parts-context", () => {
     testTerminatorName: {
       name: "testTerminatorName",
       description: "Test Terminator Description",
-      category: "terminator",
+      category: "Terminator",
       sequence: "ATGC",
       controlBy: [],
       controlTo: [],
@@ -118,7 +118,7 @@ describe("PartAddManager Component", () => {
     // Act
     await userEvent.click(screen.getByTestId("part-add-button"));
     fireEvent.click(screen.getByText("Select category"));
-    await userEvent.click(within(await screen.findByRole("listbox")).getByText("protein"));
+    await userEvent.click(within(await screen.findByRole("listbox")).getByText("Protein"));
 
     // Assert
     waitFor(() => {
@@ -137,7 +137,7 @@ describe("PartAddManager Component", () => {
     // Act
     await userEvent.click(screen.getByTestId("part-add-button"));
     fireEvent.click(screen.getByText("Select category"));
-    await userEvent.click(within(await screen.findByRole("listbox")).getByText("promoter"));
+    await userEvent.click(within(await screen.findByRole("listbox")).getByText("Promoter"));
 
     // Assert
     waitFor(() => {

@@ -24,7 +24,7 @@ vi.mock("@/components/circuit/parts/parts-context", () => {
         testPromoterName: {
           name: "testPromoterName",
           description: "Test Promoter Description",
-          category: "promoter",
+          category: "Promoter",
           controlBy: [],
           controlTo: [],
         },
@@ -33,7 +33,7 @@ vi.mock("@/components/circuit/parts/parts-context", () => {
         testProteinName: {
           name: "testProteinName",
           description: "Test Protein Description",
-          category: "protein",
+          category: "Protein",
           controlBy: [],
           controlTo: [],
         },
@@ -42,7 +42,7 @@ vi.mock("@/components/circuit/parts/parts-context", () => {
         testTerminatorName: {
           name: "testTerminatorName",
           description: "Test Terminator Description",
-          category: "terminator",
+          category: "Terminator",
           controlBy: [],
           controlTo: [],
         },
@@ -53,7 +53,7 @@ vi.mock("@/components/circuit/parts/parts-context", () => {
 
 describe("ChildSelectModal", () => {
   const defaultId = "test-id";
-  const defaultData = { category: "promoter", name: "test-name" };
+  const defaultData = { category: "Promoter", name: "test-name" };
 
   const renderComponent = () => {
     render(<ChildSelectModal id={defaultId} data={defaultData} />);

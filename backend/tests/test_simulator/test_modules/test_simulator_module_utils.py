@@ -21,6 +21,6 @@ def test_node_id2data(test_circuit, child_ids):
 def test_specific_category_node_ids(test_circuit, protein_ids):
     nodes = ReactFlowObject(**test_circuit).nodes
 
-    protein_node_ids = get_specific_category_node_ids(nodes, category='protein')
+    protein_node_ids = get_specific_category_node_ids(nodes, category='Protein')
 
     assert set(protein_node_ids) == set(protein_ids)
