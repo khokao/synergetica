@@ -117,12 +117,12 @@ export const PartsProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     }
   };
 
-  const promoterParts = Object.fromEntries(Object.entries(parts).filter(([_, part]) => part.category === "promoter"));
+  const promoterParts = Object.fromEntries(Object.entries(parts).filter(([_, part]) => part.category === "Promoter"));
 
-  const proteinParts = Object.fromEntries(Object.entries(parts).filter(([_, part]) => part.category === "protein"));
+  const proteinParts = Object.fromEntries(Object.entries(parts).filter(([_, part]) => part.category === "Protein"));
 
   const terminatorParts = Object.fromEntries(
-    Object.entries(parts).filter(([_, part]) => part.category === "terminator"),
+    Object.entries(parts).filter(([_, part]) => part.category === "Terminator"),
   );
 
   return (

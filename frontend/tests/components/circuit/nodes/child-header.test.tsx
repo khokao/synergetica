@@ -5,7 +5,7 @@ import { describe, expect, it } from "vitest";
 describe("ChildHeader Component", () => {
   it("displays the correct text and styles for promoter category", () => {
     // Arrange
-    const data = { category: "promoter" };
+    const data = { category: "Promoter" };
 
     // Act
     render(<ChildHeader data={data} />);
@@ -19,7 +19,7 @@ describe("ChildHeader Component", () => {
 
   it("displays the correct text and styles for protein category", () => {
     // Arrange
-    const data = { category: "protein" };
+    const data = { category: "Protein" };
 
     // Act
     render(<ChildHeader data={data} />);
@@ -33,7 +33,7 @@ describe("ChildHeader Component", () => {
 
   it("displays the correct text and styles for terminator category", () => {
     // Arrange
-    const data = { category: "terminator" };
+    const data = { category: "Terminator" };
 
     // Act
     render(<ChildHeader data={data} />);

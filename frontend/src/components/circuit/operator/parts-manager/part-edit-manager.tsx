@@ -118,7 +118,7 @@ const PartEditFormDialog = ({ selectedPartName, setSelectedPartName }) => {
                 form={form}
               />
 
-              {form.getValues("category") === "protein" && (
+              {form.getValues("category") === "Protein" && (
                 <>
                   <Separator />
                   <MetaFields form={form} />

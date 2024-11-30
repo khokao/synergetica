@@ -39,7 +39,7 @@ const defaultParts = {
   testPromoterName: {
     name: "testPromoterName",
     description: "Test Promoter Description",
-    category: "promoter",
+    category: "Promoter",
     sequence: "ATGC",
     controlBy: [],
     controlTo: [],
@@ -72,7 +72,7 @@ describe("PartsImportExportManager Component", () => {
       testTerminatorName: {
         name: "testTerminatorName",
         description: "Test Terminator Description",
-        category: "terminator",
+        category: "Terminator",
         sequence: "ATGC",
         controlBy: [],
         controlTo: [],
@@ -108,7 +108,7 @@ describe("PartsImportExportManager Component", () => {
       testTerminatorName: {
         name: "testTerminatorName",
         description: "Test Terminator Description",
-        category: "terminator",
+        category: "Terminator",
         sequence: "ATGC",
         controlBy: [],
         controlTo: [],

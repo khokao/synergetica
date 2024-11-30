@@ -1,13 +1,13 @@
 {
   "name": "IcaRA",
   "description": "Repressor Protein of PlcaRA",
-  "category": "protein",
+  "category": "Protein",
   "sequence": "gtgaaagacaaaattatcgataacgccatcaccctgtttagcgaaaaaggttatgacggcaccaccctggatgatattgcaaaaagcgtgaacatcaaaaaagccagcctgtattatcactttgatagcaaaaaaagcatctacgagcagagcgttaaatgctgtttcgattatctgaacaacatcatcatgatgaaccagaacaaaagcaactatagcatcgatgccctgtatcagtttctgtttgagttcatcttcgatatcgaggaacgctatattcgtatgtatgttcagctgagcaacacaccggaagaattttcaggtaacatttatggccagatccaggatctgaatcagagcctgagcaaagaaatcgccaaattctatgacgaaagcaaaatcaaaatgaccaaagaggacttccagaatctgattctgctgtttctggaaagctggtatctgaaagccagctttagccagaaatttggtgcagttgaagaaagcaaaagccagtttaaagatgaggtttatagcctgctgaacatctttctgaagaaataa",
   "controlBy": [],
   "controlTo": [
     {
       "name": "PlcaRA",
-      "type": "repression"
+      "type": "Repression"
     }
   ],
   "meta": {

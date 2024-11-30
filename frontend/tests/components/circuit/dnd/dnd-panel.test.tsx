@@ -24,9 +24,9 @@ describe("DnDPanel", () => {
     render(<DnDPanel />);
 
     // Act
-    userEvent.hover(screen.getByTestId("icon-promoter"));
-    userEvent.hover(screen.getByTestId("icon-protein"));
-    userEvent.hover(screen.getByTestId("icon-terminator"));
+    userEvent.hover(screen.getByTestId("icon-Promoter"));
+    userEvent.hover(screen.getByTestId("icon-Protein"));
+    userEvent.hover(screen.getByTestId("icon-Terminator"));
     vi.advanceTimersByTime(500);
 
     // Assert
@@ -42,9 +42,9 @@ describe("DnDPanel", () => {
     render(<DnDPanel />);
 
     // Act
-    fireEvent.dragStart(screen.getByTestId("icon-promoter"));
+    fireEvent.dragStart(screen.getByTestId("icon-Promoter"));
 
     // Assert
-    expect(setDnDCategoryMock).toHaveBeenCalledWith("promoter");
+    expect(setDnDCategoryMock).toHaveBeenCalledWith("Promoter");
   });
 });

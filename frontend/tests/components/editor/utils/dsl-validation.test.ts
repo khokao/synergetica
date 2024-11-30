@@ -9,11 +9,11 @@ vi.mock("@/components/circuit/parts/parts-context", () => {
         testPromoterName: {
           name: "testPromoterName",
           description: "Test Promoter Description",
-          category: "promoter",
+          category: "Promoter",
           controlBy: [
             {
               name: "testProteinName",
-              type: "repression",
+              type: "Repression",
             },
           ],
           controlTo: [],
@@ -23,12 +23,12 @@ vi.mock("@/components/circuit/parts/parts-context", () => {
         testProteinName: {
           name: "testProteinName",
           description: "Test Protein Description",
-          category: "protein",
+          category: "Protein",
           controlBy: [],
           controlTo: [
             {
               name: "testPromoterName",
-              type: "repression",
+              type: "Repression",
             },
           ],
         },
@@ -37,7 +37,7 @@ vi.mock("@/components/circuit/parts/parts-context", () => {
         testTerminatorName: {
           name: "testTerminatorName",
           description: "Test Terminator Description",
-          category: "terminator",
+          category: "Terminator",
           controlBy: [],
           controlTo: [],
         },
@@ -53,11 +53,11 @@ describe("validateDslContent", () => {
     // Arrange
     const validContent = `
 - chain:
-  - type: promoter
+  - type: Promoter
     name: testPromoterName
-  - type: protein
+  - type: Protein
     name: testProteinName
-  - type: terminator
+  - type: Terminator
     name: testTerminatorName
 `;
 
@@ -74,9 +74,9 @@ describe("validateDslContent", () => {
     // Arrange
     const invalidContent = `
 - chain:
-  - type: protein
+  - type: Protein
     name: testProteinName
-  - type: terminator
+  - type: Terminator
     name: testTerminatorName
 `;
 
@@ -106,11 +106,11 @@ describe("validateDslContent", () => {
     // Arrange
     const invalidContent = `
 - chain:
-  - type: promoter
+  - type: Promoter
     name: invalidPromoter
-  - type: protein
+  - type: Protein
     name: invalidProtein
-  - type: terminator
+  - type: Terminator
     name: invalidTerminator
 `;
 
@@ -127,12 +127,12 @@ describe("validateDslContent", () => {
     // Arrange
     const invalidContent = `
 - chain:
-  - type: promoter
+  - type: Promoter
     name: testPromoterName
     extra: notAllowed
-  - type: protein
+  - type: Protein
     name: testProteinName
-  - type: terminator
+  - type: Terminator
     name: testTerminatorName
 `;
 
@@ -148,7 +148,7 @@ describe("validateDslContent", () => {
     // Arrange
     const invalidContent = `
 - notChain:
-  - type: promoter
+  - type: Promoter
     name: testPromoterName
 `;
 
@@ -180,18 +180,18 @@ describe("validateDslContent", () => {
     // Arrange
     const validContent = `
 - chain:
-    - type: promoter
+    - type: Promoter
       name: testPromoterName
-    - type: protein
+    - type: Protein
       name: testProteinName
-    - type: terminator
+    - type: Terminator
       name: testTerminatorName
 - chain:
-    - type: promoter
+    - type: Promoter
       name: testPromoterName
-    - type: protein
+    - type: Protein
       name: testProteinName
-    - type: terminator
+    - type: Terminator
       name: testTerminatorName
 `;
 

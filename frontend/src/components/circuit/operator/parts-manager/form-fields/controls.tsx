@@ -56,8 +56,8 @@ export const ControlFields = ({ label, description, fieldName, form }) => {
                         <SelectValue placeholder="Select type" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="repression">repression</SelectItem>
-                        <SelectItem value="activation">activation</SelectItem>
+                        <SelectItem value="Repression">Repression</SelectItem>
+                        <SelectItem value="Activation">Activation</SelectItem>
                       </SelectContent>
                     </Select>
                   </FormControl>

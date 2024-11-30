@@ -6,8 +6,8 @@ import numpy as np
 from ..api.schemas import ReactFlowChildNodeData, ReactFlowEdge
 
 CONTROL_TYPE_STR2INT = {
-    'repression': -1,
-    'activation': 1,
+    'Repression': -1,
+    'Activation': 1,
 }
 
 
@@ -74,11 +74,11 @@ def extract_promoter_controlling_proteins(
     """
     promoter_controlling_proteins = defaultdict(list)
     for i, connected_components in enumerate(all_connected_components):
-        if node_idx2category[i] == 'promoter':
+        if node_idx2category[i] == 'Promoter':
             promoter_node_id = node_idx2id[i]
 
             for j in connected_components:
-                if node_idx2category[j] == 'protein':
+                if node_idx2category[j] == 'Protein':
                     protein_node_id = node_idx2id[j]
 
                     promoter_controlling_proteins[promoter_node_id].append(protein_node_id)

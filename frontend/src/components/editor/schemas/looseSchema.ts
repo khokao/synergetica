@@ -1,15 +1,15 @@
 import { z } from "zod";
 
 const promoterSchema = z.object({
-  type: z.literal("promoter"),
+  type: z.literal("Promoter"),
 });
 
 const proteinSchema = z.object({
-  type: z.literal("protein"),
+  type: z.literal("Protein"),
 });
 
 const terminatorSchema = z.object({
-  type: z.literal("terminator"),
+  type: z.literal("Terminator"),
 });
 
 const chainItemSchema = z.discriminatedUnion("type", [promoterSchema, proteinSchema, terminatorSchema]);

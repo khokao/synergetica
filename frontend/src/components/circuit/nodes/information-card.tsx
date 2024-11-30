@@ -5,14 +5,14 @@ import { RiText } from "@remixicon/react";
 import { MoveRight } from "lucide-react";
 
 const CATEGORY_COLORS = {
-  promoter: "text-blue-800",
-  protein: "text-green-800",
-  terminator: "text-red-800",
+  Promoter: "text-blue-800",
+  Protein: "text-green-800",
+  Terminator: "text-red-800",
 };
 
 const CONTROL_TYPE_ICONS = {
-  repression: <RiText className="rotate-90" />,
-  activation: <MoveRight />,
+  Repression: <RiText className="rotate-90" />,
+  Activation: <MoveRight />,
 };
 
 const renderControlIcon = (type) => CONTROL_TYPE_ICONS[type];

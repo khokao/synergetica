@@ -52,21 +52,21 @@ export const DnDPanel = () => {
           label="Promoter"
           icon={<CornerUpRight className="text-blue-800" />}
           color="bg-blue-200"
-          category="promoter"
+          category="Promoter"
           onDragStart={handleDragStart}
         />
         <IconTooltip
           label="Protein"
           icon={<RectangleHorizontal className="text-green-800" />}
           color="bg-green-200"
-          category="protein"
+          category="Protein"
           onDragStart={handleDragStart}
         />
         <IconTooltip
           label="Terminator"
           icon={<RiText className="text-red-800" />}
           color="bg-red-200"
-          category="terminator"
+          category="Terminator"
           onDragStart={handleDragStart}
         />
       </div>

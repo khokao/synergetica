@@ -5,11 +5,11 @@ const parts = {
   testPromoterName: {
     name: "testPromoterName",
     description: "Test Promoter Description",
-    category: "promoter",
+    category: "Promoter",
     controlBy: [
       {
         name: "testProteinName",
-        type: "repression",
+        type: "Repression",
       },
     ],
     controlTo: [],
@@ -17,19 +17,19 @@ const parts = {
   testProteinName: {
     name: "testProteinName",
     description: "Test Protein Description",
-    category: "protein",
+    category: "Protein",
     controlBy: [],
     controlTo: [
       {
         name: "testPromoterName",
-        type: "repression",
+        type: "Repression",
       },
     ],
   },
   testTerminatorName: {
     name: "testTerminatorName",
     description: "Test Terminator Description",
-    category: "terminator",
+    category: "Terminator",
     controlBy: [],
     controlTo: [],
   },
@@ -58,9 +58,9 @@ describe("dslToReactflow", () => {
   it("should generate correct nodes and edges for valid DSL content", () => {
     const content = `
 - chain:
-  - type: promoter
-  - type: protein
-  - type: terminator
+  - type: Promoter
+  - type: Protein
+  - type: Terminator
 `;
 
     // Act
@@ -76,13 +76,13 @@ describe("dslToReactflow", () => {
     // Arrange
     const content = `
 - chain:
-  - type: promoter
-  - type: protein
-  - type: terminator
+  - type: Promoter
+  - type: Protein
+  - type: Terminator
 - chain:
-  - type: promoter
-  - type: protein
-  - type: terminator
+  - type: Promoter
+  - type: Protein
+  - type: Terminator
 `;
 
     // Act
@@ -98,9 +98,9 @@ describe("dslToReactflow", () => {
     // Arrange
     const content = `
 - chain:
-  - type: promoter
-  - type: protein
-  - type: terminator
+  - type: Promoter
+  - type: Protein
+  - type: Terminator
 `;
 
     // Act
@@ -124,7 +124,7 @@ describe("dslToReactflow", () => {
     // Arrange
     const content = `
 - chain:
-  - type: promoter
+  - type: Promoter
 `;
 
     // Act
@@ -143,9 +143,9 @@ describe("dslToReactflow", () => {
     // Arrange
     const content = `
 - chain:
-  - type: promoter
-  - type: protein
-  - type: terminator
+  - type: Promoter
+  - type: Protein
+  - type: Terminator
 `;
 
     // Act
@@ -155,9 +155,9 @@ describe("dslToReactflow", () => {
     expect(result).not.toBeNull();
     const nodes = result?.nodes;
     if (nodes) {
-      const promoterNode = nodes.find((node) => node.data.category === "promoter");
-      const proteinNode = nodes.find((node) => node.data.category === "protein");
-      const terminatorNode = nodes.find((node) => node.data.category === "terminator");
+      const promoterNode = nodes.find((node) => node.data.category === "Promoter");
+      const proteinNode = nodes.find((node) => node.data.category === "Protein");
+      const terminatorNode = nodes.find((node) => node.data.category === "Terminator");
 
       expect(promoterNode?.data.leftHandleConnected).toBe(false);
       expect(promoterNode?.data.rightHandleConnected).toBe(true);
@@ -172,9 +172,9 @@ describe("dslToReactflow", () => {
     // Arrange
     const content = `
 - chain:
-  - type: promoter
-  - type: protein
-  - type: terminator
+  - type: Promoter
+  - type: Protein
+  - type: Terminator
 `;
 
     // Act

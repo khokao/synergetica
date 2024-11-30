@@ -9,15 +9,15 @@ vi.mock("@/components/circuit/parts/parts-context", () => {
         testPromoterName: {
           name: "testPromoterName",
           description: "Test Promoter Description",
-          category: "promoter",
+          category: "Promoter",
           controlBy: [
             {
               name: "testProteinName",
-              type: "repression",
+              type: "Repression",
             },
             {
               name: "testProteinName2",
-              type: "activation",
+              type: "Activation",
             },
           ],
           controlTo: [],
@@ -25,31 +25,31 @@ vi.mock("@/components/circuit/parts/parts-context", () => {
         testProteinName: {
           name: "testProteinName",
           description: "Test Protein Description",
-          category: "protein",
+          category: "Protein",
           controlBy: [],
           controlTo: [
             {
               name: "testPromoterName",
-              type: "repression",
+              type: "Repression",
             },
           ],
         },
         testProteinName2: {
           name: "testProteinName2",
           description: "Test Protein2 Description",
-          category: "protein",
+          category: "Protein",
           controlBy: [],
           controlTo: [
             {
               name: "testPromoterName",
-              type: "activation",
+              type: "Activation",
             },
           ],
         },
         testTerminatorName: {
           name: "testTerminatorName",
           description: "Test Terminator Description",
-          category: "terminator",
+          category: "Terminator",
           controlBy: [],
           controlTo: [],
         },
@@ -64,7 +64,7 @@ describe("InformationCard", () => {
     const data = {
       name: "testPartName",
       description: "Test Part Description",
-      category: "promoter",
+      category: "Promoter",
       controlBy: [],
       controlTo: [],
     };
@@ -82,9 +82,9 @@ describe("InformationCard", () => {
     const data = {
       name: "testPromoterName",
       description: "Test Promoter Description",
-      category: "promoter",
-      controlBy: [{ name: "testProteinName", type: "repression" }],
-      controlTo: [{ name: "testProteinName2", type: "activation" }],
+      category: "Promoter",
+      controlBy: [{ name: "testProteinName", type: "Repression" }],
+      controlTo: [{ name: "testProteinName2", type: "Activation" }],
     };
 
     // Act

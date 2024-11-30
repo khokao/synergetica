@@ -20,7 +20,7 @@ export const createRepressionEdge = (sourceId: string, targetId: string): Edge =
   source: sourceId,
   target: targetId,
   style: { strokeWidth: 4, stroke: REPRESSION_COLOR },
-  markerEnd: "repression",
+  markerEnd: "Repression",
   zIndex: 0,
   selectable: false,
 });
@@ -31,7 +31,7 @@ export const createActivationEdge = (sourceId: string, targetId: string): Edge =
   source: sourceId,
   target: targetId,
   style: { strokeWidth: 4, stroke: ACTIVATION_COLOR },
-  markerEnd: "activation",
+  markerEnd: "Activation",
   zIndex: 0,
   selectable: false,
 });
