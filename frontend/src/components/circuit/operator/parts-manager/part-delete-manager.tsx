@@ -55,7 +55,12 @@ export const PartDeleteManager = () => {
         <Tooltip>
           <TooltipTrigger asChild>
             <PopoverTrigger asChild>
-              <Button variant="ghost" size="icon" className="p-0.5 w-7 h-7 hover:bg-black/5">
+              <Button
+                variant="ghost"
+                size="icon"
+                className="p-0.5 w-7 h-7 hover:bg-black/5"
+                data-testid="part-delete-button"
+              >
                 <CircleMinus className="w-5 h-5 text-gray-500" />
               </Button>
             </PopoverTrigger>
