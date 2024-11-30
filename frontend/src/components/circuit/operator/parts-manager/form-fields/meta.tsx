@@ -22,7 +22,7 @@ export const MetaFields = ({ form }) => {
     {
       label: "Ymin",
       description: "Ymin description",
-      fieldName: `${fieldName}.Pmax`,
+      fieldName: `${fieldName}.Ymin`,
       placeholder: "",
     },
     {
