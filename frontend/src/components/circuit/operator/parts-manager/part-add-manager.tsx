@@ -31,7 +31,10 @@ const PartAddForm = ({ closeDialog }) => {
 
   const uniqueNamePartSchema = partSchema.merge(
     z.object({
-      name: z.string().refine((name) => !parts[name], { message: "Part name must be unique." }),
+      name: z
+        .string()
+        .min(1, { message: "Name string cannot be empty" })
+        .refine((name) => !parts[name], { message: "Part name must be unique." }),
     }),
   );
 
@@ -77,9 +80,9 @@ const PartAddForm = ({ closeDialog }) => {
             <Separator />
 
             <InputField
-              label="description"
+              label="Description"
               description="Description of the part (optional)"
-              fieldName=""
+              fieldName="description"
               form={form}
               type="text"
               placeholder="New part description."
@@ -134,10 +137,10 @@ const PartAddForm = ({ closeDialog }) => {
           </form>
         </ScrollArea>
         <DialogFooter>
-          <Button variant="secondary" onClick={() => closeDialog()}>
+          <Button variant="secondary" onClick={() => closeDialog()} data-testid="part-add-cancel-button">
             Cancel
           </Button>
-          <Button variant="default" onClick={form.handleSubmit(handleSave)}>
+          <Button variant="default" onClick={form.handleSubmit(handleSave)} data-testid="part-add-save-button">
             Save
           </Button>
         </DialogFooter>
@@ -155,7 +158,12 @@ export const PartAddManager = () => {
         <Tooltip>
           <TooltipTrigger asChild>
             <DialogTrigger asChild>
-              <Button variant="ghost" size="icon" className="p-0.5 w-7 h-7 hover:bg-black/5">
+              <Button
+                variant="ghost"
+                size="icon"
+                className="p-0.5 w-7 h-7 hover:bg-black/5"
+                data-testid="part-add-button"
+              >
                 <CirclePlus className="w-5 h-5 text-gray-500" />
               </Button>
             </DialogTrigger>
