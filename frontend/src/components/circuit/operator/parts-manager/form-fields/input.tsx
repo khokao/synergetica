@@ -10,14 +10,13 @@ export const InputField = ({ label, description, fieldName, form, type, placehol
         <FormLabel>{label}</FormLabel>
         <FormDescription>{description}</FormDescription>
         <FormControl>
-          <form noValidate>
-            <Input
-              type={type}
-              placeholder={placeholder}
-              className="[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-              {...field}
-            />
-          </form>
+          <Input
+            type={type}
+            placeholder={placeholder}
+            className="[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+            {...field}
+            value={field.value ?? ""}
+          />
         </FormControl>
         <FormMessage />
       </FormItem>
