@@ -1,19 +1,77 @@
-import { strictCircuitSchema } from "@/components/editor/schemas/strictSchema";
-import { describe, expect, it } from "vitest";
+import { useStrictSchema } from "@/components/editor/schemas/strictSchema";
+import { describe, expect, it, vi } from "vitest";
 
-const validPromoterName = "PameR";
-const validProteinName = "AmeR";
-const validTerminatorName = "L3S3P31";
+vi.mock("@/components/circuit/parts/parts-context", () => {
+  return {
+    useParts: () => ({
+      promoterParts: {
+        testPromoterName: {
+          name: "testPromoterName",
+          description: "Test Promoter Description",
+          category: "promoter",
+          controlBy: [
+            {
+              name: "testProteinName",
+              type: "repression",
+            },
+            {
+              name: "testProteinName2",
+              type: "activation",
+            },
+          ],
+          controlTo: [],
+        },
+      },
+      proteinParts: {
+        testProteinName: {
+          name: "testProteinName",
+          description: "Test Protein Description",
+          category: "protein",
+          controlBy: [],
+          controlTo: [
+            {
+              name: "testPromoterName",
+              type: "repression",
+            },
+          ],
+        },
+        testProteinName2: {
+          name: "testProteinName2",
+          description: "Test Protein2 Description",
+          category: "protein",
+          controlBy: [],
+          controlTo: [
+            {
+              name: "testPromoterName",
+              type: "activation",
+            },
+          ],
+        },
+      },
+      terminatorParts: {
+        testTerminatorName: {
+          name: "testTerminatorName",
+          description: "Test Terminator Description",
+          category: "terminator",
+          controlBy: [],
+          controlTo: [],
+        },
+      },
+    }),
+  };
+});
 
 describe("strictCircuitSchema", () => {
+  const { strictCircuitSchema } = useStrictSchema();
+
   it("should successfully parse a valid circuit with promoter(s), protein(s), and terminator", () => {
     // Arrange
     const validCircuit = [
       {
         chain: [
-          { type: "promoter", name: validPromoterName },
-          { type: "protein", name: validProteinName },
-          { type: "terminator", name: validTerminatorName },
+          { type: "promoter", name: "testPromoterName" },
+          { type: "protein", name: "testProteinName" },
+          { type: "terminator", name: "testTerminatorName" },
         ],
       },
     ];
@@ -30,8 +88,8 @@ describe("strictCircuitSchema", () => {
     const invalidCircuit = [
       {
         chain: [
-          { type: "protein", name: validProteinName },
-          { type: "terminator", name: validTerminatorName },
+          { type: "protein", name: "testProteinName" },
+          { type: "terminator", name: "testTerminatorName" },
         ],
       },
     ];
@@ -48,8 +106,8 @@ describe("strictCircuitSchema", () => {
     const invalidCircuit = [
       {
         chain: [
-          { type: "promoter", name: validPromoterName },
-          { type: "protein", name: validProteinName },
+          { type: "promoter", name: "testPromoterName" },
+          { type: "protein", name: "testProteinName" },
         ],
       },
     ];
@@ -66,10 +124,10 @@ describe("strictCircuitSchema", () => {
     const invalidCircuit = [
       {
         chain: [
-          { type: "promoter", name: validPromoterName },
-          { type: "protein", name: validProteinName },
-          { type: "promoter", name: validPromoterName },
-          { type: "terminator", name: validTerminatorName },
+          { type: "promoter", name: "testPromoterName" },
+          { type: "protein", name: "testProteinName" },
+          { type: "promoter", name: "testPromoterName" },
+          { type: "terminator", name: "testTerminatorName" },
         ],
       },
     ];
@@ -86,9 +144,9 @@ describe("strictCircuitSchema", () => {
     const invalidCircuit = [
       {
         chain: [
-          { type: "promoter", name: validPromoterName },
-          { type: "terminator", name: validTerminatorName },
-          { type: "protein", name: validProteinName },
+          { type: "promoter", name: "testPromoterName" },
+          { type: "terminator", name: "testTerminatorName" },
+          { type: "protein", name: "testProteinName" },
         ],
       },
     ];
@@ -105,10 +163,10 @@ describe("strictCircuitSchema", () => {
     const invalidCircuit = [
       {
         chain: [
-          { type: "promoter", name: validPromoterName },
-          { type: "protein", name: validProteinName },
-          { type: "terminator", name: validTerminatorName },
-          { type: "protein", name: validProteinName },
+          { type: "promoter", name: "testPromoterName" },
+          { type: "protein", name: "testProteinName" },
+          { type: "terminator", name: "testTerminatorName" },
+          { type: "protein", name: "testProteinName" },
         ],
       },
     ];
@@ -126,8 +184,8 @@ describe("strictCircuitSchema", () => {
       {
         chain: [
           { type: "promoter", name: "invalidPromoter" },
-          { type: "protein", name: validProteinName },
-          { type: "terminator", name: validTerminatorName },
+          { type: "protein", name: "testProteinName" },
+          { type: "terminator", name: "testTerminatorName" },
         ],
       },
     ];
@@ -144,9 +202,9 @@ describe("strictCircuitSchema", () => {
     const invalidCircuit = [
       {
         chain: [
-          { type: "promoter", name: validPromoterName },
-          { type: "protein", name: validProteinName },
-          { type: "terminator", name: validTerminatorName },
+          { type: "promoter", name: "testPromoterName" },
+          { type: "protein", name: "testProteinName" },
+          { type: "terminator", name: "testTerminatorName" },
         ],
         extraProperty: "not allowed",
       },
@@ -167,9 +225,9 @@ describe("strictCircuitSchema", () => {
     const invalidCircuit = [
       {
         chain: [
-          { type: "promoter", name: validPromoterName, extra: "not allowed" },
-          { type: "protein", name: validProteinName },
-          { type: "terminator", name: validTerminatorName },
+          { type: "promoter", name: "testPromoterName", extra: "not allowed" },
+          { type: "protein", name: "testProteinName" },
+          { type: "terminator", name: "testTerminatorName" },
         ],
       },
     ];

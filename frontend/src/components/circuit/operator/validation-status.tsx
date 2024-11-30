@@ -25,13 +25,13 @@ export const ValidationStatus: FC = () => {
 
   return (
     <TooltipProvider>
-      <div className="flex bg-gray-100 rounded-xl shadow-lg border border-gray-300" data-testid="validation-status">
+      <div className="flex bg-gray-100 rounded-lg shadow-lg border border-gray-300 p-0" data-testid="validation-status">
         <Tooltip>
           <TooltipTrigger asChild>
             <Button
               variant="ghost"
               size="icon"
-              className="w-8 h-8 p-0 hover:bg-black/5"
+              className="p-0 w-8 h-8 hover:bg-black/5"
               onClick={handleClick}
               aria-label="validation status"
               data-testid="validation-status-button"

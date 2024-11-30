@@ -3,6 +3,7 @@
 import { Circuit } from "@/components/circuit/circuit";
 import { DnDProvider } from "@/components/circuit/dnd/dnd-context";
 import { usePanelControls } from "@/components/circuit/hooks/use-panel-controls";
+import { PartsProvider } from "@/components/circuit/parts/parts-context";
 import { PanelProvider } from "@/components/circuit/resizable-panel/resizable-panel-context";
 import { CircuitEditor } from "@/components/editor/editor";
 import { EditorProvider } from "@/components/editor/editor-context";
@@ -24,37 +25,39 @@ export const Studio = () => {
             <ProteinParameterProvider>
               <ResizablePanelGroup direction="horizontal" className="h-full">
                 <EditorProvider>
-                  <ResizablePanel
-                    defaultSize={0}
-                    collapsedSize={0}
-                    collapsible
-                    minSize={20.0}
-                    maxSize={30.0}
-                    // @ts-ignore
-                    ref={panelRefs.left}
-                  >
-                    <CircuitEditor />
-                  </ResizablePanel>
-                  <ResizableHandle withHandle />
-                  <ResizablePanel defaultSize={100}>
-                    <DnDProvider>
-                      <Circuit />
-                    </DnDProvider>
-                  </ResizablePanel>
-                  <ResizableHandle withHandle />
-                  <ResizablePanel
-                    defaultSize={0}
-                    collapsedSize={0}
-                    collapsible
-                    minSize={20.0}
-                    maxSize={30.0}
-                    // @ts-ignore
-                    ref={panelRefs.right}
-                  >
-                    <SimulatorProvider>
-                      <Simulation />
-                    </SimulatorProvider>
-                  </ResizablePanel>
+                  <PartsProvider>
+                    <ResizablePanel
+                      defaultSize={0}
+                      collapsedSize={0}
+                      collapsible
+                      minSize={20.0}
+                      maxSize={30.0}
+                      // @ts-ignore
+                      ref={panelRefs.left}
+                    >
+                      <CircuitEditor />
+                    </ResizablePanel>
+                    <ResizableHandle withHandle />
+                    <ResizablePanel defaultSize={100}>
+                      <DnDProvider>
+                        <Circuit />
+                      </DnDProvider>
+                    </ResizablePanel>
+                    <ResizableHandle withHandle />
+                    <ResizablePanel
+                      defaultSize={0}
+                      collapsedSize={0}
+                      collapsible
+                      minSize={20.0}
+                      maxSize={30.0}
+                      // @ts-ignore
+                      ref={panelRefs.right}
+                    >
+                      <SimulatorProvider>
+                        <Simulation />
+                      </SimulatorProvider>
+                    </ResizablePanel>
+                  </PartsProvider>
                 </EditorProvider>
               </ResizablePanelGroup>
             </ProteinParameterProvider>

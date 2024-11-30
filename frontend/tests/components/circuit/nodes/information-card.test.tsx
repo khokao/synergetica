@@ -2,20 +2,68 @@ import { InformationCard } from "@/components/circuit/nodes/information-card";
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
-vi.mock("@/components/circuit/parts/constants", () => ({
-  ALL_PARTS: {
-    "Part 1 Name": { name: "Part 1 Name", description: "Part 1 Description", category: "protein" },
-    "Part 2 Name": { name: "Part 2 Name", description: "Part 2 Description", category: "promoter" },
-    "Part 3 Name": { name: "Part 3 Name", description: "Part 3 Description", category: "promoter" },
-  },
-}));
+vi.mock("@/components/circuit/parts/parts-context", () => {
+  return {
+    useParts: () => ({
+      parts: {
+        testPromoterName: {
+          name: "testPromoterName",
+          description: "Test Promoter Description",
+          category: "promoter",
+          controlBy: [
+            {
+              name: "testProteinName",
+              type: "repression",
+            },
+            {
+              name: "testProteinName2",
+              type: "activation",
+            },
+          ],
+          controlTo: [],
+        },
+        testProteinName: {
+          name: "testProteinName",
+          description: "Test Protein Description",
+          category: "protein",
+          controlBy: [],
+          controlTo: [
+            {
+              name: "testPromoterName",
+              type: "repression",
+            },
+          ],
+        },
+        testProteinName2: {
+          name: "testProteinName2",
+          description: "Test Protein2 Description",
+          category: "protein",
+          controlBy: [],
+          controlTo: [
+            {
+              name: "testPromoterName",
+              type: "activation",
+            },
+          ],
+        },
+        testTerminatorName: {
+          name: "testTerminatorName",
+          description: "Test Terminator Description",
+          category: "terminator",
+          controlBy: [],
+          controlTo: [],
+        },
+      },
+    }),
+  };
+});
 
 describe("InformationCard", () => {
   it("renders the nodePartsName and description", () => {
     // Arrange
     const data = {
-      name: "Test Name",
-      description: "This is a test description",
+      name: "testPartName",
+      description: "Test Part Description",
       category: "promoter",
       controlBy: [],
       controlTo: [],
@@ -25,25 +73,25 @@ describe("InformationCard", () => {
     render(<InformationCard data={data} />);
 
     // Assert
-    expect(screen.getByText("Test Name")).toBeInTheDocument();
-    expect(screen.getByText("This is a test description")).toBeInTheDocument();
+    expect(screen.getByText("testPartName")).toBeInTheDocument();
+    expect(screen.getByText("Test Part Description")).toBeInTheDocument();
   });
 
   it("renders control buttons with correct parts names and icons", () => {
     // Arrange
     const data = {
-      name: "Part 1 Name",
-      description: "This is a test description",
-      category: "protein",
-      controlBy: [{ name: "Part 2 Name", type: "repression" }],
-      controlTo: [{ name: "Part 3 Name", type: "activation" }],
+      name: "testPromoterName",
+      description: "Test Promoter Description",
+      category: "promoter",
+      controlBy: [{ name: "testProteinName", type: "repression" }],
+      controlTo: [{ name: "testProteinName2", type: "activation" }],
     };
 
     // Act
     render(<InformationCard data={data} />);
 
     // Assert
-    expect(screen.getByText("Part 2 Name")).toBeInTheDocument();
-    expect(screen.getByText("Part 3 Name")).toBeInTheDocument();
+    expect(screen.getByText("testProteinName")).toBeInTheDocument();
+    expect(screen.getByText("testProteinName2")).toBeInTheDocument();
   });
 });

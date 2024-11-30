@@ -18,7 +18,8 @@ export const useUpdateAnnotationEdges = () => {
       draft.length = 0;
       draft.push(...customEdges);
 
-      const edgeExists = (source, target) => draft.some((e) => e.source === source && e.target === target);
+      const edgeExists = (source, target) =>
+        draft.some((e) => e.type === "annotation" && e.source === source && e.target === target);
 
       for (const n of debouncedNodes) {
         if (n.type !== "child") continue;

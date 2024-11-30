@@ -1,4 +1,4 @@
-import { PartSchema } from "@/components/circuit/parts/schema";
+import { partsCollectionSchema } from "@/components/circuit/parts/schema";
 
 import PameRData from "@/components/circuit/parts/promoter/PameR.json";
 import PamtRData from "@/components/circuit/parts/promoter/PamtR.json";
@@ -28,70 +28,32 @@ import SrpRData from "@/components/circuit/parts/protein/SrpR.json";
 
 import L3S3P31Data from "@/components/circuit/parts/terminator/L3S3P31.json";
 
-const PameR = PartSchema.parse(PameRData);
-const PamtR = PartSchema.parse(PamtRData);
-const Pbetl = PartSchema.parse(PbetlData);
-const Pbm3r1 = PartSchema.parse(Pbm3r1Data);
-const PhyllR = PartSchema.parse(PhyllRData);
-const PlcaRA = PartSchema.parse(PlcaRAData);
-const PlitR = PartSchema.parse(PlitRData);
-const PlmrA = PartSchema.parse(PlmrAData);
-const PphlF = PartSchema.parse(PphlFData);
-const PpsrA = PartSchema.parse(PpsrAData);
-const PqacR = PartSchema.parse(PqacRData);
-const PsrpR = PartSchema.parse(PsrpRData);
+export const initialParts = partsCollectionSchema.parse({
+  PameR: PameRData,
+  PamtR: PamtRData,
+  Pbetl: PbetlData,
+  Pbm3r1: Pbm3r1Data,
+  PhyllR: PhyllRData,
+  PlcaRA: PlcaRAData,
+  PlitR: PlitRData,
+  PlmrA: PlmrAData,
+  PphlF: PphlFData,
+  PpsrA: PpsrAData,
+  PqacR: PqacRData,
+  PsrpR: PsrpRData,
 
-const AmeR = PartSchema.parse(AmeRData);
-const AmtR = PartSchema.parse(AmtRData);
-const BM3R1 = PartSchema.parse(BM3R1Data);
-const BetI = PartSchema.parse(BetIData);
-const HlyIIR = PartSchema.parse(HlyIIRData);
-const IcaRA = PartSchema.parse(IcaRAData);
-const LitR = PartSchema.parse(LitRData);
-const LmrA = PartSchema.parse(LmrAData);
-const PhlF = PartSchema.parse(PhlFData);
-const PsrA = PartSchema.parse(PsrAData);
-const QacR = PartSchema.parse(QacRData);
-const SrpR = PartSchema.parse(SrpRData);
+  AmeR: AmeRData,
+  AmtR: AmtRData,
+  BM3R1: BM3R1Data,
+  BetI: BetIData,
+  HlyIIR: HlyIIRData,
+  IcaRA: IcaRAData,
+  LitR: LitRData,
+  LmrA: LmrAData,
+  PhlF: PhlFData,
+  PsrA: PsrAData,
+  QacR: QacRData,
+  SrpR: SrpRData,
 
-const L3S3P31 = PartSchema.parse(L3S3P31Data);
-
-export const PROMOTER_PARTS = {
-  PameR,
-  PamtR,
-  Pbetl,
-  Pbm3r1,
-  PhyllR,
-  PlcaRA,
-  PlitR,
-  PlmrA,
-  PphlF,
-  PpsrA,
-  PqacR,
-  PsrpR,
-};
-
-export const PROTEIN_PARTS = {
-  AmeR,
-  AmtR,
-  BetI,
-  BM3R1,
-  HlyIIR,
-  IcaRA,
-  LitR,
-  LmrA,
-  PhlF,
-  PsrA,
-  QacR,
-  SrpR,
-};
-
-export const TERMINATOR_PARTS = {
-  L3S3P31,
-};
-
-export const ALL_PARTS = {
-  ...PROMOTER_PARTS,
-  ...PROTEIN_PARTS,
-  ...TERMINATOR_PARTS,
-};
+  L3S3P31: L3S3P31Data,
+});

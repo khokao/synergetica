@@ -1,4 +1,4 @@
-import { ActivationColor } from "@/components/circuit/constants";
+import { ACTIVATION_COLOR } from "@/components/circuit/constants";
 import { AnnotationEdge } from "@/components/circuit/edges/annotation-edge";
 import { render } from "@testing-library/react";
 import { type EdgeProps, Position, useInternalNode } from "@xyflow/react";
@@ -43,7 +43,7 @@ describe("AnnotationEdge component", () => {
       id: "edge-1",
       source: "source",
       target: "target",
-      style: { stroke: ActivationColor },
+      style: { stroke: ACTIVATION_COLOR },
       markerEnd: "url(#arrow)",
       sourceX: 0,
       sourceY: 0,

@@ -1,4 +1,4 @@
-import { ALL_PARTS } from "@/components/circuit/parts/constants";
+import { useParts } from "@/components/circuit/parts/parts-context";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { RiText } from "@remixicon/react";
@@ -18,7 +18,9 @@ const CONTROL_TYPE_ICONS = {
 const renderControlIcon = (type) => CONTROL_TYPE_ICONS[type];
 
 const renderPartsName = (name) => {
-  const category = ALL_PARTS[name].category;
+  const { parts } = useParts();
+
+  const category = parts[name].category;
   const colorClass = CATEGORY_COLORS[category];
 
   return <span className={`${colorClass} font-semibold`}>{name}</span>;

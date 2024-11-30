@@ -60,25 +60,25 @@ export const GenerationButtons = () => {
           size="default"
           onClick={handleGenerate}
           disabled={isMutating}
-          className="p-2 w-24 flex items-center"
+          className="relative w-24 flex items-center"
           data-testid="run-button"
         >
-          <div className="w-7 flex justify-center">
+          <div className="absolute left-2 w-7 flex justify-center">
             <Play className="w-5" />
           </div>
-          <span className="flex-1 text-center">Run</span>
+          <span className="absolute left-11 flex-1 text-center">Run</span>
         </Button>
         <Button
           size="default"
           onClick={() => setIsModalOpen(true)}
           disabled={!data}
-          className="p-2 w-24 flex items-center"
+          className="relative w-24 flex items-center"
           data-testid="result-button"
         >
-          <div className="w-7 flex justify-center">
+          <div className="absolute left-2 w-7 flex justify-center">
             <Dna className="w-5" />
           </div>
-          <span className="flex-1 text-center">Result</span>
+          <span className="absolute left-10 flex-1 text-center">Result</span>
         </Button>
         <GenerationResultModal data={data} snapshot={snapshot} isOpen={isModalOpen} setIsOpen={setIsModalOpen} />
       </CardContent>

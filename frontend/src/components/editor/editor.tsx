@@ -1,6 +1,8 @@
+import { useParts } from "@/components/circuit/parts/parts-context";
 import { GITHUB_LIGHT_THEME, INDENT_SIZE } from "@/components/editor/constants";
 import { useEditorContext } from "@/components/editor/editor-context";
 import { EditorConsole } from "@/components/editor/error-console";
+import { useStrictSchema } from "@/components/editor/schemas/strictSchema";
 import { EditorTopBar } from "@/components/editor/top-bar";
 import { dslToReactflow } from "@/components/editor/utils/dsl-to-reactflow";
 import { validateDslContent } from "@/components/editor/utils/dsl-validation";
@@ -16,6 +18,8 @@ import { useDebounce } from "use-debounce";
 export const CircuitEditor = () => {
   const { editorRef, monacoRef, editorContent, setEditorContent, setEditMode, setValidationError, editMode } =
     useEditorContext();
+  const { parts } = useParts();
+  const { strictCircuitSchema } = useStrictSchema();
   const { setNodes, setEdges } = useReactFlow();
   const nodes = useNodes();
   const [debouncedNodes] = useDebounce(nodes, 500);
@@ -44,7 +48,7 @@ export const CircuitEditor = () => {
     }
 
     const dslContent = convertReactFlowNodesToDSL(debouncedNodes);
-    const { validationErrors, markers, parsedContent } = validateDslContent(dslContent);
+    const { validationErrors, markers, parsedContent } = validateDslContent(dslContent, strictCircuitSchema);
 
     const newParsedContent = JSON.stringify(parsedContent);
     const prevParsedContent = prevParsedContentRef.current;
@@ -58,7 +62,7 @@ export const CircuitEditor = () => {
 
     const model = editor.getModel();
     model && monaco.editor.setModelMarkers(model, "owner", markers);
-  }, [debouncedNodes, setEditorContent, setValidationError, editMode, editorRef, monacoRef]);
+  }, [debouncedNodes, setEditorContent, setValidationError, editMode, editorRef, monacoRef, strictCircuitSchema]);
 
   const handleChange = (newEditorContent: string) => {
     setEditMode("monaco-editor");
@@ -73,7 +77,7 @@ export const CircuitEditor = () => {
       return;
     }
 
-    const { validationErrors, markers, parsedContent } = validateDslContent(editorContent);
+    const { validationErrors, markers, parsedContent } = validateDslContent(editorContent, strictCircuitSchema);
 
     const newParsedContent = JSON.stringify(parsedContent);
     const prevParsedContent = prevParsedContentRef.current;
@@ -87,13 +91,23 @@ export const CircuitEditor = () => {
     const model = editor.getModel();
     model && monaco.editor.setModelMarkers(model, "owner", markers);
 
-    const reactFlowData = dslToReactflow(editorContent);
+    const reactFlowData = dslToReactflow(editorContent, parts);
     if (reactFlowData) {
       const { nodes, edges } = reactFlowData;
       setNodes(nodes);
       setEdges(edges);
     }
-  }, [editorContent, editMode, setNodes, setEdges, setValidationError, editorRef, monacoRef]);
+  }, [
+    editorContent,
+    editMode,
+    setNodes,
+    setEdges,
+    setValidationError,
+    editorRef,
+    monacoRef,
+    parts,
+    strictCircuitSchema,
+  ]);
 
   return (
     <div className="flex flex-col h-full w-full">

@@ -3,26 +3,34 @@ import type { Node, XYPosition } from "@xyflow/react";
 import { humanId } from "human-id";
 import { nanoid } from "nanoid";
 
-export const createChildNode = (position: XYPosition, category): Node => ({
-  id: nanoid(),
-  type: "child",
-  position,
-  width: NODE_WIDTH,
-  height: NODE_HEIGHT,
-  data: {
+export const initChildNodeData = {
+  category: "",
+  name: "",
+  description: "",
+  sequence: "",
+  controlBy: [],
+  controlTo: [],
+  meta: null,
+  leftHandleConnected: false,
+  rightHandleConnected: false,
+  simulationTargetHighlight: undefined,
+  showParentId: false,
+};
+
+export const createChildNode = (position: XYPosition, category): Node => {
+  const data = {
+    ...initChildNodeData,
     category: category,
-    name: "",
-    description: "",
-    sequence: "",
-    controlBy: [],
-    controlTo: [],
-    meta: null,
-    leftHandleConnected: false,
-    rightHandleConnected: false,
-    simulationTargetHighlight: undefined,
-    showParentId: false,
-  },
-});
+  };
+  return {
+    id: nanoid(),
+    type: "child",
+    position,
+    width: NODE_WIDTH,
+    height: NODE_HEIGHT,
+    data: data,
+  };
+};
 
 export const createTempNode = (position: XYPosition, category): Node => {
   const node = createChildNode(position, category);
