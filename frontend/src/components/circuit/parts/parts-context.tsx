@@ -15,8 +15,8 @@ interface PartsContextType {
   parts: PartsCollection;
   setParts: React.Dispatch<React.SetStateAction<PartsCollection>>;
   addPart(part: Part): void;
-  editPart(partName: string, updatedPart: Part): void;
   deletePart(partName: string): void;
+  editPart(partName: string, updatedPart: Part): void;
   promoterParts: PartsCollection;
   proteinParts: PartsCollection;
   terminatorParts: PartsCollection;
@@ -79,25 +79,6 @@ export const PartsProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     }
   };
 
-  const editPart = (partName: string, updatedPart: Part): void => {
-    try {
-      const parsedPart = partSchema.parse(updatedPart);
-      if (!parts[partName]) {
-        throw new Error(`Part with name ${partName} does not exist.`);
-      }
-      setParts((prevParts) => {
-        const newParts = { ...prevParts, [partName]: parsedPart };
-        partsCollectionSchema.parse(newParts);
-        return newParts;
-      });
-      updateNodesOnEdit(parsedPart);
-      toast.success(`Part "${partName}" has been updated!`);
-    } catch (error) {
-      toast.error(`Error: The part "${partName}" could not be edited.`);
-      throw error;
-    }
-  };
-
   const deletePart = (partName: string): void => {
     try {
       if (!parts[partName]) {
@@ -117,6 +98,25 @@ export const PartsProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     }
   };
 
+  const editPart = (partName: string, updatedPart: Part): void => {
+    try {
+      const parsedPart = partSchema.parse(updatedPart);
+      if (!parts[partName]) {
+        throw new Error(`Part with name ${partName} does not exist.`);
+      }
+      setParts((prevParts) => {
+        const newParts = { ...prevParts, [partName]: parsedPart };
+        partsCollectionSchema.parse(newParts);
+        return newParts;
+      });
+      updateNodesOnEdit(parsedPart);
+      toast.success(`Part "${partName}" has been updated!`);
+    } catch (error) {
+      toast.error(`Error: The part "${partName}" could not be edited.`);
+      throw error;
+    }
+  };
+
   const promoterParts = Object.fromEntries(Object.entries(parts).filter(([_, part]) => part.category === "promoter"));
 
   const proteinParts = Object.fromEntries(Object.entries(parts).filter(([_, part]) => part.category === "protein"));
@@ -131,8 +131,8 @@ export const PartsProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         parts,
         setParts,
         addPart,
-        editPart,
         deletePart,
+        editPart,
         promoterParts,
         proteinParts,
         terminatorParts,
