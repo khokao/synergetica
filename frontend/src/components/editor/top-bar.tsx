@@ -79,7 +79,7 @@ export const EditorTopBar = () => {
     <div className="flex justify-between items-center p-1">
       <span className="pl-2 text-md font-medium">Config YAML</span>
       <TooltipProvider>
-        <div className="flex space-x-1">
+        <div className="flex space-x-1 z-10">
           <Tooltip>
             <TooltipTrigger asChild>
               <Button variant="ghost" size="icon" onClick={handleCopy} data-testid="editor-copy-button" className="p-1">
@@ -107,7 +107,7 @@ export const EditorTopBar = () => {
             </TooltipTrigger>
             <RadixTooltip.Portal>
               <TooltipContent>
-                <p>Import config</p>
+                <p>Import DSL</p>
               </TooltipContent>
             </RadixTooltip.Portal>
           </Tooltip>
@@ -125,7 +125,7 @@ export const EditorTopBar = () => {
             </TooltipTrigger>
             <RadixTooltip.Portal>
               <TooltipContent>
-                <p>Export config</p>
+                <p>Export DSL</p>
               </TooltipContent>
             </RadixTooltip.Portal>
           </Tooltip>
