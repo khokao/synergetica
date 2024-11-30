@@ -62,7 +62,16 @@ const PartEditFormDialog = ({ selectedPartName, setSelectedPartName }) => {
         sequence: selectedPart.sequence,
         controlBy: selectedPart.controlBy,
         controlTo: selectedPart.controlTo,
-        meta: selectedPart.meta,
+        meta: selectedPart.meta
+          ? {
+              Pmax: selectedPart.meta.Pmax,
+              Ymax: selectedPart.meta.Ymax,
+              Ymin: selectedPart.meta.Ymin,
+              K: selectedPart.meta.K,
+              n: selectedPart.meta.n,
+              Dp: selectedPart.meta.Dp,
+            }
+          : null,
       });
     }
   }, [selectedPart, form]);
@@ -81,7 +90,7 @@ const PartEditFormDialog = ({ selectedPartName, setSelectedPartName }) => {
         </DialogHeader>
         <Form {...form}>
           <ScrollArea className="h-full">
-            <form className="flex flex-col space-y-8 px-4">
+            <form className="flex flex-col space-y-8 px-4" noValidate>
               <InputField
                 label="DNA Sequence"
                 description="Sequence of nucleotides (A, T, C, G)"
@@ -118,10 +127,10 @@ const PartEditFormDialog = ({ selectedPartName, setSelectedPartName }) => {
             </form>
           </ScrollArea>
           <DialogFooter>
-            <Button variant="secondary" onClick={handleCancel}>
+            <Button variant="secondary" onClick={handleCancel} data-testid="part-edit-cancel-button">
               Cancel
             </Button>
-            <Button variant="default" onClick={form.handleSubmit(handleSave)}>
+            <Button variant="default" onClick={form.handleSubmit(handleSave)} data-testid="part-edit-save-button">
               Save
             </Button>
           </DialogFooter>
@@ -140,7 +149,12 @@ export const PartEditManager = () => {
         <Tooltip>
           <TooltipTrigger asChild>
             <PopoverTrigger asChild>
-              <Button variant="ghost" size="icon" className="p-0.5 w-7 h-7 hover:bg-black/5">
+              <Button
+                variant="ghost"
+                size="icon"
+                className="p-0.5 w-7 h-7 hover:bg-black/5"
+                data-testid="part-edit-button"
+              >
                 <Pencil className="w-5 h-5 text-gray-500" />
               </Button>
             </PopoverTrigger>
