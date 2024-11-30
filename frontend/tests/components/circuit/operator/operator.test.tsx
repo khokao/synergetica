@@ -1,4 +1,5 @@
 import { Operator } from "@/components/circuit/operator/operator";
+import { PartsProvider } from "@/components/circuit/parts/parts-context";
 import { EditorProvider } from "@/components/editor/editor-context";
 import { render, screen } from "@testing-library/react";
 import { ReactFlowProvider } from "@xyflow/react";
@@ -19,11 +20,13 @@ vi.mock("@/components/circuit/resizable-panel/resizable-panel-context", () => ({
 describe("Operator Component", () => {
   const renderOperator = () =>
     render(
-      <EditorProvider>
-        <ReactFlowProvider>
-          <Operator />
-        </ReactFlowProvider>
-      </EditorProvider>,
+      <ReactFlowProvider>
+        <PartsProvider>
+          <EditorProvider>
+            <Operator />
+          </EditorProvider>
+        </PartsProvider>
+      </ReactFlowProvider>,
     );
 
   it("renders ColoredMiniMap component", () => {
@@ -57,5 +60,16 @@ describe("Operator Component", () => {
 
     // Assert
     expect(validationStatus).toBeInTheDocument();
+  });
+
+  it("renders PartsManager component", () => {
+    // Arrange
+    renderOperator();
+
+    // Act
+    const partsManager = screen.getByTestId("parts-manager");
+
+    // Assert
+    expect(partsManager).toBeInTheDocument();
   });
 });
