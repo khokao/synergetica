@@ -63,7 +63,13 @@ export const ControlFields = ({ label, description, fieldName, form }) => {
                   </FormControl>
                 )}
               />
-              <Button variant="outline" size="icon" onClick={() => remove(index)} className="rounded-full w-7 h-7">
+              <Button
+                variant="outline"
+                size="icon"
+                onClick={() => remove(index)}
+                className="rounded-full w-7 h-7"
+                data-testid="field-array-remove-button"
+              >
                 <Minus />
               </Button>
             </div>
@@ -80,6 +86,7 @@ export const ControlFields = ({ label, description, fieldName, form }) => {
         type="button"
         onClick={() => append({ name: "", type: "" })}
         className="rounded-full w-7 h-7"
+        data-testid="field-array-append-button"
       >
         <Plus />
       </Button>
