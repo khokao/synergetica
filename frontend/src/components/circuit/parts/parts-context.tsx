@@ -1,5 +1,8 @@
+import { initChildNodeData } from "@/components/circuit/hooks/utils/create-node";
 import { initialParts } from "@/components/circuit/parts/initial-parts";
 import { partSchema, partsCollectionSchema } from "@/components/circuit/parts/schema";
+import { useReactFlow } from "@xyflow/react";
+import { produce } from "immer";
 import type React from "react";
 import { createContext, useContext, useState } from "react";
 import { toast } from "sonner";
@@ -10,6 +13,7 @@ type PartsCollection = z.infer<typeof partsCollectionSchema>;
 
 interface PartsContextType {
   parts: PartsCollection;
+  setParts: React.Dispatch<React.SetStateAction<PartsCollection>>;
   addPart(part: Part): void;
   editPart(partName: string, updatedPart: Part): void;
   deletePart(partName: string): void;
@@ -21,7 +25,41 @@ interface PartsContextType {
 const PartsContext = createContext<PartsContextType | undefined>(undefined);
 
 export const PartsProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const { getNodes, setNodes } = useReactFlow();
+
   const [parts, setParts] = useState<PartsCollection>(initialParts);
+
+  const updateNodesOnDelete = (part: Part): void => {
+    const nodes = getNodes();
+    const newNodes = produce(nodes, (draft) => {
+      for (const node of draft) {
+        if (node.data.name === part.name) {
+          const category = node.data.category;
+          node.data = initChildNodeData;
+          node.data.category = category;
+        }
+      }
+    });
+    setNodes(newNodes);
+  };
+
+  const updateNodesOnEdit = (part: Part): void => {
+    const nodes = getNodes();
+    const newNodes = produce(nodes, (draft) => {
+      for (const node of draft) {
+        if (node.data.name === part.name) {
+          node.data.name = part.name;
+          node.data.description = part.description;
+          node.data.category = part.category;
+          node.data.sequence = part.sequence;
+          node.data.controlBy = part.controlBy;
+          node.data.controlTo = part.controlTo;
+          node.data.meta = part.meta;
+        }
+      }
+    });
+    setNodes(newNodes);
+  };
 
   const addPart = (part: Part): void => {
     try {
@@ -52,6 +90,7 @@ export const PartsProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         partsCollectionSchema.parse(newParts);
         return newParts;
       });
+      updateNodesOnEdit(parsedPart);
       toast.success(`Part "${partName}" has been updated!`);
     } catch (error) {
       toast.error(`Error: The part "${partName}" could not be edited.`);
@@ -70,6 +109,7 @@ export const PartsProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         partsCollectionSchema.parse(newParts);
         return newParts;
       });
+      updateNodesOnDelete(parts[partName]);
       toast.success(`Part "${partName}" has been removed.`);
     } catch (error) {
       toast.error(`Error: The part "${partName}" could not be removed.`);
@@ -89,6 +129,7 @@ export const PartsProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     <PartsContext.Provider
       value={{
         parts,
+        setParts,
         addPart,
         editPart,
         deletePart,
