@@ -96,7 +96,7 @@ export const PartsImportExportManager: FC = () => {
             variant="ghost"
             size="icon"
             onClick={handleImport}
-            data-testid="editor-import-button"
+            data-testid="parts-import-button"
             className="p-0.5 w-7 h-7 hover:bg-black/5"
           >
             <ArrowDownToLine className="w-5 h-5" />
@@ -114,7 +114,7 @@ export const PartsImportExportManager: FC = () => {
             variant="ghost"
             size="icon"
             onClick={handleExport}
-            data-testid="editor-export-button"
+            data-testid="parts-export-button"
             className="p-0.5 w-7 h-7 hover:bg-black/5"
           >
             <ArrowUpToLine className="w-5 h-5" />
