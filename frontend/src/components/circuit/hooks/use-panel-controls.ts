@@ -12,7 +12,7 @@ export const usePanelControls = () => {
     right: false,
   });
 
-  const panelRefs: Record<PanelPosition, React.RefObject<PanelRef>> = {
+  const panelRefs: Record<PanelPosition, React.RefObject<PanelRef | null>> = {
     left: useRef<PanelRef>(null),
     right: useRef<PanelRef>(null),
   };
