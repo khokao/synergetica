@@ -5,9 +5,9 @@ import { RiText } from "@remixicon/react";
 import { MoveRight } from "lucide-react";
 
 const CATEGORY_COLORS = {
-  Promoter: "text-blue-800",
-  Protein: "text-green-800",
-  Terminator: "text-red-800",
+  Promoter: "text-promoter-800",
+  Protein: "text-protein-800",
+  Terminator: "text-terminator-800",
 };
 
 const CONTROL_TYPE_ICONS = {
@@ -38,10 +38,14 @@ const ControlSection = ({ data, direction }) => {
         const [sourceName, targetName] = direction === "by" ? [name, data.name] : [data.name, name];
 
         return (
-          <Button key={id || name} variant="secondary" className="space-x-2">
-            {renderPartsName(sourceName)}
-            {renderControlIcon(type)}
-            {renderPartsName(targetName)}
+          <Button
+            key={id || name}
+            variant="secondary"
+            className="flex items-center justify-center space-x-2 w-2/5 xl:w-3/5 hover:bg-neutral-100/100"
+          >
+            <div className="flex-1 text-center">{renderPartsName(sourceName)}</div>
+            <div className="flex flex-col items-center">{renderControlIcon(type)}</div>
+            <div className="flex-1 text-center">{renderPartsName(targetName)}</div>
           </Button>
         );
       })}
@@ -58,7 +62,7 @@ export const InformationCard = ({ data }) => {
         <CardTitle className={`${titleColor}`}>{data.name}</CardTitle>
         <CardDescription>{data.description}</CardDescription>
       </CardHeader>
-      <CardContent className="flex flex-col justify-center items-center">
+      <CardContent className="flex flex-col justify-center items-center space-y-2">
         <ControlSection data={data} direction="by" />
         <ControlSection data={data} direction="to" />
       </CardContent>
