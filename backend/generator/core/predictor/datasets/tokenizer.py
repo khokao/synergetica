@@ -43,6 +43,7 @@ def get_tokenizer(  # type: ignore[no-any-unimported]
 
     tokenizer = Tokenizer(WordLevel(vocab=vocab, unk_token=unk_token))
     tokenizer.pre_tokenizer = Split('', 'isolated')
+    tokenizer.add_special_tokens([pad_token, unk_token])
 
     fast_tokenizer = PreTrainedTokenizerFast(
         tokenizer_object=tokenizer,
