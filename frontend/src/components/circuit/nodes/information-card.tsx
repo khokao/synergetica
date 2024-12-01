@@ -41,7 +41,7 @@ const ControlSection = ({ data, direction }) => {
           <Button
             key={id || name}
             variant="secondary"
-            className="flex items-center justify-center space-x-2 w-2/5 xl:w-3/5 hover:bg-neutral-100/100"
+            className="flex items-center justify-center space-x-2 w-[175px] hover:bg-neutral-100/100"
           >
             <div className="flex-1 text-center">{renderPartsName(sourceName)}</div>
             <div className="flex flex-col items-center">{renderControlIcon(type)}</div>
