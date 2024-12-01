@@ -14,7 +14,12 @@ const config: Config = {
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
       },
-      colors: {},
+      colors: {
+        promoter: { ...require("tailwindcss/colors").blue },
+        protein: { ...require("tailwindcss/colors").green },
+        terminator: { ...require("tailwindcss/colors").red },
+        parent: { ...require("tailwindcss/colors").gray },
+      },
     },
   },
   plugins: [require("tailwindcss-animate")],

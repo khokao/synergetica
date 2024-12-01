@@ -1,8 +1,8 @@
 {
-  "name": "gene-circuit-ide",
+  "name": "magesty",
   "version": "0.0.0",
   "author": "Koki Hokao",
-  "description": "Desktop app for gene circuit design",
+  "description": "Genetic circuit design desktop app",
   "private": true,
   "engines": {
     "node": "22.x.x"

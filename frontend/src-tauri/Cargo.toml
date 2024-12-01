@@ -1,7 +1,7 @@
 [package]
-name = "gene-circuit-ide"
+name = "magesty"
 version = "0.0.0"
-description = "A Tauri App"
+description = "Genetic circuit design desktop app"
 authors = ["Koki Hokao"]
 license = "MIT"
 edition = "2021"

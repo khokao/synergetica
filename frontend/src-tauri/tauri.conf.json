@@ -1,8 +1,7 @@
 {
-  "productName": "Gene Circuit IDE",
-  "mainBinaryName": "Gene Circuit IDE",
+  "productName": "magesty",
   "version": "0.1.0",
-  "identifier": "dev.genecircuit.ide",
+  "identifier": "dev.khokao.magesty",
   "build": {
     "beforeBuildCommand": "npm run next-build",
     "beforeDevCommand": "npm run next-dev",
@@ -15,7 +14,7 @@
         "fullscreen": false,
         "height": 600,
         "resizable": true,
-        "title": "Gene Circuit IDE",
+        "title": "MaGesty",
         "width": 800,
         "dragDropEnabled": false
       }

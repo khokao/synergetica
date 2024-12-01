@@ -4,13 +4,13 @@ import type { FC } from "react";
 const nodeColor = (node) => {
   switch (node.data.category) {
     case "Promoter":
-      return "#bfdbfe";
+      return "#bfdbfe"; // blue-200
     case "Protein":
-      return "#bbf7d0";
+      return "#bbf7d0"; // green-200
     case "Terminator":
-      return "#fecaca";
+      return "#fecaca"; // red-200
     default:
-      return "#e5e7eb";
+      return "#e5e7eb"; // gray-200
   }
 };
 

@@ -13,7 +13,7 @@ describe("ChildHeader Component", () => {
     // Assert
     const textElement = screen.getByText("Promoter");
     expect(textElement).toBeInTheDocument();
-    expect(textElement.parentElement).toHaveClass("bg-blue-200");
+    expect(textElement.parentElement).toHaveClass("bg-promoter-200");
     expect(screen.getByTestId("promoter-icon")).toBeInTheDocument();
   });
 
@@ -27,7 +27,7 @@ describe("ChildHeader Component", () => {
     // Assert
     const textElement = screen.getByText("Protein");
     expect(textElement).toBeInTheDocument();
-    expect(textElement.parentElement).toHaveClass("bg-green-200");
+    expect(textElement.parentElement).toHaveClass("bg-protein-200");
     expect(screen.getByTestId("protein-icon")).toBeInTheDocument();
   });
 
@@ -41,7 +41,7 @@ describe("ChildHeader Component", () => {
     // Assert
     const textElement = screen.getByText("Terminator");
     expect(textElement).toBeInTheDocument();
-    expect(textElement.parentElement).toHaveClass("bg-red-200");
+    expect(textElement.parentElement).toHaveClass("bg-terminator-200");
     expect(screen.getByTestId("terminator-icon")).toBeInTheDocument();
   });
 });

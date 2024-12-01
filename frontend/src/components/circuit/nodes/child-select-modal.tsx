@@ -58,7 +58,7 @@ const SelectMenu = ({ options, selectedOption, handleSelect }) => {
       <CommandList className="flex-grow overflow-y-auto mt-2 max-h-[60vh]">
         <CommandEmpty>No results found.</CommandEmpty>
         <CommandGroup className="h-full">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
             {options.map((o) => {
               const isSelected = selectedOption && o.name === selectedOption.name;
               return (
@@ -100,20 +100,20 @@ const ChildSelectModalComponent = ({ id, data }) => {
   const modalMap = {
     Promoter: {
       title: "Select Promoter",
-      underlineColor: "border-blue-800",
-      highlightColor: "text-blue-600",
+      underlineColor: "border-promoter-800",
+      highlightColor: "text-promoter-600",
       options: Object.values(promoterParts),
     },
     Protein: {
       title: "Select Protein",
-      underlineColor: "border-green-800",
-      highlightColor: "text-green-600",
+      underlineColor: "border-protein-800",
+      highlightColor: "text-protein-600",
       options: Object.values(proteinParts),
     },
     Terminator: {
       title: "Select Terminator",
-      underlineColor: "border-red-800",
-      highlightColor: "text-red-600",
+      underlineColor: "border-terminator-800",
+      highlightColor: "text-terminator-600",
       options: Object.values(terminatorParts),
     },
   };
