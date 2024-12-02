@@ -1,0 +1,114 @@
+import json
+from collections import defaultdict
+from collections.abc import Callable
+
+import numpy as np
+from fastapi import APIRouter, WebSocket, WebSocketDisconnect
+from loguru import logger
+
+from api.schemas.simulator import ConverterInput, ConverterOutput, ReactFlowChildNodeData, ReactFlowObject
+from simulator.build_protein_interaction import (
+    build_protein_interact_graph,
+    create_adjacency_matrix,
+    extract_promoter_controlling_proteins,
+    search_all_connected_components,
+)
+from simulator.dynamic_formulation import build_function_as_str
+from simulator.euler import solve_ode_with_euler
+from simulator.utils import get_node_id2data, get_parts_name2node_ids, get_specific_category_node_ids
+
+router = APIRouter()
+
+
+@router.post('/convert-gui-circuit', response_model=ConverterOutput)
+async def convert_gui_circuit(data: ConverterInput) -> ConverterOutput:
+    reactflow_data = json.loads(data.reactflow_object_json_str)
+    reactflow_object = ReactFlowObject(**reactflow_data)
+
+    node_id2idx = {node.id: idx for idx, node in enumerate(reactflow_object.nodes)}
+    adjacency_matrix = create_adjacency_matrix(edges=reactflow_object.edges, node_id2idx=node_id2idx)
+    all_connected_components = search_all_connected_components(adjacency_matrix=adjacency_matrix)
+
+    node_idx2id = {idx: node.id for idx, node in enumerate(reactflow_object.nodes)}
+    node_idx2category = {idx: node.data.category for idx, node in enumerate(reactflow_object.nodes)}
+    promoter_controlling_proteins = extract_promoter_controlling_proteins(
+        all_connected_components=all_connected_components,
+        node_idx2category=node_idx2category,
+        node_idx2id=node_idx2id,
+    )
+
+    parts_name2node_ids = get_parts_name2node_ids(reactflow_object.nodes)
+    node_id2data = get_node_id2data(reactflow_object.nodes)
+    protein_node_ids = get_specific_category_node_ids(reactflow_object.nodes, category='Protein')
+    protein_interact_graph = build_protein_interact_graph(
+        promoter_controlling_proteins=promoter_controlling_proteins,
+        parts_name2node_ids=parts_name2node_ids,
+        node_id2data=node_id2data,
+        protein_node_ids=protein_node_ids,
+    )
+    function_str = build_function_as_str(protein_interact_graph, protein_node_ids, node_id2data)
+
+    protein_id2display_name = get_protein_id2parts_name(protein_node_ids=protein_node_ids, node_id2data=node_id2data)
+
+    return ConverterOutput(protein_id2name=protein_id2display_name, function_str=function_str)
+
+
+@router.websocket('/ws/simulation')
+async def simulation(websocket: WebSocket) -> None:
+    functions: dict[str, Callable[..., tuple[float, ...]]] = {}
+    logger.info('Client connected')
+    await websocket.accept()
+    try:
+        while True:  # Perpetuating the connection
+            raw_string_data = await websocket.receive_text()
+            data = json.loads(raw_string_data)
+            logger.info(f'Received data: {data.keys()}')
+            if 'function_str' in data:  # defining simulation function.
+                function_str = data.get('function_str', None)
+                exec(function_str, globals(), functions)
+                function_name = function_str.split(' ')[1].split('(')[0]
+                times = np.arange(0, 300, 1, dtype=np.float64)
+                var_init = [0.0] * (len(data['protein_id2name'].keys()) * 2)
+                logger.info(f'Function {function_name} defined.')
+                await websocket.send_text(f"Function '{function_name}' defined.")
+            else:  # solving ODE with the given parameters.
+                try:
+                    params = data['params'].values()  # data['params]: dict[str, float]
+                    solution = solve_ode_with_euler(
+                        functions[function_name], times=times, var_init=var_init, args=tuple(params)
+                    )
+                    logger.info(f'Solution: {solution[:3]}')
+                    response_data = json.dumps(solution.tolist())
+                    await websocket.send_text(response_data)
+                except Exception as e:  # When an error occurs
+                    logger.error(f'Error processing parameters: {e}')
+                    await websocket.send_text(f'Error: {str(e)}')
+
+    except WebSocketDisconnect:  # When the client disconnects
+        logger.info('Client disconnected')
+
+
+def get_protein_id2parts_name(
+    protein_node_ids: list[str], node_id2data: dict[str, ReactFlowChildNodeData]
+) -> dict[str, str]:
+    """Get dict of protein id to display protein name.
+
+    Args:
+        protein_node_ids (list[str]): List of protein node ids.
+        node_id2data (dict[str, ReactFlowChildNodeData]): Dict of node id to node data.
+
+    Returns:
+        protein_id2display_name (dict[str,str]): Dict of protein id and display protein name. {protein_id: protein_name}
+            if there are multiple proteins with the same name, add number to the end of the name.
+    """
+    parts_name_count = defaultdict(int)  # type: dict[str, int]
+    protein_id2display_name = {}
+    for protein_node_id in protein_node_ids:
+        protein_parts_name = node_id2data[protein_node_id].name
+        parts_name_count[protein_parts_name] += 1
+
+        count = parts_name_count[protein_parts_name]
+        suffix = f'_{count}' if count > 1 else ''
+        protein_id2display_name[protein_node_id] = f'{protein_parts_name}{suffix}'
+
+    return protein_id2display_name
