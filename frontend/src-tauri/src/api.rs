@@ -13,7 +13,7 @@ impl APIClient {
     ) -> Result<GeneratorResponseData> {
         let client = Client::new();
         let response = client
-            .post("http://127.0.0.1:8080/generate")
+            .post("http://127.0.0.1:8000/generate")
             .json(&json!({
                 "reactflow_object_json_str": reactflow_object_json_str,
                 "rbs_target_parameters": rbs_target_parameters

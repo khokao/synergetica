@@ -34,17 +34,17 @@ jobs:
         uses: ./.github/composite/setup-python
         with:
           python_version: "3.12"
-          poetry_version: "1.8"
+          uv_version: "0.5.5"
           working_dir: backend
 
       - name: Log in to Hugging Face
         shell: bash
-        run: poetry run huggingface-cli login --token ${{ secrets.HUGGINGFACE_TOKEN }}
+        run: uv run huggingface-cli login --token ${{ secrets.HUGGINGFACE_TOKEN }}
 
       - name: pytest
         run: | # set -o pipefail is required to propagate pytest exit code
           set -o pipefail
-          poetry run pytest --junitxml=pytest.xml | tee pytest-coverage.txt
+          uv run pytest --junitxml=pytest.xml | tee pytest-coverage.txt
 
       # When pytest fails, this step will still run to comment on the PR
       - name: Pytest coverage comment
