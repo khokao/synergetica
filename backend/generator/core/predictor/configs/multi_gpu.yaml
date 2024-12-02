@@ -1,8 +1,0 @@
-defaults:
-  - default
-  - _self_
-
-trainer:
-  strategy: ddp
-  accelerator: gpu
-  devices: [0, 1]
