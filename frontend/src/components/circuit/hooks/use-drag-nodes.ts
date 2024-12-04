@@ -188,7 +188,7 @@ export const useDragNodes = () => {
 
       const newEdges = produce(edges, (draft) => {
         for (const edge of draft) {
-          if (edge.source === node.id || edge.target === node.id) {
+          if (edge.type === "custom" && (edge.source === node.id || edge.target === node.id)) {
             edge.animated = true;
           }
         }

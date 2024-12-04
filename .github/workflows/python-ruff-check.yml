@@ -34,14 +34,14 @@ jobs:
         uses: ./.github/composite/setup-python
         with:
           python_version: "3.12"
-          poetry_version: "1.8"
+          uv_version: "0.5.5"
           working_dir: backend
 
       - name: ruff linter
         env:
           REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          poetry run ruff check . \
+          uv run ruff check . \
             | reviewdog -efm="%f:%l:%c: %m" \
             -name="ruff check" \
             -reporter="github-pr-review" \

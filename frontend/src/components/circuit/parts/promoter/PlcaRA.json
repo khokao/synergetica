@@ -1,12 +1,12 @@
 {
   "name": "PlcaRA",
   "description": "Regulated Promoters repressed by LcaRA",
-  "category": "promoter",
+  "category": "Promoter",
   "sequence": "tctgattcgttaccaattgacaattcacctacctttcgttaggttaggttgt",
   "controlBy": [
     {
       "name": "IcaRA",
-      "type": "repression"
+      "type": "Repression"
     }
   ],
   "controlTo": [],

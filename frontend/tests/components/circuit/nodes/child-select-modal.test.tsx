@@ -17,9 +17,43 @@ vi.mock("@xyflow/react", async () => {
   };
 });
 
+vi.mock("@/components/circuit/parts/parts-context", () => {
+  return {
+    useParts: () => ({
+      promoterParts: {
+        testPromoterName: {
+          name: "testPromoterName",
+          description: "Test Promoter Description",
+          category: "Promoter",
+          controlBy: [],
+          controlTo: [],
+        },
+      },
+      proteinParts: {
+        testProteinName: {
+          name: "testProteinName",
+          description: "Test Protein Description",
+          category: "Protein",
+          controlBy: [],
+          controlTo: [],
+        },
+      },
+      terminatorParts: {
+        testTerminatorName: {
+          name: "testTerminatorName",
+          description: "Test Terminator Description",
+          category: "Terminator",
+          controlBy: [],
+          controlTo: [],
+        },
+      },
+    }),
+  };
+});
+
 describe("ChildSelectModal", () => {
   const defaultId = "test-id";
-  const defaultData = { category: "promoter", name: "test-name" };
+  const defaultData = { category: "Promoter", name: "test-name" };
 
   const renderComponent = () => {
     render(<ChildSelectModal id={defaultId} data={defaultData} />);
@@ -40,7 +74,7 @@ describe("ChildSelectModal", () => {
   it("fires the click event and closes the modal", async () => {
     // Arrange
     renderComponent();
-    const partsDescription = "Regulated Promoter repressed by AmeR"; // PameR
+    const partsDescription = "Test Promoter Description";
 
     // Act
     fireEvent.click(screen.getByTestId("select-modal-button"));

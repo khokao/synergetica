@@ -18,21 +18,21 @@ describe("convertReactFlowNodesToDSL", () => {
         type: "child",
         parentId: "parent1",
         position: { x: 100, y: 0 },
-        data: { category: "promoter", name: "promoter1" },
+        data: { category: "Promoter", name: "promoter1" },
       },
       {
         id: "child2",
         type: "child",
         parentId: "parent1",
         position: { x: 200, y: 0 },
-        data: { category: "protein", name: "protein1" },
+        data: { category: "Protein", name: "protein1" },
       },
       {
         id: "child3",
         type: "child",
         parentId: "parent1",
         position: { x: 300, y: 0 },
-        data: { category: "terminator", name: "terminator1" },
+        data: { category: "Terminator", name: "terminator1" },
       },
     ];
 
@@ -41,11 +41,11 @@ describe("convertReactFlowNodesToDSL", () => {
 
     // Assert
     const expectedDSL = `- chain:
-  - type: promoter
+  - type: Promoter
     name: promoter1
-  - type: protein
+  - type: Protein
     name: protein1
-  - type: terminator
+  - type: Terminator
     name: terminator1
 `;
     expect(result).toBe(expectedDSL);
@@ -58,13 +58,13 @@ describe("convertReactFlowNodesToDSL", () => {
         id: "child1",
         type: "child",
         position: { x: 0, y: 0 },
-        data: { category: "promoter", name: "promoter1" },
+        data: { category: "Promoter", name: "promoter1" },
       },
       {
         id: "child2",
         type: "child",
         position: { x: 0, y: 100 },
-        data: { category: "protein", name: "protein1" },
+        data: { category: "Protein", name: "protein1" },
       },
     ];
 
@@ -73,10 +73,10 @@ describe("convertReactFlowNodesToDSL", () => {
 
     // Assert
     const expectedDSL = `- chain:
-  - type: promoter
+  - type: Promoter
     name: promoter1
 - chain:
-  - type: protein
+  - type: Protein
     name: protein1
 `;
     expect(result).toBe(expectedDSL);
@@ -90,13 +90,13 @@ describe("convertReactFlowNodesToDSL", () => {
         type: "child",
         parentId: TEMP_NODE_ID,
         position: { x: 100, y: 0 },
-        data: { category: "promoter", name: "promoter1" },
+        data: { category: "Promoter", name: "promoter1" },
       },
       {
         id: "child2",
         type: "child",
         position: { x: 0, y: 100 },
-        data: { category: "protein", name: "protein1" },
+        data: { category: "Protein", name: "protein1" },
       },
     ];
 
@@ -105,7 +105,7 @@ describe("convertReactFlowNodesToDSL", () => {
 
     // Assert
     const expectedDSL = `- chain:
-  - type: protein
+  - type: Protein
     name: protein1
 `;
     expect(result).toBe(expectedDSL);
@@ -119,14 +119,14 @@ describe("convertReactFlowNodesToDSL", () => {
         type: "child",
         parentId: undefined,
         position: { x: 100, y: 100 },
-        data: { category: "terminator", name: "terminator1" },
+        data: { category: "Terminator", name: "terminator1" },
       },
       {
         id: "child1",
         type: "child",
         parentId: undefined,
         position: { x: 100, y: 0 },
-        data: { category: "promoter", name: "promoter1" },
+        data: { category: "Promoter", name: "promoter1" },
       },
     ];
 
@@ -135,10 +135,10 @@ describe("convertReactFlowNodesToDSL", () => {
 
     // Assert
     const expectedDSL = `- chain:
-  - type: promoter
+  - type: Promoter
     name: promoter1
 - chain:
-  - type: terminator
+  - type: Terminator
     name: terminator1
 `;
     expect(result).toBe(expectedDSL);

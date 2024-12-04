@@ -3,20 +3,20 @@ import { CornerUpRight, RectangleHorizontal } from "lucide-react";
 import React from "react";
 
 const headerMap = {
-  promoter: {
+  Promoter: {
     text: "Promoter",
-    bgColor: "bg-blue-200",
-    icon: <CornerUpRight className="text-blue-800" data-testid="promoter-icon" />,
+    bgColor: "bg-promoter-200",
+    icon: <CornerUpRight className="text-promoter-800" data-testid="promoter-icon" />,
   },
-  protein: {
+  Protein: {
     text: "Protein",
-    bgColor: "bg-green-200",
-    icon: <RectangleHorizontal className="text-green-800" data-testid="protein-icon" />,
+    bgColor: "bg-protein-200",
+    icon: <RectangleHorizontal className="text-protein-800" data-testid="protein-icon" />,
   },
-  terminator: {
+  Terminator: {
     text: "Terminator",
-    bgColor: "bg-red-200",
-    icon: <RiText className="text-red-800" data-testid="terminator-icon" />,
+    bgColor: "bg-terminator-200",
+    icon: <RiText className="text-terminator-800" data-testid="terminator-icon" />,
   },
 };
 

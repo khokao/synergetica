@@ -1,54 +1,65 @@
-[tool.poetry]
-name = "gene-circuit-ide-python"
+[project]
+name = "magesty"
 version = "0.0.0"
-description = "Python API for Gene Circuit IDE"
-authors = ["Koki Hokao", "Kanta Suga", "Sota Okuda"]
-license = "MIT"
-readme = "README.md"
-packages = [
-    { include = "common"},
-    { include = "generator"},
-    { include = "simulator"},
+description = "Genetic circuit design desktop app"
+authors = [
+    { name = "Koki Hokao" },
+    { name = "Kanta Suga" },
+]
+requires-python = ">=3.12.0"
+
+dependencies = [
+    "aiomultiprocess>=0.9.1",
+    "bitsandbytes<0.43",
+    "datasets>=3.1.0",
+    "einops>=0.8.0",
+    "fastapi[standard]>=0.115.5",
+    "torch>=2.5.1",
+    "lightning>=2.4.0",
+    "loguru>=0.7.2",
+    "numpy<2.0.0",
+    "omegaconf>=2.3.0",
+    "pydantic>=2.10.2",
+    "scipy>=1.14.1",
+    "tokenizers>=0.21.0",
+    "torchmetrics>=1.6.0",
+    "transformers>=4.17.0",
 ]
 
-[tool.poetry.dependencies]
-python = ">=3.12,<4"
-aiomultiprocess = "*"
-bitsandbytes = "<0.43"  # cannot install 0.43
-datasets = "*"
-einops = "*"
-fastapi = "*"
-fastapi-cli = "*"
-httpx = "*"
-hydra-core = "*"
-lightning= { version = "*", extras = ["extra"] }
-loguru = "*"
-numpy = "^1.0.0"
-omegaconf = "^2.3.0"
-polars = "*"
-pydantic = "*"
-scipy = "^1.14.0"
-scikit-learn = "*"
-tensorboard = "*"
-tokenizers = "*"
+[tool.uv.sources]
 torch = [
-    { version = ">=1.12+cpu", markers = "sys_platform == 'darwin'" },
-    # { version = ">=1.12+cu121", markers = "sys_platform == 'linux'" },
+    { index = "pytorch-cpu", marker = "platform_system != 'Darwin' and platform_machine == 'x86_64'" },
 ]
-torchmetrics = "*"
-transformers = "*"
-typer = "*"
 
+[[tool.uv.index]]
+name = "pytorch-cpu"
+url = "https://download.pytorch.org/whl/cpu"
+explicit = true
 
-[tool.poetry.group.dev.dependencies]
-coverage = { version = "*", extras = ["toml"] }
-jupyterlab = "^4.2.3"
-matplotlib = "^3.9.0"
-mypy = "*"
-pytest = "*"
-pytest-asyncio = "*"
-pytest-cov = "*"
-ruff = "*"
+[project.optional-dependencies]
+dev = [
+    # ML development
+    "hydra-core>=1.3.2",
+    "polars>=1.16.0",
+    "tensorboardx>=2.6.2.2",
+    "typer>=0.14.0",
+
+    # Test
+    "coverage[toml]>=7.6.8",
+    "pytest-asyncio>=0.24.0",
+    "pytest>=8.3.3",
+    "pytest-cov>=6.0.0",
+
+    # Lint
+    "ruff>=0.8.1",
+
+    # Types
+    "mypy>=1.13.0",
+
+    # Docs
+    "mkdocs>=1.6.1",
+    "mkdocs-material>=9.5.47",
+]
 
 [tool.ruff]
 line-length = 120
@@ -70,7 +81,7 @@ select = [
 ]
 
 [tool.ruff.lint.isort]
-known-first-party = ["common", "generator", "simulator"]
+known-first-party = ["api", "generator", "simulator"]
 known-third-party = ["datasets"]
 
 [tool.ruff.format]
@@ -78,7 +89,7 @@ quote-style = "single"
 
 [tool.mypy]
 plugins = ["numpy.typing.mypy_plugin"]
-files = ["common/", "generator/", "simulator/", "tests/"]
+files = ["src/", "tests/"]
 disallow_untyped_defs = true
 disallow_any_unimported = true
 no_implicit_optional = true
@@ -116,7 +127,7 @@ filterwarnings = [
 [tool.coverage.run]
 parallel = true
 data_file = "coverage/.coverage"
-source = ["common", "generator/", "simulator"]
+source = ["src/"]
 omit = []
 context = '${CONTEXT}'
 
@@ -128,5 +139,12 @@ exclude_lines = [
 ]
 
 [build-system]
-requires = ["poetry"]
-build-backend = "poetry.masonry.api"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = [
+    "src/api",
+    "src/generator",
+    "src/simulator",
+]

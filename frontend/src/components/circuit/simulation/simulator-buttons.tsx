@@ -39,11 +39,11 @@ export const SimulatorButtons = () => {
           variant="default"
           disabled={disabled}
           onClick={onClick}
-          className="p-2 w-28 flex items-center"
+          className="relative w-28 flex items-center"
           data-testid={testId}
         >
-          <div className="w-8 flex justify-center">{icon}</div>
-          <span className="flex-1 text-center">{label}</span>
+          <div className="absolute left-2 w-7 flex justify-center">{icon}</div>
+          <span className="absolute left-10 flex-1 text-center">{label}</span>
         </Button>
       ))}
     </div>

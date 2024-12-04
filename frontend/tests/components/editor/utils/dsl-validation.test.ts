@@ -1,25 +1,68 @@
+import { useStrictSchema } from "@/components/editor/schemas/strictSchema";
 import { validateDslContent } from "@/components/editor/utils/dsl-validation";
 import { describe, expect, it } from "vitest";
 
-const validPromoterName = "PameR";
-const validProteinName = "AmeR";
-const validTerminatorName = "L3S3P31";
+vi.mock("@/components/circuit/parts/parts-context", () => {
+  return {
+    useParts: () => ({
+      promoterParts: {
+        testPromoterName: {
+          name: "testPromoterName",
+          description: "Test Promoter Description",
+          category: "Promoter",
+          controlBy: [
+            {
+              name: "testProteinName",
+              type: "Repression",
+            },
+          ],
+          controlTo: [],
+        },
+      },
+      proteinParts: {
+        testProteinName: {
+          name: "testProteinName",
+          description: "Test Protein Description",
+          category: "Protein",
+          controlBy: [],
+          controlTo: [
+            {
+              name: "testPromoterName",
+              type: "Repression",
+            },
+          ],
+        },
+      },
+      terminatorParts: {
+        testTerminatorName: {
+          name: "testTerminatorName",
+          description: "Test Terminator Description",
+          category: "Terminator",
+          controlBy: [],
+          controlTo: [],
+        },
+      },
+    }),
+  };
+});
 
 describe("validateDslContent", () => {
+  const { strictCircuitSchema } = useStrictSchema();
+
   it("should return parsed content and no errors for valid DSL content", () => {
     // Arrange
     const validContent = `
 - chain:
-  - type: promoter
-    name: ${validPromoterName}
-  - type: protein
-    name: ${validProteinName}
-  - type: terminator
-    name: ${validTerminatorName}
+  - type: Promoter
+    name: testPromoterName
+  - type: Protein
+    name: testProteinName
+  - type: Terminator
+    name: testTerminatorName
 `;
 
     // Act
-    const result = validateDslContent(validContent);
+    const result = validateDslContent(validContent, strictCircuitSchema);
 
     // Assert
     expect(result.parsedContent).not.toBeNull();
@@ -31,14 +74,14 @@ describe("validateDslContent", () => {
     // Arrange
     const invalidContent = `
 - chain:
-  - type: protein
-    name: ${validProteinName}
-  - type: terminator
-    name: ${validTerminatorName}
+  - type: Protein
+    name: testProteinName
+  - type: Terminator
+    name: testTerminatorName
 `;
 
     // Act
-    const result = validateDslContent(invalidContent);
+    const result = validateDslContent(invalidContent, strictCircuitSchema);
 
     // Assert
     expect(result.parsedContent).not.toBeNull();
@@ -51,7 +94,7 @@ describe("validateDslContent", () => {
     const emptyContent = "";
 
     // Act
-    const result = validateDslContent(emptyContent);
+    const result = validateDslContent(emptyContent, strictCircuitSchema);
 
     // Assert
     expect(result.parsedContent).toBeNull();
@@ -63,16 +106,16 @@ describe("validateDslContent", () => {
     // Arrange
     const invalidContent = `
 - chain:
-  - type: promoter
+  - type: Promoter
     name: invalidPromoter
-  - type: protein
+  - type: Protein
     name: invalidProtein
-  - type: terminator
+  - type: Terminator
     name: invalidTerminator
 `;
 
     // Act
-    const result = validateDslContent(invalidContent);
+    const result = validateDslContent(invalidContent, strictCircuitSchema);
 
     // Assert
     expect(result.parsedContent).not.toBeNull();
@@ -84,17 +127,17 @@ describe("validateDslContent", () => {
     // Arrange
     const invalidContent = `
 - chain:
-  - type: promoter
-    name: ${validPromoterName}
+  - type: Promoter
+    name: testPromoterName
     extra: notAllowed
-  - type: protein
-    name: ${validProteinName}
-  - type: terminator
-    name: ${validTerminatorName}
+  - type: Protein
+    name: testProteinName
+  - type: Terminator
+    name: testTerminatorName
 `;
 
     // Act
-    const result = validateDslContent(invalidContent);
+    const result = validateDslContent(invalidContent, strictCircuitSchema);
 
     // Assert
     expect(result.validationErrors).not.toHaveLength(0);
@@ -105,12 +148,12 @@ describe("validateDslContent", () => {
     // Arrange
     const invalidContent = `
 - notChain:
-  - type: promoter
-    name: ${validPromoterName}
+  - type: Promoter
+    name: testPromoterName
 `;
 
     // Act
-    const result = validateDslContent(invalidContent);
+    const result = validateDslContent(invalidContent, strictCircuitSchema);
 
     // Assert
     expect(result.parsedContent).not.toBeNull();
@@ -125,7 +168,7 @@ describe("validateDslContent", () => {
 `;
 
     // Act
-    const result = validateDslContent(invalidContent);
+    const result = validateDslContent(invalidContent, strictCircuitSchema);
 
     // Assert
     expect(result.parsedContent).not.toBeNull();
@@ -137,23 +180,23 @@ describe("validateDslContent", () => {
     // Arrange
     const validContent = `
 - chain:
-    - type: promoter
-      name: ${validPromoterName}
-    - type: protein
-      name: ${validProteinName}
-    - type: terminator
-      name: ${validTerminatorName}
+    - type: Promoter
+      name: testPromoterName
+    - type: Protein
+      name: testProteinName
+    - type: Terminator
+      name: testTerminatorName
 - chain:
-    - type: promoter
-      name: ${validPromoterName}
-    - type: protein
-      name: ${validProteinName}
-    - type: terminator
-      name: ${validTerminatorName}
+    - type: Promoter
+      name: testPromoterName
+    - type: Protein
+      name: testProteinName
+    - type: Terminator
+      name: testTerminatorName
 `;
 
     // Act
-    const result = validateDslContent(validContent);
+    const result = validateDslContent(validContent, strictCircuitSchema);
 
     // Assert
     expect(result.parsedContent).not.toBeNull();

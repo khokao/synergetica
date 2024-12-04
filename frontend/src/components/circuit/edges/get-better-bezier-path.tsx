@@ -34,6 +34,7 @@ interface GetBetterBezierPathParams {
   targetY: number;
   targetPosition?: Position;
   offset?: number;
+  curveOffset?: number;
 }
 
 interface GetControlParams {
@@ -48,16 +49,22 @@ const getControl = ({ pos, x1, y1, x2, y2 }: GetControlParams): [number, number]
   return pos === Position.Left || pos === Position.Right ? [(x1 + x2) / 2, y1] : [x1, (y1 + y2) / 2];
 };
 
-const getOffsetControl = (pos: Position, x: number, y: number, offset: number): [number, number] => {
+const getOffsetControl = (
+  pos: Position,
+  x: number,
+  y: number,
+  offset: number,
+  curveOffset: number,
+): [number, number] => {
   switch (pos) {
     case Position.Top:
-      return [x, y - offset];
+      return [x + curveOffset, y - offset];
     case Position.Bottom:
-      return [x, y + offset];
+      return [x + curveOffset, y + offset];
     case Position.Left:
-      return [x - offset, y];
+      return [x - offset, y + curveOffset];
     case Position.Right:
-      return [x + offset, y];
+      return [x + offset, y + curveOffset];
     default:
       return [x + offset, y];
   }
@@ -71,6 +78,7 @@ export const getBetterBezierPath = ({
   targetY,
   targetPosition = Position.Top,
   offset = 0,
+  curveOffset = 0,
 }: GetBetterBezierPathParams): [path: string, labelX: number, labelY: number, offsetX: number, offsetY: number] => {
   let [sourceControlX, sourceControlY] = getControl({
     pos: sourcePosition,
@@ -87,9 +95,15 @@ export const getBetterBezierPath = ({
     y2: sourceY,
   });
 
-  if (offset) {
-    [sourceControlX, sourceControlY] = getOffsetControl(sourcePosition, sourceX, sourceY, offset);
-    [targetControlX, targetControlY] = getOffsetControl(targetPosition, targetX, targetY, offset);
+  if (offset || curveOffset) {
+    [sourceControlX, sourceControlY] = getOffsetControl(sourcePosition, sourceX, sourceY, offset, curveOffset);
+    [targetControlX, targetControlY] = getOffsetControl(
+      targetPosition,
+      targetX,
+      targetY,
+      offset,
+      -curveOffset, // Invert curveOffset for opposite direction
+    );
   }
 
   const [, labelX, labelY, offsetX, offsetY] = getBezierPath({

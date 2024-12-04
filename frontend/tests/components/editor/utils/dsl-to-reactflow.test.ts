@@ -1,11 +1,45 @@
 import { dslToReactflow } from "@/components/editor/utils/dsl-to-reactflow";
 import { describe, expect, it } from "vitest";
 
+const parts = {
+  testPromoterName: {
+    name: "testPromoterName",
+    description: "Test Promoter Description",
+    category: "Promoter",
+    controlBy: [
+      {
+        name: "testProteinName",
+        type: "Repression",
+      },
+    ],
+    controlTo: [],
+  },
+  testProteinName: {
+    name: "testProteinName",
+    description: "Test Protein Description",
+    category: "Protein",
+    controlBy: [],
+    controlTo: [
+      {
+        name: "testPromoterName",
+        type: "Repression",
+      },
+    ],
+  },
+  testTerminatorName: {
+    name: "testTerminatorName",
+    description: "Test Terminator Description",
+    category: "Terminator",
+    controlBy: [],
+    controlTo: [],
+  },
+};
+
 describe("dslToReactflow", () => {
   it("should return empty nodes and edges for empty content", () => {
     const content = "";
 
-    const result = dslToReactflow(content);
+    const result = dslToReactflow(content, parts);
 
     expect(result).toEqual({ nodes: [], edges: [] });
   });
@@ -16,7 +50,7 @@ describe("dslToReactflow", () => {
   - type: invalidType
 `;
 
-    const result = dslToReactflow(content);
+    const result = dslToReactflow(content, parts);
 
     expect(result).toBeNull();
   });
@@ -24,13 +58,13 @@ describe("dslToReactflow", () => {
   it("should generate correct nodes and edges for valid DSL content", () => {
     const content = `
 - chain:
-  - type: promoter
-  - type: protein
-  - type: terminator
+  - type: Promoter
+  - type: Protein
+  - type: Terminator
 `;
 
     // Act
-    const result = dslToReactflow(content);
+    const result = dslToReactflow(content, parts);
 
     // Assert
     expect(result).not.toBeNull();
@@ -42,17 +76,17 @@ describe("dslToReactflow", () => {
     // Arrange
     const content = `
 - chain:
-  - type: promoter
-  - type: protein
-  - type: terminator
+  - type: Promoter
+  - type: Protein
+  - type: Terminator
 - chain:
-  - type: promoter
-  - type: protein
-  - type: terminator
+  - type: Promoter
+  - type: Protein
+  - type: Terminator
 `;
 
     // Act
-    const result = dslToReactflow(content);
+    const result = dslToReactflow(content, parts);
 
     // Assert
     expect(result).not.toBeNull();
@@ -64,13 +98,13 @@ describe("dslToReactflow", () => {
     // Arrange
     const content = `
 - chain:
-  - type: promoter
-  - type: protein
-  - type: terminator
+  - type: Promoter
+  - type: Protein
+  - type: Terminator
 `;
 
     // Act
-    const result = dslToReactflow(content);
+    const result = dslToReactflow(content, parts);
 
     // Assert
     expect(result).not.toBeNull();
@@ -90,11 +124,11 @@ describe("dslToReactflow", () => {
     // Arrange
     const content = `
 - chain:
-  - type: promoter
+  - type: Promoter
 `;
 
     // Act
-    const result = dslToReactflow(content);
+    const result = dslToReactflow(content, parts);
 
     // Assert
     expect(result).not.toBeNull();
@@ -109,21 +143,21 @@ describe("dslToReactflow", () => {
     // Arrange
     const content = `
 - chain:
-  - type: promoter
-  - type: protein
-  - type: terminator
+  - type: Promoter
+  - type: Protein
+  - type: Terminator
 `;
 
     // Act
-    const result = dslToReactflow(content);
+    const result = dslToReactflow(content, parts);
 
     // Assert
     expect(result).not.toBeNull();
     const nodes = result?.nodes;
     if (nodes) {
-      const promoterNode = nodes.find((node) => node.data.category === "promoter");
-      const proteinNode = nodes.find((node) => node.data.category === "protein");
-      const terminatorNode = nodes.find((node) => node.data.category === "terminator");
+      const promoterNode = nodes.find((node) => node.data.category === "Promoter");
+      const proteinNode = nodes.find((node) => node.data.category === "Protein");
+      const terminatorNode = nodes.find((node) => node.data.category === "Terminator");
 
       expect(promoterNode?.data.leftHandleConnected).toBe(false);
       expect(promoterNode?.data.rightHandleConnected).toBe(true);
@@ -138,13 +172,13 @@ describe("dslToReactflow", () => {
     // Arrange
     const content = `
 - chain:
-  - type: promoter
-  - type: protein
-  - type: terminator
+  - type: Promoter
+  - type: Protein
+  - type: Terminator
 `;
 
     // Act
-    const result = dslToReactflow(content);
+    const result = dslToReactflow(content, parts);
 
     // Assert
     expect(result?.edges.length).toBe(2);

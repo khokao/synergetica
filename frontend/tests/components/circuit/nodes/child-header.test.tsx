@@ -5,7 +5,7 @@ import { describe, expect, it } from "vitest";
 describe("ChildHeader Component", () => {
   it("displays the correct text and styles for promoter category", () => {
     // Arrange
-    const data = { category: "promoter" };
+    const data = { category: "Promoter" };
 
     // Act
     render(<ChildHeader data={data} />);
@@ -13,13 +13,13 @@ describe("ChildHeader Component", () => {
     // Assert
     const textElement = screen.getByText("Promoter");
     expect(textElement).toBeInTheDocument();
-    expect(textElement.parentElement).toHaveClass("bg-blue-200");
+    expect(textElement.parentElement).toHaveClass("bg-promoter-200");
     expect(screen.getByTestId("promoter-icon")).toBeInTheDocument();
   });
 
   it("displays the correct text and styles for protein category", () => {
     // Arrange
-    const data = { category: "protein" };
+    const data = { category: "Protein" };
 
     // Act
     render(<ChildHeader data={data} />);
@@ -27,13 +27,13 @@ describe("ChildHeader Component", () => {
     // Assert
     const textElement = screen.getByText("Protein");
     expect(textElement).toBeInTheDocument();
-    expect(textElement.parentElement).toHaveClass("bg-green-200");
+    expect(textElement.parentElement).toHaveClass("bg-protein-200");
     expect(screen.getByTestId("protein-icon")).toBeInTheDocument();
   });
 
   it("displays the correct text and styles for terminator category", () => {
     // Arrange
-    const data = { category: "terminator" };
+    const data = { category: "Terminator" };
 
     // Act
     render(<ChildHeader data={data} />);
@@ -41,7 +41,7 @@ describe("ChildHeader Component", () => {
     // Assert
     const textElement = screen.getByText("Terminator");
     expect(textElement).toBeInTheDocument();
-    expect(textElement.parentElement).toHaveClass("bg-red-200");
+    expect(textElement.parentElement).toHaveClass("bg-terminator-200");
     expect(screen.getByTestId("terminator-icon")).toBeInTheDocument();
   });
 });

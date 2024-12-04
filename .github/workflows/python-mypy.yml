@@ -34,14 +34,14 @@ jobs:
         uses: ./.github/composite/setup-python
         with:
           python_version: "3.12"
-          poetry_version: "1.8"
+          uv_version: "0.5.5"
           working_dir: backend
 
       - name: mypy
         env:
           REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          poetry run mypy \
+          uv run mypy \
             | reviewdog -f="mypy" \
             -name="mypy" \
             -reporter="github-pr-review" \

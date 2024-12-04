@@ -1,14 +1,13 @@
 import { EDGE_LENGTH, GROUP_NODE_MARGIN, NODE_HEIGHT, NODE_WIDTH } from "@/components/circuit/constants";
 import { createEdge } from "@/components/circuit/hooks/utils/create-edge";
 import { createChildNode, createParentNode } from "@/components/circuit/hooks/utils/create-node";
-import { ALL_PARTS } from "@/components/circuit/parts/constants";
 import { CHAIN_GAP_Y, CHAIN_OFFSET_X } from "@/components/editor/constants";
 import { looseCircuitSchema } from "@/components/editor/schemas/looseSchema";
 import type { Edge, Node } from "@xyflow/react";
 import { produce } from "immer";
 import { parseDocument } from "yaml";
 
-export const dslToReactflow = (content: string): { nodes: Node[]; edges: Edge[] } | null => {
+export const dslToReactflow = (content, parts): { nodes: Node[]; edges: Edge[] } | null => {
   const doc = parseDocument(content);
 
   if (doc.contents === null) {
@@ -56,8 +55,8 @@ export const dslToReactflow = (content: string): { nodes: Node[]; edges: Edge[] 
         const childNode = produce(tempChildNode, (childDraft) => {
           childDraft.parentId = hasParent ? parentNode.id : undefined;
 
-          if (childObj.name in ALL_PARTS) {
-            const attributes = ALL_PARTS[childObj.name];
+          if (childObj.name in parts) {
+            const attributes = parts[childObj.name];
             childDraft.data.name = attributes.name;
             childDraft.data.description = attributes.description;
             childDraft.data.category = attributes.category;

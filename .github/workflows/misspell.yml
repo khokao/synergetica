@@ -32,4 +32,3 @@ jobs:
           fail_on_error: "true"
           filter_mode: "nofilter"
           level: "warning"
-          ignore: "flavour" # flavour is in poetry.lock

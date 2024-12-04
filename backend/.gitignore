@@ -8,10 +8,10 @@
 # ref: https://github.com/github/gitignore/blob/main/Python.gitignore
 
 # generator specific
-datasets/cache/**
-!datasets/cache/.gitkeep
-generator/outputs/**
-!generator/outputs/.gitkeep
+src/generator/train/datasets/cache/**
+!src/generator/train/datasets/cache/.gitkeep
+src/generator/train/outputs/**
+!src/generator/train/outputs/.gitkeep
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -65,6 +65,7 @@ coverage.xml
 .hypothesis/
 .pytest_cache/
 cover/
+coverage/
 
 # Translations
 *.mo
@@ -155,6 +156,9 @@ venv.bak/
 
 # mkdocs documentation
 /site
+
+# ruff
+.ruff_cache/
 
 # mypy
 .mypy_cache/

@@ -1,7 +1,7 @@
 {
   "name": "L3S3P31",
   "description": "Standard Terminator",
-  "category": "terminator",
+  "category": "Terminator",
   "sequence": "ccaattattgaacaccctaacgggtgtttttttttttttggtctacc",
   "controlBy": [],
   "controlTo": [],

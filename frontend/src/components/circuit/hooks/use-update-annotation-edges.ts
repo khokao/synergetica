@@ -18,7 +18,8 @@ export const useUpdateAnnotationEdges = () => {
       draft.length = 0;
       draft.push(...customEdges);
 
-      const edgeExists = (source, target) => draft.some((e) => e.source === source && e.target === target);
+      const edgeExists = (source, target) =>
+        draft.some((e) => e.type === "annotation" && e.source === source && e.target === target);
 
       for (const n of debouncedNodes) {
         if (n.type !== "child") continue;
@@ -36,9 +37,9 @@ export const useUpdateAnnotationEdges = () => {
 
                 if (!edgeExists(sourceId, targetId)) {
                   let edge: Edge | undefined;
-                  if (control.type === "activation") {
+                  if (control.type === "Activation") {
                     edge = createActivationEdge(sourceId, targetId);
-                  } else if (control.type === "repression") {
+                  } else if (control.type === "Repression") {
                     edge = createRepressionEdge(sourceId, targetId);
                   }
                   if (edge) draft.push(edge);

@@ -50,23 +50,23 @@ export const DnDPanel = () => {
       <div className="flex items-center justify-center w-[140px] h-[48px] mr-[32px] space-x-3 bg-gray-100 shadow-lg px-3 py-2 rounded-lg">
         <IconTooltip
           label="Promoter"
-          icon={<CornerUpRight className="text-blue-800" />}
-          color="bg-blue-200"
-          category="promoter"
+          icon={<CornerUpRight className="text-promoter-800" />}
+          color="bg-promoter-200"
+          category="Promoter"
           onDragStart={handleDragStart}
         />
         <IconTooltip
           label="Protein"
-          icon={<RectangleHorizontal className="text-green-800" />}
-          color="bg-green-200"
-          category="protein"
+          icon={<RectangleHorizontal className="text-protein-800" />}
+          color="bg-protein-200"
+          category="Protein"
           onDragStart={handleDragStart}
         />
         <IconTooltip
           label="Terminator"
-          icon={<RiText className="text-red-800" />}
-          color="bg-red-200"
-          category="terminator"
+          icon={<RiText className="text-terminator-800" />}
+          color="bg-terminator-200"
+          category="Terminator"
           onDragStart={handleDragStart}
         />
       </div>
