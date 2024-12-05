@@ -7,8 +7,10 @@ nav:
     - Install : pages/getting_starts/install.md
     - Tutorial: pages/getting_starts/tutorial.md
   - Guide:
-    - GUI circuit design: pages/guide/gui.md
-    - DSL: pages/guide/dsl.md
+    - GUI circuit design: 
+      - Design Circuit: pages/guide/gui/design.md
+      - Parts: pages/guide/gui/parts.md
+      - DSL: pages/guide/gui/dsl.md
     - Simulation: pages/guide/simulation.md
     - Seqence Generation: pages/guide/generation.md
 
