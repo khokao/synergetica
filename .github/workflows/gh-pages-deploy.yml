@@ -27,8 +27,8 @@ jobs:
           uv_version: "0.5.5"
           working_dir: backend
       
-      - name: Activate uv venv
-        run: . ../backend/.venv/bin/activate
+      - name: install mkdocs
+        run: pip install mkdocs>=1.6.1 mkdocs-material>=9.5.47
 
       - name: Deploy to GitHub Pages
         run: mkdocs gh-deploy --force

@@ -9,6 +9,6 @@ Here show hot to design circuit with GUI
 - 活性/抑制の線について説明する
 
 ## Rule
-- DSL的にvalidな回路とunvalidな回路を示す。
+- DSL的にvalidな回路とunvalidな回路を示す。。
 
 
