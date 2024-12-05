@@ -4,14 +4,14 @@ on:
     branches:
       - docs/init
     paths:
-      - "backend/docs/**"
+      - "docs/**"
 
 permissions:
   contents: write
 
 defaults:
   run:
-    working-directory: ./backend/docs
+    working-directory: docs
 
 jobs:
   deploy:
