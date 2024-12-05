@@ -31,4 +31,4 @@ jobs:
         run: . ../backend/.venv/bin/activate
 
       - name: Deploy to GitHub Pages
-        run: uv run mkdocs gh-deploy --force
+        run: mkdocs gh-deploy --force
