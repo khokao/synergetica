@@ -11,7 +11,7 @@ permissions:
 
 defaults:
   run:
-    working-directory: docs
+    working-directory: ./backend
 
 jobs:
   deploy:
@@ -25,10 +25,7 @@ jobs:
         with:
           python_version: "3.12"
           uv_version: "0.5.5"
-          working_dir: backend
-      
-      - name: install mkdocs
-        run: pip install mkdocs>=1.6.1 mkdocs-material>=9.5.47
+          working_dir: backend      
 
       - name: Deploy to GitHub Pages
-        run: mkdocs gh-deploy --force
+        run: uv run mkdocs gh-deploy -f ../docs/mkdocs.yml --force
