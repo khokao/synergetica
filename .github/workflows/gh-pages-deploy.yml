@@ -4,14 +4,14 @@ on:
     branches:
       - docs/init
     paths:
-      - "docs/**"
+      - "backend/docs/**"
 
 permissions:
   contents: write
 
 defaults:
   run:
-    working-directory: ./docs
+    working-directory: ./backend/docs
 
 jobs:
   deploy:
@@ -24,8 +24,8 @@ jobs:
         uses: ./.github/composite/setup-python
         with:
           python_version: "3.12"
-          poetry_version: "1.8"
-          working_dir: docs
+          uv_version: "0.5.5"
+          working_dir: backend
 
       - name: Deploy to GitHub Pages
-        run: poetry run mkdocs gh-deploy --force
+        run: uv run mkdocs gh-deploy --force
