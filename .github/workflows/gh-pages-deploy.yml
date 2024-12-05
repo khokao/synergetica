@@ -28,6 +28,7 @@ jobs:
           working_dir: backend
       
       - name: Activate uv venv
+        working-directory: backend
         run: . .venv/bin/activate
 
       - name: Deploy to GitHub Pages
