@@ -1,8 +1,8 @@
-name: "GitHub Pages Deploy"
+name: "Document GitHub Pages Deploy"
 on:
   push:
     branches:
-      - docs/init
+      - main
     paths:
       - "docs/**"
 
