@@ -1,11 +1,13 @@
 # MkDocs
 ## Usage
 - dev
+	- run this command at `./backend` dir.
 ```
-mkdocs serve
+uv run mkdocs serve -f ../docs/mkdocs.yml
 ```
 
 - build
+	- run this command at ./backend dir.
 ```
-mkdocs build
+uv run mkdocs build -f ../docs/mkdocs.yml
 ```
