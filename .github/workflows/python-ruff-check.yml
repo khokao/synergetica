@@ -5,13 +5,13 @@ on:
     branches:
       - main
     paths:
-      - "backend/**"
+      - "services/**"
   pull_request:
     types:
       - opened
       - synchronize
     paths:
-      - "backend/**"
+      - "services/**"
 
 permissions:
   contents: read
@@ -20,7 +20,7 @@ permissions:
 
 defaults:
   run:
-    working-directory: ./backend
+    working-directory: ./services
 
 jobs:
   ruff-check:
@@ -35,7 +35,7 @@ jobs:
         with:
           python_version: "3.12"
           uv_version: "0.5.5"
-          working_dir: backend
+          working_dir: services
 
       - name: ruff linter
         env:

@@ -5,13 +5,13 @@ on:
     branches:
       - main
     paths:
-      - "frontend/**"
+      - "desktop/**"
   pull_request:
     types:
       - opened
       - synchronize
     paths:
-      - "frontend/**"
+      - "desktop/**"
 
 permissions:
   contents: read
@@ -20,7 +20,7 @@ permissions:
 
 defaults:
   run:
-    working-directory: ./frontend
+    working-directory: ./desktop
 
 jobs:
   vitest:
@@ -34,7 +34,7 @@ jobs:
         uses: ./.github/composite/setup-node
         with:
           node_version: "21"
-          working_dir: frontend
+          working_dir: desktop
 
       - name: vitest
         run: npm run coverage
@@ -43,7 +43,7 @@ jobs:
         if: always()
         uses: davelosert/vitest-coverage-report-action@v2
         with:
-          json-summary-path: ./frontend/coverage/coverage-summary.json
-          json-final-path: ./frontend/coverage/coverage-final.json
-          vite-config-path: ./frontend/vitest.config.mts
+          json-summary-path: ./desktop/coverage/coverage-summary.json
+          json-final-path: ./desktop/coverage/coverage-final.json
+          vite-config-path: ./desktop/vitest.config.mts
           file-coverage-mode: all
