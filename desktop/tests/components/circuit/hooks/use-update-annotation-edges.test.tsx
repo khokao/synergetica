@@ -138,4 +138,52 @@ describe("useUpdateAnnotationEdges", () => {
     // Assert
     expect(mockSetEdges.mock.calls[0][0]).toHaveLength(1);
   });
+
+  it("creates multiple edges when multiple nodes share the same name in controlTo/By", () => {
+    // Arrange
+    const mockSetEdges = vi.fn();
+    const mockGetEdges = vi.fn(() => []);
+    const nodeA = {
+      id: "nodeA",
+      type: "child",
+      data: {
+        name: "partA",
+        controlTo: [{ name: "partB", type: "Activation" }],
+        controlBy: [],
+      },
+    };
+    const nodeB1 = {
+      id: "nodeB1",
+      type: "child",
+      data: {
+        name: "partB",
+        controlTo: [],
+        controlBy: [],
+      },
+    };
+    const nodeB2 = {
+      id: "nodeB2",
+      type: "child",
+      data: {
+        name: "partB",
+        controlTo: [],
+        controlBy: [],
+      },
+    };
+    (useNodes as Mock).mockReturnValue([nodeA, nodeB1, nodeB2]);
+    (useReactFlow as Mock).mockReturnValue({
+      getEdges: mockGetEdges,
+      setEdges: mockSetEdges,
+    });
+
+    // Act
+    renderHook(() => useUpdateAnnotationEdges());
+
+    // Assert
+    expect(mockSetEdges).toHaveBeenCalled();
+    const updatedEdges = mockSetEdges.mock.calls[0][0];
+    expect(updatedEdges).toHaveLength(2);
+    expect(updatedEdges[0].target).toBe("nodeB1");
+    expect(updatedEdges[1].target).toBe("nodeB2");
+  });
 });
