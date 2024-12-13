@@ -19,7 +19,7 @@ runs:
       with:
         node-version: ${{ inputs.node_version }}
         cache: "npm"
-        cache-dependency-path: frontend/package-lock.json
+        cache-dependency-path: desktop/package-lock.json
 
     - name: Install dependencies
       shell: bash

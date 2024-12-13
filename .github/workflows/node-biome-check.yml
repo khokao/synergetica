@@ -5,13 +5,13 @@ on:
     branches:
       - main
     paths:
-      - "frontend/**"
+      - "desktop/**"
   pull_request:
     types:
       - opened
       - synchronize
     paths:
-      - "frontend/**"
+      - "desktop/**"
 
 permissions:
   contents: read
@@ -20,7 +20,7 @@ permissions:
 
 defaults:
   run:
-    working-directory: ./frontend
+    working-directory: ./desktop
 
 jobs:
   biome-check:
@@ -34,7 +34,7 @@ jobs:
         uses: ./.github/composite/setup-node
         with:
           node_version: "21"
-          working_dir: frontend
+          working_dir: desktop
 
       # ref: https://github.com/mongolyy/reviewdog-action-biome/
       - name: biome check

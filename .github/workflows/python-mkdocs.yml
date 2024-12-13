@@ -5,15 +5,15 @@ on:
     branches:
       - main
     paths:
-      - "backend/docs/**"
-      - "backend/mkdocs.yml"
+      - "services/docs/**"
+      - "services/mkdocs.yml"
 
 permissions:
   contents: write
 
 defaults:
   run:
-    working-directory: ./backend
+    working-directory: ./services
 
 jobs:
   mkdocs:
@@ -28,7 +28,7 @@ jobs:
         with:
           python_version: "3.12"
           uv_version: "0.5.5"
-          working_dir: backend
+          working_dir: services
 
       - name: mkdocs gh-deploy
         run: uv run mkdocs gh-deploy --strict --force
