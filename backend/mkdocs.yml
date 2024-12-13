@@ -1,0 +1,56 @@
+site_name: MaGesty
+site_url: https://docs.magesty/
+
+nav:
+  - Introduction: index.md
+  - Getting Started:
+      - Installation: getting-started/installation.md
+      - Tutorial: getting-started/tutorial.md
+  - Guides:
+      - Terminology: guides/terminology.md
+      - Circuit design: guides/circuit-design.md
+      - Genetic simulation: guides/genetic-simulation.md
+      - Sequence generation: guides/sequence-generation.md
+
+theme:
+  name: material
+  logo: assets/demo-logo.svg
+  favicon: assets/demo-logo.svg
+  palette:
+    scheme: default
+    primary: custom
+    accent: custom
+  features:
+    - content.code.copy
+    - navigation.instant
+    - navigation.instant.progress
+    - navigation.tracking
+    - navigation.sections
+    - navigation.top
+    - navigation.footer
+    - toc.follow
+
+extra_css:
+  - stylesheets/extra.css
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - pymdownx.magiclink
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - toc:
+      permalink: true
+      title: Page contents
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+
+validation:
+  omitted_files: warn
+  absolute_links: warn
+  unrecognized_links: warn
+  anchors: warn
