@@ -1,0 +1,15 @@
+:root {
+    --md-primary-fg-color: #171717;  /* neutral-900 */
+    --md-accent-fg-color: #dc2626;  /* red-600 */
+}
+
+.md-typeset .grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    text-align: center;
+}
+@media (min-width: 640px) { /* sm */
+    .md-typeset .grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}

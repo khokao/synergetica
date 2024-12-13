@@ -1,0 +1,34 @@
+name: "Python mkdocs deploy"
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "backend/docs/**"
+      - "backend/mkdocs.yml"
+
+permissions:
+  contents: write
+
+defaults:
+  run:
+    working-directory: ./backend
+
+jobs:
+  mkdocs:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: ./.github/composite/setup-python
+        with:
+          python_version: "3.12"
+          uv_version: "0.5.5"
+          working_dir: backend
+
+      - name: mkdocs gh-deploy
+        run: uv run mkdocs gh-deploy --strict --force
