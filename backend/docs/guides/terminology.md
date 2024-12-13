@@ -1,4 +1,4 @@
-## Parts category
+## Part categories
 
 ### Promoter
 
@@ -9,11 +9,3 @@
 
 
 ### Terminator
-
-
-## Parts interaction
-
-### Repression
-
-
-### Activation
