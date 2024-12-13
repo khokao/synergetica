@@ -18,7 +18,7 @@ export const useUpdateAnnotationEdges = () => {
       draft.length = 0;
       draft.push(...customEdges);
 
-      const edgeExists = (source, target) =>
+      const edgeExists = (source: string, target: string) =>
         draft.some((e) => e.type === "annotation" && e.source === source && e.target === target);
 
       for (const n of debouncedNodes) {
@@ -29,9 +29,9 @@ export const useUpdateAnnotationEdges = () => {
         const processControls = (controls, isControlBy) => {
           if (Array.isArray(controls)) {
             for (const control of controls) {
-              const relatedNode = debouncedNodes.find((nn) => nn.data.name === control.name);
+              const relatedNodes = debouncedNodes.filter((nn) => nn.data.name === control.name);
 
-              if (relatedNode) {
+              for (const relatedNode of relatedNodes) {
                 const sourceId = isControlBy ? relatedNode.id : n.id;
                 const targetId = isControlBy ? n.id : relatedNode.id;
 
