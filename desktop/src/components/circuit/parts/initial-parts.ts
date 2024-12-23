@@ -2,7 +2,7 @@ import { partsCollectionSchema } from "@/components/circuit/parts/schema";
 
 import PameRData from "@/components/circuit/parts/promoter/PameR.json";
 import PamtRData from "@/components/circuit/parts/promoter/PamtR.json";
-import PbetlData from "@/components/circuit/parts/promoter/Pbetl.json";
+import PbetIData from "@/components/circuit/parts/promoter/PbetI.json";
 import Pbm3r1Data from "@/components/circuit/parts/promoter/Pbm3r1.json";
 import PhyllRData from "@/components/circuit/parts/promoter/PhyllR.json";
 import PlcaRAData from "@/components/circuit/parts/promoter/PlcaRA.json";
@@ -31,7 +31,7 @@ import L3S3P31Data from "@/components/circuit/parts/terminator/L3S3P31.json";
 export const initialParts = partsCollectionSchema.parse({
   PameR: PameRData,
   PamtR: PamtRData,
-  Pbetl: PbetlData,
+  PbetI: PbetIData,
   Pbm3r1: Pbm3r1Data,
   PhyllR: PhyllRData,
   PlcaRA: PlcaRAData,
