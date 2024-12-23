@@ -7,15 +7,12 @@
   "controlTo": [
     {
       "name": "PlcaRA",
-      "type": "Repression"
+      "type": "Repression",
+      "params": null
     }
   ],
-  "meta": {
-    "Pmax": 0.000112759796,
-    "Ymax": 2.2,
-    "Ymin": 0.08,
-    "K": 0.1,
-    "n": 1.4,
-    "Dp": 0.3212729
+  "params": {
+    "Dp": 0.3212729,
+    "TIRb": 1300.7
   }
 }

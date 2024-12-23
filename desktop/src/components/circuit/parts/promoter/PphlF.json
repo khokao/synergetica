@@ -6,9 +6,17 @@
   "controlBy": [
     {
       "name": "PhlF",
-      "type": "Repression"
+      "type": "Repression",
+      "params": {
+        "Ymax": 3.9,
+        "Ymin": 0.01,
+        "K": 0.03,
+        "n": 4
+      }
     }
   ],
   "controlTo": [],
-  "meta": null
+  "params": {
+    "Ydef": 3.9
+  }
 }

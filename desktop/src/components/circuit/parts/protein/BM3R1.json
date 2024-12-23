@@ -7,15 +7,12 @@
   "controlTo": [
     {
       "name": "Pbm3r1",
-      "type": "Repression"
+      "type": "Repression",
+      "params": null
     }
   ],
-  "meta": {
-    "Pmax": 0.00005590683685,
-    "Ymax": 0.5,
-    "Ymin": 0.004,
-    "K": 0.04,
-    "n": 3.4,
-    "Dp": 0.14726881
+  "params": {
+    "Dp": 0.14726881,
+    "TIRb": 596.23
   }
 }

@@ -6,9 +6,17 @@
   "controlBy": [
     {
       "name": "BM3R1",
-      "type": "Repression"
+      "type": "Repression",
+      "params": {
+        "Ymax": 0.5,
+        "Ymin": 0.004,
+        "K": 0.04,
+        "n": 3.4
+      }
     }
   ],
   "controlTo": [],
-  "meta": null
+  "params": {
+    "Ydef": 0.5
+  }
 }

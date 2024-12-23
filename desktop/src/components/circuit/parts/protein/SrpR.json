@@ -7,15 +7,12 @@
   "controlTo": [
     {
       "name": "PsrpR",
-      "type": "Repression"
+      "type": "Repression",
+      "params": null
     }
   ],
-  "meta": {
-    "Pmax": 0.0000304105203,
-    "Ymax": 2.1,
-    "Ymin": 0.003,
-    "K": 0.04,
-    "n": 2.5,
-    "Dp": 1.13710649
+  "params": {
+    "Dp": 1.13710649,
+    "TIRb": 4603.67
   }
 }

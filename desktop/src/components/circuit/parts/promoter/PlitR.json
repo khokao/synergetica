@@ -6,9 +6,17 @@
   "controlBy": [
     {
       "name": "LitR",
-      "type": "Repression"
+      "type": "Repression",
+      "params": {
+        "Ymax": 4.3,
+        "Ymin": 0.07,
+        "K": 0.05,
+        "n": 1.7
+      }
     }
   ],
   "controlTo": [],
-  "meta": null
+  "params": {
+    "Ydef": 4.3
+  }
 }
