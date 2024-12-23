@@ -3,7 +3,7 @@
   "description": "Repressor Protein of PlcaRA",
   "category": "Protein",
   "sequence": "gtgaaagacaaaattatcgataacgccatcaccctgtttagcgaaaaaggttatgacggcaccaccctggatgatattgcaaaaagcgtgaacatcaaaaaagccagcctgtattatcactttgatagcaaaaaaagcatctacgagcagagcgttaaatgctgtttcgattatctgaacaacatcatcatgatgaaccagaacaaaagcaactatagcatcgatgccctgtatcagtttctgtttgagttcatcttcgatatcgaggaacgctatattcgtatgtatgttcagctgagcaacacaccggaagaattttcaggtaacatttatggccagatccaggatctgaatcagagcctgagcaaagaaatcgccaaattctatgacgaaagcaaaatcaaaatgaccaaagaggacttccagaatctgattctgctgtttctggaaagctggtatctgaaagccagctttagccagaaatttggtgcagttgaagaaagcaaaagccagtttaaagatgaggtttatagcctgctgaacatctttctgaagaaataa",
-  "controlBy": null,
+  "controlBy": [],
   "params": {
     "Dp": 0.3212729,
     "TIRb": 1300.7

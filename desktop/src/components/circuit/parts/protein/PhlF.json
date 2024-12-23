@@ -3,7 +3,7 @@
   "description": "Repressor Protein of PphlF",
   "category": "Protein",
   "sequence": "atggcacgtaccccgagccgtagcagcattggtagcctgcgtagtccgcatacccataaagcaattctgaccagcaccattgaaatcctgaaagaatgtggttatagcggtctgagcattgaaagcgttgcacgtcgtgccggtgcaagcaaaccgaccatttatcgttggtggaccaataaagcagcactgattgccgaagtgtatgaaaatgaaagcgaacaggtgcgtaaatttccggatctgggtagctttaaagccgatctggattttctgctgcgtaatctgtggaaagtttggcgtgaaaccatttgtggtgaagcatttcgttgtgttattgcagaagcacagctggaccctgcaaccctgacccagctgaaagatcagtttatggaacgtcgtcgtgagatgccgaaaaaactggttgaaaatgccattagcaatggtgaactgccgaaagataccaatcgtgaactgctgctggatatgatttttggtttttgttggtatcgcctgctgaccgaacagctgaccgttgaacaggatattgaagaatttaccttcctgctgattaatggtgtttgtccgggtacacagcgttaa",
-  "controlBy": null,
+  "controlBy": [],
   "params": {
     "Dp": 1.15054329,
     "TIRb": 4658.07

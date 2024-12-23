@@ -3,6 +3,6 @@
   "description": "Standard Terminator",
   "category": "Terminator",
   "sequence": "ccaattattgaacaccctaacgggtgtttttttttttttggtctacc",
-  "controlBy": null,
-  "params": null
+  "controlBy": [],
+  "params": {}
 }
