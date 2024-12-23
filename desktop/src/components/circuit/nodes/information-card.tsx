@@ -26,20 +26,39 @@ const renderPartsName = (name) => {
   return <span className={`${colorClass} font-semibold`}>{name}</span>;
 };
 
-const ControlSection = ({ data, direction }) => {
-  const controlData = direction === "by" ? data.controlBy : data.controlTo;
+const ControlSection = ({ name, category }) => {
+  const { interactionStore } = useParts();
 
-  if (controlData.length === 0) return null;
+  let controls: Array<{
+    sourceName: string;
+    targetName: string;
+    type: string;
+  }> = [];
+
+  if (category === "Promoter") {
+    const sources = interactionStore.getProteinsByPromoter(name);
+    controls = sources.map((item) => ({
+      sourceName: item.from,
+      targetName: name,
+      type: item.type,
+    }));
+  } else if (category === "Protein") {
+    const targets = interactionStore.getPromotersByProtein(name);
+    controls = targets.map((item) => ({
+      sourceName: name,
+      targetName: item.to,
+      type: item.type,
+    }));
+  }
+
+  if (controls.length === 0) return null;
 
   return (
     <>
-      {controlData.map((control) => {
-        const { name, type, id } = control;
-        const [sourceName, targetName] = direction === "by" ? [name, data.name] : [data.name, name];
-
+      {controls.map(({ sourceName, targetName, type }) => {
         return (
           <Button
-            key={id || name}
+            key={`${sourceName}-${targetName}`}
             variant="secondary"
             className="flex items-center justify-center space-x-2 w-[175px] hover:bg-neutral-100/100"
           >
@@ -63,8 +82,7 @@ export const InformationCard = ({ data }) => {
         <CardDescription>{data.description}</CardDescription>
       </CardHeader>
       <CardContent className="flex flex-col justify-center items-center space-y-2">
-        <ControlSection data={data} direction="by" />
-        <ControlSection data={data} direction="to" />
+        <ControlSection name={data.name} category={data.category} />
       </CardContent>
     </Card>
   );
