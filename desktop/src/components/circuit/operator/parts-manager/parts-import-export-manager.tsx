@@ -45,8 +45,6 @@ export const PartsImportExportManager: FC = () => {
                 node.data.category = attributes.category;
                 node.data.sequence = attributes.sequence;
                 node.data.controlBy = attributes.controlBy;
-                node.data.controlTo = attributes.controlTo;
-                node.data.meta = attributes.meta;
               } else {
                 node.data = { ...initChildNodeData, category: node.data.category };
               }
