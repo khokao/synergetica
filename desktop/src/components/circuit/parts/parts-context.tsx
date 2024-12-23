@@ -4,12 +4,42 @@ import { partSchema, partsCollectionSchema } from "@/components/circuit/parts/sc
 import { useReactFlow } from "@xyflow/react";
 import { produce } from "immer";
 import type React from "react";
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { toast } from "sonner";
 import type { z } from "zod";
 
 type Part = z.infer<typeof partSchema>;
 type PartsCollection = z.infer<typeof partsCollectionSchema>;
+
+class InteractionStore {
+  private proteinToPromotersMap: Record<string, Array<{ to: string; type: string }>> = {};
+  private promoterToProteinsMap: Record<string, Array<{ from: string; type: string }>> = {};
+
+  addInteraction(from: string, to: string, type: string) {
+    if (!this.proteinToPromotersMap[from]) {
+      this.proteinToPromotersMap[from] = [];
+    }
+    this.proteinToPromotersMap[from].push({ to, type });
+
+    if (!this.promoterToProteinsMap[to]) {
+      this.promoterToProteinsMap[to] = [];
+    }
+    this.promoterToProteinsMap[to].push({ from, type });
+  }
+
+  clear() {
+    this.proteinToPromotersMap = {};
+    this.promoterToProteinsMap = {};
+  }
+
+  getPromotersByProtein(from: string) {
+    return this.proteinToPromotersMap[from] || [];
+  }
+
+  getProteinsByPromoter(to: string) {
+    return this.promoterToProteinsMap[to] || [];
+  }
+}
 
 interface PartsContextType {
   parts: PartsCollection;
@@ -17,9 +47,12 @@ interface PartsContextType {
   addPart(part: Part): void;
   deletePart(partName: string): void;
   editPart(partName: string, updatedPart: Part): void;
+
   promoterParts: PartsCollection;
   proteinParts: PartsCollection;
   terminatorParts: PartsCollection;
+
+  interactionStore: InteractionStore;
 }
 
 const PartsContext = createContext<PartsContextType | undefined>(undefined);
@@ -28,6 +61,8 @@ export const PartsProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const { getNodes, setNodes } = useReactFlow();
 
   const [parts, setParts] = useState<PartsCollection>(initialParts);
+
+  const [interactionStore] = useState<InteractionStore>(() => new InteractionStore());
 
   const updateNodesOnDelete = (part: Part): void => {
     const nodes = getNodes();
@@ -53,8 +88,7 @@ export const PartsProvider: React.FC<{ children: React.ReactNode }> = ({ childre
           node.data.category = part.category;
           node.data.sequence = part.sequence;
           node.data.controlBy = part.controlBy;
-          node.data.controlTo = part.controlTo;
-          node.data.meta = part.meta;
+          node.data.params = part.params;
         }
       }
     });
@@ -72,6 +106,7 @@ export const PartsProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         partsCollectionSchema.parse(newParts);
         return newParts;
       });
+      refreshInteractions();
       toast.success(`New part "${parsedPart.name}" has been created!`);
     } catch (error) {
       toast.error(`Error: The part "${part.name}" could not be added.`);
@@ -91,6 +126,7 @@ export const PartsProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         return newParts;
       });
       updateNodesOnDelete(parts[partName]);
+      refreshInteractions();
       toast.success(`Part "${partName}" has been removed.`);
     } catch (error) {
       toast.error(`Error: The part "${partName}" could not be removed.`);
@@ -110,6 +146,7 @@ export const PartsProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         return newParts;
       });
       updateNodesOnEdit(parsedPart);
+      refreshInteractions();
       toast.success(`Part "${partName}" has been updated!`);
     } catch (error) {
       toast.error(`Error: The part "${partName}" could not be edited.`);
@@ -118,12 +155,27 @@ export const PartsProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   };
 
   const promoterParts = Object.fromEntries(Object.entries(parts).filter(([_, part]) => part.category === "Promoter"));
-
   const proteinParts = Object.fromEntries(Object.entries(parts).filter(([_, part]) => part.category === "Protein"));
-
   const terminatorParts = Object.fromEntries(
     Object.entries(parts).filter(([_, part]) => part.category === "Terminator"),
   );
+
+  const refreshInteractions = () => {
+    interactionStore.clear();
+
+    for (const [name, part] of Object.entries(promoterParts)) {
+      if (part.category === "Promoter" && part.controlBy && Array.isArray(part.controlBy)) {
+        for (const ctrl of part.controlBy) {
+          interactionStore.addInteraction(ctrl.name, name, ctrl.type);
+        }
+      }
+    }
+  };
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: once is enough
+  useEffect(() => {
+    refreshInteractions();
+  }, []);
 
   return (
     <PartsContext.Provider
@@ -136,6 +188,7 @@ export const PartsProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         promoterParts,
         proteinParts,
         terminatorParts,
+        interactionStore,
       }}
     >
       {children}
