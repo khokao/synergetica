@@ -1,7 +1,7 @@
 import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 
-export const InputField = ({ label, description, fieldName, form, type, placeholder }) => (
+export const InputField = ({ label, description, fieldName, form, type, placeholder, showErrorMessage = true }) => (
   <FormField
     control={form.control}
     name={fieldName}
@@ -18,7 +18,7 @@ export const InputField = ({ label, description, fieldName, form, type, placehol
             value={field.value ?? ""}
           />
         </FormControl>
-        <FormMessage />
+        {showErrorMessage && <FormMessage />}
       </FormItem>
     )}
   />
