@@ -2,7 +2,7 @@
 
 import { ControlFields } from "@/components/circuit/operator/parts-manager/form-fields/controls";
 import { InputField } from "@/components/circuit/operator/parts-manager/form-fields/input";
-import { MetaFields } from "@/components/circuit/operator/parts-manager/form-fields/meta";
+import { ParamsFields } from "@/components/circuit/operator/parts-manager/form-fields/params";
 import { PartsCommandList } from "@/components/circuit/operator/parts-manager/parts-command-list";
 import { useParts } from "@/components/circuit/parts/parts-context";
 import { partSchema } from "@/components/circuit/parts/schema";
@@ -44,35 +44,16 @@ const PartEditFormDialog = ({ selectedPartName, setSelectedPartName }) => {
     defaultValues: {
       name: "",
       description: "",
-      // @ts-ignore
-      category: "",
+      category: "Promoter", // placeholder
       sequence: "",
       controlBy: [],
-      controlTo: [],
-      meta: null,
+      params: {},
     },
   });
 
   useEffect(() => {
     if (selectedPart) {
-      form.reset({
-        name: selectedPart.name,
-        description: selectedPart.description,
-        category: selectedPart.category,
-        sequence: selectedPart.sequence,
-        controlBy: selectedPart.controlBy,
-        controlTo: selectedPart.controlTo,
-        meta: selectedPart.meta
-          ? {
-              Pmax: selectedPart.meta.Pmax,
-              Ymax: selectedPart.meta.Ymax,
-              Ymin: selectedPart.meta.Ymin,
-              K: selectedPart.meta.K,
-              n: selectedPart.meta.n,
-              Dp: selectedPart.meta.Dp,
-            }
-          : null,
-      });
+      form.reset(selectedPart as z.infer<typeof partSchema>);
     }
   }, [selectedPart, form]);
 
@@ -100,28 +81,17 @@ const PartEditFormDialog = ({ selectedPartName, setSelectedPartName }) => {
                 placeholder="atgcATGC"
               />
 
-              <Separator />
-
-              <ControlFields
-                label="Controlled By"
-                description="Properties of the part that controls this part"
-                fieldName="controlBy"
-                form={form}
-              />
-
-              <Separator />
-
-              <ControlFields
-                label="Control To"
-                description="Properties of the part controlled by this part"
-                fieldName="controlTo"
-                form={form}
-              />
-
-              {form.getValues("category") === "Protein" && (
+              {form.getValues("category") === "Promoter" && (
                 <>
                   <Separator />
-                  <MetaFields form={form} />
+                  <ControlFields form={form} />
+                </>
+              )}
+
+              {form.getValues("category") !== "Terminator" && (
+                <>
+                  <Separator />
+                  <ParamsFields form={form} category={form.getValues("category")} />
                 </>
               )}
             </form>
