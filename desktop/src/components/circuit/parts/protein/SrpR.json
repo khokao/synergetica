@@ -3,14 +3,7 @@
   "description": "Repressor Protein of PsrpR",
   "category": "Protein",
   "sequence": "atggcacgtaaaaccgcagcagaagcagaagaaacccgtcagcgtattattgatgcagcactggaagtttttgttgcacagggtgttagtgatgcaaccctggatcagattgcacgtaaagccggtgttacccgtggtgcagtttattggcattttaatggtaaactggaagttctgcaggcagttctggcaagccgtcagcatccgctggaactggattttacaccggatctgggtattgaacgtagctgggaagcagttgttgttgcaatgctggatgcagttcatagtccgcagagcaaacagtttagcgaaattctgatttatcagggtctggatgaaagcggtctgattcataatcgtatggttcaggcaagcgatcgttttctgcagtatattcatcaggttctgcgtcatgcagttacccagggtgaactgccgattaatctggatctgcagaccagcattggtgtttttaaaggtctgattaccggtctgctgtatgaaggtctgcgtagcaaagatcagcaggcacagattatcaaagttgcactgggtagcttttgggcactgctgcgtgaaccgcctcgttttctgctgtgtgaagaagcacagattaaacaggtgaaatccttcgaataa",
-  "controlBy": [],
-  "controlTo": [
-    {
-      "name": "PsrpR",
-      "type": "Repression",
-      "params": null
-    }
-  ],
+  "controlBy": null,
   "params": {
     "Dp": 1.13710649,
     "TIRb": 4603.67

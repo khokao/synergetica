@@ -3,14 +3,7 @@
   "description": "Repressor Protein of PlitR",
   "category": "Protein",
   "sequence": "atggataccattcagaaacgtccgcgtacccgtctgagtccggaaaaacgtaaagaacagctgctggatattgccattgaagtttttagccagcgtggtattggtcgtggtggtcatgcagatattgcagaaattgcacaggttagcgttgcaaccgtgtttaactattttccgacccgtgaagatctggttgatgatgttctgaacaaagtggaaaacgagtttcaccagttcatcaataacagcattagcctggatctggatgttcgtagcaatctgaataccctgctgctgaacattattgatagcgttcagaccggcaacaaatggattaaagtttggtttgaatggtcaaccagcacccgtgatgaagtttggcctctgtttctgagcacccatagcaataccaatcaggtgatcaaaaccatgtttgaagagggtattgaacgcaatgaagtgtgcaatgatcatacaccggaaaatctgaccaaaatgctgcatggtatttgctatagcgtgtttattcaggccaatcgtaatagcagcagcgaagaaatggaagaaaccgcaaattgctttctgaatatgctgtgcatctacaaataa",
-  "controlBy": [],
-  "controlTo": [
-    {
-      "name": "PlitR",
-      "type": "Repression",
-      "params": null
-    }
-  ],
+  "controlBy": null,
   "meta": {
     "Dp": 1.27461139,
     "TIRb": 5160.37

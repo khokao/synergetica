@@ -3,14 +3,7 @@
   "description": "Repressor Protein of PlmrA",
   "category": "Protein",
   "sequence": "atgagctatggtgatagccgtgaaaaaattctgagcgcagcaacccgtctgtttcagctgcagggttattatggcaccggtctgaatcagattatcaaagaaagcggtgcaccgaaaggtagcctgtattatcattttccgggtggtaaagaacagctggcaattgaagcagtgaacgaaatgaaagaatatatccgccagaaaatcgccgattgtatggaagcatgtaccgatccggcagaaggtattcaggcatttctgaaagaactgagctgtcagtttagctgtaccgaagatattgaaggtctgccggttggtctgctggcagcagaaaccagcctgaaaagcgaaccgctgcgtgaagcatgtcatgaagcatataaagaatgggccagcgtgtatgaagaaaaactgcgtcagaccggttgtagcgaaagccgtgcaaaagaagcaagcaccgttgttaatgcaatgattgaaggtggtattctgctgagcctgaccgcaaaaaatagcacaccgctgctgcatattagcagctgtattccggatctgctgaaacgttaa",
-  "controlBy": [],
-  "controlTo": [
-    {
-      "name": "PlmrA",
-      "type": "Repression",
-      "params": null
-    }
-  ],
+  "controlBy": null,
   "params": {
     "Dp": 0.35318036,
     "TIRb": 1429.88
