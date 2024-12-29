@@ -50,7 +50,10 @@ export const ParamsFields = ({ form, category }) => {
               <span className="text-sm font-medium mr-1 text-gray-700">{item.label}</span>
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <Info className="w-4 h-4 text-gray-400 hover:text-gray-600 cursor-pointer" />
+                  <Info
+                    className="w-4 h-4 text-gray-400 hover:text-gray-600 cursor-pointer"
+                    data-testid={`info-icon-${item.label}`}
+                  />
                 </TooltipTrigger>
                 <TooltipContent>
                   <p>{item.description}</p>
