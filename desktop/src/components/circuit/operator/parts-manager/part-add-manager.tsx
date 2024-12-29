@@ -169,7 +169,7 @@ export const PartAddManager = () => {
           </TooltipContent>
         </Tooltip>
         <DialogContent
-          className="h-[70vh] flex flex-col"
+          className="h-[85vh] flex flex-col"
           onOpenAutoFocus={(event) => event.preventDefault()}
           onCloseAutoFocus={(event) => event.preventDefault()}
           tabIndex={undefined} // fix focus issue: https://github.com/shadcn-ui/ui/issues/1288#issuecomment-1819808273

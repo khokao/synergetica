@@ -60,7 +60,7 @@ const PartEditFormDialog = ({ selectedPartName, setSelectedPartName }) => {
   return (
     <Dialog open={selectedPartName !== null} onOpenChange={handleCancel}>
       <DialogContent
-        className="h-[70vh] flex flex-col"
+        className="h-[85vh] flex flex-col"
         onOpenAutoFocus={(event) => event.preventDefault()}
         onCloseAutoFocus={(event) => event.preventDefault()}
         tabIndex={undefined}
