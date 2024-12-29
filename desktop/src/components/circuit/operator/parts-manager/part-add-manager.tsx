@@ -53,10 +53,11 @@ const PartAddForm = ({ closeDialog }) => {
 
   const form = useForm<z.infer<typeof uniqueNamePartSchema>>({
     resolver: zodResolver(uniqueNamePartSchema),
+    // @ts-ignore
     defaultValues: {
       name: "",
       description: "",
-      category: "Promoter", // placeholder
+      category: "",
       sequence: "",
       controlBy: [],
       params: {},
