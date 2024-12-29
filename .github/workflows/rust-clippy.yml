@@ -30,6 +30,21 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Tauri dependencies
+        run: |
+          sudo apt update && sudo apt install -y \
+            libwebkit2gtk-4.1-dev \
+            build-essential \
+            curl \
+            wget \
+            file \
+            libxdo-dev \
+            libssl-dev \
+            libayatana-appindicator3-dev \
+            librsvg2-dev \
+            webkit2gtk-driver \
+            xvfb
+
       - name: Install Rust
         uses: actions-rust-lang/setup-rust-toolchain@v1
 
