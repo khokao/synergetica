@@ -5,7 +5,7 @@ description = "Genetic circuit design desktop app"
 authors = ["Koki Hokao"]
 license = "MIT"
 edition = "2021"
-rust-version = "1.70"
+rust-version = "1.83"
 
 [lib]
 # The `_lib` suffix may seem redundant but it is necessary
@@ -27,4 +27,4 @@ reqwest = { version = "0.11", features = ["json"] }
 tauri = { version = "2", features = [] }
 tauri-plugin-fs = "2"
 tauri-plugin-dialog = "2"
-tauri-plugin-clipboard-manager = "2.0.0-beta.0"
+tauri-plugin-clipboard-manager = "2"
