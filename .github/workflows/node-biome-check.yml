@@ -6,12 +6,14 @@ on:
       - main
     paths:
       - "desktop/**"
+      - "!desktop/src-tauri/**"
   pull_request:
     types:
       - opened
       - synchronize
     paths:
       - "desktop/**"
+      - "!desktop/src-tauri/**"
 
 permissions:
   contents: read
