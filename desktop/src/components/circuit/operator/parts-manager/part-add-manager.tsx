@@ -117,8 +117,6 @@ const PartAddForm = ({ closeDialog }) => {
               placeholder="atgcATGC"
             />
 
-            <Separator />
-
             {category === "Promoter" && (
               <>
                 <Separator />
@@ -126,7 +124,7 @@ const PartAddForm = ({ closeDialog }) => {
               </>
             )}
 
-            {category !== "Terminator" && (
+            {(category === "Promoter" || category === "Protein") && (
               <>
                 <Separator />
                 <ParamsFields form={form} category={form.getValues("category")} />
