@@ -4,10 +4,10 @@ import * as PopoverPrimitive from "@radix-ui/react-popover";
 import { RiText } from "@remixicon/react";
 import { CornerUpRight, RectangleHorizontal } from "lucide-react";
 
-export const PartsCommandList = ({ onSelect }) => {
+export const PartsCommandList = ({ onSelect, includeCategories = ["Promoter", "Protein", "Terminator"] }) => {
   const { promoterParts, proteinParts, terminatorParts } = useParts();
 
-  const groups = [
+  const defaultGroups = [
     {
       heading: "Promoter",
       parts: promoterParts,
@@ -27,6 +27,8 @@ export const PartsCommandList = ({ onSelect }) => {
       iconClass: "text-red-800",
     },
   ];
+
+  const groups = defaultGroups.filter(({ heading }) => includeCategories.includes(heading));
 
   return (
     <Command>

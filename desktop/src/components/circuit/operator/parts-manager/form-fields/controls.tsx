@@ -91,7 +91,10 @@ export const ControlFields = ({ form }) => {
                           </Button>
                         </PopoverTrigger>
                         <PopoverContent className="w-[180px] p-0" align="center">
-                          <PartsCommandList onSelect={(p) => form.setValue(`${fieldName}.${index}.name`, p)} />
+                          <PartsCommandList
+                            onSelect={(p) => form.setValue(`${fieldName}.${index}.name`, p)}
+                            includeCategories={["Protein"]}
+                          />
                         </PopoverContent>
                       </Popover>
                     </div>
