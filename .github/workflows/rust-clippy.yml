@@ -30,10 +30,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Set up Rust
-        uses: ./.github/composite/setup-rust
-        with:
-          working_dir: desktop/src-tauri
+      - name: Install Rust
+        uses: actions-rust-lang/setup-rust-toolchain@v1
 
       - name: clippy
         run: cargo clippy --all-targets --all-features -- -D warnings
