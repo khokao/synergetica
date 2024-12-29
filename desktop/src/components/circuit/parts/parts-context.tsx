@@ -4,7 +4,7 @@ import { partSchema, partsCollectionSchema } from "@/components/circuit/parts/sc
 import { useReactFlow } from "@xyflow/react";
 import { produce } from "immer";
 import type React from "react";
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useCallback, useContext, useEffect, useState } from "react";
 import { toast } from "sonner";
 import type { z } from "zod";
 
@@ -106,7 +106,6 @@ export const PartsProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         partsCollectionSchema.parse(newParts);
         return newParts;
       });
-      refreshInteractions();
       toast.success(`New part "${parsedPart.name}" has been created!`);
     } catch (error) {
       toast.error(`Error: The part "${part.name}" could not be added.`);
@@ -126,7 +125,6 @@ export const PartsProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         return newParts;
       });
       updateNodesOnDelete(parts[partName]);
-      refreshInteractions();
       toast.success(`Part "${partName}" has been removed.`);
     } catch (error) {
       toast.error(`Error: The part "${partName}" could not be removed.`);
@@ -146,7 +144,6 @@ export const PartsProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         return newParts;
       });
       updateNodesOnEdit(parsedPart);
-      refreshInteractions();
       toast.success(`Part "${partName}" has been updated!`);
     } catch (error) {
       toast.error(`Error: The part "${partName}" could not be edited.`);
@@ -160,22 +157,20 @@ export const PartsProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     Object.entries(parts).filter(([_, part]) => part.category === "Terminator"),
   );
 
-  const refreshInteractions = () => {
+  const refreshInteractions = useCallback(() => {
     interactionStore.clear();
-
-    for (const [name, part] of Object.entries(promoterParts)) {
+    for (const [name, part] of Object.entries(parts)) {
       if (part.category === "Promoter" && part.controlBy && Array.isArray(part.controlBy)) {
         for (const ctrl of part.controlBy) {
           interactionStore.addInteraction(ctrl.name, name, ctrl.type);
         }
       }
     }
-  };
+  }, [parts, interactionStore]);
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: once is enough
   useEffect(() => {
     refreshInteractions();
-  }, []);
+  }, [refreshInteractions]);
 
   return (
     <PartsContext.Provider
