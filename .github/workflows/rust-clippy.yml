@@ -1,0 +1,39 @@
+name: "Rust clippy"
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "desktop/src-tauri/**"
+  pull_request:
+    types:
+      - opened
+      - synchronize
+    paths:
+      - "desktop/src-tauri/**"
+
+permissions:
+  contents: read
+  checks: write
+  pull-requests: write
+
+defaults:
+  run:
+    working-directory: ./desktop/src-tauri
+
+jobs:
+  clippy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Rust
+        uses: ./.github/composite/setup-rust
+        with:
+          working_dir: desktop/src-tauri
+
+      - name: clippy
+        run: cargo clippy --all-targets --all-features -- -D warnings
