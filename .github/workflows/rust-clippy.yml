@@ -30,6 +30,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      # install system dependencies that Tauri needs to compile on Linux.
+      # note the extra dependencies for `tauri-driver` to run which are: `webkit2gtk-driver` and `xvfb`
       - name: Tauri dependencies
         run: |
           sudo apt update && sudo apt install -y \
