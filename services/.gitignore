@@ -7,11 +7,17 @@
 
 # ref: https://github.com/github/gitignore/blob/main/Python.gitignore
 
-# generator specific
-src/generator/train/datasets/cache/**
-!src/generator/train/datasets/cache/.gitkeep
-src/generator/train/outputs/**
-!src/generator/train/outputs/.gitkeep
+# checkpoints
+src/api/generator/checkpoints/**
+!src/api/generator/checkpoints/.gitkeep
+
+# huggingface datasets cache
+src/train/datasets/cache/**
+!src/train/datasets/cache/.gitkeep
+
+# train outputs
+src/train/outputs/**
+!src/train/outputs/.gitkeep
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
