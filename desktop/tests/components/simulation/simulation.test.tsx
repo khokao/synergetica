@@ -20,7 +20,7 @@ vi.mock("@/components/simulation/sliders", () => ({
   Sliders: vi.fn(() => <div>Mocked Sliders</div>),
 }));
 
-vi.mock("@/components/generation/generation-buttons", () => ({
+vi.mock("@/components/generation/generation", () => ({
   GenerationButtons: vi.fn(() => <div>Mocked Generation Buttons</div>),
 }));
 

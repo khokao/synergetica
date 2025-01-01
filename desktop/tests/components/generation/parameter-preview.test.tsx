@@ -1,55 +1,51 @@
 import { ParameterPreview } from "@/components/generation/parameter-preview";
-import { useConverter } from "@/components/simulation/contexts/converter-context";
 import { render, screen } from "@testing-library/react";
-import { type Mock, describe, expect, it, vi } from "vitest";
-
-vi.mock("@/components/simulation/contexts/converter-context");
+import { describe, expect, it } from "vitest";
 
 describe("ParameterPreview Component", () => {
-  it("renders nothing when snapshot is null", () => {
+  it("renders protein sliders and parameters", () => {
     // Arrange
-    (useConverter as Mock).mockReturnValue({ convertResult: null });
-
-    // Act
-    const { container } = render(<ParameterPreview snapshot={null} />);
-
-    // Assert
-    expect(container).toBeEmptyDOMElement();
-  });
-
-  it("renders nothing when convertResult is null", () => {
-    // Arrange
-    (useConverter as Mock).mockReturnValue({ convertResult: null });
-
-    const mockSnapshot = {
-      proteinParameter: { foo: 10, bar: 20 },
-    };
-
-    // Act
-    const { container } = render(<ParameterPreview snapshot={mockSnapshot} />);
-
-    // Assert
-    expect(container).toBeEmptyDOMElement();
-  });
-
-  it("renders protein sliders when snapshot and convertResult are provided", () => {
-    // Arrange
-    (useConverter as Mock).mockReturnValue({
-      convertResult: {
-        protein_id2name: { foo: "Protein A", bar: "Protein B" },
+    const nodes = [
+      { id: "parent-1", type: "parent", position: { x: 0, y: 0 }, data: { showParentId: false } },
+      {
+        id: "child-1",
+        type: "child",
+        position: { x: 0, y: 0 },
+        data: { name: "Promoter A", category: "Promoter", sequence: "A" },
       },
-    });
-    const mockSnapshot = {
-      proteinParameter: { foo: 10, bar: 20 },
+      {
+        id: "child-2",
+        type: "child",
+        position: { x: 0, y: 0 },
+        data: { name: "Protein A", category: "Protein", sequence: "T" },
+      },
+      {
+        id: "child-3",
+        type: "child",
+        position: { x: 0, y: 0 },
+        data: { name: "Protein B", category: "Protein", sequence: "T" },
+      },
+      {
+        id: "child-4",
+        type: "child",
+        position: { x: 0, y: 0 },
+        data: { name: "Terminator A", category: "Terminator", sequence: "CG" },
+      },
+    ];
+    const proteinParameters = {
+      "child-2": 10,
+      "child-3": 20,
     };
 
     // Act
-    render(<ParameterPreview snapshot={mockSnapshot} />);
+    render(<ParameterPreview nodes={nodes} proteinParameters={proteinParameters} />);
 
     // Assert
     expect(screen.getByText("Protein A")).toBeInTheDocument();
     expect(screen.getByText("Protein B")).toBeInTheDocument();
     expect(screen.getByText("10")).toBeInTheDocument();
     expect(screen.getByText("20")).toBeInTheDocument();
+    expect(screen.queryByText("Promoter A")).not.toBeInTheDocument();
+    expect(screen.queryByText("Terminator A")).not.toBeInTheDocument();
   });
 });
