@@ -2,17 +2,13 @@ import { Button } from "@/components/ui/button";
 import { save } from "@tauri-apps/plugin-dialog";
 import { writeTextFile } from "@tauri-apps/plugin-fs";
 import { ArrowUpToLine } from "lucide-react";
-import type React from "react";
 import { toast } from "sonner";
 
-export const ExportButton = ({ data }) => {
+export const ExportFastaButton = ({ chainSequences }: { chainSequences: Record<string, string> }) => {
   const handleExportFASTA = async () => {
-    if (!data) return;
-
-    const fastaContent = Object.keys(data.parent2child_details)
-      .map((groupId) => {
-        const concatenatedSequences = data.parent2child_details[groupId].map((sequence) => sequence.sequence).join("");
-        return `> ${groupId}\n${concatenatedSequences}`;
+    const fastaContent = Object.entries(chainSequences)
+      .map(([id, sequence]) => {
+        return `> ${id}\n${sequence}`;
       })
       .join("\n\n");
 
