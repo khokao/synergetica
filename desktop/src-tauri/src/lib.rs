@@ -12,8 +12,8 @@ struct AppState {
 
 #[tauri::command]
 async fn call_generator_api(
-    reactflow_object_json_str: String,
-    rbs_target_parameters: HashMap<String, f64>,
+    protein_target_values: HashMap<String, f64>,
+    protein_init_sequences: HashMap<String, String>,
     state: tauri::State<'_, Arc<Mutex<AppState>>>,
 ) -> Result<GeneratorResponseData, String> {
     let cancellation_token = CancellationToken::new();
@@ -23,7 +23,7 @@ async fn call_generator_api(
         state.cancellation_token = cancellation_token.clone();
     }
 
-    let api_call = APIClient::generate(reactflow_object_json_str, rbs_target_parameters);
+    let api_call = APIClient::generate(protein_target_values, protein_init_sequences);
 
     tokio::select! {
         result = api_call => result.map_err(|e| e.to_string()),

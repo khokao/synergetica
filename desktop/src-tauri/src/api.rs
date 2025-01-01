@@ -8,15 +8,15 @@ pub struct APIClient;
 
 impl APIClient {
     pub async fn generate(
-        reactflow_object_json_str: String,
-        rbs_target_parameters: HashMap<String, f64>,
+        protein_target_values: HashMap<String, f64>,
+        protein_init_sequences: HashMap<String, String>,
     ) -> Result<GeneratorResponseData> {
         let client = Client::new();
         let response = client
             .post("http://127.0.0.1:8000/generate")
             .json(&json!({
-                "reactflow_object_json_str": reactflow_object_json_str,
-                "rbs_target_parameters": rbs_target_parameters
+                "protein_target_values": protein_target_values,
+                "protein_init_sequences": protein_init_sequences
             }))
             .send()
             .await
@@ -53,14 +53,8 @@ impl APIClient {
 }
 
 #[derive(Debug, Serialize, Deserialize)]
-pub struct ChildNodesDetails {
-    pub node_category: String,
-    pub sequence: String,
-}
-
-#[derive(Debug, Serialize, Deserialize)]
 pub struct GeneratorResponseData {
-    pub parent2child_details: HashMap<String, Vec<ChildNodesDetails>>,
+    pub protein_generated_sequences: HashMap<String, String>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
