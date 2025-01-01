@@ -2,23 +2,8 @@ import { CircuitEdgeTypes, CircuitNodeTypes } from "@/components/circuit/constan
 import { Background, BackgroundVariant, ConnectionMode, ReactFlow, ReactFlowProvider } from "@xyflow/react";
 import type { Edge, Node } from "@xyflow/react";
 import { produce } from "immer";
-import type React from "react";
 
-interface SnapshotData {
-  nodes: Node[];
-  edges: Edge[];
-  proteinParameter: { [id: string]: number };
-}
-
-interface CircuitPreviewProps {
-  snapshot: SnapshotData | null;
-}
-
-export const CircuitPreview: React.FC<CircuitPreviewProps> = ({ snapshot }) => {
-  if (!snapshot) return null;
-
-  const { nodes, edges } = snapshot;
-
+export const CircuitPreview = ({ nodes, edges }: { nodes: Node[]; edges: Edge[] }) => {
   const newNodes = produce(nodes, (draft) => {
     for (const node of draft) {
       if (node.type === "parent") {
@@ -30,7 +15,6 @@ export const CircuitPreview: React.FC<CircuitPreviewProps> = ({ snapshot }) => {
   return (
     <ReactFlowProvider>
       <ReactFlow
-        id="generation-modal-preview-flow"
         nodes={newNodes}
         edges={edges}
         proOptions={{ hideAttribution: true }}
