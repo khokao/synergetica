@@ -1,5 +1,5 @@
 import { useEditorContext } from "@/components/editor/editor-context";
-import { GenerationButtons } from "@/components/generation/generation-buttons";
+import { GenerationButtons } from "@/components/generation/generation";
 import { Chart } from "@/components/simulation/chart";
 import { useConverter } from "@/components/simulation/contexts/converter-context";
 import { Sliders } from "@/components/simulation/sliders";
