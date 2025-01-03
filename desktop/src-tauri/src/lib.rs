@@ -1,6 +1,6 @@
 mod api;
 
-use api::{APIClient, ConverterResponseData, GeneratorResponseData};
+use api::{APIClient, GeneratorResponseData};
 use std::collections::HashMap;
 use std::sync::Arc;
 use tokio::sync::Mutex;
@@ -38,13 +38,6 @@ async fn cancel_generator_api(state: tauri::State<'_, Arc<Mutex<AppState>>>) -> 
     Ok(())
 }
 
-#[tauri::command]
-async fn call_circuit_converter_api(reactflow_object_json_str: String) -> Result<ConverterResponseData, String> {
-    APIClient::convert_circuit(reactflow_object_json_str)
-        .await
-        .map_err(|e| e.to_string())
-}
-
 pub fn run() {
     let state = Arc::new(Mutex::new(AppState {
         cancellation_token: CancellationToken::new(),
@@ -55,11 +48,7 @@ pub fn run() {
         .plugin(tauri_plugin_dialog::init())
         .plugin(tauri_plugin_clipboard_manager::init())
         .manage(state)
-        .invoke_handler(tauri::generate_handler![
-            call_generator_api,
-            cancel_generator_api,
-            call_circuit_converter_api,
-        ])
+        .invoke_handler(tauri::generate_handler![call_generator_api, cancel_generator_api,])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }

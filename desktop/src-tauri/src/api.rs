@@ -25,20 +25,6 @@ impl APIClient {
         Self::handle_response::<GeneratorResponseData>(response).await
     }
 
-    pub async fn convert_circuit(reactflow_object_json_str: String) -> Result<ConverterResponseData> {
-        let client = Client::new();
-        let response = client
-            .post("http://127.0.0.1:8000/convert-gui-circuit")
-            .json(&json!({
-                "reactflow_object_json_str": reactflow_object_json_str
-            }))
-            .send()
-            .await
-            .context("Failed to send request to circuit converter API")?;
-
-        Self::handle_response::<ConverterResponseData>(response).await
-    }
-
     async fn handle_response<T: for<'de> Deserialize<'de>>(response: reqwest::Response) -> Result<T> {
         if response.status().is_success() {
             let data = response.json::<T>().await.context("Failed to parse response")?;
@@ -55,10 +41,4 @@ impl APIClient {
 #[derive(Debug, Serialize, Deserialize)]
 pub struct GeneratorResponseData {
     pub protein_generated_sequences: HashMap<String, String>,
-}
-
-#[derive(Debug, Serialize, Deserialize)]
-pub struct ConverterResponseData {
-    pub protein_id2name: HashMap<String, String>,
-    pub function_str: String,
 }
