@@ -1,43 +1,33 @@
+import { PartsProvider } from "@/components/circuit/parts/parts-context";
 import { CircuitPreview } from "@/components/generation/circuit-preview";
 import { render, screen } from "@testing-library/react";
-import type { Edge, Node } from "@xyflow/react";
-import { describe, expect, it, vi } from "vitest";
-
-vi.mock("@xyflow/react", () => ({
-  ReactFlow: ({ children }: { children: React.ReactNode }) => <div data-testid="react-flow">{children}</div>,
-  ReactFlowProvider: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
-  Background: vi.fn(),
-  BackgroundVariant: vi.fn(),
-  ConnectionMode: vi.fn(),
-}));
+import { ReactFlowProvider } from "@xyflow/react";
+import { describe, expect, it } from "vitest";
 
 describe("CircuitPreview Component", () => {
-  it("renders nothing when snapshot is null", () => {
+  it("renders ReactFlow preview with parent id", () => {
     // Arrange
-    const snapshot = null;
+    const nodes = [
+      { id: "parent-1", type: "parent", position: { x: 0, y: 0 }, data: { showParentId: false } },
+      {
+        id: "child-1",
+        type: "child",
+        position: { x: 0, y: 0 },
+        data: { name: "Promoter A", category: "Promoter", sequence: "A" },
+      },
+    ];
+    const edges = [];
 
     // Act
-    const { container } = render(<CircuitPreview snapshot={snapshot} />);
+    render(
+      <ReactFlowProvider>
+        <PartsProvider>
+          <CircuitPreview nodes={nodes} edges={edges} />
+        </PartsProvider>
+      </ReactFlowProvider>,
+    );
 
     // Assert
-    expect(container).toBeEmptyDOMElement();
-  });
-
-  it("renders ReactFlow with modified nodes when snapshot is provided", () => {
-    // Arrange
-    const snapshot = {
-      nodes: [
-        { id: "1", type: "parent", data: {} },
-        { id: "2", type: "child", data: {} },
-      ] as Node[],
-      edges: [{ id: "e1-2", source: "1", target: "2" }] as Edge[],
-      proteinParameter: { foo: 10 },
-    };
-
-    // Act
-    render(<CircuitPreview snapshot={snapshot} />);
-
-    // Assert
-    expect(screen.getByTestId("react-flow")).toBeInTheDocument();
+    expect(screen.getByText("parent-1")).toBeInTheDocument();
   });
 });
