@@ -1,79 +1,63 @@
-import { useConverter } from "@/components/simulation/contexts/converter-context";
-import { useProteinParameters } from "@/components/simulation/contexts/protein-parameter-context";
+import { useSimulator } from "@/components/simulation/simulator-context";
 import { Sliders } from "@/components/simulation/sliders";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { type Mock, describe, expect, it, vi } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 
-vi.mock("@/components/simulation/contexts/converter-context", () => ({
-  useConverter: vi.fn(),
-}));
-
-vi.mock("@/components/simulation/contexts/protein-parameter-context", () => ({
-  useProteinParameters: vi.fn(),
-}));
-
-vi.mock("@/components/simulation/hooks/use-websocket-simulation", () => ({
-  useWebSocketSimulation: vi.fn(),
+vi.mock("@/components/simulation/simulator-context", () => ({
+  useSimulator: vi.fn(),
 }));
 
 describe("Sliders Component", () => {
-  it("renders nothing if convertResult is not available", () => {
-    // Arrange
-    (useConverter as Mock).mockReturnValue({ convertResult: null });
-
-    // Act
-    const { container } = render(<Sliders />);
-
-    // Assert
-    expect(container).toBeEmptyDOMElement();
+  // JSDOM lacks pointer capture APIs, so we mock them for Radix UI tests.
+  beforeAll(() => {
+    Object.defineProperty(HTMLElement.prototype, "setPointerCapture", { value: () => {} });
+    Object.defineProperty(HTMLElement.prototype, "releasePointerCapture", { value: () => {} });
+    Object.defineProperty(HTMLElement.prototype, "hasPointerCapture", { value: () => false });
   });
 
-  it("renders sliders when convertResult is available", () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
+
+  it("renders sliders with correct labels", () => {
     // Arrange
-    (useConverter as Mock).mockReturnValue({
-      convertResult: {
-        protein_id2name: { foo: "Protein A", bar: "Protein B" },
-      },
-    });
-    (useProteinParameters as Mock).mockReturnValue({
-      proteinParameter: { foo: 10, bar: 20 },
-      handleProteinParamChange: vi.fn(),
-    });
+    vi.mocked(useSimulator).mockReturnValue({
+      proteinName2Ids: { ProteinA: ["child-1"], ProteinB: ["child-2", "child-3"] },
+      proteinParameters: { "child-1": 100, "child-2": 200, "child-3": 300 },
+      setProteinParameters: vi.fn(),
+      // biome-ignore  lint/suspicious/noExplicitAny: For brevity and clarity.
+    } as any);
 
     // Act
     render(<Sliders />);
 
     // Assert
-    expect(screen.getByText("Protein A")).toBeInTheDocument();
-    expect(screen.getByText("Protein B")).toBeInTheDocument();
-    expect(screen.getByText("10")).toBeInTheDocument();
-    expect(screen.getByText("20")).toBeInTheDocument();
+    expect(screen.getByText("ProteinA")).toBeInTheDocument();
+    expect(screen.getByText("ProteinB [1]")).toBeInTheDocument();
+    expect(screen.getByText("ProteinB [2]")).toBeInTheDocument();
   });
 
-  it("calls handleProteinParamChange when slider value changes", () => {
+  it("calls setProteinParameters when slider value changes", async () => {
     // Arrange
-    const mockHandleProteinParamChange = vi.fn();
+    const user = userEvent.setup();
 
-    (useConverter as Mock).mockReturnValue({
-      convertResult: {
-        protein_id2name: { foo: "Protein A", bar: "Protein B" },
-      },
-    });
-
-    (useProteinParameters as Mock).mockReturnValue({
-      proteinParameter: { foo: 10, bar: 20 },
-      handleProteinParamChange: mockHandleProteinParamChange,
-    });
+    const mockSetProteinParameters = vi.fn();
+    vi.mocked(useSimulator).mockReturnValue({
+      proteinName2Ids: { ProteinA: ["child-1"] },
+      proteinParameters: { "child-1": 100 },
+      setProteinParameters: mockSetProteinParameters,
+      // biome-ignore  lint/suspicious/noExplicitAny: For brevity and clarity.
+    } as any);
 
     // Act
     render(<Sliders />);
 
     // Change slider value
-    const slider = screen.getByText("Protein A");
-    userEvent.pointer({ target: slider, offset: 2, keys: "[MouseLeft]" });
+    const slider = screen.getByRole("slider");
+    await user.type(slider, "{ArrowRight}");
 
     // Assert
-    expect(mockHandleProteinParamChange).toHaveBeenCalled();
+    expect(mockSetProteinParameters).toHaveBeenCalled();
   });
 });
