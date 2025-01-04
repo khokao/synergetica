@@ -1,8 +1,12 @@
 import { DEFAULT_SLIDER_PARAM, WS_URL } from "@/components/simulation/constants";
 import { useReactFlow } from "@xyflow/react";
+import type { Node } from "@xyflow/react";
+import { useNodes } from "@xyflow/react";
+import { deepEqual } from "fast-equals";
 import { produce } from "immer";
 import type React from "react";
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useCallback, useContext, useEffect, useState } from "react";
+import { useDebounce } from "use-debounce";
 
 interface SimulatorSolution {
   time: number;
@@ -22,12 +26,18 @@ interface SimulatorContextValue {
 const SimulatorContext = createContext<SimulatorContextValue | null>(null);
 
 export const SimulatorProvider = ({ children }: { children: React.ReactNode }) => {
-  const reactFlow = useReactFlow();
   const [ws, setWs] = useState<WebSocket | null>(null);
 
   const [solutions, setSolutions] = useState<SimulatorSolution[]>([]);
   const [proteinName2Ids, setProteinName2Ids] = useState<Record<string, string[]>>({});
   const [proteinParameters, setProteinParameters] = useState<Record<string, number>>({});
+
+  const [hasFormulated, setHasFormulated] = useState<boolean>(false);
+
+  const reactflow = useReactFlow();
+  const nodes = useNodes();
+  const [debouncedNodes] = useDebounce(nodes, 500);
+  const [prevNodes, setPrevNodes] = useState<Node[]>([]);
 
   useEffect(() => {
     const socket = new WebSocket(WS_URL);
@@ -40,13 +50,15 @@ export const SimulatorProvider = ({ children }: { children: React.ReactNode }) =
       const data = JSON.parse(event.data);
       switch (data.type) {
         case "formulated": {
-          const newName2Ids: Record<string, string[]> = data.payload.protein_name2ids;
-          setProteinName2Ids(newName2Ids);
+          setHasFormulated(true);
 
-          const initParams: Record<string, number> = {};
-          for (const id of Object.values(newName2Ids).flat()) {
-            initParams[id] = DEFAULT_SLIDER_PARAM;
-          }
+          setProteinName2Ids(data.payload.protein_name2ids);
+
+          const initParams = Object.fromEntries(
+            Object.values(data.payload.protein_name2ids)
+              .flat()
+              .map((id: string) => [id, DEFAULT_SLIDER_PARAM]),
+          );
           setProteinParameters(initParams);
 
           highlightNodes(Object.keys(initParams));
@@ -71,6 +83,7 @@ export const SimulatorProvider = ({ children }: { children: React.ReactNode }) =
 
   useEffect(() => {
     if (!ws || ws.readyState !== WebSocket.OPEN) return;
+    if (!hasFormulated) return;
 
     ws.send(
       JSON.stringify({
@@ -78,37 +91,31 @@ export const SimulatorProvider = ({ children }: { children: React.ReactNode }) =
         payload: { params: proteinParameters },
       }),
     );
-  }, [ws, proteinParameters]);
+  }, [ws, proteinParameters, hasFormulated]);
 
   const formulate = () => {
     if (!ws || ws.readyState !== WebSocket.OPEN) return;
+
+    setHasFormulated(false);
 
     ws.send(
       JSON.stringify({
         type: "formulate",
         payload: {
-          rfobject: reactFlow.toObject(),
+          rfobject: reactflow.toObject(),
         },
       }),
     );
   };
 
-  const reset = () => {
+  const reset = useCallback(() => {
+    setHasFormulated(false);
     setSolutions([]);
-
-    const { getNodes, setNodes } = reactFlow;
-    setNodes(
-      produce(getNodes(), (draft) => {
-        for (const node of draft) {
-          node.data.simulationTargetHighlight = undefined;
-        }
-      }),
-    );
-  };
+    unhighlightNodes();
+  }, []);
 
   const highlightNodes = (nodeIds: string[]) => {
-    const { getNodes, setNodes } = reactFlow;
-
+    const { getNodes, setNodes } = reactflow;
     setNodes(
       produce(getNodes(), (draft) => {
         for (const node of draft) {
@@ -123,6 +130,47 @@ export const SimulatorProvider = ({ children }: { children: React.ReactNode }) =
       }),
     );
   };
+  const unhighlightNodes = () => {
+    const { getNodes, setNodes } = reactflow;
+    setNodes(
+      produce(getNodes(), (draft) => {
+        for (const node of draft) {
+          node.data.simulationTargetHighlight = undefined;
+        }
+      }),
+    );
+  };
+
+  const getMonitoredNodeProps = useCallback((nodes: Node[]) => {
+    return nodes.map((node) => {
+      const { type, data } = node;
+      const { name, category, sequence, controlBy, params } = data || {};
+      return {
+        type,
+        data: {
+          name,
+          category,
+          sequence,
+          controlBy,
+          params,
+        },
+      };
+    });
+  }, []);
+
+  useEffect(() => {
+    if (debouncedNodes.length === 0) return;
+
+    const filteredCurrent = getMonitoredNodeProps(debouncedNodes);
+    const filteredPrev = getMonitoredNodeProps(prevNodes);
+
+    if (!deepEqual(filteredCurrent, filteredPrev)) {
+      if (solutions.length > 0) {
+        reset();
+      }
+      setPrevNodes(debouncedNodes);
+    }
+  }, [debouncedNodes, prevNodes, getMonitoredNodeProps, reset, solutions]);
 
   const contextValue: SimulatorContextValue = {
     solutions,
