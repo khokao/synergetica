@@ -33,7 +33,7 @@ export const Sliders = () => {
       const displayName = proteinName2Ids[name].length === 1 ? name : `${name} [${indexInGroup + 1}]`;
 
       return (
-        <div key={id} className="flex items-center gap-4 pr-4 mb-2">
+        <div key={id} className="flex items-center gap-4 pt-0.5 pr-4 mt-2 mb-2">
           <Label htmlFor={`slider-${id}`} className="w-40 flex items-center gap-2">
             <span
               className="inline-block w-3 h-3 rounded-full"
