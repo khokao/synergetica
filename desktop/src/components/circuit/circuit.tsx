@@ -6,7 +6,7 @@ import { useDragNodes } from "@/components/circuit/hooks/use-drag-nodes";
 import { useUpdateAnnotationEdges } from "@/components/circuit/hooks/use-update-annotation-edges";
 import { Operator } from "@/components/circuit/operator/operator";
 import { ExpandCollapseButton } from "@/components/circuit/resizable-panel/expand-collapse";
-import { SimulatorButtons } from "@/components/circuit/simulation/simulator-buttons";
+import { SimulatorButtons } from "@/components/simulation/simulator-buttons";
 import {
   Background,
   BackgroundVariant,
