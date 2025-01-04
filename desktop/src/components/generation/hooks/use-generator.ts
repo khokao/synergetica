@@ -4,7 +4,7 @@ import {
   callGeneratorAPI,
   cancelGeneratorAPI,
 } from "@/components/generation/hooks/use-generator-api";
-import { useProteinParameters } from "@/components/simulation/contexts/protein-parameter-context";
+import { useSimulator } from "@/components/simulation/simulator-context";
 import { useReactFlow } from "@xyflow/react";
 import type { Edge, Node } from "@xyflow/react";
 import { useState } from "react";
@@ -19,7 +19,7 @@ export const useGenerator = () => {
   const [isGenerating, setIsGenerating] = useState(false);
 
   const { getNodes, getEdges } = useReactFlow();
-  const { proteinParameter } = useProteinParameters();
+  const { proteinParameters } = useSimulator();
 
   const generate = async (): Promise<{
     snapshot: SnapshotData;
@@ -30,7 +30,7 @@ export const useGenerator = () => {
     try {
       const nodes = getNodes();
       const edges = getEdges();
-      const currentProteinParameters = { ...proteinParameter };
+      const currentProteinParameters = { ...proteinParameters };
 
       const snapshot: SnapshotData = {
         nodes,
