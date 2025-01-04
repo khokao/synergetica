@@ -26,8 +26,9 @@ const TestComponent = () => {
             category: "Promoter",
             sequence: "ATGC",
             controlBy: [],
-            controlTo: [],
-            meta: null,
+            params: {
+              Ydef: 1.0,
+            },
           })
         }
       >
@@ -47,8 +48,10 @@ const TestComponent = () => {
             category: "Protein",
             sequence: "CGTA",
             controlBy: [],
-            controlTo: [],
-            meta: null,
+            params: {
+              Dp: 1.0,
+              TIRb: 1.0,
+            },
           })
         }
       >

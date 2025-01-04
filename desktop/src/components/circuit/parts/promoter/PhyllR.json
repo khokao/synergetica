@@ -6,9 +6,16 @@
   "controlBy": [
     {
       "name": "HlyIIR",
-      "type": "Repression"
+      "type": "Repression",
+      "params": {
+        "Ymax": 2.5,
+        "Ymin": 0.07,
+        "K": 0.19,
+        "n": 2.6
+      }
     }
   ],
-  "controlTo": [],
-  "meta": null
+  "params": {
+    "Ydef": 2.5
+  }
 }

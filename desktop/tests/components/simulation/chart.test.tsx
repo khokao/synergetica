@@ -1,30 +1,52 @@
 import { Chart } from "@/components/simulation/chart";
-import { useConverter } from "@/components/simulation/contexts/converter-context";
-import { useSimulator } from "@/components/simulation/contexts/simulator-context";
+import { useSimulator } from "@/components/simulation/simulator-context";
 import { render, screen } from "@testing-library/react";
-import { type Mock, describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 
-vi.mock("@/components/simulation/contexts/converter-context", () => ({
-  useConverter: vi.fn(),
-}));
-
-vi.mock("@/components/simulation/contexts/simulator-context", () => ({
+vi.mock("@/components/simulation/simulator-context", () => ({
   useSimulator: vi.fn(),
 }));
 
+// https://github.com/recharts/recharts/issues/2982
 vi.mock("recharts", async () => {
-  const actual = await vi.importActual("recharts");
+  const OriginalModule = await vi.importActual<typeof import("recharts")>("recharts");
+
   return {
-    ...actual,
-    ResponsiveContainer: ({ children }) => <div>{children}</div>,
+    ...OriginalModule,
+    ResponsiveContainer: ({ children }) => (
+      <OriginalModule.ResponsiveContainer width={800} height={800}>
+        {children}
+      </OriginalModule.ResponsiveContainer>
+    ),
   };
 });
 
 describe("Chart Component", () => {
-  it("renders nothing if convertResult or simulationResult is not available", () => {
+  const originalWarn = console.warn;
+  beforeAll(() => {
+    console.warn = (...args) => {
+      if (args[0]?.includes("maybe you don't need to use a ResponsiveContainer")) {
+        return;
+      }
+      originalWarn(...args);
+    };
+  });
+  afterAll(() => {
+    console.warn = originalWarn;
+  });
+
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
+
+  it("renders nothing if solutions is empty", () => {
     // Arrange
-    (useConverter as Mock).mockReturnValue({ convertResult: null });
-    (useSimulator as Mock).mockReturnValue({ simulationResult: null });
+    vi.mocked(useSimulator).mockReturnValue({
+      solutions: [],
+      proteinName2Ids: {},
+      proteinParameters: {},
+      // biome-ignore  lint/suspicious/noExplicitAny: For brevity and clarity.
+    } as any);
 
     // Act
     const { container } = render(<Chart />);
@@ -33,24 +55,21 @@ describe("Chart Component", () => {
     expect(container).toBeEmptyDOMElement();
   });
 
-  it("renders the chart when convertResult and simulationResult are available", () => {
+  it("renders the chart when solutions is provided", () => {
     // Arrange
-    (useConverter as Mock).mockReturnValue({
-      convertResult: {
-        protein_id2name: { foo: "Protein A", bar: "Protein B" },
-      },
-    });
-    (useSimulator as Mock).mockReturnValue({
-      simulationResult: [
-        [0, 10, 20],
-        [1, 15, 25],
-      ],
-    });
+    vi.mocked(useSimulator).mockReturnValue({
+      solutions: [{ time: 0, ProteinA: 100, ProteinB: 200 }],
+      proteinName2Ids: { ProteinA: ["child-1"], ProteinB: ["child-2", "child-3"] },
+      proteinParameters: { "child-1": 100, "child-2": 200, "child-3": 300 },
+      // biome-ignore  lint/suspicious/noExplicitAny: For brevity and clarity.
+    } as any);
 
     // Act
     render(<Chart />);
 
     // Assert
     expect(screen.getByTestId("chart-card")).toBeInTheDocument();
+    expect(screen.getByTestId("chart-card")).toHaveTextContent("ProteinA");
+    expect(screen.getByTestId("chart-card")).toHaveTextContent("ProteinB [1,2]");
   });
 });

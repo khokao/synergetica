@@ -6,9 +6,16 @@
   "controlBy": [
     {
       "name": "BetI",
-      "type": "Repression"
+      "type": "Repression",
+      "params": {
+        "Ymax": 3.8,
+        "Ymin": 0.07,
+        "K": 0.41,
+        "n": 2.4
+      }
     }
   ],
-  "controlTo": [],
-  "meta": null
+  "params": {
+    "Ydef": 3.8
+  }
 }

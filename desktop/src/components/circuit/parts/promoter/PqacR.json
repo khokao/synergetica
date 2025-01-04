@@ -6,9 +6,16 @@
   "controlBy": [
     {
       "name": "QacR",
-      "type": "Repression"
+      "type": "Repression",
+      "params": {
+        "Ymax": 2.4,
+        "Ymin": 0.01,
+        "K": 0.08,
+        "n": 2.7
+      }
     }
   ],
-  "controlTo": [],
-  "meta": null
+  "params": {
+    "Ydef": 2.4
+  }
 }

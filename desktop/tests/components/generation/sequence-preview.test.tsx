@@ -3,23 +3,21 @@ import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 
 describe("SequencePreview Component", () => {
-  it("renders the concatenated sequences for each sequence ID", () => {
+  it("renders ids and sequences", () => {
     // Arrange
-    const mockData = {
-      parent2child_details: {
-        group1: [{ sequence: "AAA" }, { sequence: "TTT" }],
-        group2: [{ sequence: "CCC" }, { sequence: "GGG" }],
-      },
+    const chainSequences = {
+      "parent-1": "AAATTT",
+      "parent-2": "CCCGGG",
     };
 
     // Act
-    render(<SequencePreview data={mockData} />);
+    render(<SequencePreview chainSequences={chainSequences} />);
 
     // Assert
-    expect(screen.getByText("group1")).toBeInTheDocument();
+    expect(screen.getByText("parent-1")).toBeInTheDocument();
     expect(screen.getByText("AAATTT")).toBeInTheDocument();
 
-    expect(screen.getByText("group2")).toBeInTheDocument();
+    expect(screen.getByText("parent-2")).toBeInTheDocument();
     expect(screen.getByText("CCCGGG")).toBeInTheDocument();
   });
 });

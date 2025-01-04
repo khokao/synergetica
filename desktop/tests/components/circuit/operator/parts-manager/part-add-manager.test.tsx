@@ -14,8 +14,9 @@ vi.mock("@/components/circuit/parts/parts-context", () => {
       category: "Promoter",
       sequence: "ATGC",
       controlBy: [],
-      controlTo: [],
-      meta: null,
+      params: {
+        Ydef: 1.0,
+      },
     },
   };
   const proteinParts = {
@@ -25,14 +26,9 @@ vi.mock("@/components/circuit/parts/parts-context", () => {
       category: "Protein",
       sequence: "ATGC",
       controlBy: [],
-      controlTo: [],
-      meta: {
-        Pmax: 0,
-        Ymax: 0,
-        Ymin: 0,
-        K: 0,
-        n: 0,
-        Dp: 0,
+      params: {
+        Dp: 1.0,
+        TIRb: 1.0,
       },
     },
   };
@@ -43,8 +39,7 @@ vi.mock("@/components/circuit/parts/parts-context", () => {
       category: "Terminator",
       sequence: "ATGC",
       controlBy: [],
-      controlTo: [],
-      meta: null,
+      params: {},
     },
   };
 
@@ -103,30 +98,9 @@ describe("PartAddManager Component", () => {
     expect(screen.getByText("Name")).toBeInTheDocument();
     expect(screen.getByText("Category")).toBeInTheDocument();
     expect(screen.getByText("DNA Sequence")).toBeInTheDocument();
-    expect(screen.getByText("Controlled By")).toBeInTheDocument();
-    expect(screen.getByText("Control To")).toBeInTheDocument();
   });
 
-  it('shows MetaFields when category is "protein"', async () => {
-    // Arrange
-    render(
-      <TooltipProvider>
-        <PartAddManager />
-      </TooltipProvider>,
-    );
-
-    // Act
-    await userEvent.click(screen.getByTestId("part-add-button"));
-    fireEvent.click(screen.getByText("Select category"));
-    await userEvent.click(within(await screen.findByRole("listbox")).getByText("Protein"));
-
-    // Assert
-    waitFor(() => {
-      expect(screen.getByText("Meta")).toBeInTheDocument();
-    });
-  });
-
-  it('does not show MetaFields when category is not "protein"', async () => {
+  it('shows ControlFields and ParamsFields when category is "promoter"', async () => {
     // Arrange
     render(
       <TooltipProvider>
@@ -141,7 +115,28 @@ describe("PartAddManager Component", () => {
 
     // Assert
     waitFor(() => {
-      expect(screen.getByText("Meta")).not.toBeInTheDocument();
+      expect(screen.getByText("Controlled By")).toBeInTheDocument();
+      expect(screen.getByText("Parameters")).toBeInTheDocument();
+    });
+  });
+
+  it('shows ParamsFields when category is "protein"', async () => {
+    // Arrange
+    render(
+      <TooltipProvider>
+        <PartAddManager />
+      </TooltipProvider>,
+    );
+
+    // Act
+    await userEvent.click(screen.getByTestId("part-add-button"));
+    fireEvent.click(screen.getByText("Select category"));
+    await userEvent.click(within(await screen.findByRole("listbox")).getByText("Protein"));
+
+    // Assert
+    waitFor(() => {
+      expect(screen.getByText("Controlled By")).not.toBeInTheDocument();
+      expect(screen.getByText("Parameters")).toBeInTheDocument();
     });
   });
 

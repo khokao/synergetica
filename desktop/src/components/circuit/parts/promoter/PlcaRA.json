@@ -6,9 +6,16 @@
   "controlBy": [
     {
       "name": "IcaRA",
-      "type": "Repression"
+      "type": "Repression",
+      "params": {
+        "Ymax": 2.2,
+        "Ymin": 0.08,
+        "K": 0.1,
+        "n": 1.4
+      }
     }
   ],
-  "controlTo": [],
-  "meta": null
+  "params": {
+    "Ydef": 2.2
+  }
 }

@@ -1,51 +1,69 @@
 import { MAX_SLIDER_PARAM, MIN_SLIDER_PARAM } from "@/components/simulation/constants";
-import { useConverter } from "@/components/simulation/contexts/converter-context";
-import { useProteinParameters } from "@/components/simulation/contexts/protein-parameter-context";
-import { useWebSocketSimulation } from "@/components/simulation/hooks/use-websocket-simulation";
+import { useSimulator } from "@/components/simulation/simulator-context";
 import { Card, CardContent } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { Slider } from "@/components/ui/slider";
-import type React from "react";
+import { useCallback, useMemo } from "react";
 
-export const Sliders: React.FC = () => {
-  const { convertResult } = useConverter();
+export const Sliders = () => {
+  const { proteinName2Ids, proteinParameters, setProteinParameters } = useSimulator();
 
-  if (!convertResult) {
-    return null;
-  }
+  const proteinIdToName = useMemo(() => {
+    const mapping: Record<string, string> = {};
+    for (const [name, ids] of Object.entries(proteinName2Ids)) {
+      for (const id of ids) {
+        mapping[id] = name;
+      }
+    }
+    return mapping;
+  }, [proteinName2Ids]);
 
-  const { proteinParameter, handleProteinParamChange } = useProteinParameters();
-  useWebSocketSimulation(proteinParameter);
+  const handleSliderChange = useCallback(
+    (id: string) => (value: number[]) => {
+      setProteinParameters((prev) => ({ ...prev, [id]: value[0] }));
+    },
+    [setProteinParameters],
+  );
 
-  const proteinEntries = Object.entries(convertResult.protein_id2name);
+  const sliderList = useMemo(() => {
+    return Object.keys(proteinParameters).map((id, index) => {
+      const name = proteinIdToName[id];
+      const indexInGroup = proteinName2Ids[name].indexOf(id);
+      const displayName = proteinName2Ids[name].length === 1 ? name : `${name} [${indexInGroup + 1}]`;
+
+      return (
+        <div key={id} className="flex items-center gap-4 pt-0.5 pr-4 mt-2 mb-2">
+          <Label htmlFor={`slider-${id}`} className="w-40 flex items-center gap-2">
+            <span
+              className="inline-block w-3 h-3 rounded-full"
+              style={{ backgroundColor: `hsl(var(--chart-${(index % 5) + 1}))` }}
+            />
+            {displayName}
+          </Label>
+
+          <Slider
+            id={`slider-${id}`}
+            min={MIN_SLIDER_PARAM}
+            max={MAX_SLIDER_PARAM}
+            step={1}
+            value={[proteinParameters[id]]}
+            onValueChange={handleSliderChange(id)}
+            className="w-full"
+            aria-label={displayName}
+          />
+
+          <span className="w-24 text-right">{proteinParameters[id]}</span>
+        </div>
+      );
+    });
+  }, [proteinParameters, proteinName2Ids, proteinIdToName, handleSliderChange]);
 
   return (
     <Card className="h-full border-0 shadow-none pt-4">
       <CardContent className="h-full">
         <ScrollArea className="h-full">
-          {proteinEntries.map(([id, name], index) => (
-            <div key={id} className="flex items-center gap-4 pr-4">
-              <Label htmlFor={`slider-${id}`} className="w-40 flex items-center gap-2">
-                <span
-                  className="inline-block w-3 h-3 rounded-full"
-                  style={{ backgroundColor: `hsl(var(--chart-${(index % 5) + 1}))` }}
-                />
-                {name}
-              </Label>
-              <Slider
-                id={`slider-${id}`}
-                min={MIN_SLIDER_PARAM}
-                max={MAX_SLIDER_PARAM}
-                step={1}
-                value={[proteinParameter[id]]}
-                onValueChange={handleProteinParamChange(id)}
-                className="w-full"
-                aria-label={name}
-              />
-              <span className="w-24 text-right">{proteinParameter[id]}</span>
-            </div>
-          ))}
+          {sliderList}
           <ScrollBar />
         </ScrollArea>
       </CardContent>

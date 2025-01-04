@@ -42,8 +42,7 @@ const defaultParts = {
     category: "Promoter",
     sequence: "ATGC",
     controlBy: [],
-    controlTo: [],
-    meta: null,
+    params: {},
   },
 };
 vi.mock("@/components/circuit/parts/parts-context", () => ({
@@ -75,8 +74,7 @@ describe("PartsImportExportManager Component", () => {
         category: "Terminator",
         sequence: "ATGC",
         controlBy: [],
-        controlTo: [],
-        meta: null,
+        params: {},
       },
     });
     const openMock = vi.spyOn(dialog, "open").mockResolvedValue("path/to/file.json");
@@ -111,8 +109,7 @@ describe("PartsImportExportManager Component", () => {
         category: "Terminator",
         sequence: "ATGC",
         controlBy: [],
-        controlTo: [],
-        meta: null,
+        params: {},
       },
     });
     expect(toast.success).toHaveBeenCalled();

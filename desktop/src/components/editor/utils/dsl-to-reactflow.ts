@@ -62,8 +62,7 @@ export const dslToReactflow = (content, parts): { nodes: Node[]; edges: Edge[] }
             childDraft.data.category = attributes.category;
             childDraft.data.sequence = attributes.sequence;
             childDraft.data.controlBy = attributes.controlBy;
-            childDraft.data.controlTo = attributes.controlTo;
-            childDraft.data.meta = attributes.meta;
+            childDraft.data.params = attributes.params;
           }
 
           if (previousChildNodeId) {

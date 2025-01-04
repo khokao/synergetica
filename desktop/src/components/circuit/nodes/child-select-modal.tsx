@@ -134,8 +134,7 @@ const ChildSelectModalComponent = ({ id, data }) => {
             node.data.description = option.description;
             node.data.sequence = option.sequence;
             node.data.controlBy = option.controlBy;
-            node.data.controlTo = option.controlTo;
-            node.data.meta = option.meta;
+            node.data.params = option.params;
           }
         }
       });

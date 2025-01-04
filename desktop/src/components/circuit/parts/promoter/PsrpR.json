@@ -6,9 +6,16 @@
   "controlBy": [
     {
       "name": "SrpR",
-      "type": "Repression"
+      "type": "Repression",
+      "params": {
+        "Ymax": 2.1,
+        "Ymin": 0.003,
+        "K": 0.04,
+        "n": 2.5
+      }
     }
   ],
-  "controlTo": [],
-  "meta": null
+  "params": {
+    "Ydef": 2.1
+  }
 }

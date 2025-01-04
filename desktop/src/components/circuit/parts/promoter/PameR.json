@@ -6,9 +6,16 @@
   "controlBy": [
     {
       "name": "AmeR",
-      "type": "Repression"
+      "type": "Repression",
+      "params": {
+        "Ymax": 3.8,
+        "Ymin": 0.2,
+        "K": 0.09,
+        "n": 1.4
+      }
     }
   ],
-  "controlTo": [],
-  "meta": null
+  "params": {
+    "Ydef": 3.8
+  }
 }

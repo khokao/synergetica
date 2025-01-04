@@ -14,8 +14,9 @@ vi.mock("@/components/circuit/parts/parts-context", () => {
       category: "Promoter",
       sequence: "ATGC",
       controlBy: [],
-      controlTo: [],
-      meta: null,
+      params: {
+        Ydef: 1.0,
+      },
     },
   };
   const proteinParts = {
@@ -25,14 +26,9 @@ vi.mock("@/components/circuit/parts/parts-context", () => {
       category: "Protein",
       sequence: "ATGC",
       controlBy: [],
-      controlTo: [],
-      meta: {
-        Pmax: 0,
-        Ymax: 0,
-        Ymin: 0,
-        K: 0,
-        n: 0,
+      params: {
         Dp: 0,
+        TIRb: 0,
       },
     },
   };
@@ -43,8 +39,7 @@ vi.mock("@/components/circuit/parts/parts-context", () => {
       category: "Terminator",
       sequence: "ATGC",
       controlBy: [],
-      controlTo: [],
-      meta: null,
+      params: {},
     },
   };
 
@@ -115,7 +110,6 @@ describe("PartEditManager Component", () => {
     expect(screen.getByText("Update the specifications for this part.")).toBeInTheDocument();
     expect(screen.getByText("DNA Sequence")).toBeInTheDocument();
     expect(screen.getByText("Controlled By")).toBeInTheDocument();
-    expect(screen.getByText("Control To")).toBeInTheDocument();
   });
 
   it("updates the part when save button is clicked", async () => {

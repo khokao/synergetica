@@ -4,18 +4,8 @@
   "category": "Protein",
   "sequence": "atggcaggcgcagttggtcgtccgcgtcgtagtgcaccgcgtcgtgcaggtaaaaatccgcgtgaagaaattctggatgcaagcgcagaactgtttacccgtcagggttttgcaaccaccagtacccatcagattgcagatgcagttggtattcgtcaggcaagcctgtattatcattttccgagcaaaaccgaaatctttctgaccctgctgaaaagcaccgttgaaccgagcaccgttctggcagaagatctgagcaccctggatgcaggtccggaaatgcgtctgtgggcaattgttgcaagcgaagttcgtctgctgctgagcaccaaatggaatgttggtcgtctgtatcagctgccgattgttggtagcgaagaatttgcagaatatcatagccagcgtgaagcactgaccaatgtttttcgtgatctggcaaccgaaattgttggtgatgatccgcgtgcagaactgccgtttcatattaccatgagcgttattgaaatgcgtcgcaatgatggtaaaattccgagtccgctgagcgcagatagcctgccggaaaccgcaattatgctggcagatgcaagcctggcagttctgggtgcaccgctgcctgcagatcgtgttgaaaaaaccctggaactgattaaacaggcagatgcaaaataa",
   "controlBy": [],
-  "controlTo": [
-    {
-      "name": "PamtR",
-      "type": "Repression"
-    }
-  ],
-  "meta": {
-    "Pmax": 0.0002378448751,
-    "Ymax": 3.8,
-    "Ymin": 0.08,
-    "K": 0.07,
-    "n": 1.6,
-    "Dp": 0.26308464
+  "params": {
+    "Dp": 0.26308464,
+    "TIRb": 1065.12
   }
 }

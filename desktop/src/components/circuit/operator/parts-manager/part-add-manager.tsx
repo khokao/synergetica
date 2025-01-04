@@ -2,7 +2,7 @@
 
 import { ControlFields } from "@/components/circuit/operator/parts-manager/form-fields/controls";
 import { InputField } from "@/components/circuit/operator/parts-manager/form-fields/input";
-import { MetaFields } from "@/components/circuit/operator/parts-manager/form-fields/meta";
+import { ParamsFields } from "@/components/circuit/operator/parts-manager/form-fields/params";
 import { SelectField } from "@/components/circuit/operator/parts-manager/form-fields/select";
 import { useParts } from "@/components/circuit/parts/parts-context";
 import { partSchema } from "@/components/circuit/parts/schema";
@@ -24,19 +24,27 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { CirclePlus } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
+import type { z } from "zod";
 
 const PartAddForm = ({ closeDialog }) => {
   const { parts, addPart } = useParts();
 
-  const uniqueNamePartSchema = partSchema.merge(
-    z.object({
-      name: z
-        .string()
-        .min(1, { message: "Name string cannot be empty" })
-        .refine((name) => !parts[name], { message: "Part name must be unique." }),
-    }),
-  );
+  const uniqueNamePartSchema = partSchema.superRefine((data, ctx) => {
+    if (!data.name || data.name.trim().length === 0) {
+      ctx.addIssue({
+        code: "custom",
+        message: "Name string cannot be empty",
+        path: ["name"],
+      });
+    }
+    if (parts[data.name]) {
+      ctx.addIssue({
+        code: "custom",
+        message: "Part name must be unique.",
+        path: ["name"],
+      });
+    }
+  });
 
   const handleSave = (values: z.infer<typeof uniqueNamePartSchema>) => {
     addPart(values);
@@ -45,15 +53,14 @@ const PartAddForm = ({ closeDialog }) => {
 
   const form = useForm<z.infer<typeof uniqueNamePartSchema>>({
     resolver: zodResolver(uniqueNamePartSchema),
+    // @ts-ignore
     defaultValues: {
       name: "",
       description: "",
-      // @ts-ignore
       category: "",
       sequence: "",
       controlBy: [],
-      controlTo: [],
-      meta: null,
+      params: {},
     },
   });
 
@@ -110,28 +117,17 @@ const PartAddForm = ({ closeDialog }) => {
               placeholder="atgcATGC"
             />
 
-            <Separator />
-
-            <ControlFields
-              label="Controlled By"
-              description="Properties of the part that controls this part"
-              fieldName="controlBy"
-              form={form}
-            />
-
-            <Separator />
-
-            <ControlFields
-              label="Control To"
-              description="Properties of the part controlled by this part"
-              fieldName="controlTo"
-              form={form}
-            />
-
-            {category === "Protein" && (
+            {category === "Promoter" && (
               <>
                 <Separator />
-                <MetaFields form={form} />
+                <ControlFields form={form} />
+              </>
+            )}
+
+            {(category === "Promoter" || category === "Protein") && (
+              <>
+                <Separator />
+                <ParamsFields form={form} category={form.getValues("category")} />
               </>
             )}
           </form>
@@ -173,7 +169,7 @@ export const PartAddManager = () => {
           </TooltipContent>
         </Tooltip>
         <DialogContent
-          className="h-[70vh] flex flex-col"
+          className="h-[85vh] flex flex-col"
           onOpenAutoFocus={(event) => event.preventDefault()}
           onCloseAutoFocus={(event) => event.preventDefault()}
           tabIndex={undefined} // fix focus issue: https://github.com/shadcn-ui/ui/issues/1288#issuecomment-1819808273

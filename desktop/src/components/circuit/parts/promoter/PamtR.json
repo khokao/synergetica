@@ -6,9 +6,16 @@
   "controlBy": [
     {
       "name": "AmtR",
-      "type": "Repression"
+      "type": "Repression",
+      "params": {
+        "Ymax": 3.8,
+        "Ymin": 0.08,
+        "K": 0.07,
+        "n": 1.6
+      }
     }
   ],
-  "controlTo": [],
-  "meta": null
+  "params": {
+    "Ydef": 3.8
+  }
 }

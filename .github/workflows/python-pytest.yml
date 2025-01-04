@@ -37,9 +37,9 @@ jobs:
           uv_version: "0.5.5"
           working_dir: services
 
-      - name: Log in to Hugging Face
+      - name: Download ckpt file from huggingface-hub
         shell: bash
-        run: uv run huggingface-cli login --token ${{ secrets.HUGGINGFACE_TOKEN }}
+        run: uv run huggingface-cli download gene-circuit-ide/rbs-predictor base.ckpt --local-dir src/api/generator/checkpoints/
 
       - name: pytest
         run: | # set -o pipefail is required to propagate pytest exit code

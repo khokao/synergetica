@@ -4,18 +4,8 @@
   "category": "Protein",
   "sequence": "atgccgaaactgggtatgcagagcattcgtcgtcgtcagctgattgatgcaaccctggaagcaattaatgaagttggtatgcatgatgcaaccattgcacagattgcacgtcgtgccggtgttagcaccggtattattagccattatttccgcgataaaaacggtctgctggaagcaaccatgcgtgatattaccagccagctgcgtgatgcagttctgaatcgtctgcatgcactgccgcagggtagcgcagaacagcgtctgcaggcaattgttggtggtaattttgatgaaacccaggttagcagcgcagcaatgaaagcatggctggcattttgggcaagcagcatgcatcagccgatgctgtatcgtctgcagcaggttagcagtcgtcgtctgctgagcaatctggttagcgaatttcgtcgtgaactgcctcgtgaacaggcacaagaggcaggttatggtctggcagcactgattgatggtctgtggctgcgtgcagcactgagcggtaaaccgctggataaaacccgtgcaaatagcctgacccgtcattttatcacccagcatctgccgaccgattaa",
   "controlBy": [],
-  "controlTo": [
-    {
-      "name": "PbetI",
-      "type": "Repression"
-    }
-  ],
-  "meta": {
-    "Pmax": 0.0004845146566,
-    "Ymax": 3.8,
-    "Ymin": 0.07,
-    "K": 0.41,
-    "n": 2.4,
-    "Dp": 0.12914642
+  "params": {
+    "Dp": 0.12914642,
+    "TIRb": 522.86
   }
 }

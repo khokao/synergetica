@@ -6,9 +6,16 @@
   "controlBy": [
     {
       "name": "PsrA",
-      "type": "Repression"
+      "type": "Repression",
+      "params": {
+        "Ymax": 5.9,
+        "Ymin": 0.2,
+        "K": 0.19,
+        "n": 1.8
+      }
     }
   ],
-  "controlTo": [],
-  "meta": null
+  "params": {
+    "Ydef": 5.9
+  }
 }

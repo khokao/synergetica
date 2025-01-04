@@ -4,6 +4,5 @@
   "category": "Terminator",
   "sequence": "ccaattattgaacaccctaacgggtgtttttttttttttggtctacc",
   "controlBy": [],
-  "controlTo": [],
-  "meta": null
+  "params": {}
 }

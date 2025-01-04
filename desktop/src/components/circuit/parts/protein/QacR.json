@@ -4,18 +4,8 @@
   "category": "Protein",
   "sequence": "atgaacctgaaagataaaattctgggcgttgccaaagaactgtttatcaaaaatggctataacgcaaccaccaccggtgaaattgttaaactgagcgaaagcagcaaaggcaatctgtattatcactttaaaaccaaagagaacctgtttctggaaatcctgaacatcgaagaaagcaaatggcaagagcagtggaaaaaagaacaaatcaaatgcaaaaccaaccgcgagaaattctatctgtataatgaactgagcctgaccaccgaatattactatccgctgcagaatgccatcatcgagttttataccgagtactataaaaccaacagcatcaacgagaaaatgaacaaactggaaaacaaatacatcgatgcctaccacgtgatctttaaagaaggtaatctgaacggcgaatggtgcattaatgatgttaatgccgtgagcaaaattgcagcaaatgccgttaatggcattgttacctttacccatgagcagaatatcaacgaacgcattaaactgatgaacaaattcagccagatctttctgaatggcctgagcaaataa",
   "controlBy": [],
-  "controlTo": [
-    {
-      "name": "PqacR",
-      "type": "Repression"
-    }
-  ],
-  "meta": {
-    "Pmax": 0.00004009693434,
-    "Ymax": 2.4,
-    "Ymin": 0.01,
-    "K": 0.08,
-    "n": 2.7,
-    "Dp": 0.98561151
+  "params": {
+    "Dp": 0.98561151,
+    "TIRb": 3990.33
   }
 }
