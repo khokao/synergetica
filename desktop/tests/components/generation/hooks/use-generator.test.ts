@@ -1,5 +1,6 @@
 import { useGenerator } from "@/components/generation/hooks/use-generator";
 import { callGeneratorAPI, cancelGeneratorAPI } from "@/components/generation/hooks/use-generator-api";
+import { useSimulator } from "@/components/simulation/simulator-context";
 import { act, renderHook } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
@@ -32,11 +33,6 @@ const mockNodes = [
 ];
 const mockEdges = [];
 
-const mockProteinParameters = {
-  "child-2": 10,
-  "child-3": 20,
-};
-
 vi.mock("@xyflow/react", () => ({
   useReactFlow: vi.fn().mockReturnValue({
     getNodes: vi.fn(() => mockNodes),
@@ -49,10 +45,8 @@ vi.mock("@/components/generation/hooks/use-generator-api", () => ({
   cancelGeneratorAPI: vi.fn(),
 }));
 
-vi.mock("@/components/simulation/contexts/protein-parameter-context", () => ({
-  useProteinParameters: () => ({
-    proteinParameter: mockProteinParameters,
-  }),
+vi.mock("@/components/simulation/simulator-context", () => ({
+  useSimulator: vi.fn().mockReturnValue({}),
 }));
 
 describe("useGenerator Hook", () => {
@@ -66,6 +60,15 @@ describe("useGenerator Hook", () => {
       protein_generated_sequences: { "child-2": "AAAATT", "child-3": "CCCCGG" },
     };
     vi.mocked(callGeneratorAPI).mockResolvedValue(mockResponse);
+
+    const mockProteinParameters = {
+      "child-2": 10,
+      "child-3": 20,
+    };
+    vi.mocked(useSimulator).mockReturnValue({
+      proteinParameters: mockProteinParameters,
+      // biome-ignore  lint/suspicious/noExplicitAny: For brevity and clarity.
+    } as any);
 
     // Act & Assert
     const { result } = renderHook(() => useGenerator());
