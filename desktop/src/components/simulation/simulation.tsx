@@ -1,12 +1,11 @@
 import { useEditorContext } from "@/components/editor/editor-context";
 import { GenerationButtons } from "@/components/generation/generation";
 import { Chart } from "@/components/simulation/chart";
-import { useConverter } from "@/components/simulation/contexts/converter-context";
+import { useSimulator } from "@/components/simulation/simulator-context";
 import { Sliders } from "@/components/simulation/sliders";
 import { Separator } from "@/components/ui/separator";
-import type React from "react";
 
-const Message: React.FC<{ lines: string[] }> = ({ lines }) => {
+const Message = ({ lines }: { lines: string[] }) => {
   return (
     <div className="flex flex-col items-center justify-center h-full">
       {lines.map((line) => (
@@ -18,9 +17,9 @@ const Message: React.FC<{ lines: string[] }> = ({ lines }) => {
   );
 };
 
-export const Simulation: React.FC = () => {
-  const { convertResult } = useConverter();
+export const Simulation = () => {
   const { validationError } = useEditorContext();
+  const { solutions } = useSimulator();
 
   if (validationError === null) {
     return (
@@ -38,7 +37,7 @@ export const Simulation: React.FC = () => {
     );
   }
 
-  if (convertResult === null) {
+  if (solutions.length === 0) {
     return (
       <div className="flex items-center justify-center h-full">
         <Message lines={["No simulation data.", "Click 'Simulate' button."]} />

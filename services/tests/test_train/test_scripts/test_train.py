@@ -1,7 +1,7 @@
 import pandas as pd  # Use pandas because huggingface datasets depends on pandas
 from hydra import compose, initialize
 
-from src.train.scripts.train import main
+from train.scripts.train import main
 
 
 def test_train(tmpdir):

@@ -1,18 +1,31 @@
-import { useSimulate } from "@/components/circuit/hooks/use-run-simulator";
+import { usePanelContext } from "@/components/circuit/resizable-panel/resizable-panel-context";
 import { useEditorContext } from "@/components/editor/editor-context";
-import { useConverter } from "@/components/simulation/contexts/converter-context";
-
+import { useSimulator } from "@/components/simulation/simulator-context";
 import { Button } from "@/components/ui/button";
 import { ChartSpline, RotateCw } from "lucide-react";
-import React from "react";
 
 export const SimulatorButtons = () => {
-  const { handleRunSimulate, handleResetSimulate } = useSimulate();
   const { validationError } = useEditorContext();
-  const { convertResult } = useConverter();
+  const { openPanels, togglePanel } = usePanelContext();
+  const { solutions, formulate, reset } = useSimulator();
+
+  const handleRunSimulate = async () => {
+    const panelPosition = "right";
+    const isOpen = openPanels[panelPosition];
+
+    if (!isOpen) {
+      togglePanel(panelPosition);
+    }
+
+    formulate();
+  };
+
+  const handleResetSimulate = () => {
+    reset();
+  };
 
   const isReadyToSimulate = validationError !== null && validationError.length === 0;
-  const hasConvertResult = convertResult !== null;
+  const hasSimulationResults = solutions.length > 0;
 
   const buttons = [
     {
@@ -24,7 +37,7 @@ export const SimulatorButtons = () => {
     },
     {
       onClick: handleResetSimulate,
-      disabled: !hasConvertResult,
+      disabled: !hasSimulationResults,
       icon: <RotateCw className="w-5 h-5" />,
       label: "Reset",
       testId: "simulation-reset-button",

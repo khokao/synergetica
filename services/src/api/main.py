@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 
 from api.generator import router as generator_router
-from api.routers import simulator
+from api.simulator import router as simulator_router
 from api.utils import RequestCancelledMiddleware, setup_logging
 
 app = FastAPI()
@@ -14,6 +14,6 @@ async def healthcheck() -> dict[str, str]:
 
 
 app.include_router(generator_router.router)
-app.include_router(simulator.router)
+app.include_router(simulator_router.router)
 
 setup_logging()
