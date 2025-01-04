@@ -43,6 +43,19 @@ vi.mock("@/components/editor/editor-context", () => ({
 }));
 
 describe("Simulation Component", () => {
+  const originalWarn = console.warn;
+  beforeAll(() => {
+    console.warn = (...args) => {
+      if (args[0]?.includes("maybe you don't need to use a ResponsiveContainer")) {
+        return;
+      }
+      originalWarn(...args);
+    };
+  });
+  afterAll(() => {
+    console.warn = originalWarn;
+  });
+
   it("displays message for empty circuit when validationError is null", () => {
     // Arrange
     setupMocks({ editor: { validationError: null } });
@@ -91,6 +104,20 @@ describe("Simulation Component", () => {
         proteinParameters: { "child-1": 100 },
         setProteinParameters: vi.fn(),
       },
+    });
+
+    // https://github.com/recharts/recharts/issues/2982
+    vi.mock("recharts", async () => {
+      const OriginalModule = await vi.importActual<typeof import("recharts")>("recharts");
+
+      return {
+        ...OriginalModule,
+        ResponsiveContainer: ({ children }) => (
+          <OriginalModule.ResponsiveContainer width={800} height={800}>
+            {children}
+          </OriginalModule.ResponsiveContainer>
+        ),
+      };
     });
 
     // Act

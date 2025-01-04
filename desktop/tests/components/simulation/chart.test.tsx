@@ -22,6 +22,19 @@ vi.mock("recharts", async () => {
 });
 
 describe("Chart Component", () => {
+  const originalWarn = console.warn;
+  beforeAll(() => {
+    console.warn = (...args) => {
+      if (args[0]?.includes("maybe you don't need to use a ResponsiveContainer")) {
+        return;
+      }
+      originalWarn(...args);
+    };
+  });
+  afterAll(() => {
+    console.warn = originalWarn;
+  });
+
   beforeEach(() => {
     vi.clearAllMocks();
   });
