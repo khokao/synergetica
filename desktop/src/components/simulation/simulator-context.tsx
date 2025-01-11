@@ -1,5 +1,5 @@
+import { useApiStatus } from "@/components/simulation/api-status-context";
 import { DEFAULT_SLIDER_PARAM, WS_URL } from "@/components/simulation/constants";
-import { invoke } from "@tauri-apps/api/core";
 import { useReactFlow } from "@xyflow/react";
 import type { Node } from "@xyflow/react";
 import { useNodes } from "@xyflow/react";
@@ -27,6 +27,8 @@ interface SimulatorContextValue {
 const SimulatorContext = createContext<SimulatorContextValue | null>(null);
 
 export const SimulatorProvider = ({ children }: { children: React.ReactNode }) => {
+  const { isHealthcheckOk } = useApiStatus();
+
   const [ws, setWs] = useState<WebSocket | null>(null);
 
   const [solutions, setSolutions] = useState<SimulatorSolution[]>([]);
@@ -45,8 +47,7 @@ export const SimulatorProvider = ({ children }: { children: React.ReactNode }) =
 
     const tryConnect = async () => {
       try {
-        const result = await invoke<string>("call_healthcheck");
-        if (result === "ok") {
+        if (isHealthcheckOk) {
           const socket = new WebSocket(WS_URL);
 
           socket.onopen = () => {
@@ -93,19 +94,20 @@ export const SimulatorProvider = ({ children }: { children: React.ReactNode }) =
           setWs(socket);
           clearInterval(intervalId);
         } else {
-          console.error("[Healthcheck] Server not ready. result:", result);
+          console.error("[Healthcheck] Server not ready.");
         }
       } catch (error) {
         console.error("[Healthcheck] Failed to connect to server:", error);
       }
     };
 
+    tryConnect();
     const intervalId = setInterval(tryConnect, 5000); // 5 seconds
 
     return () => {
       clearInterval(intervalId);
     };
-  }, [ws]);
+  }, [ws, isHealthcheckOk]);
 
   useEffect(() => {
     if (!ws || ws.readyState !== WebSocket.OPEN) return;
