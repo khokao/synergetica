@@ -140,3 +140,4 @@ build-backend = "hatchling.build"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/api"]
+artifacts = ["src/api/generator/checkpoints/*.ckpt"]
