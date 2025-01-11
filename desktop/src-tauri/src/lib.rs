@@ -3,9 +3,10 @@ mod api;
 use api::{APIClient, GeneratorResponseData};
 use std::collections::HashMap;
 use std::sync::Arc;
-use tauri::RunEvent;
+use tauri_plugin_shell::process::CommandEvent;
 use tauri_plugin_shell::ShellExt;
 use tokio::sync::Mutex;
+use tokio::time::{timeout, Duration};
 use tokio_util::sync::CancellationToken;
 
 struct AppState {
@@ -27,14 +28,11 @@ async fn call_generator_api(
     state: tauri::State<'_, Arc<Mutex<AppState>>>,
 ) -> Result<GeneratorResponseData, String> {
     let cancellation_token = CancellationToken::new();
-
     {
-        let mut state = state.lock().await;
-        state.cancellation_token = cancellation_token.clone();
+        let mut locked_state = state.lock().await;
+        locked_state.cancellation_token = cancellation_token.clone();
     }
-
     let api_call = APIClient::generate(protein_target_values, protein_init_sequences);
-
     tokio::select! {
         result = api_call => result.map_err(|e| e.to_string()),
         _ = cancellation_token.cancelled() => Err("Request was canceled".into()),
@@ -43,65 +41,97 @@ async fn call_generator_api(
 
 #[tauri::command]
 async fn cancel_generator_api(state: tauri::State<'_, Arc<Mutex<AppState>>>) -> Result<(), ()> {
-    let state = state.lock().await;
-    state.cancellation_token.cancel();
+    let locked_state = state.lock().await;
+    locked_state.cancellation_token.cancel();
     Ok(())
 }
 
-fn docker_run_container(app_handle: &tauri::AppHandle) -> Result<String, String> {
-    docker_remove_container(app_handle).ok();
-
-    println!("[tauri] Running Docker container...");
-
-    let container_name = "my_container";
-    let image_name = "myapp";
-
+async fn docker_command(
+    app_handle: &tauri::AppHandle,
+    action: &str,
+    args: &[&str],
+    success_msg: &str,
+    fail_msg: &str,
+    container_name: &str,
+) {
+    println!("[tauri] {action}...");
     let shell = app_handle.shell();
-
-    let output = tauri::async_runtime::block_on(async {
-        shell
-            .command("docker")
-            .args(["run", "-d", "-p", "8000:8000", "--name", container_name, image_name])
-            .output()
-            .await
-    })
-    .map_err(|e| e.to_string())?;
-
-    if output.status.success() {
-        println!("[tauri] Docker container `{container_name}` is now running.");
-        Ok(format!("Docker container `{container_name}` is now running."))
-    } else {
-        let stderr = String::from_utf8_lossy(&output.stderr);
-        eprintln!("[tauri] Failed to run Docker container `{container_name}`: {stderr}");
-        Err(format!("Failed to run Docker container `{container_name}`: {stderr}"))
+    match shell.command("docker").args(args).spawn() {
+        Err(e) => eprintln!("[tauri] Command spawn error: {e}"),
+        Ok((mut rx, child)) => {
+            let result = timeout(Duration::from_secs(3), async {
+                while let Some(event) = rx.recv().await {
+                    match event {
+                        CommandEvent::Terminated(payload) => {
+                            if let Some(code) = payload.code {
+                                if code == 0 {
+                                    println!("[tauri] {success_msg}");
+                                } else {
+                                    eprintln!("[tauri] {fail_msg}: exit code {code}");
+                                }
+                            } else {
+                                eprintln!("[tauri] {fail_msg}: no exit code");
+                            }
+                            return;
+                        }
+                        CommandEvent::Stderr(line) => {
+                            eprintln!("[tauri] docker stderr: {}", String::from_utf8_lossy(&line));
+                        }
+                        CommandEvent::Stdout(line) => {
+                            println!("[tauri] docker stdout: {}", String::from_utf8_lossy(&line));
+                        }
+                        CommandEvent::Error(err) => {
+                            eprintln!("[tauri] Command error: {err}");
+                            return;
+                        }
+                        _ => {
+                            eprintln!("[tauri] Unhandled CommandEvent variant for `{container_name}`");
+                        }
+                    }
+                }
+            })
+            .await;
+            if result.is_err() {
+                eprintln!("[tauri] Timeout: {fail_msg}. Killing process...");
+                if let Err(kill_err) = child.kill() {
+                    eprintln!("[tauri] Failed to kill child process: {kill_err}");
+                }
+            }
+        }
     }
 }
 
-fn docker_remove_container(app_handle: &tauri::AppHandle) -> Result<String, String> {
-    println!("[tauri] Removing Docker container...");
+async fn docker_remove_container(app_handle: &tauri::AppHandle) {
+    docker_command(
+        app_handle,
+        "Removing Docker container",
+        &["rm", "-f", "synergetica_api"],
+        "Docker container `synergetica_api` removed.",
+        "Failed to remove Docker container `synergetica_api`",
+        "synergetica_api",
+    )
+    .await;
+}
 
-    let container_name = "my_container";
-    let shell = app_handle.shell();
-
-    let output = tauri::async_runtime::block_on(async {
-        shell
-            .command("docker")
-            .args(["rm", "-f", container_name])
-            .output()
-            .await
-    })
-    .map_err(|e| e.to_string())?;
-
-    if output.status.success() {
-        println!("[tauri] Docker container `{container_name}` removed.");
-        Ok(format!("Docker container `{container_name}` removed."))
-    } else {
-        let stderr = String::from_utf8_lossy(&output.stderr);
-        eprintln!("[tauri] Failed to remove Docker container `{container_name}`: {stderr}");
-        Err(format!(
-            "Failed to remove Docker container `{container_name}`: {stderr}"
-        ))
-    }
+async fn docker_run_container(app_handle: &tauri::AppHandle) {
+    docker_remove_container(app_handle).await;
+    docker_command(
+        app_handle,
+        "Running Docker container",
+        &[
+            "run",
+            "-d",
+            "-p",
+            "8000:8000",
+            "--name",
+            "synergetica_api",
+            "khokao/synergetica",
+        ],
+        "Docker container `synergetica_api` is now running.",
+        "Failed to run Docker container `synergetica_api`",
+        "synergetica_api",
+    )
+    .await;
 }
 
 pub fn run() {
@@ -116,9 +146,10 @@ pub fn run() {
         .plugin(tauri_plugin_shell::init())
         .manage(state)
         .setup(|app| {
-            if let Err(e) = docker_run_container(&app.handle()) {
-                eprintln!("[tauri] Failed to run Docker container: {e}");
-            }
+            let app_handle = app.handle().clone();
+            tauri::async_runtime::spawn(async move {
+                docker_run_container(&app_handle).await;
+            });
             Ok(())
         })
         .invoke_handler(tauri::generate_handler![
@@ -129,8 +160,13 @@ pub fn run() {
         .build(tauri::generate_context!())
         .expect("error while running tauri application")
         .run(|app_handle, event| match event {
-            RunEvent::ExitRequested { .. } => {
-                docker_remove_container(app_handle).ok();
+            tauri::RunEvent::ExitRequested { api, .. } => {
+                api.prevent_exit();
+                let app_handle = app_handle.clone();
+                tauri::async_runtime::spawn(async move {
+                    docker_remove_container(&app_handle).await;
+                    std::process::exit(0);
+                });
             }
             _ => {}
         });
