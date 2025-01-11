@@ -122,7 +122,7 @@ async fn docker_run_container(app_handle: &tauri::AppHandle) {
             "run",
             "-d",
             "-p",
-            "8000:8000",
+            "7007:7007",
             "--name",
             "synergetica_api",
             "khokao/synergetica",
