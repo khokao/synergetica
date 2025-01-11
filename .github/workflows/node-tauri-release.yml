@@ -56,15 +56,15 @@ jobs:
           working_dir: desktop
 
       - name: install Rust stable
-        uses: dtolnay/rust-toolchain@stable # Set this to dtolnay/rust-toolchain@nightly
+        uses: dtolnay/rust-toolchain@stable
         with:
-          # Those targets are only used on macos runners so it's in an `if` to slightly speed up windows and linux builds.
           targets: ${{ matrix.platform == 'macos-latest' && 'aarch64-apple-darwin,x86_64-apple-darwin' || '' }}
 
       - name: Rust cache
         uses: swatinem/rust-cache@v2
         with:
           workspaces: "./src-tauri -> target"
+          key: ${{ matrix.args }}
 
       - name: Create nightly release
         if: >
