@@ -24,7 +24,7 @@ impl APIClient {
     pub async fn healthcheck() -> Result<(), String> {
         let client = Client::new();
         let response = client
-            .get("http://127.0.0.1:8000/healthcheck")
+            .get("http://127.0.0.1:7007/healthcheck")
             .send()
             .await
             .map_err(|e| format!("Failed to send request: {}", e))?;
@@ -47,7 +47,7 @@ impl APIClient {
 
         let client = Client::new();
         let response = client
-            .post("http://127.0.0.1:8000/generate")
+            .post("http://127.0.0.1:7007/generate")
             .json(&request_data)
             .send()
             .await

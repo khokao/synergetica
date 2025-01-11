@@ -8,7 +8,7 @@ ENV UV_LINK_MODE=copy \
     UV_PROJECT_ENVIRONMENT=/app
 
 RUN uvx --from "huggingface_hub[cli]" huggingface-cli download \
-    gene-circuit-ide/rbs-predictor \
+    khokao/synergetica \
     base.ckpt \
     --local-dir src/api/generator/checkpoints
 
@@ -25,4 +25,4 @@ COPY --from=builder --chown=app:app /app /app
 USER app
 WORKDIR /app
 
-CMD ["/app/bin/uvicorn", "api.main:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["/app/bin/uvicorn", "api.main:app", "--host", "0.0.0.0", "--port", "7007"]
