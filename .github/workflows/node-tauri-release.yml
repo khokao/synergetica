@@ -53,12 +53,6 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf
 
-      - name: Set up Node
-        uses: ./.github/composite/setup-node
-        with:
-          node_version: "22"
-          working_dir: desktop
-
       - name: install Rust stable
         uses: dtolnay/rust-toolchain@stable # Set this to dtolnay/rust-toolchain@nightly
         with:
@@ -70,6 +64,12 @@ jobs:
         with:
           workspaces: "./src-tauri -> target"
           key: ${{ matrix.args }}
+
+      - name: Set up Node
+        uses: ./.github/composite/setup-node
+        with:
+          node_version: "22"
+          working_dir: desktop
 
       - name: Create nightly release
         # if: >
