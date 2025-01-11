@@ -1,25 +1,21 @@
 name: "Release"
 
 on:
-  # push:
-  #   branches:
-  #     - main
-  #   tags:
-  #     - "v*"
-  # workflow_dispatch:
-  #   inputs:
-  #     release_type:
-  #       type: choice
-  #       description: "Select which release to create or update"
-  #       options:
-  #         - nightly
-  #         - tagged
-  #       required: true
-  #       default: nightly
-  pull_request:
-    types:
-      - opened
-      - synchronize
+  push:
+    branches:
+      - main
+    tags:
+      - "v*"
+  workflow_dispatch:
+    inputs:
+      release_type:
+        type: choice
+        description: "Select which release to create or update"
+        options:
+          - nightly
+          - tagged
+        required: true
+        default: nightly
 
 permissions:
   contents: write
@@ -38,10 +34,10 @@ jobs:
             args: "--target aarch64-apple-darwin"
           - platform: "macos-latest" # for Intel based macs.
             args: "--target x86_64-apple-darwin"
-          # - platform: "ubuntu-22.04"
-          #   args: ""
-          # - platform: "windows-latest"
-          #   args: ""
+          - platform: "ubuntu-22.04"
+            args: ""
+          - platform: "windows-latest"
+            args: ""
 
     runs-on: ${{ matrix.platform }}
     steps:
@@ -60,9 +56,8 @@ jobs:
           working_dir: desktop
 
       - name: install Rust stable
-        uses: dtolnay/rust-toolchain@stable # Set this to dtolnay/rust-toolchain@nightly
+        uses: dtolnay/rust-toolchain@stable
         with:
-          # Those targets are only used on macos runners so it's in an `if` to slightly speed up windows and linux builds.
           targets: ${{ matrix.platform == 'macos-latest' && 'aarch64-apple-darwin,x86_64-apple-darwin' || '' }}
 
       - name: Rust cache
@@ -72,9 +67,9 @@ jobs:
           key: ${{ matrix.args }}
 
       - name: Create nightly release
-        # if: >
-        #   (github.event_name == 'push' && startsWith(github.ref, 'refs/heads/main')) ||
-        #   (github.event_name == 'workflow_dispatch' && github.event.inputs.release_type == 'nightly')
+        if: >
+          (github.event_name == 'push' && startsWith(github.ref, 'refs/heads/main')) ||
+          (github.event_name == 'workflow_dispatch' && github.event.inputs.release_type == 'nightly')
         uses: tauri-apps/tauri-action@v0
         with:
           tagName: "nightly"
@@ -87,18 +82,18 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      # - name: Create tagged release
-      #   if: >
-      #     (github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')) ||
-      #     (github.event_name == 'workflow_dispatch' && github.event.inputs.release_type == 'tagged')
-      #   uses: tauri-apps/tauri-action@v0
-      #   with:
-      #     tagName: ${{ github.ref_name }}
-      #     releaseName: "Synergetica ${{ github.ref_name }}"
-      #     releaseDraft: true
-      #     prerelease: false
-      #     releaseBody: |
-      #       This is an official tagged release.
-      #     args: ${{ matrix.args }}
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Create tagged release
+        if: >
+          (github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')) ||
+          (github.event_name == 'workflow_dispatch' && github.event.inputs.release_type == 'tagged')
+        uses: tauri-apps/tauri-action@v0
+        with:
+          tagName: ${{ github.ref_name }}
+          releaseName: "Synergetica ${{ github.ref_name }}"
+          releaseDraft: true
+          prerelease: false
+          releaseBody: |
+            This is an official tagged release.
+          args: ${{ matrix.args }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
