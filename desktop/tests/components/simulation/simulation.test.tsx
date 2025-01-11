@@ -1,4 +1,5 @@
 import { useEditorContext } from "@/components/editor/editor-context";
+import { useApiStatus } from "@/components/simulation/api-status-context";
 import { Simulation } from "@/components/simulation/simulation";
 import { useSimulator } from "@/components/simulation/simulator-context";
 import { render, screen } from "@testing-library/react";
@@ -7,6 +8,11 @@ import { describe, expect, it, vi } from "vitest";
 
 const defaultEditorContext = {
   validationError: [],
+  // biome-ignore  lint/suspicious/noExplicitAny: For brevity and clarity.
+} as any;
+
+const defaultApiStatusContext = {
+  isHealthcheckOk: true,
   // biome-ignore  lint/suspicious/noExplicitAny: For brevity and clarity.
 } as any;
 
@@ -19,14 +25,20 @@ const defaultSimulatorContext = {
 
 function setupMocks({
   editor = {},
+  apiStatus = {},
   simulator = {},
 }: {
   editor?: Partial<typeof defaultEditorContext>;
+  apiStatus?: Partial<typeof defaultApiStatusContext>;
   simulator?: Partial<typeof defaultSimulatorContext>;
 } = {}) {
   vi.mocked(useEditorContext).mockReturnValue({
     ...defaultEditorContext,
     ...editor,
+  });
+  vi.mocked(useApiStatus).mockReturnValue({
+    ...defaultApiStatusContext,
+    ...apiStatus,
   });
   vi.mocked(useSimulator).mockReturnValue({
     ...defaultSimulatorContext,
@@ -42,6 +54,10 @@ vi.mock("@/components/editor/editor-context", () => ({
   useEditorContext: vi.fn(),
 }));
 
+vi.mock("@/components/simulation/api-status-context", () => ({
+  useApiStatus: vi.fn(),
+}));
+
 describe("Simulation Component", () => {
   const originalWarn = console.warn;
   beforeAll(() => {
@@ -54,6 +70,18 @@ describe("Simulation Component", () => {
   });
   afterAll(() => {
     console.warn = originalWarn;
+  });
+
+  it("displays message for server connection error when isHealthcheckOk is false", () => {
+    // Arrange
+    setupMocks({ apiStatus: { isHealthcheckOk: false } });
+
+    // Act
+    render(<Simulation />);
+
+    // Assert
+    expect(screen.getByText("Can't connect to the server.")).toBeInTheDocument();
+    expect(screen.getByText("Check if it's running in Docker.")).toBeInTheDocument();
   });
 
   it("displays message for empty circuit when validationError is null", () => {

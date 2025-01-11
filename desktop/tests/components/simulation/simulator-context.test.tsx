@@ -1,9 +1,14 @@
+import { useApiStatus } from "@/components/simulation/api-status-context";
 import { DEFAULT_SLIDER_PARAM } from "@/components/simulation/constants";
 import { SimulatorProvider, useSimulator } from "@/components/simulation/simulator-context";
 import { act, renderHook } from "@testing-library/react";
 import { ReactFlowProvider } from "@xyflow/react";
 import * as xyflow from "@xyflow/react";
 import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
+
+vi.mock("@/components/simulation/api-status-context", () => ({
+  useApiStatus: vi.fn().mockReturnValue({ isHealthcheckOk: true }), // デフォルトは true
+}));
 
 const MockWebSocket = vi.fn().mockImplementation(function (this) {
   this.onopen = null;
@@ -25,6 +30,7 @@ describe("SimulatorContext", () => {
 
   beforeEach(() => {
     vi.clearAllMocks();
+    vi.useFakeTimers();
 
     vi.spyOn(console, "log").mockImplementation(() => {});
     vi.spyOn(console, "error").mockImplementation(() => {});
@@ -42,6 +48,40 @@ describe("SimulatorContext", () => {
       <SimulatorProvider>{children}</SimulatorProvider>
     </ReactFlowProvider>
   );
+
+  it("does not open WebSocket if isHealthcheckOk is false", async () => {
+    // Arrange
+    vi.mocked(useApiStatus).mockReturnValueOnce({ isHealthcheckOk: false });
+
+    // Act
+    renderHook(() => useSimulator(), { wrapper });
+
+    // Assert
+    expect(MockWebSocket).not.toHaveBeenCalled();
+    expect(console.error).toHaveBeenCalledWith("[Healthcheck] Server not ready.");
+  });
+
+  it("tries to reconnect on WebSocket onclose", async () => {
+    // Arrange
+    renderHook(() => useSimulator(), { wrapper });
+    const wsInstance = MockWebSocket.mock.instances[0];
+
+    act(() => {
+      wsInstance.onopen?.(new Event("open"));
+    });
+    expect(wsInstance).toBeDefined();
+    expect(console.log).toHaveBeenCalledWith("[WebSocket] connected");
+
+    // Act
+    act(() => {
+      wsInstance.onclose?.(new CloseEvent("close"));
+    });
+
+    // Assert
+    expect(console.log).toHaveBeenCalledWith("[WebSocket] disconnected");
+    vi.advanceTimersByTime(5001);
+    expect(MockWebSocket.mock.instances.length).toBeGreaterThan(1);
+  });
 
   it("provides default state when initialized with no external data", () => {
     // Arrange & Act
