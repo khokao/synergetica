@@ -39,7 +39,7 @@ jobs:
 
       - name: Download ckpt file from huggingface-hub
         shell: bash
-        run: uv run huggingface-cli download gene-circuit-ide/rbs-predictor base.ckpt --local-dir src/api/generator/checkpoints/
+        run: uv run huggingface-cli download khokao/synergetica base.ckpt --local-dir src/api/generator/checkpoints/
 
       - name: pytest
         run: | # set -o pipefail is required to propagate pytest exit code
