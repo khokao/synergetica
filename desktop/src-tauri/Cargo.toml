@@ -1,5 +1,5 @@
 [package]
-name = "magesty"
+name = "synergetica"
 version = "0.0.0"
 description = "Genetic circuit design desktop app"
 authors = ["Koki Hokao"]
