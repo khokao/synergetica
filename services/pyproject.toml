@@ -1,5 +1,5 @@
 [project]
-name = "magesty"
+name = "synergetica"
 version = "0.0.0"
 description = "Genetic circuit design desktop app"
 authors = [
@@ -11,16 +11,16 @@ requires-python = ">=3.12,<3.13"
 dependencies = [
     "aiomultiprocess>=0.9.1",
     "datasets>=3.1.0",
-    "fastapi[standard]>=0.115.5",
+    "fastapi[standard]>=0.115.6",
     "torch>=2.5.1",
     "lightning>=2.4.0",
-    "loguru>=0.7.2",
-    "numpy>=2.0.0",
+    "loguru>=0.7.3",
+    "numpy>=2.2.1",
     "omegaconf>=2.3.0",
-    "pydantic>=2.10.2",
-    "scipy>=1.14.1",
+    "pydantic>=2.10.5",
+    "scipy>=1.15.0",
     "tokenizers>=0.21.0",
-    "torchmetrics>=1.6.0",
+    "torchmetrics>=1.6.1",
     "transformers>=4.17.0",
 ]
 
@@ -41,20 +41,20 @@ dev = [
     "tensorboardx>=2.6.2.2",
 
     # Test
-    "coverage[toml]>=7.6.8",
-    "pytest-asyncio>=0.24.0",
-    "pytest>=8.3.3",
+    "coverage[toml]>=7.6.10",
+    "pytest-asyncio>=0.25.2",
+    "pytest>=8.3.4",
     "pytest-cov>=6.0.0",
 
     # Lint
-    "ruff>=0.8.1",
+    "ruff>=0.9.1",
 
     # Types
-    "mypy>=1.13.0",
+    "mypy>=1.14.1",
 
     # Docs
     "mkdocs>=1.6.1",
-    "mkdocs-material>=9.5.47",
+    "mkdocs-material>=9.5.49",
 ]
 
 [tool.ruff]
