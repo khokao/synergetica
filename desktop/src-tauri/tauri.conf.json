@@ -1,7 +1,7 @@
 {
-  "productName": "magesty",
+  "productName": "Synergetica",
   "version": "0.1.0",
-  "identifier": "dev.khokao.magesty",
+  "identifier": "dev.khokao.synergetica",
   "build": {
     "beforeBuildCommand": "npm run next-build",
     "beforeDevCommand": "npm run next-dev",
@@ -14,7 +14,7 @@
         "fullscreen": false,
         "height": 600,
         "resizable": true,
-        "title": "MaGesty",
+        "title": "Synergetica",
         "width": 800,
         "dragDropEnabled": false
       }

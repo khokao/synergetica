@@ -2,8 +2,6 @@ name: "Python mkdocs deploy"
 
 on:
   push:
-    branches:
-      - main
     paths:
       - "services/docs/**"
       - "services/mkdocs.yml"

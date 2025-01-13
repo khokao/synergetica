@@ -5,9 +5,9 @@
   <figcaption>Banner or Logo</figcaption>
 </figure>
 
-## What is MaGesty?
+## What is Synergetica?
 
-MaGesty is ...
+Synergetica is ...
 
 
 
