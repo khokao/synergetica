@@ -84,6 +84,9 @@ This will automatically open the simulation tab from the right side and display 
 
 The graph shows the time concentration change of the protein (green block) in this circuit.
 
+!!! Tip
+	See <u>[this page](../guides/genetic-simulation.md)</u> if you want to know more about what the graphs and slide bars mean biologically.
+
 ![](../assets/imgs/tutorial/simulation_first.png)
 
 
@@ -93,8 +96,36 @@ Each of these corresponds to a protein in the green block, allowing you to adjus
 
 Changing the value of the slide bar seamlessly reflects the corresponding simulation results in the graph.
 
+Adjust the parameters to achieve the protein concentration you desire.
+
 ![](../assets/imgs/tutorial/simulation_bar_move.png)
+
 
 ## 3. Generating sequences
 
-xxx
+Once the parameters have been adjusted, the last step is to generate the specific DNA sequences to realize the parameters.
+
+Press the `Run` button in the `Generation` section at the bottom right of the app, start sequence generation.
+
+![](../assets/imgs/tutorial/generation_generating.png)
+
+When generation is complete, the result can be viewed by pressing the `Result` button.
+
+The generated DNA sequences corresponding to each **chain** will be displayed in the result window.
+
+![](../assets/imgs/tutorial/generation_result.png)
+
+You can also export generated DNA sequneces as **Fasta** format file by pressing on `Export Fasta` button.
+
+```text
+> great-coins-check
+GATAGTGACAAACTTGACAACTCATCACTTCCTAGGTATAATGCTAGCCAGCGTGTGTTCCGGGGCCACTTGTTACTGCCCAATTATTGAACACCCTAACGGGTGTTTTTTTTTTTTTGGTCTACC
+
+> tangy-parents-dress
+GATTCGTTACCAATTGACAGTTTCTATCGATCTATAGATAATGCTAGCGTGCCGACTCGATGGAATGTACCATTGGCCCCCAATTATTGAACACCCTAACGGGTGTTTTTTTTTTTTTGGTCTACC
+```
+
+![](../assets/imgs/tutorial/generation_export.png)
+
+
+**The tutorial is that's all. Let's build your own circuit !!**
