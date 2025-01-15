@@ -9,7 +9,8 @@ First, we'll build a single **chain**, a sequence of blocks.
 
 You can place any block by dragging and dropping them from the block placement area at the top of the application.
 
-(See [<u>this page</u>](../guides/circuit-design.md) to find out which color means which type of block.)
+!!! Tip
+	See [<u>this page</u>](../guides/circuit-design.md) to understand in more detail what each block means.
 
 ![](../assets/imgs/tutorial/dnd_parts.png)
 

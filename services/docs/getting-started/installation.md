@@ -28,7 +28,7 @@ Install desktop app of synergetica. Choose the appropriate guide for your operat
 
 
     1. Download appropriate installer for your architecture and install.
-       [Download link](https://drive.google.com/drive/folders/1YUu2UI_ASRp4eGSrJu7tiib_UGKfV9hT?usp=sharing)
+       <u>[Download link](https://drive.google.com/drive/folders/1YUu2UI_ASRp4eGSrJu7tiib_UGKfV9hT?usp=sharing)</u>
     ![](../assets/imgs/installation/desktop_app_google_drive.png)
 
     2. Find installed synergetica app from `Macintoch HD/application` directory of your finder.
