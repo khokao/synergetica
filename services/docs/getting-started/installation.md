@@ -39,7 +39,7 @@ Install desktop app of synergetica. Choose the appropriate guide for your operat
     ![](../assets/imgs/installation/open_app.png)
     　
 
-    4. App will launch. After a few seconds of starting the application, a popup will appear saying that the connection to the server was successful. Once this is done, you can use Simulator or Generator without any problems.
+    4. App will launch. After a few seconds of starting the application, a popup will appear saying that the connection to the server was successful. Once this is done, you can use Simulator or Generator.
     ![](../assets/imgs/installation/connected_server_popup.png)
 
 
