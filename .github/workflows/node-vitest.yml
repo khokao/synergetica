@@ -35,7 +35,7 @@ jobs:
       - name: Set up Node
         uses: ./.github/composite/setup-node
         with:
-          node_version: "21"
+          node_version: "22"
           working_dir: desktop
 
       - name: vitest

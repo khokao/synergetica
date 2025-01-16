@@ -1,5 +1,6 @@
 import { useEditorContext } from "@/components/editor/editor-context";
 import { GenerationButtons } from "@/components/generation/generation";
+import { useApiStatus } from "@/components/simulation/api-status-context";
 import { Chart } from "@/components/simulation/chart";
 import { useSimulator } from "@/components/simulation/simulator-context";
 import { Sliders } from "@/components/simulation/sliders";
@@ -19,7 +20,16 @@ const Message = ({ lines }: { lines: string[] }) => {
 
 export const Simulation = () => {
   const { validationError } = useEditorContext();
+  const { isHealthcheckOk } = useApiStatus();
   const { solutions } = useSimulator();
+
+  if (!isHealthcheckOk) {
+    return (
+      <div className="flex items-center justify-center h-full">
+        <Message lines={["Can't connect to the server.", "Check if it's running in Docker."]} />
+      </div>
+    );
+  }
 
   if (validationError === null) {
     return (

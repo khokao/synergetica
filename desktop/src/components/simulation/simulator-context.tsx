@@ -1,3 +1,4 @@
+import { useApiStatus } from "@/components/simulation/api-status-context";
 import { DEFAULT_SLIDER_PARAM, WS_URL } from "@/components/simulation/constants";
 import { useReactFlow } from "@xyflow/react";
 import type { Node } from "@xyflow/react";
@@ -26,6 +27,8 @@ interface SimulatorContextValue {
 const SimulatorContext = createContext<SimulatorContextValue | null>(null);
 
 export const SimulatorProvider = ({ children }: { children: React.ReactNode }) => {
+  const { isHealthcheckOk } = useApiStatus();
+
   const [ws, setWs] = useState<WebSocket | null>(null);
 
   const [solutions, setSolutions] = useState<SimulatorSolution[]>([]);
@@ -40,46 +43,71 @@ export const SimulatorProvider = ({ children }: { children: React.ReactNode }) =
   const [prevNodes, setPrevNodes] = useState<Node[]>([]);
 
   useEffect(() => {
-    const socket = new WebSocket(WS_URL);
+    if (ws) return;
 
-    socket.onopen = () => console.log("[WebSocket] connected");
-    socket.onerror = (err) => console.error("[WebSocket] error:", err);
-    socket.onclose = () => console.log("[WebSocket] disconnected");
+    const tryConnect = async () => {
+      try {
+        if (isHealthcheckOk) {
+          const socket = new WebSocket(WS_URL);
 
-    socket.onmessage = (event) => {
-      const data = JSON.parse(event.data);
-      switch (data.type) {
-        case "formulated": {
-          setHasFormulated(true);
+          socket.onopen = () => {
+            console.log("[WebSocket] connected");
+          };
 
-          setProteinName2Ids(data.payload.protein_name2ids);
+          socket.onerror = (err) => {
+            console.error("[WebSocket] error:", err);
+          };
 
-          const initParams = Object.fromEntries(
-            Object.values(data.payload.protein_name2ids)
-              .flat()
-              .map((id: string) => [id, DEFAULT_SLIDER_PARAM]),
-          );
-          setProteinParameters(initParams);
+          socket.onclose = () => {
+            console.log("[WebSocket] disconnected");
+            setWs(null);
+          };
 
-          highlightNodes(Object.keys(initParams));
-          break;
+          socket.onmessage = (event) => {
+            const data = JSON.parse(event.data);
+            switch (data.type) {
+              case "formulated": {
+                setHasFormulated(true);
+                setProteinName2Ids(data.payload.protein_name2ids);
+
+                const initParams = Object.fromEntries(
+                  Object.values(data.payload.protein_name2ids)
+                    .flat()
+                    .map((id: string) => [id, DEFAULT_SLIDER_PARAM]),
+                );
+                setProteinParameters(initParams);
+
+                highlightNodes(Object.keys(initParams));
+                break;
+              }
+
+              case "simulated": {
+                setSolutions(data.payload.solutions);
+                break;
+              }
+
+              default:
+                console.warn("[WebSocket] unknown message type:", data.type);
+            }
+          };
+
+          setWs(socket);
+          clearInterval(intervalId);
+        } else {
+          console.error("[Healthcheck] Server not ready.");
         }
-
-        case "simulated": {
-          setSolutions(data.payload.solutions);
-          break;
-        }
-
-        default:
-          console.warn("[WebSocket] unknown message type:", data.type);
+      } catch (error) {
+        console.error("[Healthcheck] Failed to connect to server:", error);
       }
     };
 
-    setWs(socket);
+    tryConnect();
+    const intervalId = setInterval(tryConnect, 5000); // 5 seconds
+
     return () => {
-      socket.close();
+      clearInterval(intervalId);
     };
-  }, []);
+  }, [ws, isHealthcheckOk]);
 
   useEffect(() => {
     if (!ws || ws.readyState !== WebSocket.OPEN) return;

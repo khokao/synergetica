@@ -1,0 +1,92 @@
+name: "Release"
+
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - "v*"
+  workflow_dispatch:
+    inputs:
+      release_type:
+        type: choice
+        description: "Select which release to create or update"
+        options:
+          - nightly
+          - tagged
+        required: true
+        default: nightly
+
+permissions:
+  contents: write
+
+defaults:
+  run:
+    working-directory: ./desktop
+
+jobs:
+  publish-tauri:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - platform: "macos-latest" # for Arm based macs (M1 and above).
+            args: "--target aarch64-apple-darwin"
+          - platform: "macos-latest" # for Intel based macs.
+            args: "--target x86_64-apple-darwin"
+          - platform: "windows-latest"
+            args: ""
+
+    runs-on: ${{ matrix.platform }}
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: ./.github/composite/setup-node
+        with:
+          node_version: "22"
+          working_dir: desktop
+
+      - name: install Rust stable
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: ${{ matrix.platform == 'macos-latest' && 'aarch64-apple-darwin,x86_64-apple-darwin' || '' }}
+
+      - name: Rust cache
+        uses: swatinem/rust-cache@v2
+        with:
+          workspaces: "./src-tauri -> target"
+          key: ${{ matrix.args }}
+
+      - name: Create nightly release
+        if: >
+          (github.event_name == 'push' && startsWith(github.ref, 'refs/heads/main')) ||
+          (github.event_name == 'workflow_dispatch' && github.event.inputs.release_type == 'nightly')
+        uses: tauri-apps/tauri-action@v0
+        with:
+          tagName: "nightly"
+          releaseName: "Nightly"
+          releaseDraft: false
+          prerelease: true
+          releaseBody: |
+            This nightly release is automatically built and generated on every commit to main branch.
+          args: ${{ matrix.args }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create tagged release
+        if: >
+          (github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')) ||
+          (github.event_name == 'workflow_dispatch' && github.event.inputs.release_type == 'tagged')
+        uses: tauri-apps/tauri-action@v0
+        with:
+          tagName: ${{ github.ref_name }}
+          releaseName: "Synergetica ${{ github.ref_name }}"
+          releaseDraft: true
+          prerelease: false
+          releaseBody: |
+            This is an official tagged release.
+          args: ${{ matrix.args }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

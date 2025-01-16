@@ -1,5 +1,5 @@
 [package]
-name = "magesty"
+name = "synergetica"
 version = "0.0.0"
 description = "Genetic circuit design desktop app"
 authors = ["Koki Hokao"]
@@ -27,3 +27,5 @@ tauri = { version = "2", features = [] }
 tauri-plugin-fs = "2"
 tauri-plugin-dialog = "2"
 tauri-plugin-clipboard-manager = "2"
+tauri-plugin-shell = "2"
+fix-path-env = { git = "https://github.com/tauri-apps/fix-path-env-rs" }
