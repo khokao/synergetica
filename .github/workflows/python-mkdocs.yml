@@ -26,7 +26,6 @@ jobs:
       - name: Set up Python
         uses: ./.github/composite/setup-python
         with:
-          python_version: "3.12"
           uv_version: "0.5.5"
           working_dir: services
 
