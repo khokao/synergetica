@@ -36,8 +36,8 @@ Install desktop app of synergetica. Choose the appropriate guide for your operat
     xattr -d com.apple.quarantine /Applications/Synergetica.app
     ```
          
-    3. Double click the icon of synergetics.
-
+    3. Double click the icon of synergetics, after a few seconds, when you see popup saying `Connected to server`, the application can be used normally.
+    ![](../assets/imgs/installation/connected_server_popup.png)
 
 
 === "Windows"
