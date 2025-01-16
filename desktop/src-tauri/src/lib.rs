@@ -12,22 +12,6 @@ use tokio_util::sync::CancellationToken;
 const DOCKER_CONTAINER_NAME: &str = "synergetica_api";
 const DOCKER_IMAGE: &str = "khokao/synergetica:latest";
 const DOCKER_PORT_MAPPING: &str = "7007:7007";
-const DOCKER_PATH_CANDIDATES: &[&str] = &[
-    // macOS
-    "/opt/homebrew/bin/docker",
-    "/usr/local/bin/docker",
-    "/opt/local/bin/docker",
-    "/usr/bin/docker",
-    "/bin/docker",
-    "/usr/sbin/docker",
-    "/sbin/docker",
-    // Windows
-    r"C:\Program Files\Docker\Docker\resources\bin\docker.exe",
-    r"C:\Program Files (x86)\Docker\Docker\resources\bin\docker.exe",
-    r"C:\Program Files\Docker Toolbox\docker.exe",
-    r"C:\Program Files (x86)\Docker Toolbox\docker.exe",
-    r"C:\Docker\docker.exe",
-];
 
 struct AppState {
     cancellation_token: CancellationToken,
@@ -77,18 +61,8 @@ async fn docker_command(
 ) {
     println!("[tauri] {action}...");
 
-    let docker_path = DOCKER_PATH_CANDIDATES
-        .iter()
-        .find(|&&path| std::path::Path::new(path).exists())
-        .map(|&path| path.to_string());
-
-    let Some(docker_path) = docker_path else {
-        eprintln!("Could not find 'docker' in known paths.");
-        return;
-    };
-
     let shell = app_handle.shell();
-    match shell.command(docker_path).args(args).spawn() {
+    match shell.command("docker").args(args).spawn() {
         Err(e) => eprintln!("[tauri] Command spawn error: {e}"),
         Ok((mut rx, child)) => {
             let result = timeout(Duration::from_secs(timeout_secs), async {
@@ -180,6 +154,8 @@ pub fn run() {
         .plugin(tauri_plugin_shell::init())
         .manage(state)
         .setup(|app| {
+            let _ = fix_path_env::fix(); // https://github.com/tauri-apps/fix-path-env-rs
+
             let app_handle = app.handle().clone();
             tauri::async_runtime::spawn(async move {
                 docker_run_container(&app_handle).await;

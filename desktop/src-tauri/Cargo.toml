@@ -28,3 +28,4 @@ tauri-plugin-fs = "2"
 tauri-plugin-dialog = "2"
 tauri-plugin-clipboard-manager = "2"
 tauri-plugin-shell = "2"
+fix-path-env = { git = "https://github.com/tauri-apps/fix-path-env-rs" }
