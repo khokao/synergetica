@@ -1,5 +1,5 @@
 {
-  "productName": "synergetica",
+  "productName": "Synergetica",
   "version": "0.0.0",
   "identifier": "dev.khokao.synergetica",
   "build": {
@@ -12,10 +12,12 @@
     "windows": [
       {
         "fullscreen": false,
-        "height": 600,
+        "height": 768,
+        "minHeight": 768,
+        "width": 1024,
+        "minWidth": 1024,
         "resizable": true,
         "title": "Synergetica",
-        "width": 800,
         "dragDropEnabled": false
       }
     ],
