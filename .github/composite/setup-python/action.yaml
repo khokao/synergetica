@@ -23,6 +23,7 @@ runs:
       shell: bash
       run: | # .python-version file should be present in the working_dir
         uv python install
+      working-directory: ${{ inputs.working_dir }}
 
     - name: Install dependencies
       shell: bash
