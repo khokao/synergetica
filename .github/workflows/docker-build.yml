@@ -2,8 +2,8 @@ name: Docker build and push to Docker Hub
 
 on:
   push:
-    branches:
-      - main
+    # branches:
+    #   - main
     paths:
       - "services/**"
       - "!services/docs/**"
