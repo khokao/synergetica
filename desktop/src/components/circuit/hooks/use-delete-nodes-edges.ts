@@ -61,7 +61,7 @@ export const useDeleteNodesEdges = () => {
       const { getNodes, getEdges, setNodes } = reactflow;
 
       const allNodes = getNodes();
-      const allEdges = getEdges();
+      const allEdges = getEdges().filter((edge) => edge.type === "custom"); // Ignore annotation edges
 
       const newNodes = produce(allNodes, (draft) => {
         disconnectHandles(draft, deletedEdges);
