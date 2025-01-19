@@ -129,4 +129,4 @@ GATTCGTTACCAATTGACAGTTTCTATCGATCTATAGATAATGCTAGCGTGCCGACTCGATGGAATGTACCATTGGCCCC
 ![](../assets/imgs/tutorial/generation_export.png)
 
 
-**The tutorial is that's all. Let's build your own circuit !!**
+**Great job finishing the tutorial! Now it’s time to get creative and build your own circuit!**
