@@ -48,7 +48,7 @@ The code to represent the chain you have just constructed is already written in 
 
 ![](../assets/imgs/tutorial/dsl_pallete.png)
 
-When you copy the existing code and paste it on the line immediately after, the same chain will appear.
+When you copy the existing code and paste it on the line immediately below, the same chain will appear in the graphical view.
 
 ![](../assets/imgs/tutorial/dsl_copy_paste.png)
 
