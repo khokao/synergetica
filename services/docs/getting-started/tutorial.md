@@ -15,7 +15,7 @@ You can place any block by dragging it from the block placement area at the top 
 ![](../assets/imgs/tutorial/dnd_parts.png)
 
 
-By clicking on the block you placed, you can select which biological parts the block represents.
+By clicking on the block you placed, you can select which biological parts that block represents.
 
 Please select `PameR` in this tutorial.
 
