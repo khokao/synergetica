@@ -7,7 +7,7 @@ Through this tutorial, you will be able to build and simulate simple **toggle sw
 ### Build a single chain
 First, we'll build a single **chain**, a sequence of blocks.
 
-You can place any block by dragging and dropping them from the block placement area at the top of the application.
+You can place any block by dragging it from the block placement area at the top of the application and dropping it onto the main area.
 
 !!! Tip
 	See [<u>this page</u>](../guides/circuit-design.md) to understand in more detail what each block means.
