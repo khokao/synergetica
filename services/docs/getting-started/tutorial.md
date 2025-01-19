@@ -1,4 +1,4 @@
-Through this tutorial, you will be able to build and simulate simple `toggle switch` circuit.
+Through this tutorial, you will be able to build and simulate simple **toggle switch** circuit.
 
 ![](../assets/imgs/tutorial/tutorial_goal.png)
 
