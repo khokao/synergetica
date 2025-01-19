@@ -52,7 +52,7 @@ When you copy the existing code and paste it on the line immediately below, the 
 
 ![](../assets/imgs/tutorial/dsl_copy_paste.png)
 
-Then, please change the names of the two parts enclosed by the red frame in the image from `PameR`→`PamtR` and `AmtR`→`AmeR`, respectively.
+Then, please change the names of the two parts highlighted in the below code sample `PameR`→`PamtR` and `AmtR`→`AmeR`, respectively.
 ```yaml { hl_lines="10 12" }
 - chain:
   - type: Promoter
