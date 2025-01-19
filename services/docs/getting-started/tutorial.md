@@ -21,7 +21,7 @@ Please select `PameR` in this tutorial.
 
 ![](../assets/imgs/tutorial/select_parts.png)
 
-When you drag a new block and bring it near an already existing part, the blocks will automatically connect to each other.
+When you drag a new block and bring it near an already existing block, the blocks will automatically connect to each other.
 
 In synergetica, this unit of connection between blocks is called a **chain**.
 
