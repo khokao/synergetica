@@ -93,7 +93,7 @@ The graph shows how the protein (green block) concentration changes over time in
 
 Two sliders also appear below the graph. 
 
-Each of these corresponds to a protein in the green block, allowing you to adjust the translation intensity of the protein.
+Each slider corresponds to one of the proteins in the green blocks, allowing you to adjust their translation intensities.
 
 Changing the value of the slide bar seamlessly reflects the corresponding simulation results in the graph.
 
