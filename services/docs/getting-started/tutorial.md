@@ -23,7 +23,7 @@ Please select `PameR` in this tutorial.
 
 When you drag a new block and bring it near an already existing block, the blocks will automatically connect to each other.
 
-In synergetica, this unit of connection between blocks is called a **chain**.
+In synergetica, this this connected unit of blocks is called a **chain**.
 
 Connect the green block to the blue block to create a chain. In the green block, select `AmtR` as a part.
 
