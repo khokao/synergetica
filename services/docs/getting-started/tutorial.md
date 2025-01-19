@@ -23,7 +23,7 @@ Please select `PameR` in this tutorial.
 
 When you drag a new block and bring it near an already existing block, the blocks will automatically connect to each other.
 
-In synergetica, this this connected unit of blocks is called a **chain**.
+In Synergetica, this this connected unit of blocks is called a **chain**.
 
 Connect the green block to the blue block to create a chain. In the green block, select `AmtR` as the part.
 
@@ -37,7 +37,7 @@ As shown, a chain basically consists of <span style="color: blue; ">blue</span>(
 
 ### Build another chain with DSL
 
-In synergetica, you can build circuit not only through GUI-like operations such as drag-and-drop, but also through **coding with DSL**.
+In Synergetica, you can build circuit not only through GUI-like operations such as drag-and-drop, but also through **coding with DSL**.
 
 The coding palette appears by clicking the tab button on the left side of the application.
 
