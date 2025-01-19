@@ -1,4 +1,4 @@
-To use Synergetica, you have to install both materials, `Backend docker images` and `Desktop app`
+To use Synergetica, you have to install both **Backend docker images** and **Desktop app**
 
 ## Backend docker image
 
