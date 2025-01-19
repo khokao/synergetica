@@ -25,7 +25,7 @@ When you drag a new block and bring it near an already existing block, the block
 
 In synergetica, this this connected unit of blocks is called a **chain**.
 
-Connect the green block to the blue block to create a chain. In the green block, select `AmtR` as a part.
+Connect the green block to the blue block to create a chain. In the green block, select `AmtR` as the part.
 
 ![](../assets/imgs/tutorial/dnd_new_parts.png)
 
