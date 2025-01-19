@@ -95,7 +95,7 @@ Two sliders also appear below the graph.
 
 Each slider corresponds to one of the proteins in the green blocks, allowing you to adjust their translation intensities.
 
-Changing the value of the slide bar seamlessly reflects the corresponding simulation results in the graph.
+Changing a slider’s value seamlessly updates the graph to reflect the new simulation results.
 
 Adjust the parameters to achieve the protein concentration you desire.
 
