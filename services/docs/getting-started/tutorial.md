@@ -37,7 +37,7 @@ As shown, a chain basically consists of <span style="color: blue; ">blue</span>(
 
 ### Build another chain with DSL
 
-In Synergetica, you can build circuit not only through GUI-like operations such as drag-and-drop, but also through **coding with DSL**.
+In Synergetica, you can build circuit not only through GUI (via drag-and-drop), but also through **writing DSL code.**.
 
 The coding palette appears by clicking the tab button on the left side of the application.
 
