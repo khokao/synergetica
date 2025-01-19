@@ -39,7 +39,7 @@ As shown, a chain basically consists of <span style="color: blue; ">blue</span>(
 
 In Synergetica, you can build circuit not only through GUI (via drag-and-drop), but also through **writing DSL code.**.
 
-The coding palette appears by clicking the tab button on the left side of the application.
+The coding palette appears by clicking the sidebar toggle button on the left side of the application.
 
 The code to represent the chain you have just constructed is already written in the coding palette.
 !!! Note
