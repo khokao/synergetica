@@ -70,7 +70,7 @@ Then, please change the names of the two parts highlighted in the below code sam
     name: L3S3P31
 ```
 
-After that, the name displayed on the block will also be changed and a blue arrow will appear from the green block.
+After that, the name displayed on the block will change and a blue arrow will appear from the green block.
 
 Now, you completed building toggle switch circuit :raised_hands: .
 
