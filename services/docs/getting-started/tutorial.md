@@ -104,7 +104,7 @@ Adjust the parameters to achieve the protein concentration you desire.
 
 ## 3. Generating sequences
 
-Once the parameters have been adjusted, the last step is to generate the specific DNA sequences to realize the parameters.
+Once the parameters have been adjusted, the last step is to generate the specific DNA sequences to realize your chosen parameters.
 
 Press the `Run` button in the `Generation` section at the bottom right of the app, start sequence generation.
 
