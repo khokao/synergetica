@@ -83,7 +83,7 @@ When the circuit construction is complete, press the `Simulate` button in the lo
 
 This will automatically open the simulation side bar from the right side and display the results.
 
-The graph shows the time concentration change of the protein (green block) in this circuit.
+The graph shows how the protein (green block) concentration changes over time in this circuit.
 
 !!! Tip
 	See <u>[this page](../guides/genetic-simulation.md)</u> if you want to know more about what the graphs and slide bars mean biologically.
