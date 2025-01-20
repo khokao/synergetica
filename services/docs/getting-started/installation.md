@@ -21,7 +21,7 @@ Install desktop app of Synergetica. Choose the appropriate guide for your operat
     Setup on Mac
 
     !!! warning
-        Since synergetics has not been notarized by Apple, it cannot be opened without following the steps below.
+        Since Synergetica has not been notarized by Apple, it cannot be opened without following the steps below.
 
     !!! Tip
          Once opened in this way, you can then simply launch it by double-clicking its icon on the desktop.
@@ -36,7 +36,7 @@ Install desktop app of Synergetica. Choose the appropriate guide for your operat
     xattr -d com.apple.quarantine /Applications/Synergetica.app
     ```
 
-    3. Double click the icon of synergetics, after a few seconds, when you see popup saying
+    3. Double click the icon of Synergetica, after a few seconds, when you see popup saying
     `Connected to server`, the application will be ready to use.
     ![](../assets/imgs/installation/connected_server_popup.png)
 
