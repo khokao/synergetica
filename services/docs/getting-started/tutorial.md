@@ -23,7 +23,7 @@ Please select `PameR` in this tutorial.
 
 When you drag a new block and bring it near an already existing block, the blocks will automatically connect to each other.
 
-In Synergetica, this this connected unit of blocks is called a **chain**.
+In Synergetica, this connected unit of blocks is called a **chain**.
 
 Connect the green block to the blue block to create a chain. In the green block, select `AmtR` as the part.
 
@@ -79,7 +79,7 @@ Now, you completed building toggle switch circuit :raised_hands: .
 
 ## 2. Simulation
 
-When the circuit construction is complete, press the `Simulate` button in the lower right corner of the application. 
+When the circuit construction is complete, press the `Simulate` button in the lower right corner of the application.
 
 This will automatically open the simulation side bar from the right side and display the results.
 
@@ -91,7 +91,7 @@ The graph shows how the protein (green block) concentration changes over time in
 ![](../assets/imgs/tutorial/simulation_first.png)
 
 
-Two sliders also appear below the graph. 
+Two sliders also appear below the graph.
 
 Each slider corresponds to one of the proteins in the green blocks, allowing you to adjust their translation intensities.
 
