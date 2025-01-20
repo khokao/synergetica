@@ -81,7 +81,7 @@ Now, you completed building toggle switch circuit :raised_hands: .
 
 When the circuit construction is complete, press the `Simulate` button in the lower right corner of the application.
 
-This will automatically open the simulation side bar from the right side and display the results.
+This will automatically open the simulation sidebar from the right side and display the results.
 
 The graph shows how the protein (green block) concentration changes over time in this circuit.
 
