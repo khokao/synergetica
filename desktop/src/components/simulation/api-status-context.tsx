@@ -1,6 +1,5 @@
 import { invoke } from "@tauri-apps/api/core";
 import { createContext, useContext, useEffect, useState } from "react";
-import { toast } from "sonner";
 
 interface ApiStatusContextValue {
   isHealthcheckOk: boolean;
@@ -18,16 +17,9 @@ export const ApiStatusProvider = ({ children }: { children: React.ReactNode }) =
       try {
         const result = await invoke<string>("call_healthcheck");
         if (result === "ok") {
-          // Show success toast if it's the first time
-          if (!isHealthcheckOk) {
-            toast.success("Connected to server");
-          }
           setHealthcheckOk(true);
         }
       } catch (err) {
-        if (isHealthcheckOk) {
-          toast.error("Disconnected from server");
-        }
         setHealthcheckOk(false);
         console.error("Healthcheck failed", err);
       }
@@ -39,7 +31,7 @@ export const ApiStatusProvider = ({ children }: { children: React.ReactNode }) =
     return () => {
       if (timerId) clearInterval(timerId);
     };
-  }, [isHealthcheckOk]);
+  }, []);
 
   return (
     <ApiStatusContext.Provider
