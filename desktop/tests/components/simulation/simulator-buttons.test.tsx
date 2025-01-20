@@ -1,8 +1,9 @@
 import { usePanelContext } from "@/components/circuit/resizable-panel/resizable-panel-context";
 import { useEditorContext } from "@/components/editor/editor-context";
+import { useApiStatus } from "@/components/simulation/api-status-context";
 import { SimulatorButtons } from "@/components/simulation/simulator-buttons";
 import { useSimulator } from "@/components/simulation/simulator-context";
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { vi } from "vitest";
 
@@ -24,44 +25,125 @@ const defaultPanelContext = {
   // biome-ignore  lint/suspicious/noExplicitAny: For brevity and clarity.
 } as any;
 
-function setupMocks({
-  editor = {},
-  simulator = {},
-  panel = {},
-}: {
-  editor?: Partial<typeof defaultEditorContext>;
-  simulator?: Partial<typeof defaultSimulatorContext>;
-  panel?: Partial<typeof defaultPanelContext>;
-} = {}) {
-  vi.mocked(useEditorContext).mockReturnValue({
-    ...defaultEditorContext,
-    ...editor,
-  });
-  vi.mocked(useSimulator).mockReturnValue({
-    ...defaultSimulatorContext,
-    ...simulator,
-  });
-  vi.mocked(usePanelContext).mockReturnValue({
-    ...defaultPanelContext,
-    ...panel,
-  });
-}
-
-vi.mock("@/components/simulation/simulator-context", () => ({
-  useSimulator: vi.fn(),
-}));
+const defaultApiStatusContext = {
+  isHealthcheckOk: true,
+};
 
 vi.mock("@/components/editor/editor-context", () => ({
   useEditorContext: vi.fn(),
+}));
+
+vi.mock("@/components/simulation/api-status-context", () => ({
+  useApiStatus: vi.fn(),
+}));
+
+vi.mock("@/components/simulation/simulator-context", () => ({
+  useSimulator: vi.fn(),
 }));
 
 vi.mock("@/components/circuit/resizable-panel/resizable-panel-context", () => ({
   usePanelContext: vi.fn(),
 }));
 
+function setupMocks({
+  editor = {},
+  simulator = {},
+  panel = {},
+  apiStatus = {},
+}: {
+  editor?: Partial<typeof defaultEditorContext>;
+  simulator?: Partial<typeof defaultSimulatorContext>;
+  panel?: Partial<typeof defaultPanelContext>;
+  apiStatus?: Partial<typeof defaultApiStatusContext>;
+} = {}) {
+  vi.mocked(useEditorContext).mockReturnValue({
+    ...defaultEditorContext,
+    ...editor,
+  });
+
+  vi.mocked(useSimulator).mockReturnValue({
+    ...defaultSimulatorContext,
+    ...simulator,
+  });
+
+  vi.mocked(usePanelContext).mockReturnValue({
+    ...defaultPanelContext,
+    ...panel,
+  });
+
+  vi.mocked(useApiStatus).mockReturnValue({
+    ...defaultApiStatusContext,
+    ...apiStatus,
+  });
+}
+
 describe("SimulatorButtons", () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    vi.useFakeTimers({
+      shouldAdvanceTime: true,
+    });
+  });
+  afterEach(() => {
+    vi.restoreAllMocks();
+  });
+
+  it("shows Zap icon when isHealthcheckOk is true", () => {
+    // Arrange
+    setupMocks({ apiStatus: { isHealthcheckOk: true } });
+
+    // Act
+    render(<SimulatorButtons />);
+
+    // Assert
+    expect(screen.getByTestId("zap-icon")).toBeInTheDocument();
+    expect(screen.queryByTestId("zapoff-icon")).not.toBeInTheDocument();
+  });
+
+  it("shows ZapOff icon when isHealthcheckOk is false", () => {
+    // Arrange
+    setupMocks({ apiStatus: { isHealthcheckOk: false } });
+
+    // Act
+    render(<SimulatorButtons />);
+
+    // Assert
+    expect(screen.getByTestId("zapoff-icon")).toBeInTheDocument();
+    expect(screen.queryByTestId("zap-icon")).not.toBeInTheDocument();
+  });
+
+  it("shows tooltip when hovering over Zap icon", async () => {
+    // Arrange
+    setupMocks({ apiStatus: { isHealthcheckOk: true } });
+    const user = userEvent.setup();
+
+    render(<SimulatorButtons />);
+
+    // Act
+    user.hover(screen.getByTestId("zap-icon"));
+    vi.advanceTimersByTime(500);
+
+    // Assert
+    await waitFor(() => {
+      expect(screen.getByRole("tooltip", { name: "API connected" })).toBeInTheDocument();
+    });
+  });
+
+  it("shows tooltip when hovering over ZapOff icon", async () => {
+    // Arrange
+    setupMocks({ apiStatus: { isHealthcheckOk: false } });
+    const user = userEvent.setup();
+
+    render(<SimulatorButtons />);
+
+    // Act
+    user.hover(screen.getByTestId("zapoff-icon"));
+    vi.advanceTimersByTime(500);
+
+    // Assert
+    await waitFor(() => {
+      expect(screen.getByRole("tooltip", { name: "API not connected" })).toBeInTheDocument();
+    });
   });
 
   it("enables the Simulate button when validationError is empty", () => {
