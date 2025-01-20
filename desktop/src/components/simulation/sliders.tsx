@@ -1,6 +1,7 @@
 import { MAX_SLIDER_PARAM, MIN_SLIDER_PARAM } from "@/components/simulation/constants";
 import { useSimulator } from "@/components/simulation/simulator-context";
 import { Card, CardContent } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { Slider } from "@/components/ui/slider";
@@ -22,6 +23,17 @@ export const Sliders = () => {
   const handleSliderChange = useCallback(
     (id: string) => (value: number[]) => {
       setProteinParameters((prev) => ({ ...prev, [id]: value[0] }));
+    },
+    [setProteinParameters],
+  );
+
+  const handleInputChange = useCallback(
+    (id: string) => (e) => {
+      const newVal = Number(e.target.value);
+      if (!Number.isNaN(newVal)) {
+        const clampedVal = Math.max(MIN_SLIDER_PARAM, Math.min(MAX_SLIDER_PARAM, newVal));
+        setProteinParameters((prev) => ({ ...prev, [id]: clampedVal }));
+      }
     },
     [setProteinParameters],
   );
@@ -53,11 +65,20 @@ export const Sliders = () => {
             aria-label={displayName}
           />
 
-          <span className="w-24 text-right">{proteinParameters[id]}</span>
+          <Input
+            id={`input-${id}`}
+            type="number"
+            className="w-24 text-right [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+            min={MIN_SLIDER_PARAM}
+            max={MAX_SLIDER_PARAM}
+            step={1}
+            value={proteinParameters[id]}
+            onChange={handleInputChange(id)}
+          />
         </div>
       );
     });
-  }, [proteinParameters, proteinName2Ids, proteinIdToName, handleSliderChange]);
+  }, [proteinParameters, proteinName2Ids, proteinIdToName, handleSliderChange, handleInputChange]);
 
   return (
     <Card className="h-full border-0 shadow-none pt-4">

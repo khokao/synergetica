@@ -60,4 +60,31 @@ describe("Sliders Component", () => {
     // Assert
     expect(mockSetProteinParameters).toHaveBeenCalled();
   });
+
+  it("calls setProteinParameters when input value changes", async () => {
+    // Arrange
+    const user = userEvent.setup();
+
+    const mockSetProteinParameters = vi.fn();
+    vi.mocked(useSimulator).mockReturnValue({
+      proteinName2Ids: { ProteinA: ["child-1"] },
+      proteinParameters: { "child-1": 12 },
+      setProteinParameters: mockSetProteinParameters,
+      // biome-ignore  lint/suspicious/noExplicitAny: For brevity and clarity.
+    } as any);
+
+    // Act
+    render(<Sliders />);
+
+    const input = screen.getByRole("spinbutton") as HTMLInputElement;
+
+    await user.type(input, "3");
+
+    // Assert
+    expect(mockSetProteinParameters).toHaveBeenCalled();
+    const updateFn = mockSetProteinParameters.mock.calls[0][0];
+    const prevState = { "child-1": 12 };
+    const newState = updateFn(prevState);
+    expect(newState["child-1"]).toBe(123);
+  });
 });
