@@ -29,14 +29,14 @@ Install desktop app of Synergetica. Choose the appropriate guide for your operat
     1. Download appropriate installer for your architecture and install it.
        <u>[Download link](https://drive.google.com/drive/folders/1YUu2UI_ASRp4eGSrJu7tiib_UGKfV9hT?usp=sharing)</u>
     ![](../assets/imgs/installation/desktop_app_google_drive.png)
-    
+
 
     2. In the terminal, run the following command to delete extended attribute of the app file.
     ```sh
     xattr -d com.apple.quarantine /Applications/Synergetica.app
     ```
-         
-    3. Double click the icon of synergetics, after a few seconds, when you see popup saying 
+
+    3. Double click the icon of synergetics, after a few seconds, when you see popup saying
     `Connected to server`, the application will be ready to use.
     ![](../assets/imgs/installation/connected_server_popup.png)
 
@@ -47,5 +47,3 @@ Install desktop app of Synergetica. Choose the appropriate guide for your operat
 
     1. foo
     2. bar
-
-
