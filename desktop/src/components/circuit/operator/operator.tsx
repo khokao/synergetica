@@ -12,10 +12,10 @@ export const Operator: FC = () => {
         <ZoomInOut />
       </div>
       <div className="flex items-center mt-1 gap-2 absolute left-32 bottom-4 z-[9]">
-        <ValidationStatus />
-      </div>
-      <div className="flex items-center mt-1 gap-2 absolute left-[168px] bottom-4 z-[9]">
         <PartsManager />
+      </div>
+      <div className="flex items-center mt-1 gap-2 absolute left-[324px] bottom-4 z-[9]">
+        <ValidationStatus />
       </div>
     </>
   );
