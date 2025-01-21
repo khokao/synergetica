@@ -6,12 +6,16 @@ on:
       - main
     paths:
       - "services/**"
+      - "!services/docs/**"
+      - "!services/mkdocs.yml"
   pull_request:
     types:
       - opened
       - synchronize
     paths:
       - "services/**"
+      - "!services/docs/**"
+      - "!services/mkdocs.yml"
 
 permissions:
   contents: read
