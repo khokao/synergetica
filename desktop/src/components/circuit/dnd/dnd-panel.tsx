@@ -2,7 +2,7 @@ import { useDnD } from "@/components/circuit/dnd/dnd-context";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import * as RadixTooltip from "@radix-ui/react-tooltip";
 import { RiText } from "@remixicon/react";
-import { CornerUpRight, RectangleHorizontal } from "lucide-react";
+import { CornerUpRight, RectangleHorizontal, Replace } from "lucide-react";
 import React, { useState } from "react";
 
 const IconTooltip = ({ label, icon, color, category, onDragStart }) => {
@@ -47,7 +47,8 @@ export const DnDPanel = () => {
 
   return (
     <TooltipProvider>
-      <div className="flex items-center justify-center w-[140px] h-[48px] mr-[32px] space-x-3 bg-gray-100 shadow-lg px-3 py-2 rounded-lg">
+      <div className="flex items-center justify-center w-[180px] h-[48px] mr-[32px] space-x-3 bg-gray-100 shadow-lg px-3 py-2 rounded-lg">
+        <Replace />
         <IconTooltip
           label="Promoter"
           icon={<CornerUpRight className="text-promoter-800" />}

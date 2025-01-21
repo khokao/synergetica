@@ -51,6 +51,17 @@ describe("Operator Component", () => {
     expect(zoomInOut).toBeInTheDocument();
   });
 
+  it("renders PartsManager component", () => {
+    // Arrange
+    renderOperator();
+
+    // Act
+    const partsManager = screen.getByTestId("parts-manager");
+
+    // Assert
+    expect(partsManager).toBeInTheDocument();
+  });
+
   it("renders ValidationStatus component", () => {
     // Arrange
     renderOperator();
@@ -62,14 +73,14 @@ describe("Operator Component", () => {
     expect(validationStatus).toBeInTheDocument();
   });
 
-  it("renders PartsManager component", () => {
+  it("renders ResetCircuit component", () => {
     // Arrange
     renderOperator();
 
     // Act
-    const partsManager = screen.getByTestId("parts-manager");
+    const resetCircuit = screen.getByTestId("reset-circuit");
 
     // Assert
-    expect(partsManager).toBeInTheDocument();
+    expect(resetCircuit).toBeInTheDocument();
   });
 });
