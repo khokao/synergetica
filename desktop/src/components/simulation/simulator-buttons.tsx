@@ -33,67 +33,56 @@ export const SimulatorButtons = () => {
     {
       onClick: handleRunSimulate,
       disabled: !isReadyToSimulate,
-      icon: <ChartSpline className="w-6 h-6" />,
-      label: "Run",
+      icon: <ChartSpline className="w-5 h-5" />,
+      label: "Start",
       testId: "simulation-run-button",
     },
     {
       onClick: handleResetSimulate,
       disabled: !hasSimulationResults,
-      icon: <RotateCw className="w-6 h-6" />,
+      icon: <RotateCw className="w-5 h-5" />,
       label: "Reset",
       testId: "simulation-reset-button",
     },
   ];
 
   return (
-    <div className="absolute right-2 bottom-4">
-      <div className="relative bg-gray-100 rounded-lg shadow-lg border border-gray-300 p-3">
-        <div className="absolute top-0 right-0 translate-x-1/3 -translate-y-1/3">
-          <TooltipProvider>
-            {isHealthcheckOk ? (
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Zap className="w-5 h-5 text-green-600" data-testid="zap-icon" />
-                </TooltipTrigger>
-                <RadixTooltip.Portal>
-                  <TooltipContent>
-                    <p>API connected</p>
-                  </TooltipContent>
-                </RadixTooltip.Portal>
-              </Tooltip>
-            ) : (
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <ZapOff className="w-5 h-5 text-red-600" data-testid="zapoff-icon" />
-                </TooltipTrigger>
-                <RadixTooltip.Portal>
-                  <TooltipContent>
-                    <p>API not connected</p>
-                  </TooltipContent>
-                </RadixTooltip.Portal>
-              </Tooltip>
-            )}
-          </TooltipProvider>
-        </div>
+    <div className="absolute right-2 bottom-4 flex flex-col items-center rounded-lg shadow-lg bg-gray-100 px-2.5 py-2 border border-gray-300 text-gray-800 space-y-1">
+      <div className="w-full flex justify-center items-center space-x-2 pb-0.5">
+        <h2 className="text-base font-medium tracking-wide">Simulation</h2>
+        <TooltipProvider>
+          {isHealthcheckOk ? (
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Zap className="w-4 h-4 text-green-600" data-testid="zap-icon" />
+              </TooltipTrigger>
+              <RadixTooltip.Portal>
+                <TooltipContent>
+                  <p>API connected</p>
+                </TooltipContent>
+              </RadixTooltip.Portal>
+            </Tooltip>
+          ) : (
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <ZapOff className="w-4 h-4 text-red-600" data-testid="zapoff-icon" />
+              </TooltipTrigger>
+              <RadixTooltip.Portal>
+                <TooltipContent>
+                  <p>API not connected</p>
+                </TooltipContent>
+              </RadixTooltip.Portal>
+            </Tooltip>
+          )}
+        </TooltipProvider>
+      </div>
 
-        <h2 className="text-lg font-semibold text-center">Simulation</h2>
-
-        <div className="mt-2 flex flex-col items-center space-y-2">
-          {buttons.map(({ onClick, disabled, icon, label, testId }) => (
-            <Button
-              key={testId}
-              variant="default"
-              disabled={disabled}
-              onClick={onClick}
-              className="relative w-24 flex items-center"
-              data-testid={testId}
-            >
-              <div className="absolute left-2 w-7 flex justify-center">{icon}</div>
-              <span className="absolute left-10 flex-1 text-center">{label}</span>
-            </Button>
-          ))}
-        </div>
+      <div className="flex flex-row items-center space-x-2">
+        {buttons.map(({ onClick, disabled, icon, label, testId }) => (
+          <Button key={testId} variant="default" disabled={disabled} onClick={onClick} data-testid={testId}>
+            {icon} {label}
+          </Button>
+        ))}
       </div>
     </div>
   );
