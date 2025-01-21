@@ -49,12 +49,12 @@ export const SimulatorButtons = () => {
   return (
     <div className="absolute right-2 bottom-4">
       <div className="relative bg-gray-100 rounded-lg shadow-lg border border-gray-300 p-3">
-        <div className="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2">
+        <div className="absolute top-0 right-0 translate-x-1/3 -translate-y-1/3">
           <TooltipProvider>
             {isHealthcheckOk ? (
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <Zap className="w-6 h-6 text-green-600" data-testid="zap-icon" />
+                  <Zap className="w-5 h-5 text-green-600" data-testid="zap-icon" />
                 </TooltipTrigger>
                 <RadixTooltip.Portal>
                   <TooltipContent>
@@ -65,7 +65,7 @@ export const SimulatorButtons = () => {
             ) : (
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <ZapOff className="w-6 h-6 text-red-600" data-testid="zapoff-icon" />
+                  <ZapOff className="w-5 h-5 text-red-600" data-testid="zapoff-icon" />
                 </TooltipTrigger>
                 <RadixTooltip.Portal>
                   <TooltipContent>
@@ -77,7 +77,7 @@ export const SimulatorButtons = () => {
           </TooltipProvider>
         </div>
 
-        <h2 className="text-lg font-semibold text-center">Simulator</h2>
+        <h2 className="text-lg font-semibold text-center">Simulation</h2>
 
         <div className="mt-2 flex flex-col items-center space-y-2">
           {buttons.map(({ onClick, disabled, icon, label, testId }) => (
