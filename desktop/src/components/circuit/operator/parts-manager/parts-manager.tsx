@@ -6,32 +6,30 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Database } from "lucide-react";
-import type { FC } from "react";
 
-export const PartsManager: FC = () => {
+export const PartsManager = () => {
   return (
     <TooltipProvider>
       <div
-        className="flex items-center justify-center bg-gray-100 text-gray-500 rounded-lg shadow-lg border border-gray-300 space-x-2 p-0.5"
+        className="flex flex-col bg-gray-100 text-gray-500 rounded-lg shadow-lg border border-gray-300"
         data-testid="parts-manager"
       >
-        <Button variant="ghost" size="icon" className="p-0.5 w-7 h-7 cursor-default">
-          <Database className="w-5 h-5 text-gray-500" />
-        </Button>
+        <div className="flex items-center space-x-2 p-0.5">
+          <Button variant="ghost" size="icon" className="p-0 w-7 h-7 cursor-default">
+            <Database className="w-5 h-5 text-gray-500" />
+          </Button>
+          <span className="cursor-default whitespace-nowrap">Parts Database</span>
+        </div>
 
-        <span className="cursor-default">Parts</span>
+        <Separator orientation="horizontal" />
 
-        <Separator orientation="vertical" className="h-6" />
-
-        <PartAddManager />
-
-        <PartDeleteManager />
-
-        <PartEditManager />
-
-        <Separator orientation="vertical" className="h-6" />
-
-        <PartsImportExportManager />
+        <div className="flex items-center space-x-2 p-0.5">
+          <PartAddManager />
+          <PartDeleteManager />
+          <PartEditManager />
+          <Separator orientation="vertical" className="h-6" />
+          <PartsImportExportManager />
+        </div>
       </div>
     </TooltipProvider>
   );
