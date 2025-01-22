@@ -1,29 +1,18 @@
-import { useParts } from "@/components/circuit/parts/parts-context";
 import { GITHUB_LIGHT_THEME, INDENT_SIZE } from "@/components/editor/constants";
 import { useEditorContext } from "@/components/editor/editor-context";
 import { EditorConsole } from "@/components/editor/error-console";
-import { useStrictSchema } from "@/components/editor/schemas/strictSchema";
+import { useSynchronizeDslWithReactFlow } from "@/components/editor/hooks/use-sync-dsl-with-flow";
 import { EditorTopBar } from "@/components/editor/top-bar";
-import { dslToReactflow } from "@/components/editor/utils/dsl-to-reactflow";
-import { validateDslContent } from "@/components/editor/utils/dsl-validation";
-import { convertReactFlowNodesToDSL } from "@/components/editor/utils/reactflow-to-dsl";
 import { Separator } from "@/components/ui/separator";
 import { Editor } from "@monaco-editor/react";
 import type { Monaco } from "@monaco-editor/react";
-import { useNodes, useReactFlow } from "@xyflow/react";
 import type { editor } from "monaco-editor";
-import React, { useEffect, useRef } from "react";
-import { useDebounce } from "use-debounce";
+import { useEffect } from "react";
 
 export const CircuitEditor = () => {
-  const { editorRef, monacoRef, editorContent, setEditorContent, setEditMode, setValidationError, editMode } =
-    useEditorContext();
-  const { parts } = useParts();
-  const { strictCircuitSchema } = useStrictSchema();
-  const { setNodes, setEdges } = useReactFlow();
-  const nodes = useNodes();
-  const [debouncedNodes] = useDebounce(nodes, 500);
-  const prevParsedContentRef = useRef<string>("");
+  const { editorRef, monacoRef, editorContent, setEditorContent, setEditMode } = useEditorContext();
+
+  useSynchronizeDslWithReactFlow();
 
   const handleEditorDidMount = (editor: editor.IStandaloneCodeEditor, monaco: Monaco) => {
     editorRef.current = editor;
@@ -39,78 +28,13 @@ export const CircuitEditor = () => {
     }
   }, [monacoRef]);
 
-  useEffect(() => {
-    const editor = editorRef.current;
-    const monaco = monacoRef.current;
-
-    if (editMode !== "reactflow" || !editor || !monaco) {
-      return;
-    }
-
-    const dslContent = convertReactFlowNodesToDSL(debouncedNodes);
-    const { validationErrors, markers, parsedContent } = validateDslContent(dslContent, strictCircuitSchema);
-
-    const newParsedContent = JSON.stringify(parsedContent);
-    const prevParsedContent = prevParsedContentRef.current;
-    if (prevParsedContent === newParsedContent) {
-      return;
-    }
-    prevParsedContentRef.current = newParsedContent;
-
-    setEditorContent(dslContent);
-    setValidationError(validationErrors);
-
-    const model = editor.getModel();
-    model && monaco.editor.setModelMarkers(model, "owner", markers);
-  }, [debouncedNodes, setEditorContent, setValidationError, editMode, editorRef, monacoRef, strictCircuitSchema]);
-
   const handleChange = (newEditorContent: string) => {
     setEditMode("monaco-editor");
     setEditorContent(newEditorContent || "");
   };
 
-  useEffect(() => {
-    const editor = editorRef.current;
-    const monaco = monacoRef.current;
-
-    if (editMode !== "monaco-editor" || !editor || !monaco) {
-      return;
-    }
-
-    const { validationErrors, markers, parsedContent } = validateDslContent(editorContent, strictCircuitSchema);
-
-    const newParsedContent = JSON.stringify(parsedContent);
-    const prevParsedContent = prevParsedContentRef.current;
-    if (prevParsedContent === newParsedContent) {
-      return;
-    }
-    prevParsedContentRef.current = newParsedContent;
-
-    setValidationError(validationErrors);
-
-    const model = editor.getModel();
-    model && monaco.editor.setModelMarkers(model, "owner", markers);
-
-    const reactFlowData = dslToReactflow(editorContent, parts);
-    if (reactFlowData) {
-      const { nodes, edges } = reactFlowData;
-      setNodes(nodes);
-      setEdges(edges);
-    }
-  }, [
-    editorContent,
-    editMode,
-    setNodes,
-    setEdges,
-    setValidationError,
-    editorRef,
-    monacoRef,
-    parts,
-    strictCircuitSchema,
-  ]);
-
   return (
-    <div className="flex flex-col h-full w-full">
+    <div className="flex flex-col h-full w-full" data-testid="circuit-editor">
       <EditorTopBar />
       <Separator />
       <div className="h-10 min-h-0 flex-1">

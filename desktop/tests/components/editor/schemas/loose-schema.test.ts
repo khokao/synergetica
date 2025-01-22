@@ -1,5 +1,4 @@
-import { looseCircuitSchema } from "@/components/editor/schemas/looseSchema";
-// tests/looseSchema.test.ts
+import { looseCircuitSchema } from "@/components/editor/schemas/loose-schema";
 import { describe, expect, it } from "vitest";
 
 describe("looseCircuitSchema", () => {

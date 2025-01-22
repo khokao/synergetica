@@ -1,34 +1,34 @@
-import { dslToReactflow } from "@/components/editor/utils/dsl-to-reactflow";
+import { dslToReactflow } from "@/components/editor/convert/dsl-to-reactflow";
 import { describe, expect, it } from "vitest";
 
 const parts = {
-  testPromoterName: {
-    name: "testPromoterName",
-    description: "Test Promoter Description",
+  PromoterA: {
+    name: "PromoterA",
+    description: "PromoterA Description",
     category: "Promoter",
     controlBy: [
       {
-        name: "testProteinName",
+        name: "ProteinA",
         type: "Repression",
       },
     ],
     controlTo: [],
   },
-  testProteinName: {
-    name: "testProteinName",
-    description: "Test Protein Description",
+  ProteinA: {
+    name: "ProteinA",
+    description: "ProteinA Description",
     category: "Protein",
     controlBy: [],
     controlTo: [
       {
-        name: "testPromoterName",
+        name: "PromoterA",
         type: "Repression",
       },
     ],
   },
-  testTerminatorName: {
-    name: "testTerminatorName",
-    description: "Test Terminator Description",
+  TerminatorA: {
+    name: "TerminatorA",
+    description: "TerminatorA Description",
     category: "Terminator",
     controlBy: [],
     controlTo: [],

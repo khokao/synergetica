@@ -3,7 +3,7 @@ import { INDENT_SIZE } from "@/components/editor/constants";
 import type { Node } from "@xyflow/react";
 import { stringify } from "yaml";
 
-export const convertReactFlowNodesToDSL = (nodes: Node[]): string => {
+export const reactflowToDsl = (nodes: Node[]): string => {
   if (nodes.length === 0) {
     return "";
   }
@@ -43,8 +43,6 @@ export const convertReactFlowNodesToDSL = (nodes: Node[]): string => {
     .sort((a, b) => a.positionY - b.positionY)
     .map(({ chain }) => ({ chain }));
 
-  const dsl = chains;
-
-  const editorContent = stringify(dsl, { indent: INDENT_SIZE, indentSeq: false });
-  return editorContent;
+  const content = stringify(chains, { indent: INDENT_SIZE, indentSeq: false });
+  return content;
 };

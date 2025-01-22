@@ -1,21 +1,21 @@
-import { useStrictSchema } from "@/components/editor/schemas/strictSchema";
+import { useStrictSchema } from "@/components/editor/schemas/strict-schema";
 import { describe, expect, it, vi } from "vitest";
 
 vi.mock("@/components/circuit/parts/parts-context", () => {
   return {
     useParts: () => ({
       promoterParts: {
-        testPromoterName: {
-          name: "testPromoterName",
-          description: "Test Promoter Description",
+        PromoterA: {
+          name: "PromoterA",
+          description: "PromoterA Description",
           category: "Promoter",
           controlBy: [
             {
-              name: "testProteinName",
+              name: "ProteinA",
               type: "Repression",
             },
             {
-              name: "testProteinName2",
+              name: "ProteinB",
               type: "Activation",
             },
           ],
@@ -23,35 +23,35 @@ vi.mock("@/components/circuit/parts/parts-context", () => {
         },
       },
       proteinParts: {
-        testProteinName: {
-          name: "testProteinName",
-          description: "Test Protein Description",
+        ProteinA: {
+          name: "ProteinA",
+          description: "ProteinA Description",
           category: "Protein",
           controlBy: [],
           controlTo: [
             {
-              name: "testPromoterName",
+              name: "PromoterA",
               type: "Repression",
             },
           ],
         },
-        testProteinName2: {
-          name: "testProteinName2",
-          description: "Test Protein2 Description",
+        ProteinB: {
+          name: "ProteinB",
+          description: "ProteinB Description",
           category: "Protein",
           controlBy: [],
           controlTo: [
             {
-              name: "testPromoterName",
+              name: "PromoterA",
               type: "Activation",
             },
           ],
         },
       },
       terminatorParts: {
-        testTerminatorName: {
-          name: "testTerminatorName",
-          description: "Test Terminator Description",
+        TerminatorA: {
+          name: "TerminatorA",
+          description: "TerminatorA Description",
           category: "Terminator",
           controlBy: [],
           controlTo: [],
@@ -69,9 +69,9 @@ describe("strictCircuitSchema", () => {
     const validCircuit = [
       {
         chain: [
-          { type: "Promoter", name: "testPromoterName" },
-          { type: "Protein", name: "testProteinName" },
-          { type: "Terminator", name: "testTerminatorName" },
+          { type: "Promoter", name: "PromoterA" },
+          { type: "Protein", name: "ProteinA" },
+          { type: "Terminator", name: "TerminatorA" },
         ],
       },
     ];
@@ -88,8 +88,8 @@ describe("strictCircuitSchema", () => {
     const invalidCircuit = [
       {
         chain: [
-          { type: "Protein", name: "testProteinName" },
-          { type: "Terminator", name: "testTerminatorName" },
+          { type: "Protein", name: "ProteinA" },
+          { type: "Terminator", name: "TerminatorA" },
         ],
       },
     ];
@@ -106,8 +106,8 @@ describe("strictCircuitSchema", () => {
     const invalidCircuit = [
       {
         chain: [
-          { type: "Promoter", name: "testPromoterName" },
-          { type: "Protein", name: "testProteinName" },
+          { type: "Promoter", name: "PromoterA" },
+          { type: "Protein", name: "ProteinA" },
         ],
       },
     ];
@@ -124,10 +124,10 @@ describe("strictCircuitSchema", () => {
     const invalidCircuit = [
       {
         chain: [
-          { type: "Promoter", name: "testPromoterName" },
-          { type: "Protein", name: "testProteinName" },
-          { type: "Promoter", name: "testPromoterName" },
-          { type: "Terminator", name: "testTerminatorName" },
+          { type: "Promoter", name: "PromoterA" },
+          { type: "Protein", name: "ProteinA" },
+          { type: "Promoter", name: "PromoterA" },
+          { type: "Terminator", name: "TerminatorA" },
         ],
       },
     ];
@@ -144,9 +144,9 @@ describe("strictCircuitSchema", () => {
     const invalidCircuit = [
       {
         chain: [
-          { type: "Promoter", name: "testPromoterName" },
-          { type: "Terminator", name: "testTerminatorName" },
-          { type: "Protein", name: "testProteinName" },
+          { type: "Promoter", name: "PromoterA" },
+          { type: "Terminator", name: "TerminatorA" },
+          { type: "Protein", name: "ProteinA" },
         ],
       },
     ];
@@ -163,10 +163,10 @@ describe("strictCircuitSchema", () => {
     const invalidCircuit = [
       {
         chain: [
-          { type: "Promoter", name: "testPromoterName" },
-          { type: "Protein", name: "testProteinName" },
-          { type: "Terminator", name: "testTerminatorName" },
-          { type: "Protein", name: "testProteinName" },
+          { type: "Promoter", name: "PromoterA" },
+          { type: "Protein", name: "ProteinA" },
+          { type: "Terminator", name: "TerminatorA" },
+          { type: "Protein", name: "ProteinA" },
         ],
       },
     ];
@@ -184,8 +184,8 @@ describe("strictCircuitSchema", () => {
       {
         chain: [
           { type: "Promoter", name: "invalidPromoter" },
-          { type: "Protein", name: "testProteinName" },
-          { type: "Terminator", name: "testTerminatorName" },
+          { type: "Protein", name: "ProteinA" },
+          { type: "Terminator", name: "TerminatorA" },
         ],
       },
     ];
@@ -202,9 +202,9 @@ describe("strictCircuitSchema", () => {
     const invalidCircuit = [
       {
         chain: [
-          { type: "Promoter", name: "testPromoterName" },
-          { type: "Protein", name: "testProteinName" },
-          { type: "Terminator", name: "testTerminatorName" },
+          { type: "Promoter", name: "PromoterA" },
+          { type: "Protein", name: "ProteinA" },
+          { type: "Terminator", name: "TerminatorA" },
         ],
         extraProperty: "not allowed",
       },
@@ -225,9 +225,9 @@ describe("strictCircuitSchema", () => {
     const invalidCircuit = [
       {
         chain: [
-          { type: "Promoter", name: "testPromoterName", extra: "not allowed" },
-          { type: "Protein", name: "testProteinName" },
-          { type: "Terminator", name: "testTerminatorName" },
+          { type: "Promoter", name: "PromoterA", extra: "not allowed" },
+          { type: "Protein", name: "ProteinA" },
+          { type: "Terminator", name: "TerminatorA" },
         ],
       },
     ];

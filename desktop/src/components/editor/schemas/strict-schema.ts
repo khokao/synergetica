@@ -1,6 +1,8 @@
 import { useParts } from "@/components/circuit/parts/parts-context";
 import { z } from "zod";
 
+// The strict schema is used to display errors and to control whether simulations can be executed.
+// It is a dynamic schema that references parts database (not constant).
 export const useStrictSchema = () => {
   const { promoterParts, proteinParts, terminatorParts } = useParts();
 
@@ -66,7 +68,7 @@ export const useStrictSchema = () => {
                   } else {
                     ctx.addIssue({
                       code: z.ZodIssueCode.custom,
-                      message: "Chain must start with a Promoter.",
+                      message: "Chain must start with Promoter(s).",
                       path: [i],
                     });
                     return;
@@ -81,7 +83,7 @@ export const useStrictSchema = () => {
                   } else {
                     ctx.addIssue({
                       code: z.ZodIssueCode.custom,
-                      message: "A Terminator cannot directly follow a Promoter. At least one Protein must follow.",
+                      message: "Protein(s) must follow Promoter(s) before a Terminator.",
                       path: [i],
                     });
                     return;

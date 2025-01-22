@@ -20,4 +20,5 @@ const looseChainSchema = z
   })
   .strict();
 
+// The loose schema is used to determine whether it can be converted into a ReactFlow graph.
 export const looseCircuitSchema = z.array(looseChainSchema);

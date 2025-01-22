@@ -2,7 +2,7 @@ import { EDGE_LENGTH, GROUP_NODE_MARGIN, NODE_HEIGHT, NODE_WIDTH } from "@/compo
 import { createEdge } from "@/components/circuit/hooks/utils/create-edge";
 import { createChildNode, createParentNode } from "@/components/circuit/hooks/utils/create-node";
 import { CHAIN_GAP_Y, CHAIN_OFFSET_X } from "@/components/editor/constants";
-import { looseCircuitSchema } from "@/components/editor/schemas/looseSchema";
+import { looseCircuitSchema } from "@/components/editor/schemas/loose-schema";
 import type { Edge, Node } from "@xyflow/react";
 import { produce } from "immer";
 import { parseDocument } from "yaml";
@@ -14,15 +14,15 @@ export const dslToReactflow = (content, parts): { nodes: Node[]; edges: Edge[] }
     return { nodes: [], edges: [] };
   }
 
-  const dsl = doc.toJS();
-  const result = looseCircuitSchema.safeParse(dsl);
+  const obj = doc.toJS();
+  const result = looseCircuitSchema.safeParse(obj);
 
   if (!result.success) {
     return null;
   }
 
   const { nodes, edges } = produce({ nodes: [] as Node[], edges: [] as Edge[] }, (draft) => {
-    for (const [chainIndex, chainObj] of dsl.entries()) {
+    for (const [chainIndex, chainObj] of obj.entries()) {
       const chain = chainObj.chain;
       const hasParent = chain.length > 1;
 

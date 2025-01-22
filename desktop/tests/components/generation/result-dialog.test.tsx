@@ -1,4 +1,5 @@
 import { PartsProvider } from "@/components/circuit/parts/parts-context";
+import { EditorProvider } from "@/components/editor/editor-context";
 import { GenerationResultDialog } from "@/components/generation/result-dialog";
 import { render, screen } from "@testing-library/react";
 import { ReactFlowProvider } from "@xyflow/react";
@@ -50,9 +51,11 @@ describe("GenerationResultModal Component", () => {
     // Act
     render(
       <ReactFlowProvider>
-        <PartsProvider>
-          <GenerationResultDialog generationResult={generationResult} isOpen={isOpen} setIsOpen={setIsOpen} />
-        </PartsProvider>
+        <EditorProvider>
+          <PartsProvider>
+            <GenerationResultDialog generationResult={generationResult} isOpen={isOpen} setIsOpen={setIsOpen} />
+          </PartsProvider>
+        </EditorProvider>
       </ReactFlowProvider>,
     );
 
@@ -68,9 +71,11 @@ describe("GenerationResultModal Component", () => {
     // Act
     render(
       <ReactFlowProvider>
-        <PartsProvider>
-          <GenerationResultDialog generationResult={generationResult} isOpen={isOpen} setIsOpen={setIsOpen} />
-        </PartsProvider>
+        <EditorProvider>
+          <PartsProvider>
+            <GenerationResultDialog generationResult={generationResult} isOpen={isOpen} setIsOpen={setIsOpen} />
+          </PartsProvider>
+        </EditorProvider>
       </ReactFlowProvider>,
     );
 
