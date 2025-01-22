@@ -1,4 +1,5 @@
 import { PartsProvider } from "@/components/circuit/parts/parts-context";
+import { EditorProvider } from "@/components/editor/editor-context";
 import { CircuitPreview } from "@/components/generation/circuit-preview";
 import { render, screen } from "@testing-library/react";
 import { ReactFlowProvider } from "@xyflow/react";
@@ -21,9 +22,11 @@ describe("CircuitPreview Component", () => {
     // Act
     render(
       <ReactFlowProvider>
-        <PartsProvider>
-          <CircuitPreview nodes={nodes} edges={edges} />
-        </PartsProvider>
+        <EditorProvider>
+          <PartsProvider>
+            <CircuitPreview nodes={nodes} edges={edges} />
+          </PartsProvider>
+        </EditorProvider>
       </ReactFlowProvider>,
     );
 
