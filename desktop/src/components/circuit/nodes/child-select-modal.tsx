@@ -1,6 +1,7 @@
 import { CircuitEdgeTypes, CircuitNodeTypes, TEMP_NODE_ID } from "@/components/circuit/constants";
 import { InformationCard } from "@/components/circuit/nodes/information-card";
 import { useParts } from "@/components/circuit/parts/parts-context";
+import { useEditorContext } from "@/components/editor/editor-context";
 import { Button } from "@/components/ui/button";
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
@@ -96,6 +97,7 @@ const ChildSelectModalComponent = ({ id, data }) => {
 
   const reactflow = useReactFlow();
   const { promoterParts, proteinParts, terminatorParts } = useParts();
+  const { setEditMode } = useEditorContext();
 
   const modalMap = {
     Promoter: {
@@ -138,11 +140,12 @@ const ChildSelectModalComponent = ({ id, data }) => {
           }
         }
       });
+      setEditMode("reactflow");
       setNodes(newNodes);
       setIsOpen(false);
       setIsHighlighted(true);
     },
-    [id, reactflow],
+    [id, reactflow, setEditMode],
   );
 
   useEffect(() => {
