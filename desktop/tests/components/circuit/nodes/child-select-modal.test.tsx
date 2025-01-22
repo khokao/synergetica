@@ -1,4 +1,5 @@
 import { ChildSelectModal } from "@/components/circuit/nodes/child-select-modal";
+import { EditorProvider } from "@/components/editor/editor-context";
 import { fireEvent, render, screen } from "@testing-library/react";
 
 import { describe, expect, it } from "vitest";
@@ -92,7 +93,11 @@ describe("ChildSelectModal", () => {
   const defaultData = { category: "Promoter", name: "testPromoter1" };
 
   const renderComponent = () => {
-    render(<ChildSelectModal id={defaultId} data={defaultData} />);
+    render(
+      <EditorProvider>
+        <ChildSelectModal id={defaultId} data={defaultData} />
+      </EditorProvider>,
+    );
   };
 
   it("renders the SelectMenu and CircuitPreview", async () => {
