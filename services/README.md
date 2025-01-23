@@ -245,4 +245,4 @@ Replace the directory name and checkpoint file as appropriate.
 [GitHub-Pages]: https://img.shields.io/badge/GitHub%20Pages-121013?logo=github&logoColor=white
 [GitHub-Pages-url]: https://pages.github.com/
 [GitHub-Actions]: https://img.shields.io/badge/GitHub_Actions-2088FF?logo=github-actions&logoColor=white
-[GitHub-Actions-url]: https://github.com/features/actions
+[GitHub-Actions-url]: https://github.com/features/actions/
