@@ -1,4 +1,4 @@
-import { useStrictSchema } from "@/components/editor/schemas/strict-schema";
+import { useStrictSchema } from "@/components/editor/dsl/schemas/strict-schema";
 import { describe, expect, it, vi } from "vitest";
 
 vi.mock("@/components/circuit/parts/parts-context", () => {

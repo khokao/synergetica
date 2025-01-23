@@ -1,5 +1,5 @@
-import { useStrictSchema } from "@/components/editor/schemas/strict-schema";
-import { validateContent } from "@/components/editor/validate/validate-content";
+import { useStrictSchema } from "@/components/editor/dsl/schemas/strict-schema";
+import { validateContent } from "@/components/editor/dsl/validate/validate-content";
 import { describe, expect, it } from "vitest";
 
 vi.mock("@/components/circuit/parts/parts-context", () => {

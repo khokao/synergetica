@@ -1,5 +1,5 @@
+import { useSynchronizeDslWithReactFlow } from "@/components/editor/dsl/use-sync-dsl-with-flow";
 import { useEditorContext } from "@/components/editor/editor-context";
-import { useSynchronizeDslWithReactFlow } from "@/components/editor/hooks/use-sync-dsl-with-flow";
 import { renderHook } from "@testing-library/react";
 import { useReactFlow } from "@xyflow/react";
 import type { ReactFlowInstance } from "@xyflow/react";

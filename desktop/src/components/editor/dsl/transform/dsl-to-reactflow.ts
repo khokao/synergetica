@@ -2,7 +2,7 @@ import { EDGE_LENGTH, GROUP_NODE_MARGIN, NODE_HEIGHT, NODE_WIDTH } from "@/compo
 import { createEdge } from "@/components/circuit/hooks/utils/create-edge";
 import { createChildNode, createParentNode } from "@/components/circuit/hooks/utils/create-node";
 import { CHAIN_GAP_Y, CHAIN_OFFSET_X } from "@/components/editor/constants";
-import { looseCircuitSchema } from "@/components/editor/schemas/loose-schema";
+import { looseCircuitSchema } from "@/components/editor/dsl/schemas/loose-schema";
 import type { Edge, Node } from "@xyflow/react";
 import { produce } from "immer";
 import { parseDocument } from "yaml";

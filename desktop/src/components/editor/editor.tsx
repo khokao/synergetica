@@ -1,7 +1,7 @@
 import { GITHUB_LIGHT_THEME, INDENT_SIZE } from "@/components/editor/constants";
+import { useSynchronizeDslWithReactFlow } from "@/components/editor/dsl/use-sync-dsl-with-flow";
 import { useEditorContext } from "@/components/editor/editor-context";
 import { EditorConsole } from "@/components/editor/error-console";
-import { useSynchronizeDslWithReactFlow } from "@/components/editor/hooks/use-sync-dsl-with-flow";
 import { EditorTopBar } from "@/components/editor/top-bar";
 import { Separator } from "@/components/ui/separator";
 import { Editor } from "@monaco-editor/react";

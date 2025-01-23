@@ -1,4 +1,4 @@
-import { looseCircuitSchema } from "@/components/editor/schemas/loose-schema";
+import { looseCircuitSchema } from "@/components/editor/dsl/schemas/loose-schema";
 import { describe, expect, it } from "vitest";
 
 describe("looseCircuitSchema", () => {

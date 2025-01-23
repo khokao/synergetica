@@ -1,4 +1,4 @@
-import { parseAndCheck } from "@/components/editor/validate/parse-and-check";
+import { parseAndCheck } from "@/components/editor/dsl/validate/parse-and-check";
 import type { editor } from "monaco-editor";
 import type { Document, LineCounter } from "yaml";
 import { isMap, isScalar, isSeq } from "yaml";
