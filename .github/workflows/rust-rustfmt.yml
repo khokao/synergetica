@@ -1,4 +1,4 @@
-name: "Rust rustfmt"
+name: "Rustfmt"
 
 on:
   push:
