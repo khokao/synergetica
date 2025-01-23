@@ -1,5 +1,5 @@
 import { TEMP_NODE_ID } from "@/components/circuit/constants";
-import { reactflowToDsl } from "@/components/editor/convert/reactflow-to-dsl";
+import { reactflowToDsl } from "@/components/editor/dsl/transform/reactflow-to-dsl";
 import type { Node } from "@xyflow/react";
 import { describe, expect, it } from "vitest";
 

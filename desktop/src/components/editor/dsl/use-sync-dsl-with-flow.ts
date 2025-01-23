@@ -1,9 +1,9 @@
 import { useParts } from "@/components/circuit/parts/parts-context";
-import { dslToReactflow } from "@/components/editor/convert/dsl-to-reactflow";
-import { reactflowToDsl } from "@/components/editor/convert/reactflow-to-dsl";
+import { useStrictSchema } from "@/components/editor/dsl/schemas/strict-schema";
+import { dslToReactflow } from "@/components/editor/dsl/transform/dsl-to-reactflow";
+import { reactflowToDsl } from "@/components/editor/dsl/transform/reactflow-to-dsl";
+import { validateContent } from "@/components/editor/dsl/validate/validate-content";
 import { useEditorContext } from "@/components/editor/editor-context";
-import { useStrictSchema } from "@/components/editor/schemas/strict-schema";
-import { validateContent } from "@/components/editor/validate/validate-content";
 import { useNodes, useReactFlow } from "@xyflow/react";
 import { useEffect, useRef } from "react";
 import { useDebounce } from "use-debounce";

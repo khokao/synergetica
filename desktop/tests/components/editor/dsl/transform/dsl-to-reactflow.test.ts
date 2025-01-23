@@ -1,4 +1,4 @@
-import { dslToReactflow } from "@/components/editor/convert/dsl-to-reactflow";
+import { dslToReactflow } from "@/components/editor/dsl/transform/dsl-to-reactflow";
 import { describe, expect, it } from "vitest";
 
 const parts = {
