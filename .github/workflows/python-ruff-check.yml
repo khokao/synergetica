@@ -1,4 +1,4 @@
-name: "Python ruff check"
+name: "Ruff Linter"
 
 on:
   push:
