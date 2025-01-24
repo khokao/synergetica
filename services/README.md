@@ -51,13 +51,13 @@
 
 ## 1. About This Directory
 
-This directory contains a Python-based API implementation and product documentation.
+This directory contains a Python-based API implementation and documentation.
 
 - [**`src/api`**](src/api) contains the API implementation developed using FastAPI
 - [**`src/train`**](src/train) includes scripts for building the ML model used by the DNA sequence generation
-- [**`docs`**](docs) contains Markdown files for product documentation built with MkDocs
+- [**`docs`**](docs) contains Markdown files for documentation built with MkDocs
 
-The API provides two main features: **simulation** and **generation**. For more details on each feature, please refer to the [product documentation](https://khokao.github.io/gene-circuit-ide/).
+The API provides two main features: **simulation** and **generation**. For more details on each feature, please refer to the [documentation](https://khokao.github.io/gene-circuit-ide/).
 
 ### 1.1. Built With
 * [![Python][Python]][Python-url]
