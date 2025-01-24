@@ -166,9 +166,9 @@ The build artifacts for macOS and Windows are generated automatically and can be
 [TypeScript-url]: https://www.typescriptlang.org/
 [Rust]: https://img.shields.io/badge/Rust-%23000000.svg?e&logo=rust&logoColor=white
 [Rust-url]: https://www.rust-lang.org/
-[Next.js]: https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white
+[Next.js]: https://img.shields.io/badge/Next.js-black?logo=next.js&logoColor=white
 [Next-url]: https://nextjs.org/
-[React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
+[React.js]: https://img.shields.io/badge/React-%2320232a.svg?logo=react&logoColor=%2361DAFB
 [React-url]: https://reactjs.org/
 [shadcn/ui]: https://img.shields.io/badge/shadcn%2Fui-000?logo=shadcnui&logoColor=fff
 [shadcn/ui-url]: https://ui.shadcn.com/
