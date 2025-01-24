@@ -1,4 +1,4 @@
-name: "Python mypy"
+name: "mypy"
 
 on:
   push:

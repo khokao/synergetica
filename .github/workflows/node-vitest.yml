@@ -1,4 +1,4 @@
-name: "Node vitest"
+name: "Vitest"
 
 on:
   push:
