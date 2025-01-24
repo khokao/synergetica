@@ -146,11 +146,11 @@ cargo fmt
 
 GitHub Actions automatically builds and creates releases for the desktop application.
 
-- **Nightly Release**:
+* **Nightly Release**:
 
   Triggered whenever commits are pushed to the `main` branch. This release is ideal if you want to check the latest features and improvements.
 
-- **Stable Release**:
+* **Stable Release**:
 
   Triggered when a new tag is created. This release is intended for general users.
 
