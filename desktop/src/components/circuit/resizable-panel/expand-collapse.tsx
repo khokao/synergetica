@@ -3,12 +3,10 @@ import { Button } from "@/components/ui/button";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import * as RadixTooltip from "@radix-ui/react-tooltip";
 import { PanelLeftClose, PanelLeftOpen, PanelRightClose, PanelRightOpen } from "lucide-react";
-import type React from "react";
 
 export const ExpandCollapseButton = ({ position }) => {
-  const { openPanels, togglePanel } = usePanelContext();
-
-  const isOpen = openPanels[position];
+  const { panelOpenState, togglePanel } = usePanelContext();
+  const isOpen = panelOpenState[position];
 
   const icons = {
     left: {

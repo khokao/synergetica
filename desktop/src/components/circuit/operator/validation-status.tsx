@@ -8,19 +8,16 @@ import type { FC } from "react";
 
 export const ValidationStatus: FC = () => {
   const { validationError } = useEditorContext();
-  const { openPanels, togglePanel } = usePanelContext();
+  const { openPanel } = usePanelContext();
 
   const noError = !validationError || validationError.length === 0;
-  const isOpen = openPanels.left;
 
   const Icon = noError ? CircleCheck : AlertCircle;
   const iconClass = noError ? "h-5 w-5 !text-green-600" : "h-5 w-5 !text-red-600";
 
   const handleClick = (e) => {
     e.stopPropagation();
-    if (!isOpen) {
-      togglePanel("left");
-    }
+    openPanel("left");
   };
 
   return (
