@@ -1,4 +1,5 @@
 import { CircuitEdgeTypes, CircuitNodeTypes, TEMP_NODE_ID } from "@/components/circuit/constants";
+import { CATEGORY_CONFIG } from "@/components/circuit/constants";
 import { InformationCard } from "@/components/circuit/nodes/information-card";
 import { useParts } from "@/components/circuit/parts/parts-context";
 import { useEditorContext } from "@/components/editor/editor-context";
@@ -17,7 +18,7 @@ import {
 } from "@xyflow/react";
 import { produce } from "immer";
 import { ChevronDown } from "lucide-react";
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useMemo } from "react";
 
 const CircuitPreview = ({ id }) => {
   const reactflow = useReactFlow();
@@ -29,7 +30,6 @@ const CircuitPreview = ({ id }) => {
   return (
     <ReactFlowProvider>
       <ReactFlow
-        id="select-modal-preview-flow"
         nodes={nodes}
         edges={edges}
         proOptions={{ hideAttribution: true }}
@@ -93,37 +93,28 @@ const ChildSelectModalComponent = ({ id, data }) => {
     );
   }
 
-  const { category, name } = data;
-
   const reactflow = useReactFlow();
   const { promoterParts, proteinParts, terminatorParts } = useParts();
   const { setEditMode } = useEditorContext();
 
-  const modalMap = {
-    Promoter: {
-      title: "Select Promoter",
-      underlineColor: "border-promoter-800",
-      highlightColor: "text-promoter-600",
-      options: Object.values(promoterParts),
-    },
-    Protein: {
-      title: "Select Protein",
-      underlineColor: "border-protein-800",
-      highlightColor: "text-protein-600",
-      options: Object.values(proteinParts),
-    },
-    Terminator: {
-      title: "Select Terminator",
-      underlineColor: "border-terminator-800",
-      highlightColor: "text-terminator-600",
-      options: Object.values(terminatorParts),
-    },
-  };
-
   const [isOpen, setIsOpen] = useState(false);
   const [isHighlighted, setIsHighlighted] = useState(false);
 
-  const { title, underlineColor, highlightColor, options } = modalMap[category];
+  const { category, name } = data;
+  const { underlineColor, highlightColor } = CATEGORY_CONFIG[category];
+
+  const options = useMemo(() => {
+    switch (category) {
+      case "Promoter":
+        return Object.values(promoterParts);
+      case "Protein":
+        return Object.values(proteinParts);
+      case "Terminator":
+        return Object.values(terminatorParts);
+      default:
+        return [];
+    }
+  }, [category, promoterParts, proteinParts, terminatorParts]);
   const selectedOption = options.find((option) => option.name === name);
 
   const handleSelect = useCallback(
@@ -175,7 +166,7 @@ const ChildSelectModalComponent = ({ id, data }) => {
   return (
     <Container>
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
-        {data.name && !isOpen ? (
+        {name && !isOpen ? (
           <HoverCard>
             <HoverCardTrigger asChild>
               <DialogTrigger asChild>{buttonContent}</DialogTrigger>
@@ -195,7 +186,7 @@ const ChildSelectModalComponent = ({ id, data }) => {
         >
           <DialogHeader className="flex-shrink-0 flex justify-between items-center">
             <DialogTitle className={`text-xl font-semibold border-b-2 ${underlineColor} pb-2 px-4 mx-auto text-center`}>
-              {title}
+              Select {category}
             </DialogTitle>
           </DialogHeader>
 
