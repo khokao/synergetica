@@ -4,7 +4,6 @@ import { ChildHeader } from "@/components/circuit/nodes/child-header";
 import { ChildSelectModal } from "@/components/circuit/nodes/child-select-modal";
 import { Handle, Position } from "@xyflow/react";
 import type { NodeProps } from "@xyflow/react";
-import React from "react";
 
 export const CustomChildNode = ({ id, selected, data }: NodeProps) => {
   return (
@@ -17,6 +16,7 @@ export const CustomChildNode = ({ id, selected, data }: NodeProps) => {
         height: NODE_HEIGHT,
         width: NODE_WIDTH,
       }}
+      data-testid="custom-node"
     >
       <ChildHeader data={data} />
       <ChildSelectModal id={id} data={data} />
