@@ -14,7 +14,7 @@ import { useCallback, useRef } from "react";
 
 export const useDragNodes = () => {
   const reactflow = useReactFlow();
-  const [dndCategory, _] = useDnD();
+  const { dndCategory } = useDnD();
   const dragStartNode = useRef<Node | null>(null);
   const dragStartConnectedEdges = useRef<Edge[] | null>(null);
   const { setEditMode } = useEditorContext();
