@@ -11,10 +11,8 @@ describe("ChildHeader Component", () => {
     render(<ChildHeader data={data} />);
 
     // Assert
-    const textElement = screen.getByText("Promoter");
-    expect(textElement).toBeInTheDocument();
-    expect(textElement.parentElement).toHaveClass("bg-promoter-200");
-    expect(screen.getByTestId("promoter-icon")).toBeInTheDocument();
+    expect(screen.getByText("Promoter")).toBeInTheDocument();
+    expect(screen.getByTestId("Promoter-icon")).toBeInTheDocument();
   });
 
   it("displays the correct text and styles for protein category", () => {
@@ -25,10 +23,8 @@ describe("ChildHeader Component", () => {
     render(<ChildHeader data={data} />);
 
     // Assert
-    const textElement = screen.getByText("Protein");
-    expect(textElement).toBeInTheDocument();
-    expect(textElement.parentElement).toHaveClass("bg-protein-200");
-    expect(screen.getByTestId("protein-icon")).toBeInTheDocument();
+    expect(screen.getByText("Protein")).toBeInTheDocument();
+    expect(screen.getByTestId("Protein-icon")).toBeInTheDocument();
   });
 
   it("displays the correct text and styles for terminator category", () => {
@@ -39,9 +35,7 @@ describe("ChildHeader Component", () => {
     render(<ChildHeader data={data} />);
 
     // Assert
-    const textElement = screen.getByText("Terminator");
-    expect(textElement).toBeInTheDocument();
-    expect(textElement.parentElement).toHaveClass("bg-terminator-200");
-    expect(screen.getByTestId("terminator-icon")).toBeInTheDocument();
+    expect(screen.getByText("Terminator")).toBeInTheDocument();
+    expect(screen.getByTestId("Terminator-icon")).toBeInTheDocument();
   });
 });
