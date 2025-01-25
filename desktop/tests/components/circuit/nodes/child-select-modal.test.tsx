@@ -1,111 +1,82 @@
 import { ChildSelectModal } from "@/components/circuit/nodes/child-select-modal";
 import { EditorProvider } from "@/components/editor/editor-context";
-import { fireEvent, render, screen } from "@testing-library/react";
-
+import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import { ReactFlowProvider } from "@xyflow/react";
 import { describe, expect, it } from "vitest";
 
-vi.mock("@xyflow/react", async () => {
-  const actual = await vi.importActual("@xyflow/react");
-  return {
-    ...actual,
-    ReactFlowProvider: ({ children }) => <div>{children}</div>,
-    ReactFlow: () => <div data-testid="select-modal-preview-flow" />,
-    useReactFlow: () => ({
-      getNodes: vi.fn(() => []),
-      getEdges: vi.fn(() => []),
-      setNodes: vi.fn(),
-    }),
-  };
-});
-
-const testPromoter1Part = {
-  name: "testPromoter1",
-  description: "Test Promoter 1 Description",
-  category: "Promoter",
-  sequence: "atcg",
-  controlBy: [
-    {
-      name: "testProtein1",
-      type: "Repression",
-      params: {
-        Ymax: 1.0,
-        Ymin: 1.0,
-        K: 1.0,
-        n: 1.0,
-      },
-    },
-  ],
-  params: {
-    Ydef: 1.0,
-  },
-};
-
-const testProtein1Part = {
-  name: "testProtein1",
-  description: "Test Protein 1 Description",
-  category: "Protein",
-  sequence: "atcg",
-  controlBy: [],
-  params: {
-    Dp: 1.0,
-    TIRb: 1.0,
-  },
-};
-
-const testTerminator1Part = {
-  name: "testTerminator1",
-  description: "Test Terminator 1 Description",
-  category: "Terminator",
-  sequence: "atcg",
-  controlBy: [],
-  params: {},
-};
-
-const testInteractionStore = {
-  getPromotersByProtein: vi.fn((from) => [{ to: testPromoter1Part.name, type: "Repression" }]),
-  getProteinsByPromoter: vi.fn((to) => [{ from: testProtein1Part.name, type: "Repression" }]),
-};
-
 vi.mock("@/components/circuit/parts/parts-context", () => {
+  const PromoterA = {
+    name: "PromoterA",
+    description: "PromoterA Description",
+    category: "Promoter",
+    controlBy: [
+      {
+        name: "ProteinA",
+        type: "Repression",
+      },
+    ],
+    controlTo: [],
+  };
+  const ProteinA = {
+    name: "ProteinA",
+    description: "Test Protein Description",
+    category: "Protein",
+    controlBy: [],
+    controlTo: [
+      {
+        name: "PromoterA",
+        type: "Repression",
+      },
+    ],
+  };
+  const TerminatorA = {
+    name: "TerminatorA",
+    description: "Test Terminator Description",
+    category: "Terminator",
+    controlBy: [],
+    controlTo: [],
+  };
+
   return {
-    useParts: () => ({
+    useParts: vi.fn().mockReturnValue({
       parts: {
-        testPromoter1: testPromoter1Part,
-        testProtein1: testProtein1Part,
-        testTerminator1: testTerminator1Part,
+        PromoterA: PromoterA,
+        ProteinA: ProteinA,
+        TerminatorA: TerminatorA,
       },
-      promoterParts: {
-        testPromoter1: testPromoter1Part,
+      promoterParts: { PromoterA },
+      proteinParts: { ProteinA },
+      terminatorParts: { TerminatorA },
+      interactionStore: {
+        getProteinsByPromoter: vi.fn(() => [{ from: "ProteinA", to: "PromoterA", type: "Repression" }]),
+        getPromotersByProtein: vi.fn(() => [{ from: "ProteinA", to: "PromoterA", type: "Repression" }]),
       },
-      proteinParts: {
-        testProtein1: testProtein1Part,
-      },
-      terminatorParts: {
-        testTerminator1: testTerminator1Part,
-      },
-      interactionStore: testInteractionStore,
     }),
   };
 });
 
 describe("ChildSelectModal", () => {
-  const defaultId = "test-id";
-  const defaultData = { category: "Promoter", name: "testPromoter1" };
-
   const renderComponent = () => {
     render(
-      <EditorProvider>
-        <ChildSelectModal id={defaultId} data={defaultData} />
-      </EditorProvider>,
+      <ReactFlowProvider>
+        <EditorProvider>
+          <ChildSelectModal
+            id="test-id"
+            data={{ name: "PromoterA", description: "PromoterA Description", category: "Promoter" }}
+          />
+        </EditorProvider>
+      </ReactFlowProvider>,
     );
   };
 
   it("renders the SelectMenu and CircuitPreview", async () => {
     // Arrange
+    const user = userEvent.setup();
     renderComponent();
 
     // Act
-    fireEvent.click(screen.getByTestId("select-modal-button"));
+    await user.click(screen.getByTestId("select-modal-button"));
 
     // Assert
     expect(screen.getByTestId("select-menu")).toBeInTheDocument();
@@ -115,11 +86,11 @@ describe("ChildSelectModal", () => {
   it("fires the click event and closes the modal", async () => {
     // Arrange
     renderComponent();
-    const partsDescription = "Test Promoter 1 Description";
+    const user = userEvent.setup();
 
     // Act
-    fireEvent.click(screen.getByTestId("select-modal-button"));
-    fireEvent.click(screen.getByText(partsDescription));
+    await user.click(screen.getByTestId("select-modal-button"));
+    await user.click(screen.getByText("PromoterA Description"));
 
     // Assert
     expect(screen.queryByTestId("select-menu")).not.toBeInTheDocument();
