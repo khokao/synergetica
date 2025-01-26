@@ -79,9 +79,6 @@ function setupMocks({
 describe("SimulatorButtons", () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    vi.useFakeTimers({
-      shouldAdvanceTime: true,
-    });
   });
   afterEach(() => {
     vi.restoreAllMocks();
@@ -119,8 +116,7 @@ describe("SimulatorButtons", () => {
     render(<SimulatorButtons />);
 
     // Act
-    user.hover(screen.getByTestId("zap-icon"));
-    vi.advanceTimersByTime(500);
+    await user.hover(screen.getByTestId("zap-icon"));
 
     // Assert
     await waitFor(() => {
@@ -136,8 +132,7 @@ describe("SimulatorButtons", () => {
     render(<SimulatorButtons />);
 
     // Act
-    user.hover(screen.getByTestId("zapoff-icon"));
-    vi.advanceTimersByTime(500);
+    await user.hover(screen.getByTestId("zapoff-icon"));
 
     // Assert
     await waitFor(() => {
