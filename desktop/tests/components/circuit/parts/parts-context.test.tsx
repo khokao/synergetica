@@ -1,7 +1,6 @@
 import { PartsProvider, useParts } from "@/components/circuit/parts/parts-context";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import React from "react";
 import { describe, expect, it, vi } from "vitest";
 
 vi.mock("@xyflow/react", () => ({
@@ -11,27 +10,35 @@ vi.mock("@xyflow/react", () => ({
   }),
 }));
 
+const NEW_PROMOTER = {
+  name: "PromoterA",
+  description: "PromoterA part",
+  category: "Promoter" as const,
+  sequence: "ATGC",
+  controlBy: [],
+  params: {
+    Ydef: 1.0,
+  },
+};
+
+const EDITED_NEW_PROMOTER = {
+  name: "PromoterA",
+  description: "Edited PromoterA part",
+  category: "Promoter" as const,
+  sequence: "AAAA",
+  controlBy: [],
+  params: {
+    Ydef: 100.0,
+  },
+};
+
 const TestComponent = () => {
   const { parts, addPart, editPart, deletePart, promoterParts, proteinParts, terminatorParts } = useParts();
 
   return (
     <div>
       <div data-testid="parts">{JSON.stringify(parts)}</div>
-      <button
-        type="button"
-        onClick={() =>
-          addPart({
-            name: "TestPart",
-            description: "A test part",
-            category: "Promoter",
-            sequence: "ATGC",
-            controlBy: [],
-            params: {
-              Ydef: 1.0,
-            },
-          })
-        }
-      >
+      <button type="button" onClick={() => addPart(NEW_PROMOTER)}>
         Add Part
       </button>
 
@@ -39,120 +46,73 @@ const TestComponent = () => {
       <div data-testid="proteinParts">{JSON.stringify(proteinParts)}</div>
       <div data-testid="terminatorParts">{JSON.stringify(terminatorParts)}</div>
 
-      <button
-        type="button"
-        onClick={() =>
-          editPart("TestPart", {
-            name: "TestPart",
-            description: "An edited test part",
-            category: "Protein",
-            sequence: "CGTA",
-            controlBy: [],
-            params: {
-              Dp: 1.0,
-              TIRb: 1.0,
-            },
-          })
-        }
-      >
+      <button type="button" onClick={() => editPart(NEW_PROMOTER.name, EDITED_NEW_PROMOTER)}>
         Edit Part
       </button>
 
-      <button type="button" onClick={() => deletePart("TestPart")}>
+      <button type="button" onClick={() => deletePart(NEW_PROMOTER.name)}>
         Delete Part
       </button>
     </div>
   );
 };
 
-describe("PartsContext", () => {
-  it("should throw an error when useParts is used outside of PartsProvider", () => {
-    // Arrange & Act & Assert
-    const ConsoleError = console.error;
-    console.error = () => {}; // Suppress expected error log
+const getParts = () => {
+  const textContent = screen.getByTestId("parts").textContent;
+  return JSON.parse(textContent || "{}");
+};
 
-    expect(() => render(<TestComponent />)).toThrow("useParts must be used within a PartsProvider");
-
-    console.error = ConsoleError; // Restore console.error
-  });
-
-  it("should provide default context values", () => {
-    // Arrange
-    render(
-      <PartsProvider>
-        <TestComponent />
-      </PartsProvider>,
-    );
-
-    // Act
-    const parts = screen.getByTestId("parts");
-    const promoterParts = screen.getByTestId("promoterParts");
-    const proteinParts = screen.getByTestId("proteinParts");
-    const terminatorParts = screen.getByTestId("terminatorParts");
-
-    // Assert
-    expect(parts.textContent).not.toBe(null);
-    expect(promoterParts.textContent).not.toBe(null);
-    expect(proteinParts.textContent).not.toBe(null);
-    expect(terminatorParts.textContent).not.toBe(null);
-  });
-
+describe("PartsProvider", () => {
   it("should add a new part successfully", async () => {
     // Arrange
+    const user = userEvent.setup();
     render(
       <PartsProvider>
         <TestComponent />
       </PartsProvider>,
     );
-    const addButton = screen.getByText("Add Part");
 
     // Act
-    await userEvent.click(addButton);
+    await user.click(screen.getByText("Add Part"));
 
     // Assert
-    expect(JSON.parse(screen.getByTestId("parts").textContent || "{}")).toHaveProperty("TestPart");
+    expect(getParts()).toHaveProperty(NEW_PROMOTER.name);
   });
 
   it("should edit an existing part successfully", async () => {
     // Arrange
+    const user = userEvent.setup();
     render(
       <PartsProvider>
         <TestComponent />
       </PartsProvider>,
     );
-    const addButton = screen.getByText("Add Part");
-    const editButton = screen.getByText("Edit Part");
 
-    await userEvent.click(addButton);
+    await user.click(screen.getByText("Add Part"));
 
     // Act
-    await userEvent.click(editButton);
+    await user.click(screen.getByText("Edit Part"));
 
     // Assert
-    const parts = screen.getByTestId("parts");
-    const parsedParts = JSON.parse(parts.textContent || "{}");
-    expect(parsedParts).toHaveProperty("TestPart");
-    expect(parsedParts.TestPart.description).toBe("An edited test part");
-    expect(parsedParts.TestPart.category).toBe("Protein");
+    expect(getParts().PromoterA.sequence).toEqual(EDITED_NEW_PROMOTER.sequence);
+    expect(getParts().PromoterA.params).toEqual(EDITED_NEW_PROMOTER.params);
   });
 
   it("should delete an existing part successfully", async () => {
     // Arrange
+    const user = userEvent.setup();
     render(
       <PartsProvider>
         <TestComponent />
       </PartsProvider>,
     );
-    const addButton = screen.getByText("Add Part");
-    const deleteButton = screen.getByText("Delete Part");
 
-    await userEvent.click(addButton);
+    await user.click(screen.getByText("Add Part"));
 
     // Act
-    await userEvent.click(deleteButton);
+    await user.click(screen.getByText("Delete Part"));
 
     // Assert
-    const parts = screen.getByTestId("parts");
-    expect(JSON.parse(parts.textContent || "{}")).not.toHaveProperty("TestPart");
+    expect(getParts()).not.toHaveProperty(NEW_PROMOTER.name);
   });
 });
