@@ -32,6 +32,8 @@ const CircuitPreview = ({ id }) => {
       <ReactFlow
         nodes={nodes}
         edges={edges}
+        minZoom={0.25}
+        maxZoom={2.0}
         proOptions={{ hideAttribution: true }}
         nodeTypes={CircuitNodeTypes}
         edgeTypes={CircuitEdgeTypes}
