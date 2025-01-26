@@ -1,8 +1,8 @@
 {
   "name": "PbetI",
-  "description": "Regulated Promoter repressed by BetI from Genetic circuit design automation.Science352aac7341(2016)",
+  "description": "Regulated Promoter repressed by BetI",
   "category": "Promoter",
-  "sequence": "agcgcgggtgagagggattcgttaccaattgacaattgattggacgttcaatataatgctagc",
+  "sequence": "AGCGCGGGTGAGAGGGATTCGTTACCAATTGACAATTGATTGGACGTTCAATATAATGCTAGC",
   "controlBy": [
     {
       "name": "BetI",

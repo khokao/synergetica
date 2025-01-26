@@ -1,6 +1,6 @@
 {
   "name": "PJR2",
-  "description": "Regulated Promoters repressed by JR2 from Partitioning of a 2-bit hash function across 66 communicating cells. Nat Chem Biol (2024).",
+  "description": "Regulated Promoters repressed by JR2",
   "category": "Promoter",
   "sequence": "GATGAGGCGGTCAGGAATAAACTTGACTAAAGATTCCTTTAGTAGATAATTTAAGTGTTCTTTAATTTC",
   "controlBy": [

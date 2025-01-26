@@ -1,8 +1,8 @@
 {
   "name": "PlcaRA",
-  "description": "Regulated Promoters repressed by LcaRA from Genetic circuit design automation.Science352aac7341(2016)",
+  "description": "Regulated Promoters repressed by LcaRA",
   "category": "Promoter",
-  "sequence": "tctgattcgttaccaattgacaattcacctacctttcgttaggttaggttgt",
+  "sequence": "TCTGATTCGTTACCAATTGACAATTCACCTACCTTTCGTTAGGTTAGGTTGT",
   "controlBy": [
     {
       "name": "LcaRA",
