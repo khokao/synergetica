@@ -1,6 +1,6 @@
 {
   "name": "PhyllR",
-  "description": "Regulated Promoters repressed by HylIR",
+  "description": "Regulated Promoters repressed by HylIR from Genetic circuit design automation.Science352aac7341(2016)",
   "category": "Promoter",
   "sequence": "gattcgttaccaattgacatatttaaaattcttgtttaaaatgctagc",
   "controlBy": [

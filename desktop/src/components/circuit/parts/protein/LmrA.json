@@ -1,6 +1,6 @@
 {
   "name": "LmrA",
-  "description": "Repressor Protein of PlmrA",
+  "description": "Repressor Protein of PlmrA from Genetic circuit design automation.Science352aac7341(2016)",
   "category": "Protein",
   "sequence": "atgagctatggtgatagccgtgaaaaaattctgagcgcagcaacccgtctgtttcagctgcagggttattatggcaccggtctgaatcagattatcaaagaaagcggtgcaccgaaaggtagcctgtattatcattttccgggtggtaaagaacagctggcaattgaagcagtgaacgaaatgaaagaatatatccgccagaaaatcgccgattgtatggaagcatgtaccgatccggcagaaggtattcaggcatttctgaaagaactgagctgtcagtttagctgtaccgaagatattgaaggtctgccggttggtctgctggcagcagaaaccagcctgaaaagcgaaccgctgcgtgaagcatgtcatgaagcatataaagaatgggccagcgtgtatgaagaaaaactgcgtcagaccggttgtagcgaaagccgtgcaaaagaagcaagcaccgttgttaatgcaatgattgaaggtggtattctgctgagcctgaccgcaaaaaatagcacaccgctgctgcatattagcagctgtattccggatctgctgaaacgttaa",
   "controlBy": [],

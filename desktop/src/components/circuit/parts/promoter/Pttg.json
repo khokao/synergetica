@@ -1,0 +1,21 @@
+{
+  "name": "Pttg",
+  "description": "Regulated Promoters repressed by TtgR_AM from Escherichia coli 'Marionette' strains with 12 highly optimized small-molecule sensors. Nat Chem Biol 15 196 204",
+  "category": "Promoter",
+  "sequence": "CACCCAGCAGTATTTACAAACAACCATGAATGTAAGTATATTCCTTAGCAA",
+  "controlBy": [
+    {
+      "name": "TtgRAM",
+      "type": "Repression",
+      "params": {
+        "Ymax": 0.46,
+        "Ymin": 0.0034,
+        "K": 0.1,
+        "n": 2
+      }
+    }
+  ],
+  "params": {
+    "Ydef": 0.46
+  }
+}

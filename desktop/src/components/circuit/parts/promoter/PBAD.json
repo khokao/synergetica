@@ -1,0 +1,21 @@
+{
+  "name": "PBAD",
+  "description": "Regulated Promoters activated by AraC_AM from Escherichia coli 'Marionette' strains with 12 highly optimized small-molecule sensors. Nat Chem Biol 15 196 204",
+  "category": "Promoter",
+  "sequence": "AGAAACCAATTGTCCATATTGCATCAGACATTGCCGTCACTGCGTCTTTTACTGGCTCTTCTCGCTAACCAAACCGGTAACCCCGCTTATTAAAAGCATTCTGTAACAAAGCGGGACCAAAGCCATGACAAAAACGCGTAACAAAAGTGTCTATAATCACGGCAGAAAAGTCCACATTGATTATTTGCACGGCGTCACACTTTGCTATGCCATAGCATTTTTATCCATAAGATTAGCGGATCCTACCTGACGCTTTTTATCGCAACTCTCTACTGTTTCTCCATACCCG",
+  "controlBy": [
+    {
+      "name": "AraCAM",
+      "type": "Activation",
+      "params": {
+        "Ymax": 1.2,
+        "Ymin": 0.0024,
+        "K": 0.1,
+        "n": 2
+      }
+    }
+  ],
+  "params": {
+    "Ydef": 0.0024
+  }
+}

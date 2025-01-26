@@ -1,0 +1,21 @@
+{
+  "name": "Pcin",
+  "description": "Regulated Promoters activated by CinR_AM from Escherichia coli 'Marionette' strains with 12 highly optimized small-molecule sensors. Nat Chem Biol 15 196 204",
+  "category": "Promoter",
+  "sequence": "CCCTTTGTGCGTCCAAACGGACGCACGGCGCTCTAAAGCGGGTCGCGATCTTTCAGATTCGCTCCTCGCGCTTTCAGTCTTTGTTTTGGCGCATGTCGTTATCGCAAAACCGCTGCACACTTTTGCGCGACATGCTCTGATCCCCCTCATCTGGGGGGGCCTATCTGAGGGAATTTCCGATCCGGCTCGCCTGAACCATTCTGCTTTCCACGAACTTGAAAACGCT",
+  "controlBy": [
+    {
+      "name": "CinRAM",
+      "type": "Activation",
+      "params": {
+        "Ymax": 1.5,
+        "Ymin": 0.003,
+        "K": 0.1,
+        "n": 2
+      }
+    }
+  ],
+  "params": {
+    "Ydef": 0.003
+  }
+}

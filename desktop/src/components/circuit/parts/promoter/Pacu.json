@@ -1,0 +1,21 @@
+{
+  "name": "Pacu",
+  "description": "Regulated Promoters repressed by AcuR_AM from Escherichia coli 'Marionette' strains with 12 highly optimized small-molecule sensors. Nat Chem Biol 15 196 204",
+  "category": "Promoter",
+  "sequence": "CGCTAGCAAGTAAGGCCGACGCTTCACAACCGCACTTGATTTAATAGACCATACCGTCTATTATTTCTGGCCAT",
+  "controlBy": [
+    {
+      "name": "AcuRAM",
+      "type": "Repression",
+      "params": {
+        "Ymax": 3.1,
+        "Ymin": 0.037,
+        "K": 0.1,
+        "n": 2
+      }
+    }
+  ],
+  "params": {
+    "Ydef": 3.1
+  }
+}

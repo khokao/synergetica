@@ -1,6 +1,6 @@
 {
   "name": "HlyIIR",
-  "description": "Repressor Protein of PhyllR",
+  "description": "Repressor Protein of PhyllR from Genetic circuit design automation.Science352aac7341(2016)",
   "category": "Protein",
   "sequence": "atgaaatacatcctgtttgaggtgtgcgaaatgggtaaaagccgtgaacagaccatggaaaatattctgaaagcagccaaaaagaaattcggcgaacgtggttatgaaggcaccagcattcaagaaattaccaaagaagccaaagttaacgttgcaatggccagctattactttaatggcaaagagaacctgtactacgaggtgttcaaaaaatacggtctggcaaatgaactgccgaactttctggaaaaaaaccagtttaatccgattaatgccctgcgtgaatatctgaccgtttttaccacccacattaaagaaaatccggaaattggcaccctggcctatgaagaaattatcaaagaaagcgcacgcctggaaaaaatcaaaccgtattttatcggcagcttcgaacagctgaaagaaattctgcaagagggtgaaaaacagggtgtgtttcacttttttagcatcaaccataccatccattggattaccagcattgttctgtttccgaaattcaaaaaattcatcgatagcctgggtccgaatgaaaccaatgataccaatcatgaatggatgccggaagatctggttagccgtattattagcgcactgaccgataaaccgaacatttaa",
   "controlBy": [],

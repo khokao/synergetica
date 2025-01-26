@@ -1,6 +1,6 @@
 {
   "name": "PlitR",
-  "description": "Regulated Promoter repressed by LitR",
+  "description": "Regulated Promoter repressed by LitR from Genetic circuit design automation.Science352aac7341(2016)",
   "category": "Promoter",
   "sequence": "gattcgttaccaattgacaaatttataaattgtcagtataatgctagc",
   "controlBy": [

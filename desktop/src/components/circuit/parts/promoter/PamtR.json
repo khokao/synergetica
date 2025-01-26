@@ -1,6 +1,6 @@
 {
   "name": "PamtR",
-  "description": "Regulated Promoter repressed by AmtR",
+  "description": "Regulated Promoter repressed by AmtR from Genetic circuit design automation.Science352aac7341(2016)",
   "category": "Promoter",
   "sequence": "gattcgttaccaattgacagtttctatcgatctatagataatgctagc",
   "controlBy": [

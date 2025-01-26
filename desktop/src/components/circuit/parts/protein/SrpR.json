@@ -1,6 +1,6 @@
 {
   "name": "SrpR",
-  "description": "Repressor Protein of PsrpR",
+  "description": "Repressor Protein of PsrpR from Genetic circuit design automation.Science352aac7341(2016)",
   "category": "Protein",
   "sequence": "atggcacgtaaaaccgcagcagaagcagaagaaacccgtcagcgtattattgatgcagcactggaagtttttgttgcacagggtgttagtgatgcaaccctggatcagattgcacgtaaagccggtgttacccgtggtgcagtttattggcattttaatggtaaactggaagttctgcaggcagttctggcaagccgtcagcatccgctggaactggattttacaccggatctgggtattgaacgtagctgggaagcagttgttgttgcaatgctggatgcagttcatagtccgcagagcaaacagtttagcgaaattctgatttatcagggtctggatgaaagcggtctgattcataatcgtatggttcaggcaagcgatcgttttctgcagtatattcatcaggttctgcgtcatgcagttacccagggtgaactgccgattaatctggatctgcagaccagcattggtgtttttaaaggtctgattaccggtctgctgtatgaaggtctgcgtagcaaagatcagcaggcacagattatcaaagttgcactgggtagcttttgggcactgctgcgtgaaccgcctcgttttctgctgtgtgaagaagcacagattaaacaggtgaaatccttcgaataa",
   "controlBy": [],

@@ -1,11 +1,11 @@
 {
   "name": "BM3R1",
-  "description": "Repressor Protein of Pbm3R1",
+  "description": "Repressor Protein of Pbm3R1 from Genetic circuit design automation.Science352aac7341(2016)",
   "category": "Protein",
   "sequence": "atggaaagcaccccgaccaaacagaaagcaatttttagcgcaagcctgctgctgtttgcagaacgtggttttgatgcaaccaccatgccgatgattgcagaaaatgcaaaagttggtgcaggcaccatttatcgctatttcaaaaacaaagaaagcctggtgaacgaactgtttcagcagcatgttaatgaatttctgcagtgtattgaaagcggtctggcaaatgaacgtgatggttatcgtgatggctttcatcacatttttgaaggtatggtgacctttaccaaaaatcatccgcgtgcactgggttttatcaaaacccatagccagggcacctttctgaccgaagaaagccgtctggcatatcagaaactggttgaatttgtgtgcaccttttttcgtgaaggtcagaaacagggtgtgattcgtaatctgccggaaaatgcactgattgcaattctgtttggcagctttatggaagtgtatgaaatgatcgagaacgattatctgagcctgaccgatgaactgctgaccggtgttgaagaaagcctgtgggcagcactgagccgtcagagctaa",
   "controlBy": [],
   "params": {
-    "Dp": 0.14726881,
-    "TIRb": 596.23
+    "Dp": 0.09706606,
+    "TIRb": 392.98
   }
 }

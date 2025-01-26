@@ -1,0 +1,21 @@
+{
+  "name": "P3B5B",
+  "description": "Regulated Promoters repressed by PcaU_AM from Escherichia coli 'Marionette' strains with 12 highly optimized small-molecule sensors. Nat Chem Biol 15 196 204",
+  "category": "Promoter",
+  "sequence": "TTTTGTTCGATTATCGAACAAATTATTGAAATATCGAACAAAACCTCTAAACTACTGTGGCACTGAATCAAAAAATTATAAACCATGATCAGA",
+  "controlBy": [
+    {
+      "name": "PcaUAM",
+      "type": "Repression",
+      "params": {
+        "Ymax": 1.6,
+        "Ymin": 0.0045,
+        "K": 0.1,
+        "n": 2
+      }
+    }
+  ],
+  "params": {
+    "Ydef": 1.6
+  }
+}

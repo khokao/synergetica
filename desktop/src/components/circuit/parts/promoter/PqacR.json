@@ -1,6 +1,6 @@
 {
   "name": "PqacR",
-  "description": "Regulated Promoter repressed by QacR",
+  "description": "Regulated Promoter repressed by QacR from Genetic circuit design automation.Science352aac7341(2016)",
   "category": "Promoter",
   "sequence": "cgttaccaattgacagctagctcagtcctactttagtatatagaccgtgcgatcggtctata",
   "controlBy": [

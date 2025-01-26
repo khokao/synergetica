@@ -1,6 +1,6 @@
 {
   "name": "PameR",
-  "description": "Regulated Promoter repressed by AmeR",
+  "description": "Regulated Promoter repressed by AmeR from Genetic circuit design automation.Science352aac7341(2016)",
   "category": "Promoter",
   "sequence": "gatagtgacaaacttgacaactcatcacttcctaggtataatgctagc",
   "controlBy": [

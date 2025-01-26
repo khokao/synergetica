@@ -1,0 +1,21 @@
+{
+  "name": "PvanCC",
+  "description": "Regulated Promoters repressed by VanR_AM from Escherichia coli 'Marionette' strains with 12 highly optimized small-molecule sensors. Nat Chem Biol 15 196 204",
+  "category": "Promoter",
+  "sequence": "ATTGGATCCAATTGACAGCTAGCTCAGTCCTAGGTACCATTGGATCCAAT",
+  "controlBy": [
+    {
+      "name": "VanRAM",
+      "type": "Repression",
+      "params": {
+        "Ymax": 3,
+        "Ymin": 0.002,
+        "K": 0.1,
+        "n": 2
+      }
+    }
+  ],
+  "params": {
+    "Ydef": 3
+  }
+}

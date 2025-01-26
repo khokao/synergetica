@@ -1,0 +1,21 @@
+{
+  "name": "PsalTTC",
+  "description": "Regulated Promoters activated by NahR_AM from Escherichia coli 'Marionette' strains with 12 highly optimized small-molecule sensors. Nat Chem Biol 15 196 204",
+  "category": "Promoter",
+  "sequence": "GGGGCCTCGCTTGGGTTATTGCTGGTGCCCGGCCGGGCGCAATATTCATGTTGATGATTTATTATATATCGAGTGGTGTATTTATTTATATTGTTTGCTCCGTTACCGTTATTAAC",
+  "controlBy": [
+    {
+      "name": "NahRAM",
+      "type": "Activation",
+      "params": {
+        "Ymax": 2.8,
+        "Ymin": 0.0047,
+        "K": 0.1,
+        "n": 2
+      }
+    }
+  ],
+  "params": {
+    "Ydef": 0.0047
+  }
+}

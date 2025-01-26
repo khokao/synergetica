@@ -1,6 +1,6 @@
 {
   "name": "LitR",
-  "description": "Repressor Protein of PlitR",
+  "description": "Repressor Protein of PlitR from Genetic circuit design automation.Science352aac7341(2016)",
   "category": "Protein",
   "sequence": "atggataccattcagaaacgtccgcgtacccgtctgagtccggaaaaacgtaaagaacagctgctggatattgccattgaagtttttagccagcgtggtattggtcgtggtggtcatgcagatattgcagaaattgcacaggttagcgttgcaaccgtgtttaactattttccgacccgtgaagatctggttgatgatgttctgaacaaagtggaaaacgagtttcaccagttcatcaataacagcattagcctggatctggatgttcgtagcaatctgaataccctgctgctgaacattattgatagcgttcagaccggcaacaaatggattaaagtttggtttgaatggtcaaccagcacccgtgatgaagtttggcctctgtttctgagcacccatagcaataccaatcaggtgatcaaaaccatgtttgaagagggtattgaacgcaatgaagtgtgcaatgatcatacaccggaaaatctgaccaaaatgctgcatggtatttgctatagcgtgtttattcaggccaatcgtaatagcagcagcgaagaaatggaagaaaccgcaaattgctttctgaatatgctgtgcatctacaaataa",
   "controlBy": [],

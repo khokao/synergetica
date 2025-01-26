@@ -1,0 +1,21 @@
+{
+  "name": "Ptet",
+  "description": "Regulated Promoters repressed by TetR from Escherichia coli 'Marionette' strains with 12 highly optimized small-molecule sensors. Nat Chem Biol 15 196 204",
+  "category": "Promoter",
+  "sequence": "TTTTCAGCAGGACGCACTGACCTCCCTATCAGTGATAGAGATTGACATCCCTATCAGTGATAGAGATACTGAGCAC",
+  "controlBy": [
+    {
+      "name": "TetR",
+      "type": "Repression",
+      "params": {
+        "Ymax": 2.4,
+        "Ymin": 0.0049,
+        "K": 0.1,
+        "n": 2
+      }
+    }
+  ],
+  "params": {
+    "Ydef": 2.4
+  }
+}

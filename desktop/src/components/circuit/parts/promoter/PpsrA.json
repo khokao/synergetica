@@ -1,6 +1,6 @@
 {
   "name": "PpsrA",
-  "description": "Regulated Promoter repressed by PsrA",
+  "description": "Regulated Promoter repressed by PsrA from Genetic circuit design automation.Science352aac7341(2016)",
   "category": "Promoter",
   "sequence": "aggaacaaacgtttgattgacagctagctcagtcctaggtataatgctagc",
   "controlBy": [

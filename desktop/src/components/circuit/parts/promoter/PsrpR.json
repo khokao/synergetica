@@ -1,6 +1,6 @@
 {
   "name": "PsrpR",
-  "description": "Regulated Promoter repressed by SrpR",
+  "description": "Regulated Promoter repressed by SrpR from Genetic circuit design automation.Science352aac7341(2016)",
   "category": "Promoter",
   "sequence": "gattcgttaccaattgacagctagctcagtcctaggtatatacatacatgcttgtttgtttgtaaac",
   "controlBy": [
@@ -11,7 +11,7 @@
         "Ymax": 2.1,
         "Ymin": 0.003,
         "K": 0.04,
-        "n": 2.5
+        "n": 2.6
       }
     }
   ],

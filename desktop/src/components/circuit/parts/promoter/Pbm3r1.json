@@ -1,6 +1,6 @@
 {
   "name": "Pbm3r1",
-  "description": "Regulated Promoter repressed by BM3R1",
+  "description": "Regulated Promoter repressed by BM3R1 from Genetic circuit design automation.Science352aac7341(2016)",
   "category": "Promoter",
   "sequence": "tctgattcgttaccaattgacggaatgaacgttcattccgataatgctagc",
   "controlBy": [
@@ -8,14 +8,14 @@
       "name": "BM3R1",
       "type": "Repression",
       "params": {
-        "Ymax": 0.5,
-        "Ymin": 0.004,
-        "K": 0.04,
+        "Ymax": 0.8,
+        "Ymin": 0.01,
+        "K": 0.25,
         "n": 3.4
       }
     }
   ],
   "params": {
-    "Ydef": 0.5
+    "Ydef": 0.8
   }
 }
