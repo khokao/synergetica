@@ -6,25 +6,25 @@ import { describe, expect, it, vi } from "vitest";
 
 vi.mock("@/components/circuit/parts/parts-context", () => {
   const promoterParts = {
-    testPromoterName: {
-      name: "testPromoterName",
-      description: "Test Promoter Description",
+    PromoterA: {
+      name: "PromoterA",
+      description: "PromoterA Description",
       category: "Promoter",
       controlBy: [],
     },
   };
   const proteinParts = {
-    testProteinName: {
-      name: "testProteinName",
-      description: "Test Protein Description",
+    ProteinA: {
+      name: "ProteinA",
+      description: "ProteinA Description",
       category: "Protein",
       controlBy: [],
     },
   };
   const terminatorParts = {
-    testTerminatorName: {
-      name: "testTerminatorName",
-      description: "Test Terminator Description",
+    TerminatorA: {
+      name: "TerminatorA",
+      description: "TerminatorA Description",
       category: "Terminator",
       controlBy: [],
     },
@@ -147,13 +147,13 @@ describe("ControlFields Component", () => {
 
     // Act
     fireEvent.click(screen.getByText("Select part"));
-    fireEvent.click(screen.getByText("testProteinName"));
+    fireEvent.click(screen.getByText("ProteinA"));
 
     fireEvent.click(screen.getByText("Select type"));
     fireEvent.click(screen.getByText("Repression"));
 
     // Assert
-    expect(screen.getByText("testProteinName")).toBeInTheDocument();
+    expect(screen.getByText("ProteinA")).toBeInTheDocument();
     expect(screen.getByText("Repression")).toBeInTheDocument();
   });
 });
