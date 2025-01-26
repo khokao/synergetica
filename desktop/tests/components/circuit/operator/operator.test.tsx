@@ -5,17 +5,13 @@ import { render, screen } from "@testing-library/react";
 import { ReactFlowProvider } from "@xyflow/react";
 import { describe, expect, it } from "vitest";
 
-const openPanels = { left: false, right: false };
-const togglePanelMock = vi.fn(() => {
-  openPanels.left = !openPanels.left;
+vi.mock("@/components/circuit/resizable-panel/resizable-panel-context", () => {
+  return {
+    usePanelContext: () => ({
+      openPanel: vi.fn(),
+    }),
+  };
 });
-
-vi.mock("@/components/circuit/resizable-panel/resizable-panel-context", () => ({
-  usePanelContext: () => ({
-    openPanels: openPanels,
-    togglePanel: togglePanelMock,
-  }),
-}));
 
 describe("Operator Component", () => {
   const renderOperator = () =>
