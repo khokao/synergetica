@@ -1,7 +1,7 @@
 import { useUpdateAnnotationEdges } from "@/components/circuit/hooks/use-update-annotation-edges";
 import { renderHook } from "@testing-library/react";
 import { useNodes, useReactFlow } from "@xyflow/react";
-import { type Mock, vi } from "vitest";
+import { vi } from "vitest";
 
 vi.mock("@xyflow/react", () => ({
   useNodes: vi.fn(),
@@ -11,11 +11,10 @@ vi.mock("@xyflow/react", () => ({
 describe("useUpdateAnnotationEdges", () => {
   it("updates edges when nodes have controlTo with Activation", () => {
     // Arrange
-    const mockSetEdges = vi.fn();
-    const mockGetEdges = vi.fn(() => []);
     const nodeA = {
       id: "nodeA",
       type: "child",
+      position: { x: 0, y: 0 },
       data: {
         name: "partA",
         controlTo: [{ name: "partB", controlType: "Activation" }],
@@ -25,10 +24,14 @@ describe("useUpdateAnnotationEdges", () => {
     const nodeB = {
       id: "nodeB",
       type: "child",
+      position: { x: 0, y: 0 },
       data: { name: "partB", controlTo: [], controlBy: [] },
     };
-    (useNodes as Mock).mockReturnValue([nodeA, nodeB]);
-    (useReactFlow as Mock).mockReturnValue({
+    const mockSetEdges = vi.fn();
+    const mockGetEdges = vi.fn(() => []);
+    vi.mocked(useNodes).mockReturnValue([nodeA, nodeB]);
+    // @ts-ignore
+    vi.mocked(useReactFlow).mockReturnValue({
       getEdges: mockGetEdges,
       setEdges: mockSetEdges,
     });
@@ -42,11 +45,10 @@ describe("useUpdateAnnotationEdges", () => {
 
   it("updates edges when nodes have controlBy with Repression", () => {
     // Arrange
-    const mockSetEdges = vi.fn();
-    const mockGetEdges = vi.fn(() => []);
     const nodeA = {
       id: "nodeA",
       type: "child",
+      position: { x: 0, y: 0 },
       data: {
         name: "partA",
         controlTo: [],
@@ -56,10 +58,14 @@ describe("useUpdateAnnotationEdges", () => {
     const nodeB = {
       id: "nodeB",
       type: "child",
+      position: { x: 0, y: 0 },
       data: { name: "partB", controlTo: [], controlBy: [] },
     };
-    (useNodes as Mock).mockReturnValue([nodeA, nodeB]);
-    (useReactFlow as Mock).mockReturnValue({
+    const mockSetEdges = vi.fn();
+    const mockGetEdges = vi.fn(() => []);
+    vi.mocked(useNodes).mockReturnValue([nodeA, nodeB]);
+    // @ts-ignore
+    vi.mocked(useReactFlow).mockReturnValue({
       getEdges: mockGetEdges,
       setEdges: mockSetEdges,
     });
@@ -73,20 +79,23 @@ describe("useUpdateAnnotationEdges", () => {
 
   it("does not create edges for nodes without control relationships", () => {
     // Arrange
-    const mockSetEdges = vi.fn();
-    const mockGetEdges = vi.fn(() => []);
     const nodeA = {
       id: "nodeA",
       type: "child",
+      position: { x: 0, y: 0 },
       data: { name: "partA", controlTo: [], controlBy: [] },
     };
     const nodeB = {
       id: "nodeB",
       type: "child",
+      position: { x: 0, y: 0 },
       data: { name: "partB", controlTo: [], controlBy: [] },
     };
-    (useNodes as Mock).mockReturnValue([nodeA, nodeB]);
-    (useReactFlow as Mock).mockReturnValue({
+    const mockSetEdges = vi.fn();
+    const mockGetEdges = vi.fn(() => []);
+    vi.mocked(useNodes).mockReturnValue([nodeA, nodeB]);
+    // @ts-ignore
+    vi.mocked(useReactFlow).mockReturnValue({
       getEdges: mockGetEdges,
       setEdges: mockSetEdges,
     });
@@ -111,6 +120,7 @@ describe("useUpdateAnnotationEdges", () => {
     const nodeA = {
       id: "nodeA",
       type: "child",
+      position: { x: 0, y: 0 },
       data: {
         name: "partA",
         controlTo: [{ name: "partB", type: "Activation" }],
@@ -120,14 +130,16 @@ describe("useUpdateAnnotationEdges", () => {
     const nodeB = {
       id: "nodeB",
       type: "child",
+      position: { x: 0, y: 0 },
       data: {
         name: "partB",
         controlTo: [],
         controlBy: [{ name: "partA", type: "Activation" }],
       },
     };
-    (useNodes as Mock).mockReturnValue([nodeA, nodeB]);
-    (useReactFlow as Mock).mockReturnValue({
+    vi.mocked(useNodes).mockReturnValue([nodeA, nodeB]);
+    // @ts-ignore
+    vi.mocked(useReactFlow).mockReturnValue({
       getEdges: mockGetEdges,
       setEdges: mockSetEdges,
     });
@@ -141,11 +153,10 @@ describe("useUpdateAnnotationEdges", () => {
 
   it("creates multiple edges when multiple nodes share the same name in controlTo/By", () => {
     // Arrange
-    const mockSetEdges = vi.fn();
-    const mockGetEdges = vi.fn(() => []);
     const nodeA = {
       id: "nodeA",
       type: "child",
+      position: { x: 0, y: 0 },
       data: {
         name: "partA",
         controlTo: [{ name: "partB", type: "Activation" }],
@@ -155,6 +166,7 @@ describe("useUpdateAnnotationEdges", () => {
     const nodeB1 = {
       id: "nodeB1",
       type: "child",
+      position: { x: 0, y: 0 },
       data: {
         name: "partB",
         controlTo: [],
@@ -164,14 +176,18 @@ describe("useUpdateAnnotationEdges", () => {
     const nodeB2 = {
       id: "nodeB2",
       type: "child",
+      position: { x: 0, y: 0 },
       data: {
         name: "partB",
         controlTo: [],
         controlBy: [],
       },
     };
-    (useNodes as Mock).mockReturnValue([nodeA, nodeB1, nodeB2]);
-    (useReactFlow as Mock).mockReturnValue({
+    const mockSetEdges = vi.fn();
+    const mockGetEdges = vi.fn(() => []);
+    vi.mocked(useNodes).mockReturnValue([nodeA, nodeB1, nodeB2]);
+    // @ts-ignore
+    vi.mocked(useReactFlow).mockReturnValue({
       getEdges: mockGetEdges,
       setEdges: mockSetEdges,
     });
