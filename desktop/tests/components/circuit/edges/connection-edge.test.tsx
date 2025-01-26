@@ -1,4 +1,4 @@
-import { CustomEdge } from "@/components/circuit/edges/custom-edge";
+import { ConnectionEdge } from "@/components/circuit/edges/connection-edge";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { Position, ReactFlowProvider, useReactFlow } from "@xyflow/react";
@@ -13,7 +13,7 @@ vi.mock("@xyflow/react", async () => {
   };
 });
 
-describe("CustomEdge component", () => {
+describe("ConnectionEdge component", () => {
   it("renders the edge correctly", () => {
     // Arrange
     const props = {
@@ -38,7 +38,7 @@ describe("CustomEdge component", () => {
     const { container } = render(
       <ReactFlowProvider>
         <svg aria-hidden="true">
-          <CustomEdge {...props} />
+          <ConnectionEdge {...props} />
         </svg>
       </ReactFlowProvider>,
     );
@@ -82,7 +82,7 @@ describe("CustomEdge component", () => {
     render(
       <ReactFlowProvider>
         <svg aria-hidden="true">
-          <CustomEdge {...props} />
+          <ConnectionEdge {...props} />
         </svg>
       </ReactFlowProvider>,
     );

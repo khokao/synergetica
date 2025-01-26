@@ -1,5 +1,5 @@
 import { AnnotationEdge } from "@/components/circuit/edges/annotation-edge";
-import { CustomEdge } from "@/components/circuit/edges/custom-edge";
+import { ConnectionEdge } from "@/components/circuit/edges/connection-edge";
 import { CustomChildNode } from "@/components/circuit/nodes/child-node";
 import { CustomParentNode } from "@/components/circuit/nodes/parent-node";
 import { RiText } from "@remixicon/react";
@@ -15,7 +15,7 @@ export const CircuitNodeTypes: NodeTypes = {
 };
 
 export const CircuitEdgeTypes: EdgeTypes = {
-  custom: CustomEdge,
+  connection: ConnectionEdge,
   annotation: AnnotationEdge,
 };
 

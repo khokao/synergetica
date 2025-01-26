@@ -2,7 +2,7 @@ import { BaseEdge, EdgeLabelRenderer, getBezierPath, useReactFlow } from "@xyflo
 import type { EdgeProps } from "@xyflow/react";
 import { CircleX } from "lucide-react";
 
-export const CustomEdge = ({
+export const ConnectionEdge = ({
   id,
   sourceX,
   sourceY,
