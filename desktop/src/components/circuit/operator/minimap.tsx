@@ -1,5 +1,4 @@
 import { MiniMap } from "@xyflow/react";
-import type { FC } from "react";
 
 const nodeColor = (node) => {
   switch (node.data.category) {
@@ -14,7 +13,7 @@ const nodeColor = (node) => {
   }
 };
 
-export const ColoredMiniMap: FC = () => {
+export const ColoredMiniMap = () => {
   return (
     <div data-testid="colored-mini-map">
       <MiniMap
