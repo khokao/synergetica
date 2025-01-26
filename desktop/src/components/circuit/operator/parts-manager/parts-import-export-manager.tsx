@@ -9,10 +9,9 @@ import { readTextFile, writeTextFile } from "@tauri-apps/plugin-fs";
 import { useReactFlow } from "@xyflow/react";
 import { produce } from "immer";
 import { ArrowDownToLine, ArrowUpToLine } from "lucide-react";
-import type { FC } from "react";
 import { toast } from "sonner";
 
-export const PartsImportExportManager: FC = () => {
+export const PartsImportExportManager = () => {
   const { parts, setParts } = useParts();
   const { getNodes, setNodes } = useReactFlow();
 

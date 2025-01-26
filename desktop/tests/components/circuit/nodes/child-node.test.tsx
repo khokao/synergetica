@@ -1,7 +1,7 @@
-import { ChildSelectModal } from "@/components/circuit/nodes/child-select-modal";
+// @ts-nocheck
+import { CustomChildNode } from "@/components/circuit/nodes/child-node";
 import { EditorProvider } from "@/components/editor/editor-context";
 import { render, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
 import { ReactFlowProvider } from "@xyflow/react";
 import { describe, expect, it } from "vitest";
 
@@ -56,43 +56,29 @@ vi.mock("@/components/circuit/parts/parts-context", () => {
   };
 });
 
-describe("ChildSelectModal", () => {
-  const renderComponent = () => {
+describe("CustomChildNode", () => {
+  it("renders the custom node", () => {
+    // Arrange & Act
     render(
       <ReactFlowProvider>
         <EditorProvider>
-          <ChildSelectModal
+          <CustomChildNode
             id="test-id"
-            data={{ name: "PromoterA", description: "PromoterA Description", category: "Promoter" }}
+            selected={false}
+            data={{
+              name: "PromoterA",
+              description: "PromoterA Description",
+              category: "Promoter",
+              simulationTargetHighlight: false,
+              leftHandleConnected: false,
+              rightHandleConnected: false,
+            }}
           />
         </EditorProvider>
       </ReactFlowProvider>,
     );
-  };
-
-  it("renders the SelectMenu and CircuitPreview", async () => {
-    // Arrange
-    const user = userEvent.setup();
-    renderComponent();
-
-    // Act
-    await user.click(screen.getByTestId("select-modal-button"));
 
     // Assert
-    expect(screen.getByTestId("select-menu")).toBeInTheDocument();
-    expect(screen.getByTestId("select-modal-preview-flow")).toBeInTheDocument();
-  });
-
-  it("fires the click event and closes the modal", async () => {
-    // Arrange
-    renderComponent();
-    const user = userEvent.setup();
-
-    // Act
-    await user.click(screen.getByTestId("select-modal-button"));
-    await user.click(screen.getByText("PromoterA Description"));
-
-    // Assert
-    expect(screen.queryByTestId("select-menu")).not.toBeInTheDocument();
+    expect(screen.getByTestId("custom-node")).toBeInTheDocument();
   });
 });

@@ -4,13 +4,13 @@ import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 
-const mockEditPart = vi.fn((p) => {});
+const mockEditPart = vi.fn();
 
 vi.mock("@/components/circuit/parts/parts-context", () => {
   const promoterParts = {
-    testPromoterName: {
-      name: "testPromoterName",
-      description: "Test Promoter Description",
+    PromoterA: {
+      name: "PromoterA",
+      description: "PromoterA Description",
       category: "Promoter",
       sequence: "ATGC",
       controlBy: [],
@@ -20,9 +20,9 @@ vi.mock("@/components/circuit/parts/parts-context", () => {
     },
   };
   const proteinParts = {
-    testProteinName: {
-      name: "testProteinName",
-      description: "Test Protein Description",
+    ProteinA: {
+      name: "ProteinA",
+      description: "ProteinA Description",
       category: "Protein",
       sequence: "ATGC",
       controlBy: [],
@@ -33,9 +33,9 @@ vi.mock("@/components/circuit/parts/parts-context", () => {
     },
   };
   const terminatorParts = {
-    testTerminatorName: {
-      name: "testTerminatorName",
-      description: "Test Terminator Description",
+    TerminatorA: {
+      name: "TerminatorA",
+      description: "TerminatorA Description",
       category: "Terminator",
       sequence: "ATGC",
       controlBy: [],
@@ -61,6 +61,7 @@ vi.mock("@/components/circuit/parts/parts-context", () => {
 describe("PartEditManager Component", () => {
   it("renders edit button with tooltip", async () => {
     // Arrange
+    const user = userEvent.setup();
     render(
       <TooltipProvider>
         <PartEditManager />
@@ -68,7 +69,7 @@ describe("PartEditManager Component", () => {
     );
 
     // Act
-    await userEvent.hover(screen.getByTestId("part-edit-button"));
+    await user.hover(screen.getByTestId("part-edit-button"));
 
     // Assert
     await waitFor(() => {
@@ -78,6 +79,7 @@ describe("PartEditManager Component", () => {
 
   it("opens popover and displays parts when edit button is clicked", async () => {
     // Arrange
+    const user = userEvent.setup();
     render(
       <TooltipProvider>
         <PartEditManager />
@@ -85,16 +87,17 @@ describe("PartEditManager Component", () => {
     );
 
     // Act
-    await userEvent.click(screen.getByTestId("part-edit-button"));
+    await user.click(screen.getByTestId("part-edit-button"));
 
     // Assert
-    expect(screen.getByText("testPromoterName")).toBeInTheDocument();
-    expect(screen.getByText("testProteinName")).toBeInTheDocument();
-    expect(screen.getByText("testTerminatorName")).toBeInTheDocument();
+    expect(screen.getByText("PromoterA")).toBeInTheDocument();
+    expect(screen.getByText("ProteinA")).toBeInTheDocument();
+    expect(screen.getByText("TerminatorA")).toBeInTheDocument();
   });
 
   it("opens edit dialog with correct content when a part is selected", async () => {
     // Arrange
+    const user = userEvent.setup();
     render(
       <TooltipProvider>
         <PartEditManager />
@@ -102,11 +105,11 @@ describe("PartEditManager Component", () => {
     );
 
     // Act
-    await userEvent.click(screen.getByTestId("part-edit-button"));
-    await userEvent.click(screen.getByText("testPromoterName"));
+    await user.click(screen.getByTestId("part-edit-button"));
+    await user.click(screen.getByText("PromoterA"));
 
     // Assert
-    expect(screen.getByText("Edit testPromoterName")).toBeInTheDocument();
+    expect(screen.getByText("Edit PromoterA")).toBeInTheDocument();
     expect(screen.getByText("Update the specifications for this part.")).toBeInTheDocument();
     expect(screen.getByText("DNA Sequence")).toBeInTheDocument();
     expect(screen.getByText("Controlled By")).toBeInTheDocument();
@@ -114,6 +117,7 @@ describe("PartEditManager Component", () => {
 
   it("updates the part when save button is clicked", async () => {
     // Arrange
+    const user = userEvent.setup();
     render(
       <TooltipProvider>
         <PartEditManager />
@@ -121,22 +125,23 @@ describe("PartEditManager Component", () => {
     );
 
     // Act
-    await userEvent.click(screen.getByTestId("part-edit-button"));
-    await userEvent.click(screen.getByText("testPromoterName"));
+    await user.click(screen.getByTestId("part-edit-button"));
+    await user.click(screen.getByText("PromoterA"));
 
-    await userEvent.clear(screen.getByLabelText("DNA Sequence"));
-    await userEvent.type(screen.getByLabelText("DNA Sequence"), "GGCC");
+    await user.clear(screen.getByLabelText("DNA Sequence"));
+    await user.type(screen.getByLabelText("DNA Sequence"), "GGCC");
 
-    await userEvent.click(screen.getByTestId("part-edit-save-button"));
+    await user.click(screen.getByTestId("part-edit-save-button"));
 
     // Assert
     await waitFor(() => {
-      expect(mockEditPart).toHaveBeenCalledWith("testPromoterName", expect.objectContaining({ sequence: "GGCC" }));
+      expect(mockEditPart).toHaveBeenCalledWith("PromoterA", expect.objectContaining({ sequence: "GGCC" }));
     });
   });
 
   it("closes the dialog when cancel button is clicked", async () => {
     // Arrange
+    const user = userEvent.setup();
     render(
       <TooltipProvider>
         <PartEditManager />
@@ -144,9 +149,9 @@ describe("PartEditManager Component", () => {
     );
 
     // Act
-    await userEvent.click(screen.getByTestId("part-edit-button"));
-    await userEvent.click(screen.getByText("testPromoterName"));
-    await userEvent.click(screen.getByTestId("part-edit-cancel-button"));
+    await user.click(screen.getByTestId("part-edit-button"));
+    await user.click(screen.getByText("PromoterA"));
+    await user.click(screen.getByTestId("part-edit-cancel-button"));
 
     // Assert
     expect(screen.queryByText("Edit testPart")).not.toBeInTheDocument();

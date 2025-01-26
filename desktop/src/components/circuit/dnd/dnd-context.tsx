@@ -1,20 +1,31 @@
 import type React from "react";
-import { type ReactNode, createContext, useContext, useState } from "react";
+import { createContext, useContext, useMemo, useState } from "react";
 
-type DnDContextType = [string | null, React.Dispatch<React.SetStateAction<string | null>>];
+type DnDCategory = "Promoter" | "Protein" | "Terminator" | null;
 
-export const DnDContext = createContext<DnDContextType>([null, () => {}]);
+interface DnDContextValue {
+  dndCategory: DnDCategory;
+  setDnDCategory: React.Dispatch<React.SetStateAction<DnDCategory>>;
+}
+
+const DnDContext = createContext<DnDContextValue | undefined>(undefined);
 
 interface DnDProviderProps {
-  children: ReactNode;
+  children: React.ReactNode;
 }
 
 export const DnDProvider: React.FC<DnDProviderProps> = ({ children }) => {
-  const [dndCategory, setDnDCategory] = useState<string | null>(null);
+  const [dndCategory, setDnDCategory] = useState<DnDCategory>(null);
 
-  return <DnDContext.Provider value={[dndCategory, setDnDCategory]}>{children}</DnDContext.Provider>;
+  const value = useMemo(() => ({ dndCategory, setDnDCategory }), [dndCategory]);
+
+  return <DnDContext.Provider value={value}>{children}</DnDContext.Provider>;
 };
 
-export const useDnD = (): DnDContextType => {
-  return useContext(DnDContext);
+export const useDnD = (): DnDContextValue => {
+  const context = useContext(DnDContext);
+  if (!context) {
+    throw new Error("useDnD must be used within a DnDProvider");
+  }
+  return context;
 };

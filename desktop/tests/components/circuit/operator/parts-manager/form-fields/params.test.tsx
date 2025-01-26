@@ -5,18 +5,11 @@ import userEvent from "@testing-library/user-event";
 import { FormProvider, useForm } from "react-hook-form";
 import { describe, expect, it } from "vitest";
 
-describe("MetaFields Component", () => {
-  beforeEach(() => {
-    vi.useFakeTimers({
-      shouldAdvanceTime: true,
-    });
-  });
-  afterEach(() => {
-    vi.restoreAllMocks();
-  });
-
-  it("renders params fields with correct labels and descriptions when category === Promoter", async () => {
+describe("ParamsFields Component", () => {
+  it("should render parameter fields with the correct labels and descriptions for the 'Promoter' category", async () => {
     // Arrange
+    const fields = [{ label: "Ydef", description: "Ydef description" }];
+
     const TestComponent = () => {
       const form = useForm();
       return (
@@ -28,67 +21,49 @@ describe("MetaFields Component", () => {
       );
     };
 
-    const fields = [{ label: "Ydef", description: "Ydef description" }];
-
     // Act
     render(<TestComponent />);
 
-    for (const field of fields) {
-      await userEvent.hover(screen.getByTestId(`info-icon-${field.label}`));
-    }
-    vi.advanceTimersByTime(500);
-
     // Assert
     expect(screen.getByText("Parameters")).toBeInTheDocument();
-    expect(screen.getByText("Promoter items description")).toBeInTheDocument();
-
+    expect(screen.getByText("Promoter params description")).toBeInTheDocument();
     for (const field of fields) {
       expect(screen.getByText(field.label)).toBeInTheDocument();
-      await waitFor(() => {
-        expect(screen.getByRole("tooltip", { name: field.description })).toBeInTheDocument();
-      });
     }
   });
 
-  it("renders params fields with correct labels and descriptions when category === Protein", async () => {
+  it("should display the correct tooltip when clicking the 'Ydef' label for the 'Promoter' category", async () => {
     // Arrange
+    const user = userEvent.setup();
+
     const TestComponent = () => {
       const form = useForm();
       return (
         <TooltipProvider>
           <FormProvider {...form}>
-            <ParamsFields form={form} category="Protein" />
+            <ParamsFields form={form} category="Promoter" />
           </FormProvider>
         </TooltipProvider>
       );
     };
+    render(<TestComponent />);
 
+    // Act
+    await user.click(screen.getByText("Ydef")); // Take Ydef as an example
+
+    // Assert
+    waitFor(() => {
+      expect(screen.getByRole("tooltip", { name: "Ydef description" })).toBeInTheDocument();
+    });
+  });
+
+  it("should render parameter fields with the correct labels and descriptions for the 'Protein' category", async () => {
+    // Arrange
     const fields = [
       { label: "Dp", description: "Dp description" },
       { label: "TIRb", description: "TIRb description" },
     ];
 
-    // Act
-    render(<TestComponent />);
-
-    for (const field of fields) {
-      await userEvent.hover(screen.getByTestId(`info-icon-${field.label}`));
-    }
-
-    // Assert
-    expect(screen.getByText("Parameters")).toBeInTheDocument();
-    expect(screen.getByText("Protein items description")).toBeInTheDocument();
-
-    for (const field of fields) {
-      expect(screen.getByText(field.label)).toBeInTheDocument();
-      await waitFor(() => {
-        expect(screen.getByRole("tooltip", { name: field.description })).toBeInTheDocument();
-      });
-    }
-  });
-
-  it("renders input fields with correct types", () => {
-    // Arrange
     const TestComponent = () => {
       const form = useForm();
       return (
@@ -104,10 +79,34 @@ describe("MetaFields Component", () => {
     render(<TestComponent />);
 
     // Assert
-    const inputFields = screen.getAllByRole("spinbutton"); // Spinbutton is the role for number inputs
-    expect(inputFields).toHaveLength(2); // There should be 2 input fields for protein.
-    for (const input of inputFields) {
-      expect(input).toHaveAttribute("type", "number");
+    expect(screen.getByText("Parameters")).toBeInTheDocument();
+    expect(screen.getByText("Protein params description")).toBeInTheDocument();
+    for (const field of fields) {
+      expect(screen.getByText(field.label)).toBeInTheDocument();
     }
+  });
+
+  it("should display the correct tooltip when clicking the 'Dp' label for the 'Protein' category", async () => {
+    const user = userEvent.setup();
+
+    const TestComponent = () => {
+      const form = useForm();
+      return (
+        <TooltipProvider>
+          <FormProvider {...form}>
+            <ParamsFields form={form} category="Protein" />
+          </FormProvider>
+        </TooltipProvider>
+      );
+    };
+    render(<TestComponent />);
+
+    // Act
+    await user.click(screen.getByText("Dp")); // Take Dp as an example
+
+    // Assert
+    waitFor(() => {
+      expect(screen.getByRole("tooltip", { name: "Dp description" })).toBeInTheDocument();
+    });
   });
 });

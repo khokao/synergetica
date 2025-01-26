@@ -3,48 +3,49 @@ import { FormDescription, FormLabel } from "@/components/ui/form";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { Info } from "lucide-react";
 
-const promoterItems = [
-  {
-    label: "Ydef",
-    description: "Ydef description",
-    placeholder: "",
+const categoryConfig = {
+  Promoter: {
+    description: "Promoter params description",
+    params: [
+      {
+        label: "Ydef",
+        description: "Ydef description",
+        placeholder: "",
+      },
+    ],
   },
-];
-
-const proteinItems = [
-  {
-    label: "Dp",
-    description: "Dp description",
-    placeholder: "",
+  Protein: {
+    description: "Protein params description",
+    params: [
+      {
+        label: "Dp",
+        description: "Dp description",
+        placeholder: "",
+      },
+      {
+        label: "TIRb",
+        description: "TIRb description",
+        placeholder: "",
+      },
+    ],
   },
-  {
-    label: "TIRb",
-    description: "TIRb description",
-    placeholder: "",
-  },
-];
+};
 
 export const ParamsFields = ({ form, category }) => {
   const label = "Parameters";
   const fieldName = "params";
 
-  const descriptionMap = {
-    Promoter: "Promoter items description",
-    Protein: "Protein items description",
-  };
+  if (!categoryConfig[category]) return null;
 
-  const itemsMap = {
-    Promoter: promoterItems,
-    Protein: proteinItems,
-  };
+  const { description, params } = categoryConfig[category];
 
   return (
     <div className="space-y-2">
       <FormLabel className="w-full">{label}</FormLabel>
-      <FormDescription className="w-full text-left mb-2">{descriptionMap[category]}</FormDescription>
+      <FormDescription className="w-full text-left mb-2">{description}</FormDescription>
 
-      <div className="grid grid-cols-2  gap-4 py-1">
-        {itemsMap[category].map((item) => (
+      <div className="grid grid-cols-2 gap-4 py-1">
+        {params.map((item) => (
           <div key={item.label} className="flex flex-col">
             <div className="flex items-center mb-1">
               <span className="text-sm font-medium mr-1 text-gray-700">{item.label}</span>

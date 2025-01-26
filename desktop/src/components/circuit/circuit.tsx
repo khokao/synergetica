@@ -17,9 +17,8 @@ import {
   useNodesState,
 } from "@xyflow/react";
 import type { Edge, Node } from "@xyflow/react";
-import type React from "react";
 
-export const Circuit: React.FC = () => {
+export const Circuit = () => {
   const [nodes, setNodes, onNodesChange] = useNodesState<Node>([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>([]);
 
@@ -51,7 +50,7 @@ export const Circuit: React.FC = () => {
         nodeTypes={CircuitNodeTypes}
         edgeTypes={CircuitEdgeTypes}
         connectionMode={ConnectionMode.Loose}
-        defaultViewport={{ x: 100, y: 100, zoom: 0.5 }}
+        defaultViewport={{ x: 100, y: 100, zoom: 1.0 }}
         minZoom={0.25}
         maxZoom={2.0}
         proOptions={{ hideAttribution: true }}

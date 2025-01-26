@@ -14,9 +14,9 @@ export const useUpdateAnnotationEdges = () => {
     const edges = getEdges();
 
     const newEdges = produce(edges, (draft) => {
-      const customEdges = draft.filter((e) => e.type === "custom");
+      const connectionEdges = draft.filter((e) => e.type === "connection");
       draft.length = 0;
-      draft.push(...customEdges);
+      draft.push(...connectionEdges);
 
       const edgeExists = (source: string, target: string) =>
         draft.some((e) => e.type === "annotation" && e.source === source && e.target === target);

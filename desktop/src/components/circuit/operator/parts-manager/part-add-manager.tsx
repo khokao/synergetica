@@ -1,5 +1,3 @@
-"use client";
-
 import { ControlFields } from "@/components/circuit/operator/parts-manager/form-fields/controls";
 import { InputField } from "@/components/circuit/operator/parts-manager/form-fields/input";
 import { ParamsFields } from "@/components/circuit/operator/parts-manager/form-fields/params";

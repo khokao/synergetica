@@ -1,7 +1,6 @@
 import { ChildFooter } from "@/components/circuit/nodes/child-footer";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import React from "react";
 import { describe, expect, it, vi } from "vitest";
 
 const deleteElementsMock = vi.fn();
@@ -18,7 +17,7 @@ vi.mock("@xyflow/react", () => {
 
 describe("ChildFooter Component", () => {
   it("should render the settings button", () => {
-    // Act
+    // Arrange & Act
     render(<ChildFooter id="node-1" />);
 
     // Assert
@@ -27,10 +26,11 @@ describe("ChildFooter Component", () => {
 
   it("should open the dropdown menu when settings button is clicked", async () => {
     // Arrange
+    const user = userEvent.setup();
     render(<ChildFooter id="node-1" />);
 
     // Act
-    await userEvent.click(screen.getByLabelText("settings"));
+    await user.click(screen.getByLabelText("settings"));
 
     // Assert
     expect(screen.getByTestId("dropdownmenu-content")).toBeInTheDocument();
@@ -38,11 +38,12 @@ describe("ChildFooter Component", () => {
 
   it("should call deleteElements when delete is clicked", async () => {
     // Arrange
+    const user = userEvent.setup();
     render(<ChildFooter id="node-1" />);
 
     // Act
-    await userEvent.click(screen.getByLabelText("settings"));
-    await userEvent.click(screen.getByText("Delete"));
+    await user.click(screen.getByLabelText("settings"));
+    await user.click(screen.getByText("Delete"));
 
     // Assert
     expect(deleteElementsMock).toHaveBeenCalled();

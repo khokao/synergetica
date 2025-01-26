@@ -1,8 +1,8 @@
-import { BaseEdge, EdgeLabelRenderer, type EdgeProps, getBezierPath, useReactFlow } from "@xyflow/react";
+import { BaseEdge, EdgeLabelRenderer, getBezierPath, useReactFlow } from "@xyflow/react";
+import type { EdgeProps } from "@xyflow/react";
 import { CircleX } from "lucide-react";
-import React from "react";
 
-export const CustomEdge = ({
+export const ConnectionEdge = ({
   id,
   sourceX,
   sourceY,
@@ -39,16 +39,14 @@ export const CustomEdge = ({
       <BaseEdge path={edgePath} markerEnd={markerEnd} style={style} />
       <EdgeLabelRenderer>
         <div
-          className="absolute transform translate-x-[-50%] translate-y-[-50%] p-1 w-8 h-8 bg-white shadow-md rounded-full hover:opacity-100 opacity-0 transition-opacity duration-300 z-50"
-          style={{ left: labelX, top: labelY, pointerEvents: "all" }}
+          className="absolute z-50 -translate-x-1/2 -translate-y-1/2 pointer-events-none will-change-[opacity]"
+          style={{ left: labelX, top: labelY }}
         >
-          <button
-            type="button"
-            className="text-red-500 hover:text-red-700 focus:outline-none"
-            onClick={handleDeleteEdge}
-          >
-            <CircleX />
-          </button>
+          <div className="flex items-center justify-center h-8 w-8 rounded-full bg-white shadow-md opacity-0 hover:opacity-100 transition-opacity duration-300 pointer-events-auto">
+            <button type="button" className="text-red-500" onClick={handleDeleteEdge} data-testid="delete-edge-button">
+              <CircleX />
+            </button>
+          </div>
         </div>
       </EdgeLabelRenderer>
     </>

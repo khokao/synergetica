@@ -24,10 +24,6 @@ export default defineConfig({
         "src/app/page.tsx",
         "src/app/layout.tsx", // Warning: validateDOMNesting(...): <html> cannot appear as a child of <div>.
         // components
-        "src/components/studio/studio.tsx", // just composes other components.
-        "src/components/circuit/nodes/child-node.tsx", // No integration tests for custom node.
-        "src/components/circuit/nodes/parent-node.tsx", // No integration tests for custom node.
-        "src/components/circuit/edges/custom-edge.tsx", // No integration tests for custom edge.
         "src/components/circuit/circuit.tsx", // GUI testing is excluded due to high cost and low value
         "src/components/circuit/hooks/use-delete-nodes-edges.ts", // GUI testing is excluded due to high cost and low value
         "src/components/circuit/hooks/use-drag-nodes.ts", // GUI testing is excluded due to high cost and low value

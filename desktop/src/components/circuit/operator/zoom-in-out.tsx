@@ -3,9 +3,8 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 import * as RadixTooltip from "@radix-ui/react-tooltip";
 import { useReactFlow, useViewport } from "@xyflow/react";
 import { ZoomIn, ZoomOut } from "lucide-react";
-import type { FC } from "react";
 
-export const ZoomInOut: FC = () => {
+export const ZoomInOut = () => {
   const { zoomIn, zoomOut } = useReactFlow();
   const { zoom } = useViewport();
 

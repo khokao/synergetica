@@ -171,10 +171,11 @@ export const SimulatorProvider = ({ children }: { children: React.ReactNode }) =
 
   const getMonitoredNodeProps = useCallback((nodes: Node[]) => {
     return nodes.map((node) => {
-      const { type, data } = node;
+      const { type, data, parentId } = node;
       const { name, category, sequence, controlBy, params } = data || {};
       return {
         type,
+        parentId,
         data: {
           name,
           category,

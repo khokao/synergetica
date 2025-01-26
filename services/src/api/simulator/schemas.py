@@ -62,8 +62,8 @@ class ReactFlowChildNode(BaseModel):
     parentId: str
 
 
-class ReactFlowCustomEdge(BaseModel):
-    type: Literal['custom']
+class ReactFlowConnectionEdge(BaseModel):
+    type: Literal['connection']
     source: str
     target: str
 
@@ -76,4 +76,4 @@ class ReactFlowAnnotationEdge(BaseModel):
 
 class ReactFlowObject(BaseModel):
     nodes: list[ReactFlowParentNode | ReactFlowChildNode]
-    edges: list[ReactFlowCustomEdge | ReactFlowAnnotationEdge]
+    edges: list[ReactFlowConnectionEdge | ReactFlowAnnotationEdge]
