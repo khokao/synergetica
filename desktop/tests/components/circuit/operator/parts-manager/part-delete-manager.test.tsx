@@ -2,47 +2,38 @@ import { PartDeleteManager } from "@/components/circuit/operator/parts-manager/p
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import React from "react";
 import { describe, expect, it, vi } from "vitest";
 
-const mockDeletePart = vi.fn((p) => {});
+const mockDeletePart = vi.fn();
 
 vi.mock("@/components/circuit/parts/parts-context", () => {
   const promoterParts = {
-    testPromoterName: {
-      name: "testPromoterName",
-      description: "Test Promoter Description",
+    PromoterA: {
+      name: "PromoterA",
+      description: "PromoterA Description",
       category: "Promoter",
       controlBy: [],
-      controlTo: [],
     },
   };
   const proteinParts = {
-    testProteinName: {
-      name: "testProteinName",
-      description: "Test Protein Description",
+    ProteinA: {
+      name: "ProteinA",
+      description: "ProteinA Description",
       category: "Protein",
       controlBy: [],
-      controlTo: [],
     },
   };
   const terminatorParts = {
-    testTerminatorName: {
-      name: "testTerminatorName",
-      description: "Test Terminator Description",
+    TerminatorA: {
+      name: "TerminatorA",
+      description: "TerminatorA Description",
       category: "Terminator",
       controlBy: [],
-      controlTo: [],
     },
   };
 
   return {
     useParts: () => ({
-      parts: {
-        ...promoterParts,
-        ...proteinParts,
-        ...terminatorParts,
-      },
       promoterParts: promoterParts,
       proteinParts: proteinParts,
       terminatorParts: terminatorParts,
@@ -52,17 +43,13 @@ vi.mock("@/components/circuit/parts/parts-context", () => {
 });
 
 describe("PartDeleteManager Component", () => {
-  beforeEach(() => {
-    vi.useFakeTimers({
-      shouldAdvanceTime: true,
-    });
-  });
   afterEach(() => {
     vi.restoreAllMocks();
   });
 
   it("renders delete button with tooltip", async () => {
     // Arrange
+    const user = userEvent.setup();
     render(
       <TooltipProvider>
         <PartDeleteManager />
@@ -70,8 +57,7 @@ describe("PartDeleteManager Component", () => {
     );
 
     // Act
-    await userEvent.hover(screen.getByTestId("part-delete-button"));
-    vi.advanceTimersByTime(500);
+    await user.hover(screen.getByTestId("part-delete-button"));
 
     // Assert
     await waitFor(() => {
@@ -81,6 +67,7 @@ describe("PartDeleteManager Component", () => {
 
   it("opens popover and displays parts when delete button is clicked", async () => {
     // Arrange
+    const user = userEvent.setup();
     render(
       <TooltipProvider>
         <PartDeleteManager />
@@ -88,16 +75,17 @@ describe("PartDeleteManager Component", () => {
     );
 
     // Act
-    await userEvent.click(screen.getByTestId("part-delete-button"));
+    await user.click(screen.getByTestId("part-delete-button"));
 
     // Assert
-    expect(screen.getByText("testPromoterName")).toBeInTheDocument();
-    expect(screen.getByText("testProteinName")).toBeInTheDocument();
-    expect(screen.getByText("testTerminatorName")).toBeInTheDocument();
+    expect(screen.getByText("PromoterA")).toBeInTheDocument();
+    expect(screen.getByText("ProteinA")).toBeInTheDocument();
+    expect(screen.getByText("TerminatorA")).toBeInTheDocument();
   });
 
   it("opens delete dialog with correct content when a part is selected", async () => {
     // Arrange
+    const user = userEvent.setup();
     render(
       <TooltipProvider>
         <PartDeleteManager />
@@ -105,11 +93,11 @@ describe("PartDeleteManager Component", () => {
     );
 
     // Act
-    await userEvent.click(screen.getByTestId("part-delete-button"));
-    await userEvent.click(screen.getByText("testPromoterName"));
+    await user.click(screen.getByTestId("part-delete-button"));
+    await user.click(screen.getByText("PromoterA"));
 
     // Assert
-    expect(screen.getByText("Delete testPromoterName")).toBeInTheDocument();
+    expect(screen.getByText("Delete PromoterA")).toBeInTheDocument();
     expect(screen.getByText("Are you sure you want to delete this part?")).toBeInTheDocument();
     expect(screen.getByRole("button", { name: /cancel/i })).toBeInTheDocument();
     expect(screen.getByRole("button", { name: /delete/i })).toBeInTheDocument();
@@ -117,6 +105,7 @@ describe("PartDeleteManager Component", () => {
 
   it("cancels deletion when cancel button is clicked", async () => {
     // Arrange
+    const user = userEvent.setup();
     render(
       <TooltipProvider>
         <PartDeleteManager />
@@ -124,17 +113,18 @@ describe("PartDeleteManager Component", () => {
     );
 
     // Act
-    await userEvent.click(screen.getByTestId("part-delete-button"));
-    await userEvent.click(screen.getByText("testPromoterName"));
-    await userEvent.click(screen.getByRole("button", { name: /cancel/i }));
+    await user.click(screen.getByTestId("part-delete-button"));
+    await user.click(screen.getByText("PromoterA"));
+    await user.click(screen.getByRole("button", { name: /cancel/i }));
 
     // Assert
-    expect(screen.queryByText("Delete testPromoterName")).not.toBeInTheDocument();
+    expect(screen.queryByText("Delete PromoterA")).not.toBeInTheDocument();
     expect(screen.queryByText("Are you sure you want to delete this part?")).not.toBeInTheDocument();
   });
 
   it("calls deletePart and closes dialog when delete button is clicked", async () => {
     // Arrange
+    const user = userEvent.setup();
     render(
       <TooltipProvider>
         <PartDeleteManager />
@@ -142,13 +132,13 @@ describe("PartDeleteManager Component", () => {
     );
 
     // Act
-    await userEvent.click(screen.getByTestId("part-delete-button"));
-    await userEvent.click(screen.getByText("testPromoterName"));
-    await userEvent.click(screen.getByRole("button", { name: /delete/i }));
+    await user.click(screen.getByTestId("part-delete-button"));
+    await user.click(screen.getByText("PromoterA"));
+    await user.click(screen.getByRole("button", { name: /delete/i }));
 
     // Assert
-    expect(mockDeletePart).toHaveBeenCalledWith("testPromoterName");
-    expect(screen.queryByText("Delete testPromoterName")).not.toBeInTheDocument();
+    expect(mockDeletePart).toHaveBeenCalledWith("PromoterA");
+    expect(screen.queryByText("Delete PromoterA")).not.toBeInTheDocument();
     expect(screen.queryByText("Are you sure you want to delete this part?")).not.toBeInTheDocument();
   });
 });
