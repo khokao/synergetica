@@ -1,47 +1,37 @@
+import { CATEGORY_CONFIG } from "@/components/circuit/constants";
 import { useParts } from "@/components/circuit/parts/parts-context";
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command";
 import * as PopoverPrimitive from "@radix-ui/react-popover";
-import { RiText } from "@remixicon/react";
-import { CornerUpRight, RectangleHorizontal } from "lucide-react";
 
 export const PartsCommandList = ({ onSelect, includeCategories = ["Promoter", "Protein", "Terminator"] }) => {
   const { promoterParts, proteinParts, terminatorParts } = useParts();
 
-  const defaultGroups = [
-    {
-      heading: "Promoter",
-      parts: promoterParts,
-      Icon: CornerUpRight,
-      iconClass: "text-blue-800",
-    },
-    {
-      heading: "Protein",
-      parts: proteinParts,
-      Icon: RectangleHorizontal,
-      iconClass: "text-green-800",
-    },
-    {
-      heading: "Terminator",
-      parts: terminatorParts,
-      Icon: RiText,
-      iconClass: "text-red-800",
-    },
-  ];
+  const partsMap = {
+    Promoter: promoterParts,
+    Protein: proteinParts,
+    Terminator: terminatorParts,
+  };
 
-  const groups = defaultGroups.filter(({ heading }) => includeCategories.includes(heading));
+  const groups = includeCategories.map((category) => {
+    return {
+      category,
+      parts: partsMap[category] || {},
+      ...CATEGORY_CONFIG[category],
+    };
+  });
 
   return (
     <Command>
       <CommandInput placeholder="Search parts..." />
       <CommandList>
         <CommandEmpty>No results found.</CommandEmpty>
-        {groups.map(({ heading, parts, Icon, iconClass }) => (
-          <CommandGroup key={heading} heading={heading}>
+        {groups.map(({ category, parts, icon: Icon, iconColor }) => (
+          <CommandGroup key={category} heading={category}>
             {Object.keys(parts).map((p) => (
               // Need PopoverPrimitive.Close : https://github.com/shadcn-ui/ui/issues/1625#issuecomment-1785193833
               <PopoverPrimitive.Close key={p} className="w-full">
-                <CommandItem key={p} onSelect={() => onSelect(p)}>
-                  <Icon className={iconClass} />
+                <CommandItem onSelect={() => onSelect(p)}>
+                  {Icon && <Icon className={iconColor} />}
                   <span>{p}</span>
                 </CommandItem>
               </PopoverPrimitive.Close>
