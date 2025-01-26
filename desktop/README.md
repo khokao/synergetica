@@ -123,13 +123,13 @@ We use Biome for linting and formatting, and Vitest for testing. These checks ru
 **Lint & Format (Biome)**
 
 ```sh
-uv run check
+npm run check
 ```
 
 **Test (Vitest)**
 
 ```sh
-uv run test
+npm run test
 ```
 
 **Format (Rustfmt)**
