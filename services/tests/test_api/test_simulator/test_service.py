@@ -110,10 +110,10 @@ def test_formulate(circuit_fixture, request):
     num_proteins = len(parsed_items['protein_name2ids'])
     expected_num_equations = num_chains + num_proteins
 
-    dummy_y = [0.0] * expected_num_equations
     dummy_t = 0.0
+    dummy_y = [0.0] * expected_num_equations
     dummy_args = [1.0] * len(parsed_items['protein_id2argidx'])
-    result = ode_func(dummy_y, dummy_t, *dummy_args)
+    result = ode_func(dummy_t, dummy_y, *dummy_args)
     assert len(result) == expected_num_equations
 
 
@@ -129,16 +129,16 @@ def test_run_simulation(circuit_fixture, request):
     num_proteins = len(parsed_items['protein_name2ids'])
     num_equations = num_chains + num_proteins
 
+    t_span = (T0, TF)
     y0 = [0.0] * num_equations
-    t = list(range(T0, TF, 1))
 
     params = {}
     for protein_id in parsed_items['protein_id2argidx']:
         params[protein_id] = 1.0
 
     # --- Act ---
-    solutions = run_simulation(parsed_items, ode_func, y0, t, params)
+    solutions = run_simulation(parsed_items, ode_func, t_span, y0, params)
 
     # --- Assert ---
-    assert len(solutions) == len(t)
+    assert len(solutions) == len(list(range(T0, TF + 1)))
     assert solutions[0].keys() == {'time', *parsed_items['protein_name2ids'].keys()}

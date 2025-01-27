@@ -10,9 +10,9 @@ def test_create_func_str_and_get_func_from_str():
     func = get_func_from_str(func_str)
 
     # Assert
-    y = [1.0, 0.0]
     t = 0.0
-    result = func(y, t)
+    y = [1.0, 0.0]
+    result = func(t, y)
     # d0dt = -0.5 * 1.0 = -0.5
     # d1dt = 0.5 * 1.0 - 0.1 * 0.0 = 0.5
     assert result == (-0.5, 0.5)
