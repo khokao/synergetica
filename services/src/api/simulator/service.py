@@ -3,7 +3,7 @@ from collections import defaultdict
 from collections.abc import Callable
 from typing import LiteralString
 
-from scipy.integrate import odeint
+from scipy.integrate import solve_ivp
 
 from .constants import DMRNA, ERPU, PCN, PCN_REF, ZETA
 from .schemas import ControlByItemParams, ReactFlowAnnotationEdge, ReactFlowChildNode, ReactFlowObject
@@ -216,8 +216,8 @@ def formulate(parsed_items: dict[str, dict]) -> Callable:
 def run_simulation(
     parsed_items: dict,
     func: Callable,
+    t_span: tuple[int, int],
     y0: list[float],
-    t: list[int],
     params: dict[str, float],
 ) -> list[dict]:
     """Executes the ODE simulation using given parameters.
@@ -225,8 +225,8 @@ def run_simulation(
     Args:
         parsed_items (dict): The dictionary produced by `parse_circuit`
         func (Callable): The derivative function created by `formulate`.
+        t_span (tuple[int, int]): The start and end time points for the simulation.
         y0 (list[float]): The initial values for the ODE variables (mRNA and protein concentrations).
-        t (list[int]): The time points at which to solve the ODE.
         params (dict[str, float]): TIR values for each protein ID.
 
     Returns:
@@ -247,16 +247,16 @@ def run_simulation(
     for protein_id, argidx in parsed_items['protein_id2argidx'].items():
         func_args[argidx] = params[protein_id]
 
-    y = odeint(func, y0, t, args=tuple(func_args))
+    y = solve_ivp(func, t_span, y0, method='RK45', args=tuple(func_args), first_step=1, max_step=1).y
 
     num_chains = len(parsed_items['chain_promoters'])
     protein_names = list(parsed_items['protein_name2ids'].keys())
 
     solutions = []
-    for i, ti in enumerate(t):
+    for i, ti in enumerate(list(range(t_span[0], t_span[1] + 1))):
         sol = {'time': ti}
         for j, protein_name in enumerate(protein_names):
-            sol[protein_name] = y[i, num_chains + j]
+            sol[protein_name] = y[num_chains + j, i]
         solutions.append(sol)
 
     return solutions
