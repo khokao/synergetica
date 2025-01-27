@@ -10,7 +10,7 @@ export const SelectField = ({ label, description, fieldName, form, placeholder, 
         <FormLabel>{label}</FormLabel>
         <FormDescription>{description}</FormDescription>
         <FormControl>
-          <Select onValueChange={fieldTypeProps.onChange} defaultValue={fieldTypeProps.value}>
+          <Select onValueChange={fieldTypeProps.onChange} value={fieldTypeProps.value}>
             <SelectTrigger className="font-medium data-[placeholder]:text-neutral-500">
               <SelectValue placeholder={placeholder} />
             </SelectTrigger>
