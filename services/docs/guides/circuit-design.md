@@ -137,6 +137,3 @@ Here are basical rules of valid circuit.
 	![](../assets/imgs/guides/circuit-design/invalid_circuit4.png)
 
 
-## Customizing parts
-
-xxx
