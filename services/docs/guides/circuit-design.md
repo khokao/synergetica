@@ -109,10 +109,32 @@ Here are basical rules of valid circuit.
 - No elements are allowed after the Terminator.(Chain must end with a Terminator)
 
 ??? Success "Valid circuit examples"
-	![](../assets/imgs/guides/circuit-design/valid.png)
+
+	- Minimum valid circuit.
+
+	![](../assets/imgs/guides/circuit-design/valid_circuit1.png){ width="550" height="350" }
+
+	- Multiple Protein is allowed.
+
+	![](../assets/imgs/guides/circuit-design/valid_circuit2.png)
+
+	- Multiple Promoter is allowed
+
+	![](../assets/imgs/guides/circuit-design/valid_circuit3.png)
 
 ??? Failure "Invalid circuit examples"
-	![](../assets/imgs/guides/circuit-design/invalid.png)
+
+	- Chain must start with Promoter(s)
+	![](../assets/imgs/guides/circuit-design/invalid_circuit1.png){ width="550" height="350" }
+
+	- No elements are allowed after the Terminator.(Chain must end with a Terminator)
+	![](../assets/imgs/guides/circuit-design/invalid_circuit2.png){ width="550" height="350" }
+
+	- Empty block is not allowed.
+	![](../assets/imgs/guides/circuit-design/invalid_circuit3.png){ width="550" height="350" }
+
+	- A promoter cannot appear after Proteins.
+	![](../assets/imgs/guides/circuit-design/invalid_circuit4.png)
 
 
 ## Customizing parts
