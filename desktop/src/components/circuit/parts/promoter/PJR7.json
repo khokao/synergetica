@@ -1,0 +1,21 @@
+{
+  "name": "PJR7",
+  "description": "Regulated promoter repressed by JR7",
+  "category": "Promoter",
+  "sequence": "ATTGTCAGAAATGGCACTTGCAAAAACTTTCAGTTCAACCATAATACGTACTGAAAGTACGAAAAAGG",
+  "controlBy": [
+    {
+      "name": "JR7",
+      "type": "Repression",
+      "params": {
+        "Ymax": 0.9,
+        "Ymin": 0.06,
+        "K": 0.08,
+        "n": 1.8
+      }
+    }
+  ],
+  "params": {
+    "Ydef": 0.9
+  }
+}

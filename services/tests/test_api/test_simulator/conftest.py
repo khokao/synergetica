@@ -43,7 +43,7 @@ FLIPFLOP_CIRCUIT = {
             'data': {
                 'category': 'Promoter',
                 'name': 'PameR',
-                'description': 'Regulated Promoter repressed by AmeR',
+                'description': 'Regulated promoter repressed by AmeR',
                 'sequence': 'gatagtgacaaacttgacaactcatcacttcctaggtataatgctagc',
                 'controlBy': [
                     {'name': 'AmeR', 'type': 'Repression', 'params': {'Ymax': 3.8, 'Ymin': 0.2, 'K': 0.09, 'n': 1.4}}
@@ -61,7 +61,7 @@ FLIPFLOP_CIRCUIT = {
             'data': {
                 'category': 'Protein',
                 'name': 'BM3R1',
-                'description': 'Repressor Protein of Pbm3R1',
+                'description': 'Repressor protein of Pbm3R1',
                 'sequence': 'atggaaagcaccccgaccaaacagaaagcaatttttagcgcaagcctgctgctgtttgcagaacgtggttttgatgcaaccaccatgccgatgattgcagaaaatgcaaaagttggtgcaggcaccatttatcgctatttcaaaaacaaagaaagcctggtgaacgaactgtttcagcagcatgttaatgaatttctgcagtgtattgaaagcggtctggcaaatgaacgtgatggttatcgtgatggctttcatcacatttttgaaggtatggtgacctttaccaaaaatcatccgcgtgcactgggttttatcaaaacccatagccagggcacctttctgaccgaagaaagccgtctggcatatcagaaactggttgaatttgtgtgcaccttttttcgtgaaggtcagaaacagggtgtgattcgtaatctgccggaaaatgcactgattgcaattctgtttggcagctttatggaagtgtatgaaatgatcgagaacgattatctgagcctgaccgatgaactgctgaccggtgttgaagaaagcctgtgggcagcactgagccgtcagagctaa',
                 'controlBy': [],
                 'params': {'Dp': 0.14726881, 'TIRb': 596.23},
@@ -94,7 +94,7 @@ FLIPFLOP_CIRCUIT = {
             'data': {
                 'category': 'Promoter',
                 'name': 'Pbm3r1',
-                'description': 'Regulated Promoter repressed by BM3R1',
+                'description': 'Regulated promoter repressed by BM3R1',
                 'sequence': 'tctgattcgttaccaattgacggaatgaacgttcattccgataatgctagc',
                 'controlBy': [
                     {'name': 'BM3R1', 'type': 'Repression', 'params': {'Ymax': 0.5, 'Ymin': 0.004, 'K': 0.04, 'n': 3.4}}
@@ -112,7 +112,7 @@ FLIPFLOP_CIRCUIT = {
             'data': {
                 'category': 'Protein',
                 'name': 'AmeR',
-                'description': 'Repressor Protein of PameR',
+                'description': 'Repressor protein of PameR',
                 'sequence': 'atgaacaaaaccattgatcaggtgcgtaaaggtgatcgtaaaagcgatctgccggttcgtcgtcgtccgcgtcgtagtgccgaagaaacccgtcgtgatattctggcaaaagccgaagaactgtttcgtgaacgtggttttaatgcagttgccattgcagatattgcaagcgcactgaatatgagtccggcaaatgtgtttaaacattttagcagcaaaaacgcactggttgatgcaattggttttggtcagattggtgtttttgaacgtcagatttgtccgctggataaaagccatgcaccgctggatcgtctgcgtcatctggcacgtaatctgatggaacagcatcatcaggatcatttcaaacacatacgggtttttattcagatcctgatgaccgccaaacaggatatgaaatgtggcgattattacaaaagcgtgattgcaaaactgctggccgaaattattcgtgatggtgttgaagcaggtctgtatattgcaaccgatattccggttctggcagaaaccgttctgcatgcactgaccagcgttattcatccggttctgattgcacaagaagatattggtaatctggcaacccgttgtgatcagctggttgatctgattgatgcaggtctgcgtaatccgctggcaaaataa',
                 'controlBy': [],
                 'params': {'Dp': 0.74589307, 'TIRb': 3019.81},
@@ -217,7 +217,7 @@ HYBRID_PROMOTER_CIRCUIT = {
             'data': {
                 'category': 'Promoter',
                 'name': 'PphlF',
-                'description': 'Regulated Promoter repressed by PhlF',
+                'description': 'Regulated promoter repressed by PhlF',
                 'sequence': 'tctgattcgttaccaattgacatgatacgaaacgtaccgtatcgttaaggt',
                 'controlBy': [
                     {'name': 'PhlF', 'type': 'Repression', 'params': {'Ymax': 3.9, 'Ymin': 0.01, 'K': 0.03, 'n': 4}}
@@ -235,7 +235,7 @@ HYBRID_PROMOTER_CIRCUIT = {
             'data': {
                 'category': 'Protein',
                 'name': 'AmeR',
-                'description': 'Repressor Protein of PameR',
+                'description': 'Repressor protein of PameR',
                 'sequence': 'atgaacaaaaccattgatcaggtgcgtaaaggtgatcgtaaaagcgatctgccggttcgtcgtcgtccgcgtcgtagtgccgaagaaacccgtcgtgatattctggcaaaagccgaagaactgtttcgtgaacgtggttttaatgcagttgccattgcagatattgcaagcgcactgaatatgagtccggcaaatgtgtttaaacattttagcagcaaaaacgcactggttgatgcaattggttttggtcagattggtgtttttgaacgtcagatttgtccgctggataaaagccatgcaccgctggatcgtctgcgtcatctggcacgtaatctgatggaacagcatcatcaggatcatttcaaacacatacgggtttttattcagatcctgatgaccgccaaacaggatatgaaatgtggcgattattacaaaagcgtgattgcaaaactgctggccgaaattattcgtgatggtgttgaagcaggtctgtatattgcaaccgatattccggttctggcagaaaccgttctgcatgcactgaccagcgttattcatccggttctgattgcacaagaagatattggtaatctggcaacccgttgtgatcagctggttgatctgattgatgcaggtctgcgtaatccgctggcaaaataa',
                 'controlBy': [],
                 'params': {'Dp': 0.74589307, 'TIRb': 3019.81},
@@ -268,7 +268,7 @@ HYBRID_PROMOTER_CIRCUIT = {
             'data': {
                 'category': 'Promoter',
                 'name': 'PpsrA',
-                'description': 'Regulated Promoter repressed by PsrA',
+                'description': 'Regulated promoter repressed by PsrA',
                 'sequence': 'aggaacaaacgtttgattgacagctagctcagtcctaggtataatgctagc',
                 'controlBy': [
                     {'name': 'PsrA', 'type': 'Repression', 'params': {'Ymax': 5.9, 'Ymin': 0.2, 'K': 0.19, 'n': 1.8}}
@@ -286,7 +286,7 @@ HYBRID_PROMOTER_CIRCUIT = {
             'data': {
                 'category': 'Protein',
                 'name': 'AmtR',
-                'description': 'Repressor Protein of PamtR',
+                'description': 'Repressor protein of PamtR',
                 'sequence': 'atggcaggcgcagttggtcgtccgcgtcgtagtgcaccgcgtcgtgcaggtaaaaatccgcgtgaagaaattctggatgcaagcgcagaactgtttacccgtcagggttttgcaaccaccagtacccatcagattgcagatgcagttggtattcgtcaggcaagcctgtattatcattttccgagcaaaaccgaaatctttctgaccctgctgaaaagcaccgttgaaccgagcaccgttctggcagaagatctgagcaccctggatgcaggtccggaaatgcgtctgtgggcaattgttgcaagcgaagttcgtctgctgctgagcaccaaatggaatgttggtcgtctgtatcagctgccgattgttggtagcgaagaatttgcagaatatcatagccagcgtgaagcactgaccaatgtttttcgtgatctggcaaccgaaattgttggtgatgatccgcgtgcagaactgccgtttcatattaccatgagcgttattgaaatgcgtcgcaatgatggtaaaattccgagtccgctgagcgcagatagcctgccggaaaccgcaattatgctggcagatgcaagcctggcagttctgggtgcaccgctgcctgcagatcgtgttgaaaaaaccctggaactgattaaacaggcagatgcaaaataa',
                 'controlBy': [],
                 'params': {'Dp': 0.26308464, 'TIRb': 1065.12},
@@ -302,7 +302,7 @@ HYBRID_PROMOTER_CIRCUIT = {
             'data': {
                 'category': 'Protein',
                 'name': 'BetI',
-                'description': 'Repressor Protein of BetI',
+                'description': 'Repressor protein of BetI',
                 'sequence': 'atgccgaaactgggtatgcagagcattcgtcgtcgtcagctgattgatgcaaccctggaagcaattaatgaagttggtatgcatgatgcaaccattgcacagattgcacgtcgtgccggtgttagcaccggtattattagccattatttccgcgataaaaacggtctgctggaagcaaccatgcgtgatattaccagccagctgcgtgatgcagttctgaatcgtctgcatgcactgccgcagggtagcgcagaacagcgtctgcaggcaattgttggtggtaattttgatgaaacccaggttagcagcgcagcaatgaaagcatggctggcattttgggcaagcagcatgcatcagccgatgctgtatcgtctgcagcaggttagcagtcgtcgtctgctgagcaatctggttagcgaatttcgtcgtgaactgcctcgtgaacaggcacaagaggcaggttatggtctggcagcactgattgatggtctgtggctgcgtgcagcactgagcggtaaaccgctggataaaacccgtgcaaatagcctgacccgtcattttatcacccagcatctgccgaccgattaa',
                 'controlBy': [],
                 'params': {'Dp': 0.12914642, 'TIRb': 522.86},
@@ -335,7 +335,7 @@ HYBRID_PROMOTER_CIRCUIT = {
             'data': {
                 'category': 'Promoter',
                 'name': 'PameR',
-                'description': 'Regulated Promoter repressed by AmeR',
+                'description': 'Regulated promoter repressed by AmeR',
                 'sequence': 'gatagtgacaaacttgacaactcatcacttcctaggtataatgctagc',
                 'controlBy': [
                     {'name': 'AmeR', 'type': 'Repression', 'params': {'Ymax': 3.8, 'Ymin': 0.2, 'K': 0.09, 'n': 1.4}}
@@ -353,7 +353,7 @@ HYBRID_PROMOTER_CIRCUIT = {
             'data': {
                 'category': 'Promoter',
                 'name': 'PamtR',
-                'description': 'Regulated Promoter repressed by AmtR',
+                'description': 'Regulated promoter repressed by AmtR',
                 'sequence': 'gattcgttaccaattgacagtttctatcgatctatagataatgctagc',
                 'controlBy': [
                     {'name': 'AmtR', 'type': 'Repression', 'params': {'Ymax': 3.8, 'Ymin': 0.08, 'K': 0.07, 'n': 1.6}}
@@ -371,7 +371,7 @@ HYBRID_PROMOTER_CIRCUIT = {
             'data': {
                 'category': 'Protein',
                 'name': 'BetI',
-                'description': 'Repressor Protein of BetI',
+                'description': 'Repressor protein of BetI',
                 'sequence': 'atgccgaaactgggtatgcagagcattcgtcgtcgtcagctgattgatgcaaccctggaagcaattaatgaagttggtatgcatgatgcaaccattgcacagattgcacgtcgtgccggtgttagcaccggtattattagccattatttccgcgataaaaacggtctgctggaagcaaccatgcgtgatattaccagccagctgcgtgatgcagttctgaatcgtctgcatgcactgccgcagggtagcgcagaacagcgtctgcaggcaattgttggtggtaattttgatgaaacccaggttagcagcgcagcaatgaaagcatggctggcattttgggcaagcagcatgcatcagccgatgctgtatcgtctgcagcaggttagcagtcgtcgtctgctgagcaatctggttagcgaatttcgtcgtgaactgcctcgtgaacaggcacaagaggcaggttatggtctggcagcactgattgatggtctgtggctgcgtgcagcactgagcggtaaaccgctggataaaacccgtgcaaatagcctgacccgtcattttatcacccagcatctgccgaccgattaa',
                 'controlBy': [],
                 'params': {'Dp': 0.12914642, 'TIRb': 522.86},

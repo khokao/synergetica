@@ -1,0 +1,21 @@
+{
+  "name": "PBAD",
+  "description": "Regulated promoter activated by AraC_AM",
+  "category": "Promoter",
+  "sequence": "AGAAACCAATTGTCCATATTGCATCAGACATTGCCGTCACTGCGTCTTTTACTGGCTCTTCTCGCTAACCAAACCGGTAACCCCGCTTATTAAAAGCATTCTGTAACAAAGCGGGACCAAAGCCATGACAAAAACGCGTAACAAAAGTGTCTATAATCACGGCAGAAAAGTCCACATTGATTATTTGCACGGCGTCACACTTTGCTATGCCATAGCATTTTTATCCATAAGATTAGCGGATCCTACCTGACGCTTTTTATCGCAACTCTCTACTGTTTCTCCATACCCG",
+  "controlBy": [
+    {
+      "name": "AraC_AM",
+      "type": "Activation",
+      "params": {
+        "Ymax": 1.2,
+        "Ymin": 0.0024,
+        "K": 0.1,
+        "n": 2
+      }
+    }
+  ],
+  "params": {
+    "Ydef": 0.0024
+  }
+}

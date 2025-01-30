@@ -1,21 +1,21 @@
 {
   "name": "Pbm3r1",
-  "description": "Regulated Promoter repressed by BM3R1",
+  "description": "Regulated promoter repressed by BM3R1",
   "category": "Promoter",
-  "sequence": "tctgattcgttaccaattgacggaatgaacgttcattccgataatgctagc",
+  "sequence": "TCTGATTCGTTACCAATTGACGGAATGAACGTTCATTCCGATAATGCTAGC",
   "controlBy": [
     {
       "name": "BM3R1",
       "type": "Repression",
       "params": {
-        "Ymax": 0.5,
-        "Ymin": 0.004,
-        "K": 0.04,
+        "Ymax": 0.8,
+        "Ymin": 0.01,
+        "K": 0.25,
         "n": 3.4
       }
     }
   ],
   "params": {
-    "Ydef": 0.5
+    "Ydef": 0.8
   }
 }

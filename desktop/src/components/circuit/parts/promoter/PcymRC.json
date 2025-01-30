@@ -1,0 +1,21 @@
+{
+  "name": "PcymRC",
+  "description": "Regulated promoter repressed by CymR_AM",
+  "category": "Promoter",
+  "sequence": "AACAAACAGACAATCTGGTCTGTTTGTATTATGGAAAATTTTTCTGTATAATAGATTCAACAAACAGACAATCTGGTCTGTTTGTATTAT",
+  "controlBy": [
+    {
+      "name": "CymR_AM",
+      "type": "Repression",
+      "params": {
+        "Ymax": 3.7,
+        "Ymin": 0.0043,
+        "K": 0.1,
+        "n": 2
+      }
+    }
+  ],
+  "params": {
+    "Ydef": 3.7
+  }
+}

@@ -1,8 +1,8 @@
 {
   "name": "PsrpR",
-  "description": "Regulated Promoter repressed by SrpR",
+  "description": "Regulated promoter repressed by SrpR",
   "category": "Promoter",
-  "sequence": "gattcgttaccaattgacagctagctcagtcctaggtatatacatacatgcttgtttgtttgtaaac",
+  "sequence": "GATTCGTTACCAATTGACAGCTAGCTCAGTCCTAGGTATATACATACATGCTTGTTTGTTTGTAAAC",
   "controlBy": [
     {
       "name": "SrpR",
@@ -11,7 +11,7 @@
         "Ymax": 2.1,
         "Ymin": 0.003,
         "K": 0.04,
-        "n": 2.5
+        "n": 2.6
       }
     }
   ],

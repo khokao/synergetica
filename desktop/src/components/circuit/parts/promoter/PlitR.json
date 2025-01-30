@@ -1,8 +1,8 @@
 {
   "name": "PlitR",
-  "description": "Regulated Promoter repressed by LitR",
+  "description": "Regulated promoter repressed by LitR",
   "category": "Promoter",
-  "sequence": "gattcgttaccaattgacaaatttataaattgtcagtataatgctagc",
+  "sequence": "GATTCGTTACCAATTGACAAATTTATAAATTGTCAGTATAATGCTAGC",
   "controlBy": [
     {
       "name": "LitR",

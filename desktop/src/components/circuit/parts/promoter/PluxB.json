@@ -1,0 +1,21 @@
+{
+  "name": "PluxB",
+  "description": "Regulated promoter activated by LuxR",
+  "category": "Promoter",
+  "sequence": "ACCTGTAGGATCGTACAGGTTTACGCAAGAAAATGGTTTGTTACAGTCGAATAAA",
+  "controlBy": [
+    {
+      "name": "LuxR",
+      "type": "Activation",
+      "params": {
+        "Ymax": 1.3,
+        "Ymin": 0.0024,
+        "K": 0.1,
+        "n": 2
+      }
+    }
+  ],
+  "params": {
+    "Ydef": 0.0024
+  }
+}

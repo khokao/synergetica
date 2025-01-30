@@ -1,0 +1,8 @@
+{
+  "name": "L3S2P11",
+  "description": "Standard terminator",
+  "category": "Terminator",
+  "sequence": "CTCGGTACCAAATTCCAGAAAAGAGACGCTTTCGAGCGTCTTTTTTCGTTTTGGTCC",
+  "controlBy": [],
+  "params": {}
+}

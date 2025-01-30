@@ -1,0 +1,8 @@
+{
+  "name": "ECK120010876",
+  "description": "Standard terminator",
+  "category": "Terminator",
+  "sequence": "TAAGGTTGAAAAATAAAAACGGCGCTAAAAAGCGCCGTTTTTTTTGACGGTGGTA",
+  "controlBy": [],
+  "params": {}
+}

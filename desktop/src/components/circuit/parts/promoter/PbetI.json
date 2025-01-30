@@ -1,8 +1,8 @@
 {
   "name": "PbetI",
-  "description": "Regulated Promoter repressed by BetI",
+  "description": "Regulated promoter repressed by BetI",
   "category": "Promoter",
-  "sequence": "agcgcgggtgagagggattcgttaccaattgacaattgattggacgttcaatataatgctagc",
+  "sequence": "AGCGCGGGTGAGAGGGATTCGTTACCAATTGACAATTGATTGGACGTTCAATATAATGCTAGC",
   "controlBy": [
     {
       "name": "BetI",

@@ -1,0 +1,21 @@
+{
+  "name": "PvanCC",
+  "description": "Regulated promoter repressed by VanR_AM",
+  "category": "Promoter",
+  "sequence": "ATTGGATCCAATTGACAGCTAGCTCAGTCCTAGGTACCATTGGATCCAAT",
+  "controlBy": [
+    {
+      "name": "VanR_AM",
+      "type": "Repression",
+      "params": {
+        "Ymax": 3,
+        "Ymin": 0.002,
+        "K": 0.1,
+        "n": 2
+      }
+    }
+  ],
+  "params": {
+    "Ydef": 3
+  }
+}

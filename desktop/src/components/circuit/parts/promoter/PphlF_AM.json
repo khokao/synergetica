@@ -1,11 +1,11 @@
 {
-  "name": "PphlF",
-  "description": "Regulated Promoter repressed by PhlF",
+  "name": "PphlF_AM",
+  "description": "Regulated promoter repressed by PphlF_AM",
   "category": "Promoter",
-  "sequence": "tctgattcgttaccaattgacatgatacgaaacgtaccgtatcgttaaggt",
+  "sequence": "TCTGATTCGTTACCAATTGACATGATACGAAACGTACCGTATCGTTAAGGT",
   "controlBy": [
     {
-      "name": "PhlF",
+      "name": "PhlF_AM",
       "type": "Repression",
       "params": {
         "Ymax": 3.9,

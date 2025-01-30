@@ -1,0 +1,21 @@
+{
+  "name": "Pacu",
+  "description": "Regulated promoter repressed by AcuR_AM",
+  "category": "Promoter",
+  "sequence": "CGCTAGCAAGTAAGGCCGACGCTTCACAACCGCACTTGATTTAATAGACCATACCGTCTATTATTTCTGGCCAT",
+  "controlBy": [
+    {
+      "name": "AcuR_AM",
+      "type": "Repression",
+      "params": {
+        "Ymax": 3.1,
+        "Ymin": 0.037,
+        "K": 0.1,
+        "n": 2
+      }
+    }
+  ],
+  "params": {
+    "Ydef": 3.1
+  }
+}
