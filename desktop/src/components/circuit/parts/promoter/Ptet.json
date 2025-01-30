@@ -1,6 +1,6 @@
 {
   "name": "Ptet",
-  "description": "Regulated promoter repressed by  TetR",
+  "description": "Regulated promoter repressed by TetR",
   "category": "Promoter",
   "sequence": "TTTTCAGCAGGACGCACTGACCTCCCTATCAGTGATAGAGATTGACATCCCTATCAGTGATAGAGATACTGAGCAC",
   "controlBy": [

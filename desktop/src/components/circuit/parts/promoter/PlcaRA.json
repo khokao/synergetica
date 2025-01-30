@@ -1,6 +1,6 @@
 {
   "name": "PlcaRA",
-  "description": "Regulated promoter repressed by  LcaRA",
+  "description": "Regulated promoter repressed by LcaRA",
   "category": "Promoter",
   "sequence": "TCTGATTCGTTACCAATTGACAATTCACCTACCTTTCGTTAGGTTAGGTTGT",
   "controlBy": [

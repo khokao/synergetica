@@ -1,6 +1,6 @@
 {
   "name": "Pacu",
-  "description": "Regulated promoter repressed by  AcuR_AM",
+  "description": "Regulated promoter repressed by AcuR_AM",
   "category": "Promoter",
   "sequence": "CGCTAGCAAGTAAGGCCGACGCTTCACAACCGCACTTGATTTAATAGACCATACCGTCTATTATTTCTGGCCAT",
   "controlBy": [

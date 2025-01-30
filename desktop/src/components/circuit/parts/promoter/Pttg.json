@@ -1,6 +1,6 @@
 {
   "name": "Pttg",
-  "description": "Regulated promoter repressed by  TtgR_AM",
+  "description": "Regulated promoter repressed by TtgR_AM",
   "category": "Promoter",
   "sequence": "CACCCAGCAGTATTTACAAACAACCATGAATGTAAGTATATTCCTTAGCAA",
   "controlBy": [

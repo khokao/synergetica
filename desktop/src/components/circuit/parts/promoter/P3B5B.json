@@ -1,6 +1,6 @@
 {
   "name": "P3B5B",
-  "description": "Regulated promoter repressed by  PcaU_AM",
+  "description": "Regulated promoter repressed by PcaU_AM",
   "category": "Promoter",
   "sequence": "TTTTGTTCGATTATCGAACAAATTATTGAAATATCGAACAAAACCTCTAAACTACTGTGGCACTGAATCAAAAAATTATAAACCATGATCAGA",
   "controlBy": [
