@@ -1,6 +1,6 @@
 {
   "name": "PsrpR",
-  "description": "Regulated Promoter repressed by SrpR",
+  "description": "Regulated promoter repressed by SrpR",
   "category": "Promoter",
   "sequence": "GATTCGTTACCAATTGACAGCTAGCTCAGTCCTAGGTATATACATACATGCTTGTTTGTTTGTAAAC",
   "controlBy": [

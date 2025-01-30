@@ -1,6 +1,6 @@
 {
   "name": "L3S2P55",
-  "description": "standard terminator",
+  "description": "Standard terminator",
   "category": "Terminator",
   "sequence": "CTCGGTACCAAAGACGAACAATAAGACGCTGAAAAGCGTCTTTTTTCGTTTTGGTCC",
   "controlBy": [],

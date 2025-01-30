@@ -1,6 +1,6 @@
 {
   "name": "PJR8",
-  "description": "Regulated Promoters repressed by JR8",
+  "description": "Regulated promoter repressed by  JR8",
   "category": "Promoter",
   "sequence": "AACTACTACGCAAAATTCAACTTCTCCGAAACGTCTATTGACATAATTACTCCGATTGCGTAATTTCTTG",
   "controlBy": [

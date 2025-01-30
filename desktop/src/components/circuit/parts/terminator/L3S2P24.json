@@ -1,6 +1,6 @@
 {
   "name": "L3S2P24",
-  "description": "standard terminator",
+  "description": "Standard terminator",
   "category": "Terminator",
   "sequence": "CTCGGTACCAAATTCCAGAAAAGACACCCGAAAGGGTGTTTTTTCGTTTTGGTCC",
   "controlBy": [],

@@ -1,6 +1,6 @@
 {
   "name": "PlmrA",
-  "description": "Regulated Promoter repressed by LmrA",
+  "description": "Regulated promoter repressed by LmrA",
   "category": "Promoter",
   "sequence": "TCTGATTCGTTACCAATTGACAACTGGTGGTCGAATCAAGATAATAGACCAGTCACTATATTT",
   "controlBy": [

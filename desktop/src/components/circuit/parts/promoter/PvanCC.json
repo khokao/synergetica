@@ -1,6 +1,6 @@
 {
   "name": "PvanCC",
-  "description": "Regulated Promoters repressed by VanR_AM",
+  "description": "Regulated promoter repressed by  VanR_AM",
   "category": "Promoter",
   "sequence": "ATTGGATCCAATTGACAGCTAGCTCAGTCCTAGGTACCATTGGATCCAAT",
   "controlBy": [

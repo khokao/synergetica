@@ -1,6 +1,6 @@
 {
   "name": "PluxB",
-  "description": "Regulated Promoters activated by LuxR",
+  "description": "Regulated promoter activated by LuxR",
   "category": "Promoter",
   "sequence": "ACCTGTAGGATCGTACAGGTTTACGCAAGAAAATGGTTTGTTACAGTCGAATAAA",
   "controlBy": [

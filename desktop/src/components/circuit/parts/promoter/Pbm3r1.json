@@ -1,6 +1,6 @@
 {
   "name": "Pbm3r1",
-  "description": "Regulated Promoter repressed by BM3R1",
+  "description": "Regulated promoter repressed by BM3R1",
   "category": "Promoter",
   "sequence": "TCTGATTCGTTACCAATTGACGGAATGAACGTTCATTCCGATAATGCTAGC",
   "controlBy": [

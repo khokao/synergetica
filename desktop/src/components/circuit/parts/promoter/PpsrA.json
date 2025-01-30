@@ -1,6 +1,6 @@
 {
   "name": "PpsrA",
-  "description": "Regulated Promoter repressed by PsrA",
+  "description": "Regulated promoter repressed by PsrA",
   "category": "Promoter",
   "sequence": "AGGAACAAACGTTTGATTGACAGCTAGCTCAGTCCTAGGTATAATGCTAGC",
   "controlBy": [

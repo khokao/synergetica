@@ -1,6 +1,6 @@
 {
   "name": "Ptac",
-  "description": "Regulated Promoters repressed by LacI_AM",
+  "description": "Regulated promoter repressed by  LacI_AM",
   "category": "Promoter",
   "sequence": "TGTTGACAATTAATCATCGGCTCGTATAATGTGTGGAATTGTGAGCGCTCACAATT",
   "controlBy": [

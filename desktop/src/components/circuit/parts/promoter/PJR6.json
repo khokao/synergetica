@@ -1,6 +1,6 @@
 {
   "name": "PJR6",
-  "description": "Regulated Promoters repressed by JR6",
+  "description": "Regulated promoter repressed by  JR6",
   "category": "Promoter",
   "sequence": "TTGTTACCCATACTGTTTCGATAAAACCTATTTACTATCTCTCAATTGGGAGATATATTTTGGCTAAACCCA",
   "controlBy": [

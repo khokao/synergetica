@@ -1,6 +1,6 @@
 {
   "name": "PcymRC",
-  "description": "Regulated Promoters repressed by CymR_AM",
+  "description": "Regulated promoter repressed by  CymR_AM",
   "category": "Promoter",
   "sequence": "AACAAACAGACAATCTGGTCTGTTTGTATTATGGAAAATTTTTCTGTATAATAGATTCAACAAACAGACAATCTGGTCTGTTTGTATTAT",
   "controlBy": [
