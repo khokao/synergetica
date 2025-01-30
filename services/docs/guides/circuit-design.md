@@ -2,27 +2,44 @@
 
 Here, you can learn more about how to create a genetic circuit using Synergetica.
 
+### Block types
+
+**Promoter**: The promoter part controls the timing and strength of transcription for the downstream DNA sequence. Specific proteins can bind to the promoter to either activate or repress transcription.
+
+![](../assets/imgs/guides/circuit-design/promoter.png){ width="200" height="150"}
+
+
+**Protein**: The protein part represents a protein that is actually produced within a cell. In living organisms, proteins serve as the functional entities responsible for various biological processes.
+
+![](../assets/imgs/guides/circuit-design/protein.png){ width="200" height="150"}
+
+**Terminator**: A terminator is a part that indicates the end of transcription. It also plays a role in regulating the degradation rate of the DNA strand. If the same terminator part is used multiple times, a phenomenon called homologous recombination may occur, potentially altering the DNA sequence. To prevent this, Synergetica provides multiple terminator parts.
+
+![](../assets/imgs/guides/circuit-design/terminator.png){ width="200" height="150"}
+
+*For detailed explanations of each part in each block type, please refer to <u>[this page]()</u>.
+
 ### Method 1: Arranging blocks
 
-Designing circuit with GUI
+Designing a circuit with the GUI
 
-**Place block**
+**Placing block**
 
 - You can place any block by dragging it from the block placement area at the top of the application and dropping it onto the main area.
 
 ![](../assets/imgs/tutorial/dnd_parts.png)
 
+
 **Delete block**
 
-- There are two ways to delete block.
+- There are two ways to delete a block.
 
-A. Press　the `DELETE` key with the block selected.
+A. Select the block and press the `DELETE` key.
 
 B. Click the overflow menu button and select `Delete`.
 
 ![](../assets/imgs/guides/circuit-design/delete_block.png){ width="300" height="200" }
 
-**Block types**
 
 
 **Connect blocks**

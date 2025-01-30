@@ -77,7 +77,7 @@ Now, you completed building toggle switch circuit :raised_hands: .
 ![](../assets/imgs/tutorial/dsl_name_change.png)
 
 
-## 2. Simulation
+## 2. Running a simulation
 
 When the circuit construction is complete, press the `Simulate` button in the lower right corner of the application.
 

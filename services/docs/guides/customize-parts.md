@@ -1,6 +1,6 @@
 # Customizing parts
 
-This section describes the customization of parts.
+This section describes about the customization of parts.
 
 You can customize parts from this area.
 
@@ -14,7 +14,7 @@ You can add any part by cliking `+` button and entering the required parameters.
 
 ### Common parameters
 
-- **Name**(required): Parts name to add. This name have to be **unique** within the entire set of parts.
+- **Name**(required): Parts name to add. This name have to be **unique** within the entire set of parts database.
 
 - **Description** : Description of parts to add.
 
@@ -24,23 +24,24 @@ You can add any part by cliking `+` button and entering the required parameters.
 
 Different types of parameters are required for each parts category(= block type).
 
-### Parameters for Promoters
+### Parameters for Promoter
 
-- **Ydef**(required): XXXX(適切な説明を書いてくださいー)
+- **Ydef**(required): Expression strength of the gate in the absence of transcriptional regulators [RPU], i.e., if it is a repressive promoter, the value is the same as Ymax, and if it is an activation promoter, the value is the same as Ymin.
 
 *If the added promoter interacts with some proteins, following parameters are also needed in `Control By` section.
  
 - **Name**(required): Name of protein parts to interact. This parts have to be already exist in parts database.
 - **Type**(required): Type of interaction between the promoter and the protein. `Repression` or `Activation`.
-- **Ymax** :  XXXX(適切な説明を書いてくださいー)
-- **Ymin** :  XXXX(適切な説明を書いてくださいー)
-- **K** :  XXXX(適切な説明を書いてくださいー)
-- **n** :  XXXX(適切な説明を書いてくださいー)
+- **Ymax** :  Maximum expression rate of the gate[RPU].
+- **Ymin** :  Minimum expression rate of the gate[RPU]. This means that leakage expression.
+- **K** :  Michaelis-Menten constant, i.e., the protein expression level at which the expression level of the gate is halved [RPU].
+- **n** :  Hill coefficient of the gate.
 
-### Parameters for Proteins
+### Parameters for Protein
 
-- **Dp**(required):  XXXX(適切な説明を書いてくださいー)
-- **TIRb**(required):  XXXX(適切な説明を書いてくださいー)
+- **Dp**(required):  Protein degradation rate [RPU]. The default part values ​​are theoretical values ​​calculated from the steady state when the gate expression level is at its maximum, but it is recommended to use the actual measured value.
+
+- **TIRb**(required):  Translation Initiation Rate in baseline experiments to determine the parameters. The Translation Initiation Rate represents the RBS strength. (For details on the Translation Inistiation Rate, see <u>[H. M. Salis, C. A. Voigt, Nat. Biotech. 2009](https://www.nature.com/articles/nbt.1568>)</u>)
 
 
 !!! Warning
