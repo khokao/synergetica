@@ -23,7 +23,7 @@ import PlcaRAData from "@/components/circuit/parts/promoter/PlcaRA.json";
 import PlitRData from "@/components/circuit/parts/promoter/PlitR.json";
 import PlmrAData from "@/components/circuit/parts/promoter/PlmrA.json";
 import PluxBData from "@/components/circuit/parts/promoter/PluxB.json";
-import PphlFAMData from "@/components/circuit/parts/promoter/PphlFAM.json";
+import PphlF_AMData from "@/components/circuit/parts/promoter/PphlF_AM.json";
 import PpsrAData from "@/components/circuit/parts/promoter/PpsrA.json";
 import PqacRData from "@/components/circuit/parts/promoter/PqacR.json";
 import PsalTTCData from "@/components/circuit/parts/promoter/PsalTTC.json";
@@ -33,14 +33,14 @@ import PtetData from "@/components/circuit/parts/promoter/Ptet.json";
 import PttgData from "@/components/circuit/parts/promoter/Pttg.json";
 import PvanCCData from "@/components/circuit/parts/promoter/PvanCC.json";
 
-import AcuRAMData from "@/components/circuit/parts/protein/AcuRAM.json";
+import AcuR_AMData from "@/components/circuit/parts/protein/AcuR_AM.json";
 import AmeRData from "@/components/circuit/parts/protein/AmeR.json";
 import AmtRData from "@/components/circuit/parts/protein/AmtR.json";
-import AraCAMData from "@/components/circuit/parts/protein/AraC_AM.json";
+import AraC_AMData from "@/components/circuit/parts/protein/AraC_AM.json";
 import BM3R1Data from "@/components/circuit/parts/protein/BM3R1.json";
 import BetIData from "@/components/circuit/parts/protein/BetI.json";
-import CinRAMData from "@/components/circuit/parts/protein/CinRAM.json";
-import CymRAMData from "@/components/circuit/parts/protein/CymR_AM.json";
+import CinR_AMData from "@/components/circuit/parts/protein/CinR_AM.json";
+import CymR_AMData from "@/components/circuit/parts/protein/CymR_AM.json";
 import HlyIIRData from "@/components/circuit/parts/protein/HlyIIR.json";
 import JR1Data from "@/components/circuit/parts/protein/JR1.json";
 import JR2Data from "@/components/circuit/parts/protein/JR2.json";
@@ -51,20 +51,20 @@ import JR7Data from "@/components/circuit/parts/protein/JR7.json";
 import JR8Data from "@/components/circuit/parts/protein/JR8.json";
 import JR9Data from "@/components/circuit/parts/protein/JR9.json";
 import JR11Data from "@/components/circuit/parts/protein/JR11.json";
-import LacIAMData from "@/components/circuit/parts/protein/LacIAM.json";
+import LacI_AMData from "@/components/circuit/parts/protein/LacI_AM.json";
 import LcaRAData from "@/components/circuit/parts/protein/LcaRA.json";
 import LitRData from "@/components/circuit/parts/protein/LitR.json";
 import LmrAData from "@/components/circuit/parts/protein/LmrA.json";
 import LuxRData from "@/components/circuit/parts/protein/LuxR.json";
-import NahRAMData from "@/components/circuit/parts/protein/NahRAM.json";
-import PcaUAMData from "@/components/circuit/parts/protein/PcaUAM.json";
-import PhlFAMData from "@/components/circuit/parts/protein/PhlFAM.json";
+import NahR_AMData from "@/components/circuit/parts/protein/NahR_AM.json";
+import PcaU_AMData from "@/components/circuit/parts/protein/PcaU_AM.json";
+import PhlF_AMData from "@/components/circuit/parts/protein/PhlF_AM.json";
 import PsrAData from "@/components/circuit/parts/protein/PsrA.json";
 import QacRData from "@/components/circuit/parts/protein/QacR.json";
 import SrpRData from "@/components/circuit/parts/protein/SrpR.json";
 import TetRData from "@/components/circuit/parts/protein/TetR.json";
-import TtgRAMData from "@/components/circuit/parts/protein/TtgRAM.json";
-import VanRAMData from "@/components/circuit/parts/protein/VanR_AM.json";
+import TtgR_AMData from "@/components/circuit/parts/protein/TtgR_AM.json";
+import VanR_AMData from "@/components/circuit/parts/protein/VanR_AM.json";
 
 import ECK120010818Data from "@/components/circuit/parts/terminator/ECK120010818.json";
 import ECK120010876Data from "@/components/circuit/parts/terminator/ECK120010876.json";
@@ -88,7 +88,7 @@ export const initialParts = partsCollectionSchema.parse({
   PlcaRA: PlcaRAData,
   PlitR: PlitRData,
   PlmrA: PlmrAData,
-  PphlFAM: PphlFAMData,
+  PphlF_AM: PphlF_AMData,
   PpsrA: PpsrAData,
   PqacR: PqacRData,
   PsrpR: PsrpRData,
@@ -121,21 +121,21 @@ export const initialParts = partsCollectionSchema.parse({
   LcaRA: LcaRAData,
   LitR: LitRData,
   LmrA: LmrAData,
-  PhlFAM: PhlFAMData,
+  PhlF_AM: PhlF_AMData,
   PsrA: PsrAData,
   QacR: QacRData,
   SrpR: SrpRData,
-  AraCAM: AraCAMData,
-  CymRAM: CymRAMData,
+  AraC_AM: AraC_AMData,
+  CymR_AM: CymR_AMData,
   LuxR: LuxRData,
-  VanRAM: VanRAMData,
-  LacIAM: LacIAMData,
+  VanR_AM: VanR_AMData,
+  LacI_AM: LacI_AMData,
   TetR: TetRData,
-  TtgRAM: TtgRAMData,
-  PcaUAM: PcaUAMData,
-  NahRAM: NahRAMData,
-  CinRAM: CinRAMData,
-  AcuRAM: AcuRAMData,
+  TtgR_AM: TtgR_AMData,
+  PcaU_AM: PcaU_AMData,
+  NahR_AM: NahR_AMData,
+  CinR_AM: CinR_AMData,
+  AcuR_AM: AcuR_AMData,
   JR1: JR1Data,
   JR2: JR2Data,
   JR3: JR3Data,

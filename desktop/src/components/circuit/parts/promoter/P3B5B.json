@@ -5,7 +5,7 @@
   "sequence": "TTTTGTTCGATTATCGAACAAATTATTGAAATATCGAACAAAACCTCTAAACTACTGTGGCACTGAATCAAAAAATTATAAACCATGATCAGA",
   "controlBy": [
     {
-      "name": "PcaUAM",
+      "name": "PcaU_AM",
       "type": "Repression",
       "params": {
         "Ymax": 1.6,

@@ -5,7 +5,7 @@
   "sequence": "AACAAACAGACAATCTGGTCTGTTTGTATTATGGAAAATTTTTCTGTATAATAGATTCAACAAACAGACAATCTGGTCTGTTTGTATTAT",
   "controlBy": [
     {
-      "name": "CymRAM",
+      "name": "CymR_AM",
       "type": "Repression",
       "params": {
         "Ymax": 3.7,

@@ -5,7 +5,7 @@
   "sequence": "ATTGGATCCAATTGACAGCTAGCTCAGTCCTAGGTACCATTGGATCCAAT",
   "controlBy": [
     {
-      "name": "VanRAM",
+      "name": "VanR_AM",
       "type": "Repression",
       "params": {
         "Ymax": 3,

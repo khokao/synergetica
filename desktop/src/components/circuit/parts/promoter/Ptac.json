@@ -5,7 +5,7 @@
   "sequence": "TGTTGACAATTAATCATCGGCTCGTATAATGTGTGGAATTGTGAGCGCTCACAATT",
   "controlBy": [
     {
-      "name": "LacIAM",
+      "name": "LacI_AM",
       "type": "Repression",
       "params": {
         "Ymax": 3.3,

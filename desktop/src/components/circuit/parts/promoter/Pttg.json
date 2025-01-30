@@ -5,7 +5,7 @@
   "sequence": "CACCCAGCAGTATTTACAAACAACCATGAATGTAAGTATATTCCTTAGCAA",
   "controlBy": [
     {
-      "name": "TtgRAM",
+      "name": "TtgR_AM",
       "type": "Repression",
       "params": {
         "Ymax": 0.46,

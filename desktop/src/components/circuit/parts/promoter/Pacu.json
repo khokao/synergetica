@@ -5,7 +5,7 @@
   "sequence": "CGCTAGCAAGTAAGGCCGACGCTTCACAACCGCACTTGATTTAATAGACCATACCGTCTATTATTTCTGGCCAT",
   "controlBy": [
     {
-      "name": "AcuRAM",
+      "name": "AcuR_AM",
       "type": "Repression",
       "params": {
         "Ymax": 3.1,

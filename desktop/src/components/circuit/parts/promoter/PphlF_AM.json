@@ -1,11 +1,11 @@
 {
-  "name": "PphlFAM",
+  "name": "PphlF_AM",
   "description": "Repressor Protein of PphlF_AM",
   "category": "Promoter",
   "sequence": "TCTGATTCGTTACCAATTGACATGATACGAAACGTACCGTATCGTTAAGGT",
   "controlBy": [
     {
-      "name": "PhlFAM",
+      "name": "PhlF_AM",
       "type": "Repression",
       "params": {
         "Ymax": 3.9,
