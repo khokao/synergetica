@@ -8,6 +8,11 @@
     grid-template-columns: 1fr;
     text-align: center;
 }
+
+.md-typeset pre>code {
+    max-height: 15rem;
+}
+
 @media (min-width: 640px) { /* sm */
     .md-typeset .grid {
         grid-template-columns: repeat(3, 1fr);
