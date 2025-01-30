@@ -1,4 +1,4 @@
-name: "Python mkdocs deploy"
+name: "MkDocs"
 
 on:
   push:

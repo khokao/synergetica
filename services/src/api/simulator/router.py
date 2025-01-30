@@ -49,7 +49,7 @@ async def websocket_endpoint(websocket: WebSocket) -> None:
                 )
 
                 y0 = [0.0] * num_equations
-                t = list(range(T0, TF, 1))
+                t_span = (T0, TF)
 
                 await websocket.send_json(
                     {
@@ -67,8 +67,8 @@ async def websocket_endpoint(websocket: WebSocket) -> None:
                 solutions = run_simulation(
                     parsed_items=parsed_items,
                     func=func,
+                    t_span=t_span,
                     y0=y0,
-                    t=t,
                     params=params,
                 )
 

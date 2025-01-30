@@ -1,16 +1,16 @@
 import { PartAddManager } from "@/components/circuit/operator/parts-manager/part-add-manager";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { cleanup, fireEvent, render, screen, waitFor, within } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 
 const mockAddPart = vi.fn();
 
 vi.mock("@/components/circuit/parts/parts-context", () => {
   const promoterParts = {
-    testPromoterName: {
-      name: "testPromoterName",
-      description: "Test Promoter Description",
+    PromoterA: {
+      name: "PromoterA",
+      description: "PromoterA Description",
       category: "Promoter",
       sequence: "ATGC",
       controlBy: [],
@@ -20,22 +20,22 @@ vi.mock("@/components/circuit/parts/parts-context", () => {
     },
   };
   const proteinParts = {
-    testProteinName: {
-      name: "testProteinName",
-      description: "Test Protein Description",
+    ProteinA: {
+      name: "ProteinA",
+      description: "ProteinA Description",
       category: "Protein",
       sequence: "ATGC",
       controlBy: [],
       params: {
-        Dp: 1.0,
-        TIRb: 1.0,
+        Dp: 0,
+        TIRb: 0,
       },
     },
   };
   const terminatorParts = {
-    testTerminatorName: {
-      name: "testTerminatorName",
-      description: "Test Terminator Description",
+    TerminatorA: {
+      name: "TerminatorA",
+      description: "TerminatorA Description",
       category: "Terminator",
       sequence: "ATGC",
       controlBy: [],
@@ -56,16 +56,13 @@ vi.mock("@/components/circuit/parts/parts-context", () => {
 });
 
 describe("PartAddManager Component", () => {
-  beforeEach(() => {
-    mockAddPart.mockClear();
-  });
-
   afterEach(() => {
-    cleanup();
+    vi.restoreAllMocks();
   });
 
   it("renders add button with tooltip", async () => {
     // Arrange
+    const user = userEvent.setup();
     render(
       <TooltipProvider>
         <PartAddManager />
@@ -73,7 +70,7 @@ describe("PartAddManager Component", () => {
     );
 
     // Act
-    await userEvent.hover(screen.getByTestId("part-add-button"));
+    await user.hover(screen.getByTestId("part-add-button"));
 
     // Assert
     await waitFor(() => {
@@ -83,6 +80,7 @@ describe("PartAddManager Component", () => {
 
   it("opens dialog when add button is clicked", async () => {
     // Arrange
+    const user = userEvent.setup();
     render(
       <TooltipProvider>
         <PartAddManager />
@@ -90,7 +88,7 @@ describe("PartAddManager Component", () => {
     );
 
     // Act
-    await userEvent.click(screen.getByTestId("part-add-button"));
+    await user.click(screen.getByTestId("part-add-button"));
 
     // Assert
     expect(screen.getByText("Add New Part")).toBeInTheDocument();
@@ -102,6 +100,7 @@ describe("PartAddManager Component", () => {
 
   it('shows ControlFields and ParamsFields when category is "promoter"', async () => {
     // Arrange
+    const user = userEvent.setup();
     render(
       <TooltipProvider>
         <PartAddManager />
@@ -109,9 +108,9 @@ describe("PartAddManager Component", () => {
     );
 
     // Act
-    await userEvent.click(screen.getByTestId("part-add-button"));
+    await user.click(screen.getByTestId("part-add-button"));
     fireEvent.click(screen.getByText("Select category"));
-    await userEvent.click(within(await screen.findByRole("listbox")).getByText("Promoter"));
+    await user.click(within(await screen.findByRole("listbox")).getByText("Promoter"));
 
     // Assert
     waitFor(() => {
@@ -122,6 +121,7 @@ describe("PartAddManager Component", () => {
 
   it('shows ParamsFields when category is "protein"', async () => {
     // Arrange
+    const user = userEvent.setup();
     render(
       <TooltipProvider>
         <PartAddManager />
@@ -129,9 +129,9 @@ describe("PartAddManager Component", () => {
     );
 
     // Act
-    await userEvent.click(screen.getByTestId("part-add-button"));
+    await user.click(screen.getByTestId("part-add-button"));
     fireEvent.click(screen.getByText("Select category"));
-    await userEvent.click(within(await screen.findByRole("listbox")).getByText("Protein"));
+    await user.click(within(await screen.findByRole("listbox")).getByText("Protein"));
 
     // Assert
     waitFor(() => {
@@ -142,6 +142,7 @@ describe("PartAddManager Component", () => {
 
   it("closes dialog when cancel button is clicked", async () => {
     // Arrange
+    const user = userEvent.setup();
     render(
       <TooltipProvider>
         <PartAddManager />
@@ -149,8 +150,8 @@ describe("PartAddManager Component", () => {
     );
 
     // Act
-    await userEvent.click(screen.getByTestId("part-add-button"));
-    await userEvent.click(screen.getByTestId("part-add-cancel-button"));
+    await user.click(screen.getByTestId("part-add-button"));
+    await user.click(screen.getByTestId("part-add-cancel-button"));
 
     // Assert
     expect(screen.queryByText("Add New Part")).not.toBeInTheDocument();

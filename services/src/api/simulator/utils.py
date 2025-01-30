@@ -17,7 +17,7 @@ def create_func_str(odes: list[str]) -> str:
     indented_lines = [f'{indent}d{i}dt = {odes[i]}' for i in range(num_equations)]
     indented_lines += [f'{indent}return ({return_tuple})']
 
-    return f'def func(y, t, *arg):\n{"\n".join(indented_lines)}'
+    return f'def func(t, y, *arg):\n{"\n".join(indented_lines)}'
 
 
 def get_func_from_str(func_str: str) -> Callable:

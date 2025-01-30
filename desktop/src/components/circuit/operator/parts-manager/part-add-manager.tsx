@@ -1,9 +1,8 @@
-"use client";
-
 import { ControlFields } from "@/components/circuit/operator/parts-manager/form-fields/controls";
 import { InputField } from "@/components/circuit/operator/parts-manager/form-fields/input";
 import { ParamsFields } from "@/components/circuit/operator/parts-manager/form-fields/params";
 import { SelectField } from "@/components/circuit/operator/parts-manager/form-fields/select";
+import { PartsCommandList } from "@/components/circuit/operator/parts-manager/parts-command-list";
 import { useParts } from "@/components/circuit/parts/parts-context";
 import { partSchema } from "@/components/circuit/parts/schema";
 import { Button } from "@/components/ui/button";
@@ -17,6 +16,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Form } from "@/components/ui/form";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
@@ -66,12 +66,41 @@ const PartAddForm = ({ closeDialog }) => {
 
   const category = form.watch("category");
 
+  const handleSelectPart = (partName: string) => {
+    const selectedPart = parts[partName];
+    if (!selectedPart) return;
+
+    // @ts-ignore
+    form.reset({
+      name: selectedPart.name,
+      description: selectedPart.description,
+      category: selectedPart.category,
+      sequence: selectedPart.sequence,
+      controlBy: selectedPart.controlBy || [],
+      params: selectedPart.params || {},
+    });
+  };
+
   return (
     <>
       <DialogHeader>
         <DialogTitle>Add New Part</DialogTitle>
         <DialogDescription>Fill in the necessary information to create a new part.</DialogDescription>
       </DialogHeader>
+
+      <div className="flex justify-end px-4 mb-2">
+        <Popover>
+          <PopoverTrigger asChild>
+            <Button variant="outline" size="sm">
+              Fill form with existing part
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent className="p-0 w-72">
+            <PartsCommandList onSelect={handleSelectPart} />
+          </PopoverContent>
+        </Popover>
+      </div>
+
       <Form {...form}>
         <ScrollArea className="h-full">
           <form className="flex flex-col space-y-8 px-4">
@@ -132,6 +161,7 @@ const PartAddForm = ({ closeDialog }) => {
             )}
           </form>
         </ScrollArea>
+
         <DialogFooter>
           <Button variant="secondary" onClick={() => closeDialog()} data-testid="part-add-cancel-button">
             Cancel

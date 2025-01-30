@@ -23,12 +23,6 @@ vi.mock("@/components/editor/editor-context", () => ({
 }));
 
 describe("ResetCircuit Component", () => {
-  beforeEach(() => {
-    vi.useFakeTimers({
-      shouldAdvanceTime: true,
-    });
-  });
-
   afterEach(() => {
     vi.restoreAllMocks();
   });
@@ -40,7 +34,6 @@ describe("ResetCircuit Component", () => {
 
     // Act
     await user.hover(screen.getByTestId("reset-circuit-button"));
-    vi.advanceTimersByTime(500);
 
     // Assert
     await waitFor(() => {

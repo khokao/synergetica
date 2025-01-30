@@ -8,17 +8,13 @@ import * as RadixTooltip from "@radix-ui/react-tooltip";
 import { ChartSpline, RotateCw, Zap, ZapOff } from "lucide-react";
 
 export const SimulatorButtons = () => {
-  const { openPanels, togglePanel } = usePanelContext();
+  const { openPanel } = usePanelContext();
   const { validationError } = useEditorContext();
   const { isHealthcheckOk } = useApiStatus();
   const { solutions, formulate, reset } = useSimulator();
 
   const handleRunSimulate = async () => {
-    const panelPosition = "right";
-    const isOpen = openPanels[panelPosition];
-    if (!isOpen) {
-      togglePanel(panelPosition);
-    }
+    openPanel("right");
     formulate();
   };
 

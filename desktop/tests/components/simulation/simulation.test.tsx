@@ -118,8 +118,8 @@ describe("Simulation Component", () => {
     render(<Simulation />);
 
     // Assert
-    expect(screen.getByText("No simulation data.")).toBeInTheDocument();
-    expect(screen.getByText("Click 'Simulate' button.")).toBeInTheDocument();
+    expect(screen.getByText("No simulation results.")).toBeInTheDocument();
+    expect(screen.getByText("Click the simulation start button.")).toBeInTheDocument();
   });
 
   it("renders Chart, Sliders, and GenerationButtons when validationError is empty and solutions is available", () => {

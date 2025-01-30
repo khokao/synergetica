@@ -1,4 +1,4 @@
-name: "Node biome check"
+name: "Biome"
 
 on:
   push:

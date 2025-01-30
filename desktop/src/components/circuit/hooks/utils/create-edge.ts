@@ -4,7 +4,7 @@ import { nanoid } from "nanoid";
 
 export const createEdge = (sourceId: string, targetId: string): Edge => ({
   id: nanoid(),
-  type: "custom",
+  type: "connection",
   source: sourceId,
   target: targetId,
   sourceHandle: "right",

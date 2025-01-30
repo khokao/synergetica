@@ -1,16 +1,15 @@
 import { DnDProvider, useDnD } from "@/components/circuit/dnd/dnd-context";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import type React from "react";
 import { describe, expect, it } from "vitest";
 
-const TestComponent: React.FC = () => {
-  const [dndCategory, setDnDCategory] = useDnD();
+const TestComponent = () => {
+  const { dndCategory, setDnDCategory } = useDnD();
 
   return (
     <div>
       <span data-testid="dnd-category">{dndCategory || "No category"}</span>
-      <button type="button" onClick={() => setDnDCategory("Test Category")}>
+      <button type="button" onClick={() => setDnDCategory("Promoter")}>
         Set Category
       </button>
     </div>
@@ -19,18 +18,15 @@ const TestComponent: React.FC = () => {
 
 describe("DnDContext", () => {
   it("provides a default null value for the category when used within a DnDProvider", () => {
-    // Arrange
+    // Arrange & Act
     render(
       <DnDProvider>
         <TestComponent />
       </DnDProvider>,
     );
 
-    // Act
-    const dndCategoryElement = screen.getByTestId("dnd-category");
-
     // Assert
-    expect(dndCategoryElement.textContent).toBe("No category");
+    expect(screen.getByTestId("dnd-category")).toHaveTextContent("No category");
   });
 
   it("updates the category when setDnDCategory is called", async () => {
@@ -47,7 +43,6 @@ describe("DnDContext", () => {
     await user.click(button);
 
     // Assert
-    const dndCategoryElement = screen.getByTestId("dnd-category");
-    expect(dndCategoryElement.textContent).toBe("Test Category");
+    expect(screen.getByTestId("dnd-category")).toHaveTextContent("Promoter");
   });
 });

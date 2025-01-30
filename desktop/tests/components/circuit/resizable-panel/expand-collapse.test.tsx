@@ -1,40 +1,20 @@
 import { ExpandCollapseButton } from "@/components/circuit/resizable-panel/expand-collapse";
+import { PanelProvider } from "@/components/circuit/resizable-panel/resizable-panel-context";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { vi } from "vitest";
-
-let openPanels = { left: false, right: true };
-const togglePanelMock = vi.fn(() => {
-  openPanels.left = !openPanels.left;
-});
-
-vi.mock("@/components/circuit/resizable-panel/resizable-panel-context", () => ({
-  usePanelContext: () => ({
-    openPanels: openPanels,
-    togglePanel: togglePanelMock,
-  }),
-}));
 
 describe("ExpandCollapseButton", () => {
-  beforeEach(() => {
-    vi.useFakeTimers({
-      shouldAdvanceTime: true,
-    });
-
-    openPanels = { left: false, right: true };
-    togglePanelMock.mockClear();
-  });
-  afterEach(() => {
-    vi.restoreAllMocks();
-  });
-
   it("displays 'Open' tooltip on hover over open button", async () => {
     // Arrange
-    render(<ExpandCollapseButton position="left" />);
+    const user = userEvent.setup();
+    render(
+      <PanelProvider>
+        <ExpandCollapseButton position="left" />
+      </PanelProvider>,
+    );
 
     // Act
-    await userEvent.hover(screen.getByTestId("expand-collapse-button"));
-    vi.advanceTimersByTime(500);
+    await user.hover(screen.getByTestId("expand-collapse-button"));
 
     // Assert
     await waitFor(() => {
@@ -42,28 +22,23 @@ describe("ExpandCollapseButton", () => {
     });
   });
 
-  it("displays 'Close' tooltip on hover over close button", async () => {
+  it("displays 'Close' tooltip on hover after the panel is toggled open", async () => {
     // Arrange
-    render(<ExpandCollapseButton position="right" />);
+    const user = userEvent.setup();
+    render(
+      <PanelProvider>
+        <ExpandCollapseButton position="left" />
+      </PanelProvider>,
+    );
 
     // Act
-    await userEvent.hover(screen.getByTestId("expand-collapse-button"));
-    vi.advanceTimersByTime(500);
+    await user.click(screen.getByTestId("expand-collapse-button"));
 
     // Assert
+    await user.unhover(screen.getByTestId("expand-collapse-button")); // unhover before hovering again
+    await user.hover(screen.getByTestId("expand-collapse-button"));
     await waitFor(() => {
-      expect(screen.getByRole("tooltip", { name: "Close" })).toBeInTheDocument();
+      expect(screen.getByRole("tooltip")).toHaveTextContent("Close");
     });
-  });
-
-  it("calls togglePanel when the button is clicked", async () => {
-    // Arrange
-    render(<ExpandCollapseButton position="left" />);
-
-    // Act
-    await userEvent.click(screen.getByTestId("expand-collapse-button"));
-
-    // Assert
-    expect(togglePanelMock).toHaveBeenCalledTimes(1);
   });
 });

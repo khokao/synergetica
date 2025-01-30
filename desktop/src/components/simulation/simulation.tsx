@@ -50,7 +50,7 @@ export const Simulation = () => {
   if (solutions.length === 0) {
     return (
       <div className="flex items-center justify-center h-full">
-        <Message lines={["No simulation data.", "Click 'Simulate' button."]} />
+        <Message lines={["No simulation results.", "Click the simulation start button."]} />
       </div>
     );
   }

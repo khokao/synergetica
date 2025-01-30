@@ -20,8 +20,7 @@ const defaultSimulatorContext = {
 } as any;
 
 const defaultPanelContext = {
-  openPanels: { right: false },
-  togglePanel: vi.fn(),
+  openPanel: vi.fn(),
   // biome-ignore  lint/suspicious/noExplicitAny: For brevity and clarity.
 } as any;
 
@@ -80,9 +79,6 @@ function setupMocks({
 describe("SimulatorButtons", () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    vi.useFakeTimers({
-      shouldAdvanceTime: true,
-    });
   });
   afterEach(() => {
     vi.restoreAllMocks();
@@ -120,8 +116,7 @@ describe("SimulatorButtons", () => {
     render(<SimulatorButtons />);
 
     // Act
-    user.hover(screen.getByTestId("zap-icon"));
-    vi.advanceTimersByTime(500);
+    await user.hover(screen.getByTestId("zap-icon"));
 
     // Assert
     await waitFor(() => {
@@ -137,8 +132,7 @@ describe("SimulatorButtons", () => {
     render(<SimulatorButtons />);
 
     // Act
-    user.hover(screen.getByTestId("zapoff-icon"));
-    vi.advanceTimersByTime(500);
+    await user.hover(screen.getByTestId("zapoff-icon"));
 
     // Assert
     await waitFor(() => {
@@ -202,11 +196,11 @@ describe("SimulatorButtons", () => {
     // Arrange
     const user = userEvent.setup();
     const mockFormulate = vi.fn();
-    const mockTogglePanel = vi.fn();
+    const mockOpenPanel = vi.fn();
 
     setupMocks({
       simulator: { formulate: mockFormulate },
-      panel: { openPanels: { right: false }, togglePanel: mockTogglePanel },
+      panel: { openPanel: mockOpenPanel },
     });
 
     render(<SimulatorButtons />);
@@ -217,7 +211,7 @@ describe("SimulatorButtons", () => {
 
     // Assert
     expect(mockFormulate).toHaveBeenCalledTimes(1);
-    expect(mockTogglePanel).toHaveBeenCalledTimes(1);
+    expect(mockOpenPanel).toHaveBeenCalledTimes(1);
   });
 
   it("calls handleResetSimulate when the Reset button is clicked and enabled", async () => {

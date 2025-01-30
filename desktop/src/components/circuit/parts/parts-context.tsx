@@ -12,19 +12,19 @@ type Part = z.infer<typeof partSchema>;
 type PartsCollection = z.infer<typeof partsCollectionSchema>;
 
 class InteractionStore {
-  private proteinToPromotersMap: Record<string, Array<{ to: string; type: string }>> = {};
-  private promoterToProteinsMap: Record<string, Array<{ from: string; type: string }>> = {};
+  private proteinToPromotersMap: Record<string, Array<{ from: string; to: string; type: string }>> = {};
+  private promoterToProteinsMap: Record<string, Array<{ from: string; to: string; type: string }>> = {};
 
   addInteraction(from: string, to: string, type: string) {
     if (!this.proteinToPromotersMap[from]) {
       this.proteinToPromotersMap[from] = [];
     }
-    this.proteinToPromotersMap[from].push({ to, type });
+    this.proteinToPromotersMap[from].push({ from, to, type });
 
     if (!this.promoterToProteinsMap[to]) {
       this.promoterToProteinsMap[to] = [];
     }
-    this.promoterToProteinsMap[to].push({ from, type });
+    this.promoterToProteinsMap[to].push({ from, to, type });
   }
 
   clear() {

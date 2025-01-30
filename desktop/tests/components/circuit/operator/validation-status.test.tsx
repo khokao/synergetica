@@ -2,102 +2,89 @@ import { ValidationStatus } from "@/components/circuit/operator/validation-statu
 import { useEditorContext } from "@/components/editor/editor-context";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { type Mock, vi } from "vitest";
+import { vi } from "vitest";
 
-let openPanels = { left: false, right: false };
-const togglePanelMock = vi.fn(() => {
-  openPanels.left = !openPanels.left;
+const openPanelMock = vi.fn();
+
+vi.mock("@/components/circuit/resizable-panel/resizable-panel-context", () => {
+  return {
+    usePanelContext: () => ({
+      openPanel: openPanelMock,
+    }),
+  };
 });
-
-vi.mock("@/components/circuit/resizable-panel/resizable-panel-context", () => ({
-  usePanelContext: () => ({
-    openPanels: openPanels,
-    togglePanel: togglePanelMock,
-  }),
-}));
 
 vi.mock("@/components/editor/editor-context", () => ({
   useEditorContext: vi.fn(),
 }));
 
 describe("ValidationStatus", () => {
-  beforeEach(() => {
-    vi.useFakeTimers({
-      shouldAdvanceTime: true,
-    });
-
-    openPanels = { left: false, right: false };
-    togglePanelMock.mockClear();
-  });
-
   afterEach(() => {
     vi.restoreAllMocks();
   });
 
-  it("displays tooltip on hover over button", async () => {
+  it("renders CircleCheck icon and displays tooltip when no validation errors (no circuit)", async () => {
     // Arrange
-    (useEditorContext as Mock).mockReturnValue({ validationError: null });
-
-    render(<ValidationStatus />);
+    const user = userEvent.setup();
+    // @ts-ignore
+    vi.mocked(useEditorContext).mockReturnValue({ validationError: null }); // no circuit
 
     // Act
-    await userEvent.hover(screen.getByTestId("validation-status-button"));
-    vi.advanceTimersByTime(500);
+    render(<ValidationStatus />);
+    await user.hover(screen.getByTestId("validation-status-button"));
 
     // Assert
+    expect(screen.getByTestId("validation-status-button").querySelector("svg")).toHaveClass("text-green-600");
     await waitFor(() => {
-      expect(screen.getByRole("tooltip")).toHaveTextContent("Validation status");
+      expect(screen.getByRole("tooltip")).toHaveTextContent("Circuit is valid");
     });
   });
 
-  it("renders CircleCheck icon when there are no validation errors", () => {
+  it("renders CircleCheck icon when there are no validation errors (valid circuit)", async () => {
     // Arrange
-    (useEditorContext as Mock).mockReturnValue({ validationError: null });
-
-    render(<ValidationStatus />);
-
-    // Assert
-    const icon = screen.getByTestId("validation-status-button").querySelector("svg");
-    expect(icon).toHaveClass("!text-green-600");
-  });
-
-  it("renders AlertCircle icon when there are validation errors", () => {
-    // Arrange
-    const errors = ["Error 1", "Error 2"];
-    (useEditorContext as Mock).mockReturnValue({ validationError: errors });
-
-    render(<ValidationStatus />);
-
-    // Assert
-    const icon = screen.getByTestId("validation-status-button").querySelector("svg");
-    expect(icon).toHaveClass("!text-red-600");
-  });
-
-  it("calls togglePanel with 'left' when the button is clicked and panel is closed", async () => {
-    // Arrange
-    (useEditorContext as Mock).mockReturnValue({ validationError: null });
-    openPanels.left = false;
-
-    render(<ValidationStatus />);
+    const user = userEvent.setup();
+    // @ts-ignore
+    vi.mocked(useEditorContext).mockReturnValue({ validationError: [] }); // valid circuit
 
     // Act
-    await userEvent.click(screen.getByTestId("validation-status-button"));
+    render(<ValidationStatus />);
+    await user.hover(screen.getByTestId("validation-status-button"));
 
     // Assert
-    expect(togglePanelMock).toHaveBeenCalledTimes(1);
+    expect(screen.getByTestId("validation-status-button").querySelector("svg")).toHaveClass("text-green-600");
+    await waitFor(() => {
+      expect(screen.getByRole("tooltip")).toHaveTextContent("Circuit is valid");
+    });
   });
 
-  it("does not call togglePanel when the panel is already open", async () => {
+  it("renders AlertCircle icon when there are validation errors (invalid circuit)", async () => {
     // Arrange
-    (useEditorContext as Mock).mockReturnValue({ validationError: null });
-    openPanels.left = true;
-
-    render(<ValidationStatus />);
+    const user = userEvent.setup();
+    // @ts-ignore
+    vi.mocked(useEditorContext).mockReturnValue({ validationError: [{ message: "error msg", line: 1 }] }); // invalid circuit
 
     // Act
-    await userEvent.click(screen.getByTestId("validation-status-button"));
+    render(<ValidationStatus />);
+    await user.hover(screen.getByTestId("validation-status-button"));
 
     // Assert
-    expect(togglePanelMock).not.toHaveBeenCalled();
+    expect(screen.getByTestId("validation-status-button").querySelector("svg")).toHaveClass("text-red-600");
+    await waitFor(() => {
+      expect(screen.getByRole("tooltip")).toHaveTextContent("Circuit has errors");
+    });
+  });
+
+  it("calls openPanel with 'left' when the button is clicked", async () => {
+    // Arrange
+    const user = userEvent.setup();
+    // @ts-ignore
+    vi.mocked(useEditorContext).mockReturnValue({ validationError: null }); // no circuit
+
+    // Act
+    render(<ValidationStatus />);
+    await user.click(screen.getByTestId("validation-status-button"));
+
+    // Assert
+    expect(openPanelMock).toHaveBeenCalledWith("left");
   });
 });

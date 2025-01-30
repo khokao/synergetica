@@ -4,23 +4,20 @@ import { Button } from "@/components/ui/button";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import * as RadixTooltip from "@radix-ui/react-tooltip";
 import { AlertCircle, CircleCheck } from "lucide-react";
-import type { FC } from "react";
 
-export const ValidationStatus: FC = () => {
+export const ValidationStatus = () => {
   const { validationError } = useEditorContext();
-  const { openPanels, togglePanel } = usePanelContext();
+  const { openPanel } = usePanelContext();
 
-  const noError = !validationError || validationError.length === 0;
-  const isOpen = openPanels.left;
+  const isValid = !validationError || validationError.length === 0;
 
-  const Icon = noError ? CircleCheck : AlertCircle;
-  const iconClass = noError ? "h-5 w-5 !text-green-600" : "h-5 w-5 !text-red-600";
+  const { Icon, iconClassName, tooltipContent } = isValid
+    ? { Icon: CircleCheck, iconClassName: "h-5 w-5 text-green-600", tooltipContent: "Circuit is valid" }
+    : { Icon: AlertCircle, iconClassName: "h-5 w-5 text-red-600", tooltipContent: "Circuit has errors" };
 
   const handleClick = (e) => {
     e.stopPropagation();
-    if (!isOpen) {
-      togglePanel("left");
-    }
+    openPanel("left");
   };
 
   return (
@@ -36,14 +33,12 @@ export const ValidationStatus: FC = () => {
               aria-label="validation status"
               data-testid="validation-status-button"
             >
-              <Icon className={iconClass} />
+              <Icon className={iconClassName} />
             </Button>
           </TooltipTrigger>
           {/* Using RadixTooltip.Portal to avoid layout issues caused by parent styles */}
           <RadixTooltip.Portal>
-            <TooltipContent>
-              <p>Validation status</p>
-            </TooltipContent>
+            <TooltipContent>{tooltipContent}</TooltipContent>
           </RadixTooltip.Portal>
         </Tooltip>
       </div>

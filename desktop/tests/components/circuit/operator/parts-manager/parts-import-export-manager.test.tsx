@@ -11,6 +11,25 @@ const mockSetParts = vi.fn();
 const mockSetNodes = vi.fn();
 const mockGetNodes = vi.fn().mockReturnValue([]);
 
+const defaultParts = {
+  PromoterA: {
+    name: "PromoterA",
+    description: "PromoterA Description",
+    category: "Promoter",
+    sequence: "ATGC",
+    controlBy: [],
+    params: {
+      Ydef: 1.0,
+    },
+  },
+};
+vi.mock("@/components/circuit/parts/parts-context", () => ({
+  useParts: () => ({
+    parts: defaultParts,
+    setParts: mockSetParts,
+  }),
+}));
+
 vi.mock("@tauri-apps/plugin-dialog", () => ({
   open: vi.fn(),
   save: vi.fn(),
@@ -21,34 +40,10 @@ vi.mock("@tauri-apps/plugin-fs", () => ({
   writeTextFile: vi.fn(),
 }));
 
-vi.mock("sonner", () => ({
-  toast: {
-    success: vi.fn(),
-    error: vi.fn(),
-  },
-}));
-
 vi.mock("@xyflow/react", () => ({
   useReactFlow: () => ({
     getNodes: mockGetNodes,
     setNodes: mockSetNodes,
-  }),
-}));
-
-const defaultParts = {
-  testPromoterName: {
-    name: "testPromoterName",
-    description: "Test Promoter Description",
-    category: "Promoter",
-    sequence: "ATGC",
-    controlBy: [],
-    params: {},
-  },
-};
-vi.mock("@/components/circuit/parts/parts-context", () => ({
-  useParts: () => ({
-    parts: defaultParts,
-    setParts: mockSetParts,
   }),
 }));
 
@@ -67,10 +62,11 @@ describe("PartsImportExportManager Component", () => {
 
   it("handles successful import", async () => {
     // Arrange
+    const user = userEvent.setup();
     const fileContent = JSON.stringify({
-      testTerminatorName: {
-        name: "testTerminatorName",
-        description: "Test Terminator Description",
+      TerminatorA: {
+        name: "TerminatorA",
+        description: "TerminatorA Description",
         category: "Terminator",
         sequence: "ATGC",
         controlBy: [],
@@ -87,7 +83,7 @@ describe("PartsImportExportManager Component", () => {
     );
 
     // Act
-    await userEvent.click(screen.getByTestId("parts-import-button"));
+    await user.click(screen.getByTestId("parts-import-button"));
 
     // Assert
     expect(openMock).toHaveBeenCalledWith({
@@ -103,9 +99,9 @@ describe("PartsImportExportManager Component", () => {
     expect(readTextFileMock).toHaveBeenCalledWith("path/to/file.json");
     expect(mockSetNodes).toHaveBeenCalledWith([]);
     expect(mockSetParts).toHaveBeenCalledWith({
-      testTerminatorName: {
-        name: "testTerminatorName",
-        description: "Test Terminator Description",
+      TerminatorA: {
+        name: "TerminatorA",
+        description: "TerminatorA Description",
         category: "Terminator",
         sequence: "ATGC",
         controlBy: [],
@@ -117,6 +113,7 @@ describe("PartsImportExportManager Component", () => {
 
   it("handles failed import", async () => {
     // Arrange
+    const user = userEvent.setup();
     const openMock = vi.spyOn(dialog, "open").mockRejectedValue(new Error("Import failed"));
 
     render(
@@ -126,7 +123,7 @@ describe("PartsImportExportManager Component", () => {
     );
 
     // Act
-    await userEvent.click(screen.getByTestId("parts-import-button"));
+    await user.click(screen.getByTestId("parts-import-button"));
 
     // Assert
     await waitFor(() => {
@@ -137,6 +134,7 @@ describe("PartsImportExportManager Component", () => {
 
   it("handles successful export", async () => {
     // Arrange
+    const user = userEvent.setup();
     const saveMock = vi.spyOn(dialog, "save").mockResolvedValue("path/to/save.json");
     const writeTextFileMock = vi.spyOn(fs, "writeTextFile").mockResolvedValue();
 
@@ -147,7 +145,7 @@ describe("PartsImportExportManager Component", () => {
     );
 
     // Act
-    await userEvent.click(screen.getByTestId("parts-export-button"));
+    await user.click(screen.getByTestId("parts-export-button"));
 
     // Assert
     expect(saveMock).toHaveBeenCalledWith({
@@ -160,6 +158,7 @@ describe("PartsImportExportManager Component", () => {
 
   it("handles failed export", async () => {
     // Arrange
+    const user = userEvent.setup();
     const saveMock = vi.spyOn(dialog, "save").mockRejectedValue(new Error("Export failed"));
 
     render(
@@ -169,7 +168,7 @@ describe("PartsImportExportManager Component", () => {
     );
 
     // Act
-    await userEvent.click(screen.getByTestId("parts-export-button"));
+    await user.click(screen.getByTestId("parts-export-button"));
 
     // Assert
     expect(saveMock).toHaveBeenCalled();

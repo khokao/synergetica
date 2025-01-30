@@ -1,4 +1,4 @@
-name: "Python ruff format"
+name: "Ruff Formatter"
 
 on:
   push:

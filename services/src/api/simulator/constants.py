@@ -5,4 +5,4 @@ DMRNA = 0.025  # mRNA degradation rate (unit: 1/s)
 ERPU = 0.02  # Translation efficiency coefficient
 
 T0 = 0  # Simulation start time
-TF = 300  # Simulation end time
+TF = 299  # Simulation end time

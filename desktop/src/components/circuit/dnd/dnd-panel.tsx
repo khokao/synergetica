@@ -3,7 +3,7 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 import * as RadixTooltip from "@radix-ui/react-tooltip";
 import { RiText } from "@remixicon/react";
 import { CornerUpRight, RectangleHorizontal, Replace } from "lucide-react";
-import React, { useState } from "react";
+import { useState } from "react";
 
 const IconTooltip = ({ label, icon, color, category, onDragStart }) => {
   const [tooltipVisible, setTooltipVisible] = useState(false);
@@ -38,7 +38,7 @@ const IconTooltip = ({ label, icon, color, category, onDragStart }) => {
 };
 
 export const DnDPanel = () => {
-  const [_, setDnDCategory] = useDnD();
+  const { setDnDCategory } = useDnD();
 
   const handleDragStart = (category) => {
     if (!setDnDCategory) return;
