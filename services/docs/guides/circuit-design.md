@@ -1,23 +1,38 @@
 ## Building circuits
 
-Here, you can learn more about how to create a genetic circuit using Synergetica.
+In this guide, you can learn more about how to create a genetic circuit using Synergetica.
 
 ### Block types
 
-**Promoter**: The promoter part controls the timing and strength of transcription for the downstream DNA sequence. Specific proteins can bind to the promoter to either activate or repress transcription.
+![Promoter part](../assets/imgs/guides/circuit-design/promoter.png){ align=left width="200" }
 
-![](../assets/imgs/guides/circuit-design/promoter.png){ width="200" height="150"}
+#### Promoter
+A promoter controls the timing and strength of transcription for the downstream DNA sequence. Specific proteins can bind to it to either activate or repress transcription.
 
+<div style="clear: both;"></div>
 
-**Protein**: The protein part represents a protein that is actually produced within a cell. In living organisms, proteins serve as the functional entities responsible for various biological processes.
+![Protein part](../assets/imgs/guides/circuit-design/protein.png){ align=left width="200" }
 
-![](../assets/imgs/guides/circuit-design/protein.png){ width="200" height="150"}
+#### Protein
 
-**Terminator**: A terminator is a part that indicates the end of transcription. It also plays a role in regulating the degradation rate of the DNA strand. If the same terminator part is used multiple times, a phenomenon called homologous recombination may occur, potentially altering the DNA sequence. To prevent this, Synergetica provides multiple terminator parts.
+A protein is a functional entity that is actually produced within a cell. In living organisms, proteins serve as the functional components responsible for various biological processes.
 
-![](../assets/imgs/guides/circuit-design/terminator.png){ width="200" height="150"}
+<div style="clear: both;"></div>
 
-*For detailed explanations of each part in each block type, please refer to <u>[this page]()</u>.
+![Terminator part](../assets/imgs/guides/circuit-design/terminator.png){ align=left width="200" }
+
+#### Terminator
+
+A terminator marks the end of transcription and also plays a role in regulating the degradation rate of the DNA strand.
+
+<div style="clear: both;"></div>
+
+!!! info
+	When multiple identical terminators exist, homologous recombination may occur, potentially altering the DNA sequence. To prevent this, Synergetica offers multiple terminator variants.
+
+!!! note
+	For more details about the specific parts within each category, please refer to <u>[this page]()</u>.
+
 
 ### Method 1: Arranging blocks
 
@@ -108,7 +123,7 @@ Circuit can be designed through coding with DSL.
 ![](../assets/imgs/guides/circuit-design/invalid.png)
 
 !!! Warning
-	If the designed circuit is invalid, `Simulation` can't be conducted. 
+	If the designed circuit is invalid, `Simulation` can't be conducted.
 
 Here are basical rules of valid circuit.
 
@@ -152,5 +167,3 @@ Here are basical rules of valid circuit.
 
 	- A promoter cannot appear after Proteins.
 	![](../assets/imgs/guides/circuit-design/invalid_circuit4.png)
-
-
