@@ -53,9 +53,9 @@
 
 This directory contains a Python-based API implementation and documentation.
 
-- [**`src/api`**](src/api) contains the API implementation developed using FastAPI
-- [**`src/train`**](src/train) includes scripts for building the ML model used by the DNA sequence generation
-- [**`docs`**](docs) contains Markdown files for documentation built with MkDocs
+- [`src/api`](src/api) contains the API implementation developed using FastAPI
+- [`src/train`](src/train) includes scripts for building the ML model used by the DNA sequence generation
+- [`docs`](docs) contains Markdown files for documentation built with MkDocs
 
 The API provides two main features: **simulation** and **generation**. For more details on each feature, please refer to the [documentation](https://khokao.github.io/synergetica/).
 
@@ -94,6 +94,9 @@ The API provides two main features: **simulation** and **generation**. For more 
    ```sh
    uv run huggingface-cli download khokao/synergetica base.ckpt --local-dir src/api/generator/checkpoints
    ```
+
+> [!NOTE]
+> The pretrained model weights are required for the iterative optimization that uses the predictive model to generate DNA sequences.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -175,8 +178,6 @@ uv run pytest
 
 The Docker image is managed in a [Docker Hub repository](https://hub.docker.com/r/khokao/synergetica) and is automatically built and deployed via GitHub Actions.
 
-The Docker image only includes the pretrained model weights and API source code. ML model training and evaluation scripts, as well as documentation source files, are excluded.
-
 **Build the Docker image locally**
 
 ```sh
@@ -197,6 +198,9 @@ If you prefer to pull the prebuilt image directly from Docker Hub, run:
 docker pull khokao/synergetica:latest
 docker run --rm -p 7007:7007 khokao/synergetica:latest
 ```
+
+> [!NOTE]
+> The Docker image only includes the pretrained model weights and API source code. ML model training and evaluation scripts, as well as documentation source files, are excluded.
 
 ### 4.3. ML Model Training and Evaluation
 
