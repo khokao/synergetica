@@ -6,13 +6,14 @@ import { Handle, Position } from "@xyflow/react";
 import type { NodeProps } from "@xyflow/react";
 
 export const CustomChildNode = ({ id, selected, data }: NodeProps) => {
+  const outlineWidth = data.simulationTargetHighlight ? "4px" : "2px";
+  const highlightColor = data.simulationTargetHighlight || (selected ? "#DB2777" : "#6B7280");
+
   return (
     <div
       className="relative rounded-xl"
       style={{
-        borderWidth: data.simulationTargetHighlight ? "4px" : "2px",
-        borderColor: (data.simulationTargetHighlight || (selected ? "#DB2777" : "#6B7280")) as string,
-        borderStyle: "solid",
+        outline: `solid ${outlineWidth} ${highlightColor}`,
         height: NODE_HEIGHT,
         width: NODE_WIDTH,
       }}
