@@ -45,7 +45,7 @@ Different types of parameters are required for each parts category(= block type)
 
 
 !!! Warning
-	To save added parts, you have to export parts database following the description in <u>[Import & Export parts](#import--export-parts)</u> section 
+	To save added parts, you have to export parts database following the description in <u>[Import & Export parts](#import-export-parts)</u> section 
 
 ## Delete parts
 
