@@ -1,8 +1,7 @@
 import { useApiStatus } from "@/components/simulation/api-status-context";
 import { DEFAULT_SLIDER_PARAM, WS_URL } from "@/components/simulation/constants";
-import { useReactFlow } from "@xyflow/react";
+import { useNodes, useReactFlow } from "@xyflow/react";
 import type { Node } from "@xyflow/react";
-import { useNodes } from "@xyflow/react";
 import { deepEqual } from "fast-equals";
 import { produce } from "immer";
 import type React from "react";
