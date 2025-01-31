@@ -6,8 +6,21 @@ import { ReactFlowProvider } from "@xyflow/react";
 import * as xyflow from "@xyflow/react";
 import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
 
+vi.mock("@xyflow/react", async () => {
+  const actual = await vi.importActual<typeof import("@xyflow/react")>("@xyflow/react");
+
+  const mockUseNodes = vi.fn(() => {
+    return actual.useNodes();
+  });
+
+  return {
+    ...actual,
+    useNodes: mockUseNodes,
+  };
+});
+
 vi.mock("@/components/simulation/api-status-context", () => ({
-  useApiStatus: vi.fn().mockReturnValue({ isHealthcheckOk: true }), // デフォルトは true
+  useApiStatus: vi.fn().mockReturnValue({ isHealthcheckOk: true }),
 }));
 
 const MockWebSocket = vi.fn().mockImplementation(function (this) {
@@ -230,7 +243,7 @@ describe("SimulatorContext", () => {
       },
     ];
 
-    const mockUseNodes = vi.spyOn(xyflow, "useNodes").mockReturnValue(prevNodes);
+    vi.mocked(xyflow.useNodes).mockReturnValue(prevNodes);
 
     const { result, rerender } = renderHook(() => useSimulator(), { wrapper });
 
@@ -241,7 +254,7 @@ describe("SimulatorContext", () => {
 
     // Act
     act(() => {
-      mockUseNodes.mockReturnValue(nextNodes);
+      vi.mocked(xyflow.useNodes).mockReturnValue(nextNodes);
       rerender();
     });
 
