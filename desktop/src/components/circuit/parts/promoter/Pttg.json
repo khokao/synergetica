@@ -1,0 +1,21 @@
+{
+  "name": "Pttg",
+  "description": "Regulated promoter repressed by TtgR_AM",
+  "category": "Promoter",
+  "sequence": "CACCCAGCAGTATTTACAAACAACCATGAATGTAAGTATATTCCTTAGCAA",
+  "controlBy": [
+    {
+      "name": "TtgR_AM",
+      "type": "Repression",
+      "params": {
+        "Ymax": 0.46,
+        "Ymin": 0.0034,
+        "K": 0.1,
+        "n": 2
+      }
+    }
+  ],
+  "params": {
+    "Ydef": 0.46
+  }
+}

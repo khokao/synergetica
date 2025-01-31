@@ -1,0 +1,21 @@
+{
+  "name": "PsalTTC",
+  "description": "Regulated promoter activated by NahR_AM",
+  "category": "Promoter",
+  "sequence": "GGGGCCTCGCTTGGGTTATTGCTGGTGCCCGGCCGGGCGCAATATTCATGTTGATGATTTATTATATATCGAGTGGTGTATTTATTTATATTGTTTGCTCCGTTACCGTTATTAAC",
+  "controlBy": [
+    {
+      "name": "NahR_AM",
+      "type": "Activation",
+      "params": {
+        "Ymax": 2.8,
+        "Ymin": 0.0047,
+        "K": 0.1,
+        "n": 2
+      }
+    }
+  ],
+  "params": {
+    "Ydef": 0.0047
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "name": "Ptac",
+  "description": "Regulated promoter repressed by LacI_AM",
+  "category": "Promoter",
+  "sequence": "TGTTGACAATTAATCATCGGCTCGTATAATGTGTGGAATTGTGAGCGCTCACAATT",
+  "controlBy": [
+    {
+      "name": "LacI_AM",
+      "type": "Repression",
+      "params": {
+        "Ymax": 3.3,
+        "Ymin": 0.0048,
+        "K": 0.1,
+        "n": 2
+      }
+    }
+  ],
+  "params": {
+    "Ydef": 3.3
+  }
+}

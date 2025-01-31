@@ -1,0 +1,21 @@
+{
+  "name": "P3B5B",
+  "description": "Regulated promoter repressed by PcaU_AM",
+  "category": "Promoter",
+  "sequence": "TTTTGTTCGATTATCGAACAAATTATTGAAATATCGAACAAAACCTCTAAACTACTGTGGCACTGAATCAAAAAATTATAAACCATGATCAGA",
+  "controlBy": [
+    {
+      "name": "PcaU_AM",
+      "type": "Repression",
+      "params": {
+        "Ymax": 1.6,
+        "Ymin": 0.0045,
+        "K": 0.1,
+        "n": 2
+      }
+    }
+  ],
+  "params": {
+    "Ydef": 1.6
+  }
+}

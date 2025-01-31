@@ -1,8 +1,8 @@
 {
   "name": "PqacR",
-  "description": "Regulated Promoter repressed by QacR",
+  "description": "Regulated promoter repressed by QacR",
   "category": "Promoter",
-  "sequence": "cgttaccaattgacagctagctcagtcctactttagtatatagaccgtgcgatcggtctata",
+  "sequence": "CGTTACCAATTGACAGCTAGCTCAGTCCTACTTTAGTATATAGACCGTGCGATCGGTCTATA",
   "controlBy": [
     {
       "name": "QacR",

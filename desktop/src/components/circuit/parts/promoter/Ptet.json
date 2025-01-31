@@ -1,0 +1,21 @@
+{
+  "name": "Ptet",
+  "description": "Regulated promoter repressed by TetR",
+  "category": "Promoter",
+  "sequence": "TTTTCAGCAGGACGCACTGACCTCCCTATCAGTGATAGAGATTGACATCCCTATCAGTGATAGAGATACTGAGCAC",
+  "controlBy": [
+    {
+      "name": "TetR",
+      "type": "Repression",
+      "params": {
+        "Ymax": 2.4,
+        "Ymin": 0.0049,
+        "K": 0.1,
+        "n": 2
+      }
+    }
+  ],
+  "params": {
+    "Ydef": 2.4
+  }
+}

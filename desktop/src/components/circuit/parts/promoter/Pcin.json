@@ -1,0 +1,21 @@
+{
+  "name": "Pcin",
+  "description": "Regulated promoter activated by CinR_AM",
+  "category": "Promoter",
+  "sequence": "CCCTTTGTGCGTCCAAACGGACGCACGGCGCTCTAAAGCGGGTCGCGATCTTTCAGATTCGCTCCTCGCGCTTTCAGTCTTTGTTTTGGCGCATGTCGTTATCGCAAAACCGCTGCACACTTTTGCGCGACATGCTCTGATCCCCCTCATCTGGGGGGGCCTATCTGAGGGAATTTCCGATCCGGCTCGCCTGAACCATTCTGCTTTCCACGAACTTGAAAACGCT",
+  "controlBy": [
+    {
+      "name": "CinR_AM",
+      "type": "Activation",
+      "params": {
+        "Ymax": 1.5,
+        "Ymin": 0.003,
+        "K": 0.1,
+        "n": 2
+      }
+    }
+  ],
+  "params": {
+    "Ydef": 0.003
+  }
+}

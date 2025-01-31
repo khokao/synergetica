@@ -1,8 +1,8 @@
 {
   "name": "PhyllR",
-  "description": "Regulated Promoters repressed by HylIR",
+  "description": "Regulated promoter repressed by HylIR",
   "category": "Promoter",
-  "sequence": "gattcgttaccaattgacatatttaaaattcttgtttaaaatgctagc",
+  "sequence": "GATTCGTTACCAATTGACATATTTAAAATTCTTGTTTAAAATGCTAGC",
   "controlBy": [
     {
       "name": "HlyIIR",
