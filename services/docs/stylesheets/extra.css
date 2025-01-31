@@ -1,6 +1,6 @@
 :root {
     --md-primary-fg-color: #171717;  /* neutral-900 */
-    --md-accent-fg-color: #dc2626;  /* red-600 */
+    --md-accent-fg-color: #0ba39b;  /* icon color */
 }
 
 .md-typeset .grid {
@@ -11,6 +11,13 @@
 
 .md-typeset pre>code {
     max-height: 15rem;
+}
+
+.zap-on {
+    color: #00c951;
+}
+.zap-off {
+    color: #fb2c36;
 }
 
 @media (min-width: 640px) { /* sm */
