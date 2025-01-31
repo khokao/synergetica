@@ -31,3 +31,4 @@ jobs:
           file: ./services/Dockerfile
           push: true
           tags: khokao/synergetica:latest
+          no-cache: true
