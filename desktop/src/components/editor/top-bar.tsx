@@ -42,12 +42,12 @@ export const EditorTopBar = () => {
         const content = await readTextFile(path);
         setEditMode("monaco-editor");
         setEditorContent(content);
-        toast.success("Imported config YAML file", {
+        toast.success("Imported circuit YAML file", {
           cancel: { label: "Close", onClick: () => {} },
         });
       }
     } catch (error) {
-      toast.error("Failed to import config YAML file", {
+      toast.error("Failed to import circuit YAML file", {
         cancel: { label: "Close", onClick: () => {} },
       });
       console.error("File import failed:", error);
@@ -58,17 +58,17 @@ export const EditorTopBar = () => {
     try {
       const path = await save({
         filters: [{ name: "YAML", extensions: ["yaml", "yml"] }],
-        defaultPath: "config.yaml",
+        defaultPath: "circuit.yaml",
       });
 
       if (path) {
         await writeTextFile(path, editorContent);
-        toast.success("Exported config YAML file", {
+        toast.success("Exported circuit YAML file", {
           cancel: { label: "Close", onClick: () => {} },
         });
       }
     } catch (error) {
-      toast.error("Failed to export config YAML file", {
+      toast.error("Failed to export circuit YAML file", {
         cancel: { label: "Close", onClick: () => {} },
       });
       console.error("File export failed:", error);
@@ -77,7 +77,7 @@ export const EditorTopBar = () => {
 
   return (
     <div className="flex justify-between items-center p-1">
-      <span className="pl-2 text-md font-medium">Config YAML</span>
+      <span className="pl-2 text-md font-medium">Circuit YAML</span>
       <TooltipProvider>
         <div className="flex space-x-1 z-10">
           <Tooltip>
