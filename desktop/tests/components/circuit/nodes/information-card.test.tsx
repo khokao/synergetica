@@ -7,6 +7,7 @@ vi.mock("@/components/circuit/parts/parts-context", () => {
     name: "PromoterA",
     description: "PromoterA Description",
     category: "Promoter",
+    sequence: "ATGC",
     controlBy: [
       {
         name: "ProteinA",
@@ -17,8 +18,9 @@ vi.mock("@/components/circuit/parts/parts-context", () => {
   };
   const ProteinA = {
     name: "ProteinA",
-    description: "Test Protein Description",
+    description: "ProteinA Description",
     category: "Protein",
+    sequence: "ATGC",
     controlBy: [],
     controlTo: [
       {
@@ -29,8 +31,9 @@ vi.mock("@/components/circuit/parts/parts-context", () => {
   };
   const TerminatorA = {
     name: "TerminatorA",
-    description: "Test Terminator Description",
+    description: "TerminatorA Description",
     category: "Terminator",
+    sequence: "ATGC",
     controlBy: [],
     controlTo: [],
   };
@@ -54,16 +57,44 @@ vi.mock("@/components/circuit/parts/parts-context", () => {
 });
 
 describe("InformationCard", () => {
-  it("renders name, description, control section", () => {
+  it("renders name, description, control section for Promoter", () => {
     // Arrange & Act
     const data = { name: "PromoterA", description: "PromoterA Description", category: "Promoter" };
     render(<InformationCard data={data} />);
 
     // Assert
-    expect(screen.getByTestId("information-card-title")).toHaveTextContent("PromoterA");
-    expect(screen.getByTestId("information-card-description")).toHaveTextContent("PromoterA Description");
+    expect(screen.getByTestId("information-card-title")).toHaveTextContent(data.name);
+    expect(screen.getByTestId("information-card-description")).toHaveTextContent(data.description);
     expect(screen.getByTestId("information-card-content")).toHaveTextContent("PromoterA");
     expect(screen.getByTestId("repression-icon")).toBeInTheDocument();
     expect(screen.getByTestId("information-card-content")).toHaveTextContent("ProteinA");
+  });
+
+  it("renders name, description, control section for Protein", () => {
+    // Arrange & Act
+    const data = { name: "ProteinA", description: "ProteinA Description", category: "Protein" };
+    render(<InformationCard data={data} />);
+
+    // Assert
+    expect(screen.getByTestId("information-card-title")).toHaveTextContent(data.name);
+    expect(screen.getByTestId("information-card-description")).toHaveTextContent(data.description);
+    expect(screen.getByTestId("information-card-content")).toHaveTextContent("PromoterA");
+    expect(screen.getByTestId("repression-icon")).toBeInTheDocument();
+    expect(screen.getByTestId("information-card-content")).toHaveTextContent("ProteinA");
+  });
+
+  it("renders name, description, sequence section for Terminator", () => {
+    // Arrange & Act
+    const data = {
+      name: "TerminatorA",
+      description: "TerminatorA Description",
+      category: "Terminator",
+      sequence: "ATGC",
+    };
+    render(<InformationCard data={data} />);
+
+    expect(screen.getByTestId("information-card-title")).toHaveTextContent(data.name);
+    expect(screen.getByTestId("information-card-description")).toHaveTextContent(data.description);
+    expect(screen.getByTestId("information-card-content")).toHaveTextContent(data.sequence);
   });
 });
