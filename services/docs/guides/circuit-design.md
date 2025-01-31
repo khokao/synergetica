@@ -108,7 +108,7 @@ Circuit can be designed through coding with DSL.
 ![](../assets/imgs/guides/circuit-design/invalid.png)
 
 !!! Warning
-	If the desinged circuit is invalid, `Simulation` can't be conducted. 
+	If the designed circuit is invalid, `Simulation` can't be conducted. 
 
 Here are basical rules of valid circuit.
 

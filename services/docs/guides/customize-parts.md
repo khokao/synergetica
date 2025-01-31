@@ -131,7 +131,7 @@ You can also edit the parameters of existing parts.
 }
 ```
 
-- You can also add parts by appending neccesary informaion to the JSON file and import it.
+- You can also add parts by appending necessary informaion to the JSON file and import it.
 
 ```json
 {
