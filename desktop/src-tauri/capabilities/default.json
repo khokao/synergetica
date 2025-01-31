@@ -12,6 +12,8 @@
     "dialog:allow-message",
     "dialog:allow-ask",
     "dialog:allow-confirm",
-    "clipboard-manager:allow-write-text"
+    "clipboard-manager:allow-write-text",
+    "opener:allow-default-urls",
+    "opener:allow-open-url"
   ]
 }
