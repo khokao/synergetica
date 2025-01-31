@@ -2,13 +2,13 @@
 
 # Services
 
-[![Ruff Linter](https://github.com/khokao/gene-circuit-ide/actions/workflows/python-ruff-check.yml/badge.svg)](https://github.com/khokao/gene-circuit-ide/actions/workflows/python-ruff-check.yml)
-[![Ruff Formatter](https://github.com/khokao/gene-circuit-ide/actions/workflows/python-ruff-format.yml/badge.svg)](https://github.com/khokao/gene-circuit-ide/actions/workflows/python-ruff-format.yml)
-[![mypy](https://github.com/khokao/gene-circuit-ide/actions/workflows/python-mypy.yml/badge.svg)](https://github.com/khokao/gene-circuit-ide/actions/workflows/python-mypy.yml)
-[![pytest](https://github.com/khokao/gene-circuit-ide/actions/workflows/python-pytest.yml/badge.svg)](https://github.com/khokao/gene-circuit-ide/actions/workflows/python-pytest.yml)
+[![Ruff Linter](https://github.com/khokao/synergetica/actions/workflows/python-ruff-check.yml/badge.svg)](https://github.com/khokao/synergetica/actions/workflows/python-ruff-check.yml)
+[![Ruff Formatter](https://github.com/khokao/synergetica/actions/workflows/python-ruff-format.yml/badge.svg)](https://github.com/khokao/synergetica/actions/workflows/python-ruff-format.yml)
+[![mypy](https://github.com/khokao/synergetica/actions/workflows/python-mypy.yml/badge.svg)](https://github.com/khokao/synergetica/actions/workflows/python-mypy.yml)
+[![pytest](https://github.com/khokao/synergetica/actions/workflows/python-pytest.yml/badge.svg)](https://github.com/khokao/synergetica/actions/workflows/python-pytest.yml)
 
-[![Docker](https://github.com/khokao/gene-circuit-ide/actions/workflows/docker-build.yml/badge.svg)](https://github.com/khokao/gene-circuit-ide/actions/workflows/docker-build.yml)
-[![MkDocs](https://github.com/khokao/gene-circuit-ide/actions/workflows/python-mkdocs.yml/badge.svg)](https://github.com/khokao/gene-circuit-ide/actions/workflows/python-mkdocs.yml)
+[![Docker](https://github.com/khokao/synergetica/actions/workflows/docker-build.yml/badge.svg)](https://github.com/khokao/synergetica/actions/workflows/docker-build.yml)
+[![MkDocs](https://github.com/khokao/synergetica/actions/workflows/python-mkdocs.yml/badge.svg)](https://github.com/khokao/synergetica/actions/workflows/python-mkdocs.yml)
 
 
 
@@ -57,7 +57,7 @@ This directory contains a Python-based API implementation and documentation.
 - [**`src/train`**](src/train) includes scripts for building the ML model used by the DNA sequence generation
 - [**`docs`**](docs) contains Markdown files for documentation built with MkDocs
 
-The API provides two main features: **simulation** and **generation**. For more details on each feature, please refer to the [documentation](https://khokao.github.io/gene-circuit-ide/).
+The API provides two main features: **simulation** and **generation**. For more details on each feature, please refer to the [documentation](https://khokao.github.io/synergetica/).
 
 ### 1.1. Built With
 * [![Python][Python]][Python-url]

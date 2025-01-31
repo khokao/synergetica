@@ -2,11 +2,11 @@
 
 # Desktop
 
-[![Biome](https://github.com/khokao/gene-circuit-ide/actions/workflows/node-biome-check.yml/badge.svg)](https://github.com/khokao/gene-circuit-ide/actions/workflows/node-biome-check.yml)
-[![Vitest](https://github.com/khokao/gene-circuit-ide/actions/workflows/node-vitest.yml/badge.svg)](https://github.com/khokao/gene-circuit-ide/actions/workflows/node-vitest.yml)
-[![Rustfmt](https://github.com/khokao/gene-circuit-ide/actions/workflows/rust-rustfmt.yml/badge.svg)](https://github.com/khokao/gene-circuit-ide/actions/workflows/rust-rustfmt.yml)
+[![Biome](https://github.com/khokao/synergetica/actions/workflows/node-biome-check.yml/badge.svg)](https://github.com/khokao/synergetica/actions/workflows/node-biome-check.yml)
+[![Vitest](https://github.com/khokao/synergetica/actions/workflows/node-vitest.yml/badge.svg)](https://github.com/khokao/synergetica/actions/workflows/node-vitest.yml)
+[![Rustfmt](https://github.com/khokao/synergetica/actions/workflows/rust-rustfmt.yml/badge.svg)](https://github.com/khokao/synergetica/actions/workflows/rust-rustfmt.yml)
 
-[![Release](https://github.com/khokao/gene-circuit-ide/actions/workflows/node-tauri-release.yml/badge.svg)](https://github.com/khokao/gene-circuit-ide/actions/workflows/node-tauri-release.yml)
+[![Release](https://github.com/khokao/synergetica/actions/workflows/node-tauri-release.yml/badge.svg)](https://github.com/khokao/synergetica/actions/workflows/node-tauri-release.yml)
 
 
 
@@ -154,7 +154,7 @@ GitHub Actions automatically builds and creates releases for the desktop applica
 
   Triggered when a new tag is created. This release is intended for general users.
 
-The build artifacts for macOS and Windows are generated automatically and can be downloaded from the [GitHub Releases](https://github.com/khokao/gene-circuit-ide/releases) page. Each platform has its own binaries or installers, so make sure to pick the right one for your environment.
+The build artifacts for macOS and Windows are generated automatically and can be downloaded from the [GitHub Releases](https://github.com/khokao/synergetica/releases) page. Each platform has its own binaries or installers, so make sure to pick the right one for your environment.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
