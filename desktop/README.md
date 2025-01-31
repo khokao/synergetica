@@ -2,11 +2,11 @@
 
 # Desktop
 
-[![Biome](https://github.com/khokao/gene-circuit-ide/actions/workflows/node-biome-check.yml/badge.svg)](https://github.com/khokao/gene-circuit-ide/actions/workflows/node-biome-check.yml)
-[![Vitest](https://github.com/khokao/gene-circuit-ide/actions/workflows/node-vitest.yml/badge.svg)](https://github.com/khokao/gene-circuit-ide/actions/workflows/node-vitest.yml)
-[![Rustfmt](https://github.com/khokao/gene-circuit-ide/actions/workflows/rust-rustfmt.yml/badge.svg)](https://github.com/khokao/gene-circuit-ide/actions/workflows/rust-rustfmt.yml)
+[![Biome](https://github.com/khokao/synergetica/actions/workflows/node-biome-check.yml/badge.svg)](https://github.com/khokao/synergetica/actions/workflows/node-biome-check.yml)
+[![Vitest](https://github.com/khokao/synergetica/actions/workflows/node-vitest.yml/badge.svg)](https://github.com/khokao/synergetica/actions/workflows/node-vitest.yml)
+[![Rustfmt](https://github.com/khokao/synergetica/actions/workflows/rust-rustfmt.yml/badge.svg)](https://github.com/khokao/synergetica/actions/workflows/rust-rustfmt.yml)
 
-[![Release](https://github.com/khokao/gene-circuit-ide/actions/workflows/node-tauri-release.yml/badge.svg)](https://github.com/khokao/gene-circuit-ide/actions/workflows/node-tauri-release.yml)
+[![Release](https://github.com/khokao/synergetica/actions/workflows/node-tauri-release.yml/badge.svg)](https://github.com/khokao/synergetica/actions/workflows/node-tauri-release.yml)
 
 
 
@@ -48,8 +48,8 @@
 
 This directory includes code for the frontend implementation using Next.js and for packaging the application as a desktop app using Tauri.
 
-- [**`src`**](src) contains the frontend implementation using Next.js
-- [**`src-tauri`**](src-tauri) contains the code for packaging the application as a desktop app using Tauri
+- [`src`](src) contains the frontend implementation using Next.js
+- [`src-tauri`](src-tauri) contains the code for packaging the application as a desktop app using Tauri
 
 ### 1.1. Built With
 * [![TypeScript][TypeScript]][TypeScript-url]
@@ -81,10 +81,13 @@ This directory includes code for the frontend implementation using Next.js and f
    ```sh
    npm install
    ```
-2. Optional: If you want to use the simulation and generation APIs, please pull the Docker image
+2. Pull the Docker image for the simulation and generation APIs
    ```sh
    docker pull khokao/synergetica:latest
    ```
+
+> [!NOTE]
+> Pulling the Docker image is optional. You can still launch the desktop application without it, but you will not be able to use the simulation and generation APIs.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -94,9 +97,7 @@ This directory includes code for the frontend implementation using Next.js and f
 
 ### 3.1. Running the Desktop Application
 
-When the application starts, a Docker container is automatically launched, and the API server runs on port 7007. Please make sure Docker Engine is running and that the Docker image has been pulled.
-
-You can also start the API by running the Docker container manually or by starting the FastAPI application yourself. For more details, see the [`../services`](../services) directory.
+When the application starts, a Docker container is automatically launched, and the API server runs on port `7007`. Please make sure Docker Engine is running and that the Docker image has been pulled.
 
 **Development Mode**
 
@@ -109,6 +110,9 @@ npm run dev
 ```sh
 npm run build
 ```
+
+> [!TIP]
+> You can also start the API by running the Docker container manually or by starting the FastAPI application yourself. For more details, see the [`../services`](../services) directory.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -154,7 +158,7 @@ GitHub Actions automatically builds and creates releases for the desktop applica
 
   Triggered when a new tag is created. This release is intended for general users.
 
-The build artifacts for macOS and Windows are generated automatically and can be downloaded from the [GitHub Releases](https://github.com/khokao/gene-circuit-ide/releases) page. Each platform has its own binaries or installers, so make sure to pick the right one for your environment.
+The build artifacts for macOS and Windows are generated automatically and can be downloaded from the [GitHub Releases](https://github.com/khokao/synergetica/releases) page. Each platform has its own binaries or installers, so make sure to pick the right one for your environment.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
