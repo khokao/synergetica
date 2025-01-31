@@ -8,7 +8,7 @@ import { describe, expect, it } from "vitest";
 describe("ParamsFields Component", () => {
   it("should render parameter fields with the correct labels and descriptions for the 'Promoter' category", async () => {
     // Arrange
-    const fields = [{ label: "Ydef", description: "Ydef description" }];
+    const fields = [{ label: "Ydef", description: "Default expression rate w/o regulator" }];
 
     const TestComponent = () => {
       const form = useForm();
@@ -26,7 +26,7 @@ describe("ParamsFields Component", () => {
 
     // Assert
     expect(screen.getByText("Parameters")).toBeInTheDocument();
-    expect(screen.getByText("Promoter params description")).toBeInTheDocument();
+    expect(screen.getByText("Promoter parameters")).toBeInTheDocument();
     for (const field of fields) {
       expect(screen.getByText(field.label)).toBeInTheDocument();
     }
@@ -53,15 +53,15 @@ describe("ParamsFields Component", () => {
 
     // Assert
     waitFor(() => {
-      expect(screen.getByRole("tooltip", { name: "Ydef description" })).toBeInTheDocument();
+      expect(screen.getByRole("tooltip", { name: "Default expression rate w/o regulator" })).toBeInTheDocument();
     });
   });
 
   it("should render parameter fields with the correct labels and descriptions for the 'Protein' category", async () => {
     // Arrange
     const fields = [
-      { label: "Dp", description: "Dp description" },
-      { label: "TIRb", description: "TIRb description" },
+      { label: "Dp", description: "Protein degradation rate" },
+      { label: "TIRb", description: "Baseline RBS strength" },
     ];
 
     const TestComponent = () => {
@@ -80,7 +80,7 @@ describe("ParamsFields Component", () => {
 
     // Assert
     expect(screen.getByText("Parameters")).toBeInTheDocument();
-    expect(screen.getByText("Protein params description")).toBeInTheDocument();
+    expect(screen.getByText("Protein parameters")).toBeInTheDocument();
     for (const field of fields) {
       expect(screen.getByText(field.label)).toBeInTheDocument();
     }
@@ -106,7 +106,7 @@ describe("ParamsFields Component", () => {
 
     // Assert
     waitFor(() => {
-      expect(screen.getByRole("tooltip", { name: "Dp description" })).toBeInTheDocument();
+      expect(screen.getByRole("tooltip", { name: "Protein degradation rate" })).toBeInTheDocument();
     });
   });
 });
