@@ -153,11 +153,11 @@ const ChildSelectModalComponent = ({ id, data }) => {
   const buttonContent = (
     <Button
       variant="ghost"
-      className="flex justify-between items-center py-2 px-2 w-full hover:bg-gray-100"
+      className="flex justify-between items-center py-2 pl-2 pr-1 w-full hover:bg-gray-100"
       data-testid="select-modal-button"
     >
       <span
-        className={`tracking-wider text-black font-extrabold text-lg duration-300 ${isHighlighted ? highlightColor : ""}`}
+        className={`tracking-wider text-black font-extrabold text-lg duration-300 truncate ${isHighlighted ? highlightColor : ""}`}
       >
         {selectedOption ? selectedOption.name : ""}
       </span>
