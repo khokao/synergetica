@@ -5,26 +5,26 @@ import { Info } from "lucide-react";
 
 const categoryConfig = {
   Promoter: {
-    description: "Promoter params description",
+    description: "Promoter parameters",
     params: [
       {
         label: "Ydef",
-        description: "Ydef description",
+        description: "Default expression rate w/o regulator",
         placeholder: "",
       },
     ],
   },
   Protein: {
-    description: "Protein params description",
+    description: "Protein parameters",
     params: [
       {
         label: "Dp",
-        description: "Dp description",
+        description: "Protein degradation rate",
         placeholder: "",
       },
       {
         label: "TIRb",
-        description: "TIRb description",
+        description: "Baseline RBS strength",
         placeholder: "",
       },
     ],
