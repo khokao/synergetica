@@ -2,7 +2,7 @@ from typing import Annotated
 
 from pydantic import BaseModel, Field, PositiveFloat, StringConstraints
 
-DNASequence = Annotated[str, StringConstraints(pattern=r'^[atgcATGC]+$')]
+DNASequence = Annotated[str, StringConstraints(pattern=r'^[ATGC]+$')]
 
 
 class GeneratorInput(BaseModel):

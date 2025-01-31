@@ -143,7 +143,7 @@ const PartAddForm = ({ closeDialog }) => {
               fieldName="sequence"
               form={form}
               type="text"
-              placeholder="atgcATGC"
+              placeholder="ATGC"
             />
 
             {category === "Promoter" && (

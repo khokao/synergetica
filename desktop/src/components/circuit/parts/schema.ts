@@ -19,7 +19,7 @@ const basePartSchema = z.object({
   category: z.enum(["Promoter", "Protein", "Terminator"], {
     message: "Category must be 'Promoter', 'Protein', or 'Terminator'.",
   }),
-  sequence: z.string().regex(/^[ATCGatcg]+$/, { message: "DNA sequence must contain only A, T, C, or G." }),
+  sequence: z.string().regex(/^[ATCG]+$/, { message: "DNA sequence must contain only A, T, C, or G." }),
 });
 
 const promoterSchema = basePartSchema.extend({

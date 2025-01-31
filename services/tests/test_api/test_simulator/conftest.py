@@ -44,7 +44,7 @@ FLIPFLOP_CIRCUIT = {
                 'category': 'Promoter',
                 'name': 'PameR',
                 'description': 'Regulated promoter repressed by AmeR',
-                'sequence': 'gatagtgacaaacttgacaactcatcacttcctaggtataatgctagc',
+                'sequence': 'GATAGTGACAAACTTGACAACTCATCACTTCCTAGGTATAATGCTAGC',
                 'controlBy': [
                     {'name': 'AmeR', 'type': 'Repression', 'params': {'Ymax': 3.8, 'Ymin': 0.2, 'K': 0.09, 'n': 1.4}}
                 ],
@@ -62,9 +62,9 @@ FLIPFLOP_CIRCUIT = {
                 'category': 'Protein',
                 'name': 'BM3R1',
                 'description': 'Repressor protein of Pbm3R1',
-                'sequence': 'atggaaagcaccccgaccaaacagaaagcaatttttagcgcaagcctgctgctgtttgcagaacgtggttttgatgcaaccaccatgccgatgattgcagaaaatgcaaaagttggtgcaggcaccatttatcgctatttcaaaaacaaagaaagcctggtgaacgaactgtttcagcagcatgttaatgaatttctgcagtgtattgaaagcggtctggcaaatgaacgtgatggttatcgtgatggctttcatcacatttttgaaggtatggtgacctttaccaaaaatcatccgcgtgcactgggttttatcaaaacccatagccagggcacctttctgaccgaagaaagccgtctggcatatcagaaactggttgaatttgtgtgcaccttttttcgtgaaggtcagaaacagggtgtgattcgtaatctgccggaaaatgcactgattgcaattctgtttggcagctttatggaagtgtatgaaatgatcgagaacgattatctgagcctgaccgatgaactgctgaccggtgttgaagaaagcctgtgggcagcactgagccgtcagagctaa',
+                'sequence': 'ATGGAAAGCACCCCGACCAAACAGAAAGCAATTTTTAGCGCAAGCCTGCTGCTGTTTGCAGAACGTGGTTTTGATGCAACCACCATGCCGATGATTGCAGAAAATGCAAAAGTTGGTGCAGGCACCATTTATCGCTATTTCAAAAACAAAGAAAGCCTGGTGAACGAACTGTTTCAGCAGCATGTTAATGAATTTCTGCAGTGTATTGAAAGCGGTCTGGCAAATGAACGTGATGGTTATCGTGATGGCTTTCATCACATTTTTGAAGGTATGGTGACCTTTACCAAAAATCATCCGCGTGCACTGGGTTTTATCAAAACCCATAGCCAGGGCACCTTTCTGACCGAAGAAAGCCGTCTGGCATATCAGAAACTGGTTGAATTTGTGTGCACCTTTTTTCGTGAAGGTCAGAAACAGGGTGTGATTCGTAATCTGCCGGAAAATGCACTGATTGCAATTCTGTTTGGCAGCTTTATGGAAGTGTATGAAATGATCGAGAACGATTATCTGAGCCTGACCGATGAACTGCTGACCGGTGTTGAAGAAAGCCTGTGGGCAGCACTGAGCCGTCAGAGCTAA',
                 'controlBy': [],
-                'params': {'Dp': 0.14726881, 'TIRb': 596.23},
+                'params': {'Dp': 0.09706606, 'TIRb': 392.98},
             },
             'parentId': 'chain-id-1',
         },
@@ -77,8 +77,8 @@ FLIPFLOP_CIRCUIT = {
             'data': {
                 'category': 'Terminator',
                 'name': 'L3S3P31',
-                'description': 'Standard Terminator',
-                'sequence': 'ccaattattgaacaccctaacgggtgtttttttttttttggtctacc',
+                'description': 'Standard terminator',
+                'sequence': 'CCAATTATTGAACACCCTAACGGGTGTTTTTTTTTTTTTGGTCTACC',
                 'controlBy': [],
                 'params': {},
             },
@@ -95,11 +95,11 @@ FLIPFLOP_CIRCUIT = {
                 'category': 'Promoter',
                 'name': 'Pbm3r1',
                 'description': 'Regulated promoter repressed by BM3R1',
-                'sequence': 'tctgattcgttaccaattgacggaatgaacgttcattccgataatgctagc',
+                'sequence': 'TCTGATTCGTTACCAATTGACGGAATGAACGTTCATTCCGATAATGCTAGC',
                 'controlBy': [
-                    {'name': 'BM3R1', 'type': 'Repression', 'params': {'Ymax': 0.5, 'Ymin': 0.004, 'K': 0.04, 'n': 3.4}}
+                    {'name': 'BM3R1', 'type': 'Repression', 'params': {'Ymax': 0.8, 'Ymin': 0.01, 'K': 0.25, 'n': 3.4}}
                 ],
-                'params': {'Ydef': 0.5},
+                'params': {'Ydef': 0.8},
             },
             'parentId': 'chain-id-2',
         },
@@ -113,7 +113,7 @@ FLIPFLOP_CIRCUIT = {
                 'category': 'Protein',
                 'name': 'AmeR',
                 'description': 'Repressor protein of PameR',
-                'sequence': 'atgaacaaaaccattgatcaggtgcgtaaaggtgatcgtaaaagcgatctgccggttcgtcgtcgtccgcgtcgtagtgccgaagaaacccgtcgtgatattctggcaaaagccgaagaactgtttcgtgaacgtggttttaatgcagttgccattgcagatattgcaagcgcactgaatatgagtccggcaaatgtgtttaaacattttagcagcaaaaacgcactggttgatgcaattggttttggtcagattggtgtttttgaacgtcagatttgtccgctggataaaagccatgcaccgctggatcgtctgcgtcatctggcacgtaatctgatggaacagcatcatcaggatcatttcaaacacatacgggtttttattcagatcctgatgaccgccaaacaggatatgaaatgtggcgattattacaaaagcgtgattgcaaaactgctggccgaaattattcgtgatggtgttgaagcaggtctgtatattgcaaccgatattccggttctggcagaaaccgttctgcatgcactgaccagcgttattcatccggttctgattgcacaagaagatattggtaatctggcaacccgttgtgatcagctggttgatctgattgatgcaggtctgcgtaatccgctggcaaaataa',
+                'sequence': 'ATGAACAAAACCATTGATCAGGTGCGTAAAGGTGATCGTAAAAGCGATCTGCCGGTTCGTCGTCGTCCGCGTCGTAGTGCCGAAGAAACCCGTCGTGATATTCTGGCAAAAGCCGAAGAACTGTTTCGTGAACGTGGTTTTAATGCAGTTGCCATTGCAGATATTGCAAGCGCACTGAATATGAGTCCGGCAAATGTGTTTAAACATTTTAGCAGCAAAAACGCACTGGTTGATGCAATTGGTTTTGGTCAGATTGGTGTTTTTGAACGTCAGATTTGTCCGCTGGATAAAAGCCATGCACCGCTGGATCGTCTGCGTCATCTGGCACGTAATCTGATGGAACAGCATCATCAGGATCATTTCAAACACATACGGGTTTTTATTCAGATCCTGATGACCGCCAAACAGGATATGAAATGTGGCGATTATTACAAAAGCGTGATTGCAAAACTGCTGGCCGAAATTATTCGTGATGGTGTTGAAGCAGGTCTGTATATTGCAACCGATATTCCGGTTCTGGCAGAAACCGTTCTGCATGCACTGACCAGCGTTATTCATCCGGTTCTGATTGCACAAGAAGATATTGGTAATCTGGCAACCCGTTGTGATCAGCTGGTTGATCTGATTGATGCAGGTCTGCGTAATCCGCTGGCAAAATAA',
                 'controlBy': [],
                 'params': {'Dp': 0.74589307, 'TIRb': 3019.81},
             },
@@ -128,8 +128,8 @@ FLIPFLOP_CIRCUIT = {
             'data': {
                 'category': 'Terminator',
                 'name': 'L3S3P31',
-                'description': 'Standard Terminator',
-                'sequence': 'ccaattattgaacaccctaacgggtgtttttttttttttggtctacc',
+                'description': 'Standard terminator',
+                'sequence': 'CCAATTATTGAACACCCTAACGGGTGTTTTTTTTTTTTTGGTCTACC',
                 'controlBy': [],
                 'params': {},
             },
@@ -216,11 +216,11 @@ HYBRID_PROMOTER_CIRCUIT = {
             'height': 126,
             'data': {
                 'category': 'Promoter',
-                'name': 'PphlF',
-                'description': 'Regulated promoter repressed by PhlF',
-                'sequence': 'tctgattcgttaccaattgacatgatacgaaacgtaccgtatcgttaaggt',
+                'name': 'PphlF_AM',
+                'description': 'Regulated promoter repressed by PhlF_AM',
+                'sequence': 'TCTGATTCGTTACCAATTGACATGATACGAAACGTACCGTATCGTTAAGGT',
                 'controlBy': [
-                    {'name': 'PhlF', 'type': 'Repression', 'params': {'Ymax': 3.9, 'Ymin': 0.01, 'K': 0.03, 'n': 4}}
+                    {'name': 'PhlF_AM', 'type': 'Repression', 'params': {'Ymax': 3.9, 'Ymin': 0.01, 'K': 0.03, 'n': 4}}
                 ],
                 'params': {'Ydef': 3.9},
             },
@@ -236,7 +236,7 @@ HYBRID_PROMOTER_CIRCUIT = {
                 'category': 'Protein',
                 'name': 'AmeR',
                 'description': 'Repressor protein of PameR',
-                'sequence': 'atgaacaaaaccattgatcaggtgcgtaaaggtgatcgtaaaagcgatctgccggttcgtcgtcgtccgcgtcgtagtgccgaagaaacccgtcgtgatattctggcaaaagccgaagaactgtttcgtgaacgtggttttaatgcagttgccattgcagatattgcaagcgcactgaatatgagtccggcaaatgtgtttaaacattttagcagcaaaaacgcactggttgatgcaattggttttggtcagattggtgtttttgaacgtcagatttgtccgctggataaaagccatgcaccgctggatcgtctgcgtcatctggcacgtaatctgatggaacagcatcatcaggatcatttcaaacacatacgggtttttattcagatcctgatgaccgccaaacaggatatgaaatgtggcgattattacaaaagcgtgattgcaaaactgctggccgaaattattcgtgatggtgttgaagcaggtctgtatattgcaaccgatattccggttctggcagaaaccgttctgcatgcactgaccagcgttattcatccggttctgattgcacaagaagatattggtaatctggcaacccgttgtgatcagctggttgatctgattgatgcaggtctgcgtaatccgctggcaaaataa',
+                'sequence': 'ATGAACAAAACCATTGATCAGGTGCGTAAAGGTGATCGTAAAAGCGATCTGCCGGTTCGTCGTCGTCCGCGTCGTAGTGCCGAAGAAACCCGTCGTGATATTCTGGCAAAAGCCGAAGAACTGTTTCGTGAACGTGGTTTTAATGCAGTTGCCATTGCAGATATTGCAAGCGCACTGAATATGAGTCCGGCAAATGTGTTTAAACATTTTAGCAGCAAAAACGCACTGGTTGATGCAATTGGTTTTGGTCAGATTGGTGTTTTTGAACGTCAGATTTGTCCGCTGGATAAAAGCCATGCACCGCTGGATCGTCTGCGTCATCTGGCACGTAATCTGATGGAACAGCATCATCAGGATCATTTCAAACACATACGGGTTTTTATTCAGATCCTGATGACCGCCAAACAGGATATGAAATGTGGCGATTATTACAAAAGCGTGATTGCAAAACTGCTGGCCGAAATTATTCGTGATGGTGTTGAAGCAGGTCTGTATATTGCAACCGATATTCCGGTTCTGGCAGAAACCGTTCTGCATGCACTGACCAGCGTTATTCATCCGGTTCTGATTGCACAAGAAGATATTGGTAATCTGGCAACCCGTTGTGATCAGCTGGTTGATCTGATTGATGCAGGTCTGCGTAATCCGCTGGCAAAATAA',
                 'controlBy': [],
                 'params': {'Dp': 0.74589307, 'TIRb': 3019.81},
             },
@@ -251,8 +251,8 @@ HYBRID_PROMOTER_CIRCUIT = {
             'data': {
                 'category': 'Terminator',
                 'name': 'L3S3P31',
-                'description': 'Standard Terminator',
-                'sequence': 'ccaattattgaacaccctaacgggtgtttttttttttttggtctacc',
+                'description': 'Standard terminator',
+                'sequence': 'CCAATTATTGAACACCCTAACGGGTGTTTTTTTTTTTTTGGTCTACC',
                 'controlBy': [],
                 'params': {},
             },
@@ -269,7 +269,7 @@ HYBRID_PROMOTER_CIRCUIT = {
                 'category': 'Promoter',
                 'name': 'PpsrA',
                 'description': 'Regulated promoter repressed by PsrA',
-                'sequence': 'aggaacaaacgtttgattgacagctagctcagtcctaggtataatgctagc',
+                'sequence': 'AGGAACAAACGTTTGATTGACAGCTAGCTCAGTCCTAGGTATAATGCTAGC',
                 'controlBy': [
                     {'name': 'PsrA', 'type': 'Repression', 'params': {'Ymax': 5.9, 'Ymin': 0.2, 'K': 0.19, 'n': 1.8}}
                 ],
@@ -287,7 +287,7 @@ HYBRID_PROMOTER_CIRCUIT = {
                 'category': 'Protein',
                 'name': 'AmtR',
                 'description': 'Repressor protein of PamtR',
-                'sequence': 'atggcaggcgcagttggtcgtccgcgtcgtagtgcaccgcgtcgtgcaggtaaaaatccgcgtgaagaaattctggatgcaagcgcagaactgtttacccgtcagggttttgcaaccaccagtacccatcagattgcagatgcagttggtattcgtcaggcaagcctgtattatcattttccgagcaaaaccgaaatctttctgaccctgctgaaaagcaccgttgaaccgagcaccgttctggcagaagatctgagcaccctggatgcaggtccggaaatgcgtctgtgggcaattgttgcaagcgaagttcgtctgctgctgagcaccaaatggaatgttggtcgtctgtatcagctgccgattgttggtagcgaagaatttgcagaatatcatagccagcgtgaagcactgaccaatgtttttcgtgatctggcaaccgaaattgttggtgatgatccgcgtgcagaactgccgtttcatattaccatgagcgttattgaaatgcgtcgcaatgatggtaaaattccgagtccgctgagcgcagatagcctgccggaaaccgcaattatgctggcagatgcaagcctggcagttctgggtgcaccgctgcctgcagatcgtgttgaaaaaaccctggaactgattaaacaggcagatgcaaaataa',
+                'sequence': 'ATGGCAGGCGCAGTTGGTCGTCCGCGTCGTAGTGCACCGCGTCGTGCAGGTAAAAATCCGCGTGAAGAAATTCTGGATGCAAGCGCAGAACTGTTTACCCGTCAGGGTTTTGCAACCACCAGTACCCATCAGATTGCAGATGCAGTTGGTATTCGTCAGGCAAGCCTGTATTATCATTTTCCGAGCAAAACCGAAATCTTTCTGACCCTGCTGAAAAGCACCGTTGAACCGAGCACCGTTCTGGCAGAAGATCTGAGCACCCTGGATGCAGGTCCGGAAATGCGTCTGTGGGCAATTGTTGCAAGCGAAGTTCGTCTGCTGCTGAGCACCAAATGGAATGTTGGTCGTCTGTATCAGCTGCCGATTGTTGGTAGCGAAGAATTTGCAGAATATCATAGCCAGCGTGAAGCACTGACCAATGTTTTTCGTGATCTGGCAACCGAAATTGTTGGTGATGATCCGCGTGCAGAACTGCCGTTTCATATTACCATGAGCGTTATTGAAATGCGTCGCAATGATGGTAAAATTCCGAGTCCGCTGAGCGCAGATAGCCTGCCGGAAACCGCAATTATGCTGGCAGATGCAAGCCTGGCAGTTCTGGGTGCACCGCTGCCTGCAGATCGTGTTGAAAAAACCCTGGAACTGATTAAACAGGCAGATGCAAAATAA',
                 'controlBy': [],
                 'params': {'Dp': 0.26308464, 'TIRb': 1065.12},
             },
@@ -303,7 +303,7 @@ HYBRID_PROMOTER_CIRCUIT = {
                 'category': 'Protein',
                 'name': 'BetI',
                 'description': 'Repressor protein of BetI',
-                'sequence': 'atgccgaaactgggtatgcagagcattcgtcgtcgtcagctgattgatgcaaccctggaagcaattaatgaagttggtatgcatgatgcaaccattgcacagattgcacgtcgtgccggtgttagcaccggtattattagccattatttccgcgataaaaacggtctgctggaagcaaccatgcgtgatattaccagccagctgcgtgatgcagttctgaatcgtctgcatgcactgccgcagggtagcgcagaacagcgtctgcaggcaattgttggtggtaattttgatgaaacccaggttagcagcgcagcaatgaaagcatggctggcattttgggcaagcagcatgcatcagccgatgctgtatcgtctgcagcaggttagcagtcgtcgtctgctgagcaatctggttagcgaatttcgtcgtgaactgcctcgtgaacaggcacaagaggcaggttatggtctggcagcactgattgatggtctgtggctgcgtgcagcactgagcggtaaaccgctggataaaacccgtgcaaatagcctgacccgtcattttatcacccagcatctgccgaccgattaa',
+                'sequence': 'ATGCCGAAACTGGGTATGCAGAGCATTCGTCGTCGTCAGCTGATTGATGCAACCCTGGAAGCAATTAATGAAGTTGGTATGCATGATGCAACCATTGCACAGATTGCACGTCGTGCCGGTGTTAGCACCGGTATTATTAGCCATTATTTCCGCGATAAAAACGGTCTGCTGGAAGCAACCATGCGTGATATTACCAGCCAGCTGCGTGATGCAGTTCTGAATCGTCTGCATGCACTGCCGCAGGGTAGCGCAGAACAGCGTCTGCAGGCAATTGTTGGTGGTAATTTTGATGAAACCCAGGTTAGCAGCGCAGCAATGAAAGCATGGCTGGCATTTTGGGCAAGCAGCATGCATCAGCCGATGCTGTATCGTCTGCAGCAGGTTAGCAGTCGTCGTCTGCTGAGCAATCTGGTTAGCGAATTTCGTCGTGAACTGCCTCGTGAACAGGCACAAGAGGCAGGTTATGGTCTGGCAGCACTGATTGATGGTCTGTGGCTGCGTGCAGCACTGAGCGGTAAACCGCTGGATAAAACCCGTGCAAATAGCCTGACCCGTCATTTTATCACCCAGCATCTGCCGACCGATTAA',
                 'controlBy': [],
                 'params': {'Dp': 0.12914642, 'TIRb': 522.86},
             },
@@ -318,8 +318,8 @@ HYBRID_PROMOTER_CIRCUIT = {
             'data': {
                 'category': 'Terminator',
                 'name': 'L3S3P31',
-                'description': 'Standard Terminator',
-                'sequence': 'ccaattattgaacaccctaacgggtgtttttttttttttggtctacc',
+                'description': 'Standard terminator',
+                'sequence': 'CCAATTATTGAACACCCTAACGGGTGTTTTTTTTTTTTTGGTCTACC',
                 'controlBy': [],
                 'params': {},
             },
@@ -336,7 +336,7 @@ HYBRID_PROMOTER_CIRCUIT = {
                 'category': 'Promoter',
                 'name': 'PameR',
                 'description': 'Regulated promoter repressed by AmeR',
-                'sequence': 'gatagtgacaaacttgacaactcatcacttcctaggtataatgctagc',
+                'sequence': 'GATAGTGACAAACTTGACAACTCATCACTTCCTAGGTATAATGCTAGC',
                 'controlBy': [
                     {'name': 'AmeR', 'type': 'Repression', 'params': {'Ymax': 3.8, 'Ymin': 0.2, 'K': 0.09, 'n': 1.4}}
                 ],
@@ -354,7 +354,7 @@ HYBRID_PROMOTER_CIRCUIT = {
                 'category': 'Promoter',
                 'name': 'PamtR',
                 'description': 'Regulated promoter repressed by AmtR',
-                'sequence': 'gattcgttaccaattgacagtttctatcgatctatagataatgctagc',
+                'sequence': 'GATTCGTTACCAATTGACAGTTTCTATCGATCTATAGATAATGCTAGC',
                 'controlBy': [
                     {'name': 'AmtR', 'type': 'Repression', 'params': {'Ymax': 3.8, 'Ymin': 0.08, 'K': 0.07, 'n': 1.6}}
                 ],
@@ -372,7 +372,7 @@ HYBRID_PROMOTER_CIRCUIT = {
                 'category': 'Protein',
                 'name': 'BetI',
                 'description': 'Repressor protein of BetI',
-                'sequence': 'atgccgaaactgggtatgcagagcattcgtcgtcgtcagctgattgatgcaaccctggaagcaattaatgaagttggtatgcatgatgcaaccattgcacagattgcacgtcgtgccggtgttagcaccggtattattagccattatttccgcgataaaaacggtctgctggaagcaaccatgcgtgatattaccagccagctgcgtgatgcagttctgaatcgtctgcatgcactgccgcagggtagcgcagaacagcgtctgcaggcaattgttggtggtaattttgatgaaacccaggttagcagcgcagcaatgaaagcatggctggcattttgggcaagcagcatgcatcagccgatgctgtatcgtctgcagcaggttagcagtcgtcgtctgctgagcaatctggttagcgaatttcgtcgtgaactgcctcgtgaacaggcacaagaggcaggttatggtctggcagcactgattgatggtctgtggctgcgtgcagcactgagcggtaaaccgctggataaaacccgtgcaaatagcctgacccgtcattttatcacccagcatctgccgaccgattaa',
+                'sequence': 'ATGCCGAAACTGGGTATGCAGAGCATTCGTCGTCGTCAGCTGATTGATGCAACCCTGGAAGCAATTAATGAAGTTGGTATGCATGATGCAACCATTGCACAGATTGCACGTCGTGCCGGTGTTAGCACCGGTATTATTAGCCATTATTTCCGCGATAAAAACGGTCTGCTGGAAGCAACCATGCGTGATATTACCAGCCAGCTGCGTGATGCAGTTCTGAATCGTCTGCATGCACTGCCGCAGGGTAGCGCAGAACAGCGTCTGCAGGCAATTGTTGGTGGTAATTTTGATGAAACCCAGGTTAGCAGCGCAGCAATGAAAGCATGGCTGGCATTTTGGGCAAGCAGCATGCATCAGCCGATGCTGTATCGTCTGCAGCAGGTTAGCAGTCGTCGTCTGCTGAGCAATCTGGTTAGCGAATTTCGTCGTGAACTGCCTCGTGAACAGGCACAAGAGGCAGGTTATGGTCTGGCAGCACTGATTGATGGTCTGTGGCTGCGTGCAGCACTGAGCGGTAAACCGCTGGATAAAACCCGTGCAAATAGCCTGACCCGTCATTTTATCACCCAGCATCTGCCGACCGATTAA',
                 'controlBy': [],
                 'params': {'Dp': 0.12914642, 'TIRb': 522.86},
             },
@@ -387,8 +387,8 @@ HYBRID_PROMOTER_CIRCUIT = {
             'data': {
                 'category': 'Terminator',
                 'name': 'L3S3P31',
-                'description': 'Standard Terminator',
-                'sequence': 'ccaattattgaacaccctaacgggtgtttttttttttttggtctacc',
+                'description': 'Standard terminator',
+                'sequence': 'CCAATTATTGAACACCCTAACGGGTGTTTTTTTTTTTTTGGTCTACC',
                 'controlBy': [],
                 'params': {},
             },

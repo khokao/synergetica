@@ -76,7 +76,7 @@ const PartEditFormDialog = ({ selectedPartName, setSelectedPartName }) => {
                 fieldName="sequence"
                 form={form}
                 type="text"
-                placeholder="atgcATGC"
+                placeholder="ATGC"
               />
 
               {form.getValues("category") === "Promoter" && (
