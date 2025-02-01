@@ -1,9 +1,14 @@
 # Introduction
 
 <figure markdown="span">
-  ![Image title](https://dummyimage.com/600x200/)
-  <figcaption>Banner or Logo</figcaption>
+  ![Image title](assets/demo_banner.png){ width="80%" }
 </figure>
+
+<figure markdown="span">
+  ![Image title](assets/demo_screen.png)
+</figure>
+
+
 
 ## What is Synergetica?
 
@@ -17,25 +22,3 @@ Synergetica is a powerful desktop application for genetic circuit design. It pro
 * 🤖 Simulate protein expression levels for your circuits interactively
 * 🧬 Generate DNA sequences based on parameters determined through simulation
 * ⚙️ Customize your circuits by adding genetic parts that suit your needs
-
-
-## Concepts
-
-<figure markdown="span">
-  ![Image title](https://dummyimage.com/600x400/)
-  <figcaption>Screen</figcaption>
-</figure>
-
-xxx
-
-### Circuit design
-
-xxx
-
-### Genetic simulation
-
-xxx
-
-### Sequence generation
-
-xxx
