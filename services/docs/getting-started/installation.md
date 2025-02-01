@@ -1,11 +1,12 @@
-Synergetica requires a **backend Docker image** and a **desktop application**.
+To get started, install both the **backend Docker image** and the **desktop application**.
 
 ## Backend Docker image
 
-1. Login to Docker Hub (skip if already logged in):
+1. Log in to Docker Hub (skip this step if you’re already logged in):
 ```console
 docker login -u <USER_NAME> -p <PASSWORD>
 ```
+Replace `<USER_NAME>` and `<PASSWORD>` with your Docker Hub credentials.
 
 2. Pull the Docker image:
 ```console
@@ -27,13 +28,16 @@ Download the installer for your operating system:
 
 
 !!! note "Note (macOS Users)"
-    After installing Synergetica, run the following command to open the app:
+    After installing Synergetica, run the following command to launch the app:
     ```sh
     xattr -d com.apple.quarantine /Applications/Synergetica.app
     ```
 
-!!! tip
-    Check the :octicons-zap-16: icon at the bottom-right of the app screen to confirm whether you’re connected to the backend API.
+!!! note
+    If the Docker engine is running when you open the desktop app, the Docker container will automatically start and the API will launch on port `7007`.
 
-    - :octicons-zap-16:{ .zap-on } : Connected to the API
-    - :octicons-zap-16:{ .zap-off } : Not connected to the API
+!!! tip
+    Check the :lucide-zap: icon at the bottom-right of the app screen to confirm that you’re connected to the backend API.
+
+    - :lucide-zap:{ .zap-on } : Connected to the API
+    - :lucide-zap-off:{ .zap-off } : Not connected to the API
