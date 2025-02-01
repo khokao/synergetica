@@ -9,7 +9,7 @@ docker login -u <USER_NAME> -p <PASSWORD>
 
 2. Pull the Docker image:
 ```console
-docker pull khokao/Synergetica
+docker pull khokao/synergetica
 ```
 
 
