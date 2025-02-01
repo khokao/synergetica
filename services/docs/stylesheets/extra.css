@@ -13,15 +13,15 @@
     max-height: 15rem;
 }
 
-.zap-on {
-    color: #00c951;
-}
-.zap-off {
-    color: #fb2c36;
-}
-
 @media (min-width: 640px) { /* sm */
     .md-typeset .grid {
         grid-template-columns: repeat(3, 1fr);
     }
+}
+
+.zap-on {
+    color: #43a047;  /* green-600 */
+}
+.zap-off {
+    color: #e53935;  /* red-600 */
 }
