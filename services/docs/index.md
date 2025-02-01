@@ -2,6 +2,7 @@
 
 <figure markdown="span">
   ![Image title](assets/demo_banner.png){ width="80%" }
+  <figcaption>A modern, end-to-end genetic circuit design desktop app</figcaption>
 </figure>
 
 <figure markdown="span">
