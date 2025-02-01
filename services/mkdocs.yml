@@ -46,6 +46,7 @@ markdown_extensions:
   - pymdownx.magiclink
   - pymdownx.details
   - pymdownx.superfences
+  - pymdownx.keys
   - pymdownx.tabbed:
       alternate_style: true
   - toc:
@@ -54,6 +55,9 @@ markdown_extensions:
   - pymdownx.emoji:
       emoji_index: !!python/name:material.extensions.emoji.twemoji
       emoji_generator: !!python/name:material.extensions.emoji.to_svg
+      options:
+        custom_icons:
+          - docs/assets/overrides/.icons
 
 validation:
   omitted_files: warn
