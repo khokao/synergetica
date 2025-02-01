@@ -1,120 +1,128 @@
-## Building circuits
+In this guide, you will learn how to create a genetic circuit with Synergetica.
 
-In this guide, you can learn more about how to create a genetic circuit using Synergetica.
-
-### Block types
+## Block types
 
 ![Promoter part](../assets/imgs/guides/circuit-design/promoter.png){ align=left width="200" }
 
-#### Promoter
+### Promoter
 A promoter controls the timing and strength of transcription for the downstream DNA sequence. Specific proteins can bind to it to either activate or repress transcription.
 
 <div style="clear: both;"></div>
 
 ![Protein part](../assets/imgs/guides/circuit-design/protein.png){ align=left width="200" }
 
-#### Protein
+### Protein
 
-A protein is a functional entity that is actually produced within a cell. In living organisms, proteins serve as the functional components responsible for various biological processes.
+A protein is a functional molecule produced within a cell. In living organisms, proteins are essential components in various biological processes.
 
 <div style="clear: both;"></div>
 
 ![Terminator part](../assets/imgs/guides/circuit-design/terminator.png){ align=left width="200" }
 
-#### Terminator
+### Terminator
 
-A terminator marks the end of transcription and also plays a role in regulating the degradation rate of the DNA strand.
+A terminator marks the end of transcription and also plays a role in regulating the degradation rate of the resulting transcript.
 
 <div style="clear: both;"></div>
 
 !!! info
-	When multiple identical terminators exist, homologous recombination may occur, potentially altering the DNA sequence. To prevent this, Synergetica offers multiple terminator variants.
+	When multiple identical terminators are present, homologous recombination may occur, potentially altering the DNA sequence. To prevent this, Synergetica offers multiple terminator variants.
 
 !!! note
 	For more details about the specific parts within each category, please refer to <u>[this page]()</u>.
 
+## Building circuits
 
-### Method 1: Arranging blocks
+### Method 1: Node-based design
 
-Designing a circuit with the GUI
+Design a circuit using the graphical interface.
 
-**Placing block**
+#### Placing a block
 
-- You can place any block by dragging it from the block placement area at the top of the application and dropping it onto the main area.
+Drag any block from the block placement area at the top of the window and drop it onto the main area.
 
 ![](../assets/imgs/tutorial/dnd_parts.png)
 
+#### Deleting a block
 
-**Delete block**
+![](../assets/imgs/guides/circuit-design/delete_block.png){ align=right width="300" }
 
-- There are two ways to delete a block.
+There are two ways to delete a block.
 
-A. Select the block and press the `DELETE` key.
+1. Select the block and press the ++backspace++ key.
+2. Click the "**:material-dots-horizontal:**" button and select `Delete`.
 
-B. Click the overflow menu button and select `Delete`.
+<div style="clear: both"></div>
 
-![](../assets/imgs/guides/circuit-design/delete_block.png){ width="300" height="200" }
+#### Connecting blocks
 
-
-
-**Connect blocks**
-
-- When you drag a new block and bring it near an already existing block, the blocks will automatically connect to each other.
+When you drag a new block near an existing one, they will automatically connect.
 
 ![](../assets/imgs/tutorial/dnd_new_parts.png)
 
-!!! Info
+!!! note
 	In Synergetica, this connected unit of blocks is called a **chain**.
 
-**Disconnect blocks**
+#### Disconnecting blocks
 
-- When you place the mouse cursor on the edge between blocks, an "×" button will appear. Clicking this button will allow you to separate the blocks.
+When you hover the mouse cursor over the edge between blocks, an :octicons-x-circle-16: button will appear. Clicking this button disconnects the blocks.
 
-![](../assets/imgs/guides/circuit-design/disconnection.png){ width="500" height="350 " }
+![](../assets/imgs/guides/circuit-design/disconnection.png){ width="500" height="350" }
 
-- Alternatively, you can disconnect by dragging the part from the chain beyond a certain distance.
+Alternatively, you can also drag the block away from the chain to disconnect it.
 
 ![](../assets/imgs/guides/circuit-design/disconnect_drag_out.png){ width="500" height="350"}
 
+### Method 2: Code-based design
 
+Circuits can also be designed using the Synergetica DSL, a custom domain-specific language developed exclusively for genetic circuit design.
 
-### Method 2: Defining YAML configurations
+#### Basic structure of the Synergetica DSL
 
-Circuit can be designed through coding with DSL.
+- The code is written in YAML format.
+- It is defined as an array of objects, each with a single key: `chain`.
+- Each `chain` is an array of elements, where each element contains:
+	- `type`: the block type (`Promoter`, `Protein`, or `Terminator`)
+	- `name`: the part name
 
-**Basic Structure of DSL**
-
-- The components of a genetic circuit have to be defined within the `chain` array. Each element has a `type` (type of block) and a `name` (parts name).
-
-- As the elements (`type` and `name`) described in YAML from top to bottom, the blocks will be connected **from left to right**
-
-```yaml
+``` yaml title="Example YAML"
 - chain:
-    - type: Promoter
-      name: PameR
-    - type: Protein
-      name: AmeR
-    - type: Terminator
-      name: L3S3P31
+  - type: Promoter
+    name: PamtR
+  - type: Protein
+    name: BM3R1
+  - type: Terminator
+    name: L3S3P31
+- chain:
+  - type: Promoter
+    name: Pbm3r1
+  - type: Protein
+    name: AmtR
+  - type: Terminator
+    name: L3S3P11
 ```
 
-**Import & Export YAML file**
+!!! tip
+	Because the node-based editor and the code-based editor are always synchronized, you can switch between them at any time.
 
-- Synergetica can import & export the YAML configurations by clicking highlighted buttons in the below image.
+!!! info
+	When the YAML-based circuit is loaded into the node-based editor, each chain is arranged vertically, and the blocks in each chain are arranged from left to right.
 
-!!! Success
-	So you can **save and share your project** through YAML file.
+![](../assets/imgs/guides/circuit-design/import_export_yaml.png){ align=right width="350"}
 
-![](../assets/imgs/guides/circuit-design/import_export_yaml.png){ width="500" height="350"}
+#### Importing and exporting YAML files
 
-!!! Tips
-	The graphical design with blocks and the DSL are always synchronized, allowing you to alternate between design methods at any time.
+To import or export a YAML file, click the :material-arrow-collapse-down: and :material-arrow-collapse-up: buttons located in the top bar of the code palette.
+
+<div style="clear: both"></div>
+
+!!! tip
+	You can save and share your circuit using a YAML file.
 
 
 ## Completing valid circuits
 
-- In Synergetica, designed circuits are automatically checked to ensure they are biologically valid.
-- Validation results are showed in the bottom of DSL pallet and the icon highlighted in the below image.
+Circuits are automatically validated for biological correctness. The validation results are displayed at the bottom of the code palette, and an icon indicating the result is shown in the node-based editor.
 
 **Valid**
 ![](../assets/imgs/guides/circuit-design/valid.png)
@@ -123,47 +131,34 @@ Circuit can be designed through coding with DSL.
 ![](../assets/imgs/guides/circuit-design/invalid.png)
 
 !!! Warning
-	If the designed circuit is invalid, `Simulation` can't be conducted.
+	If the designed circuit is invalid, you cannot run a simulation.
 
-Here are basical rules of valid circuit.
+Here are the basic rules for a valid circuit.
 
-**Rule of Blocks**
-
-- `type` and `name` are not missed.
-- Value of `type` is included in [`Promoter`,`Protein`,`Terminator`]
-- Value of `name` is included in the parts list of each block type (<u>[See here for detail]()</u>)
-
-**Rule of Chains**
-
-- Chain must start with Promoter(s)
-- A promoter cannot appear after Proteins.
-- After Promoter(s), at least one Protein must follow before a Terminator.",
-- No elements are allowed after the Terminator.(Chain must end with a Terminator)
+- **Chain rule**: A chain must consist of one or more promoters, followed by one or more proteins, and end with exactly one terminator.
+- **Block rule**: The part name must be included in the list of parts for each block type. (<u>[see details here]()</u>)
 
 ??? Success "Valid circuit examples"
 
-	- Minimum valid circuit.
+	- **Minimum valid circuit**
+	![](../assets/imgs/guides/circuit-design/valid_circuit1.png)
 
-	![](../assets/imgs/guides/circuit-design/valid_circuit1.png){ width="550" height="350" }
-
-	- Multiple Protein is allowed.
-
+	- **Multiple proteins are allowed**
 	![](../assets/imgs/guides/circuit-design/valid_circuit2.png)
 
-	- Multiple Promoter is allowed
-
+	- **Multiple promoters are allowed**
 	![](../assets/imgs/guides/circuit-design/valid_circuit3.png)
 
 ??? Failure "Invalid circuit examples"
 
-	- Chain must start with Promoter(s)
-	![](../assets/imgs/guides/circuit-design/invalid_circuit1.png){ width="550" height="350" }
+	- **A chain must start with promoter(s)**
+	![](../assets/imgs/guides/circuit-design/invalid_circuit1.png)
 
-	- No elements are allowed after the Terminator.(Chain must end with a Terminator)
-	![](../assets/imgs/guides/circuit-design/invalid_circuit2.png){ width="550" height="350" }
+	- **Protein(s) must follow promoter(s) before a terminator**
+	![](../assets/imgs/guides/circuit-design/invalid_circuit2.png)
 
-	- Empty block is not allowed.
-	![](../assets/imgs/guides/circuit-design/invalid_circuit3.png){ width="550" height="350" }
+	- **Empty blocks are not allowed**
+	![](../assets/imgs/guides/circuit-design/invalid_circuit3.png)
 
-	- A promoter cannot appear after Proteins.
+	- **Protein(s) must follow promoter(s) before a terminator**
 	![](../assets/imgs/guides/circuit-design/invalid_circuit4.png)
