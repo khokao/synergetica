@@ -1,6 +1,6 @@
 This section explains how to customize the genetic parts in your database.
 
-![](../assets/imgs/guides/customize-parts/parts_database.png)
+![](../assets/imgs/guides/parts-customization/parts_database.png)
 
 The following five buttons let you manage the parts in your database:
 
