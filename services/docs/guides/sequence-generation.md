@@ -21,16 +21,45 @@ During the generation process, a popup like the below will appear. If you want t
 
 Once the generation is complete, the popup will disappear, and the Result button will become clickable.
 
-When you press the Result button, a window like the one below will open.
+When you press the Result button, a window like the below will open.
+
+A chain ID is assigned to each chain and you can see generated sequence for each chain separately.
 
 ![](../assets/imgs/guides/sequence-generation/viewing_result.png)
 
-A Chain ID is assigned to each chain and you can see generated sequence for each chain separately.
 
 ## Exporting a FASTA file
 
-xxx
-aasdfasdfasd
+You can export generated sequences as `FASTA` format file by pressing `Export FASTA` button.
+
+```FASTA
+> stupid-crabs-allow
+GATTCGTTACCAATTGACAGTTTCTATCGATCTATAGATAATGCTAGCGGACCCCGCCATCAGCTGCATGAAGTATCAGCCAATTATTGAACACCCTAACGGGTGTTTTTTTTTTTTTGGTCTACC
+> brown-rice-wish
+GATAGTGACAAACTTGACAACTCATCACTTCCTAGGTATAATGCTAGCTGGCTGCCCTGCGCGTGCAAGCCTCGGGATCCCAATTATTGAACACCCTAACGGGTGTTTTTTTTTTTTTGGTCTACC
+```
+
+
 ## Technical details
 
-xxx
+### Generated sequence
+
+- Synergetica generates `RBS` to realizing the parameters specified in the Simulation section.
+
+- The RBS sequence regulates the translation rate of  downstream protein, so inserted immediately before the protein sequence.
+
+![](../assets/imgs/guides/sequence-generation/generation_sequence_order.png)
+
+- Sequences shown in the `Generation Summary` contain all nodes and inserted RBS sequence in each chain.
+
+### Generating algorithm
+
+- In Synergetica, sequences are optimize by combining a prediction model with genetic algorithms.
+
+- The prediction model was trained with the dataset of RBS sequence and obserbed TIR value published by <u>[AC Reils et.al (2020)](https://pubs.acs.org/doi/10.1021/acssynbio.0c00394)</u>
+
+!!! Info
+	For the detailed implementation of training prediction model, see <u>[this repository](https://github.com/khokao/synergetica/tree/main/services#43-ml-model-training-and-evaluation)</u>.
+
+
+
