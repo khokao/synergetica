@@ -30,7 +30,7 @@ Synergetica is a powerful desktop application for genetic circuit design. It pro
 
 ## Documentation
 
-See the [documentation](https://khokao.github.io/gene-circuit-ide/) on the Synergetica website.
+See the [documentation](https://khokao.github.io/synergetica/) on the Synergetica website.
 
 
 

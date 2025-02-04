@@ -1,6 +1,6 @@
 {
   "name": "PphlF_AM",
-  "description": "Regulated promoter repressed by PphlF_AM",
+  "description": "Regulated promoter repressed by PhlF_AM",
   "category": "Promoter",
   "sequence": "TCTGATTCGTTACCAATTGACATGATACGAAACGTACCGTATCGTTAAGGT",
   "controlBy": [

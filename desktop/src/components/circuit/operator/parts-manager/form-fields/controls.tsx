@@ -10,10 +10,10 @@ import { ChevronDown, Info, Plus, X } from "lucide-react";
 import { useFieldArray } from "react-hook-form";
 
 const controlParamItems = [
-  { label: "Ymax", description: "Ymax description" },
-  { label: "Ymin", description: "Ymin description" },
-  { label: "K", description: "K description" },
-  { label: "n", description: "n description" },
+  { label: "Ymax", description: "Maximum expression rate" },
+  { label: "Ymin", description: "Minimum expression rate" },
+  { label: "K", description: "Michaelis-Menten constant" },
+  { label: "n", description: "Hill coefficient" },
 ];
 
 export const ControlFields = ({ form }) => {
