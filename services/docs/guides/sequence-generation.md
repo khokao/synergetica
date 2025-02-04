@@ -57,7 +57,7 @@ GATAGTGACAAACTTGACAACTCATCACTTCCTAGGTATAATGCTAGCTGGCTGCCCTGCGCGTGCAAGCCTCGGGATCC
 
 - In Synergetica, sequences are optimize by combining a prediction model with genetic algorithms.
 
-- The prediction model was trained with the dataset of RBS sequence and obserbed TIR value published by <u>[AC Reils et.al (2020)](https://pubs.acs.org/doi/10.1021/acssynbio.0c00394)</u>
+- The prediction model was trained with the dataset of RBS sequence and obserbed TIR value published by <u>[A C. Reis & H M. Salis (2020)](https://pubs.acs.org/doi/10.1021/acssynbio.0c00394)</u>
 
 !!! Info
 	For the detailed implementation of training prediction model, see <u>[this repository](https://github.com/khokao/synergetica/tree/main/services#43-ml-model-training-and-evaluation)</u>.
