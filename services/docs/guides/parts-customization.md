@@ -56,7 +56,7 @@ Proteins have additional parameters:
 | Parameter | Description                                                                                                                                                                                                                                                                         |
 | --------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Dp        | The protein degradation rate (in [RPU]). The default values are theoretical, calculated from the steady-state condition when the gate’s expression is at its maximum. Whenever possible, use experimentally measured values.                                                        |
-| TIRb      | The Translation Initiation Rate measured in baseline experiments to determine parameter values. This represents RBS strength. For more details on the translation initiation rate, see <u>[H. M. Salis, C. A. Voigt, Nat. Biotech. 2009](https://www.nature.com/articles/nbt.1568>)</u> |
+| TIRb      | The Translation Initiation Rate measured in baseline experiments to determine parameter values. This represents RBS strength. For more details on the translation initiation rate, see <u>[H. M. Salis, C. A. Voigt, Nat. Biotech. 2009](https://www.nature.com/articles/nbt.1568)</u> |
 
 !!! note
     If any parameters are invalid, an error message will appear. Check the message and correct your input accordingly.
