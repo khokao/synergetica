@@ -6,6 +6,47 @@ import React from "react";
 import { toast } from "sonner";
 import { describe, expect, it, vi } from "vitest";
 
+vi.mock("@/components/circuit/parts/parts-context", () => {
+  const promoterParts = {
+    PromoterA: {
+      name: "PromoterA",
+      description: "PromoterA Description",
+      category: "Promoter",
+      controlBy: [],
+    },
+  };
+  const proteinParts = {
+    ProteinA: {
+      name: "ProteinA",
+      description: "ProteinA Description",
+      category: "Protein",
+      controlBy: [],
+    },
+  };
+  const terminatorParts = {
+    TerminatorA: {
+      name: "TerminatorA",
+      description: "TerminatorA Description",
+      category: "Terminator",
+      controlBy: [],
+    },
+  };
+
+  return {
+    useParts: () => ({
+      promoterParts: promoterParts,
+      proteinParts: proteinParts,
+      terminatorParts: terminatorParts,
+    }),
+  };
+});
+
+vi.mock("@/components/editor/editor-context", () => ({
+  useEditorContext: () => ({
+    setEditorContent: vi.fn(),
+  }),
+}));
+
 vi.mock("@/components/generation/hooks/use-generator", () => ({
   useGenerator: vi.fn(),
 }));
@@ -28,8 +69,8 @@ describe("GenerationButtons Component", () => {
     render(<GenerationButtons />);
 
     // Assert
-    const runButton = screen.getByTestId("run-button");
-    const resultButton = screen.getByTestId("result-button");
+    const runButton = screen.getByTestId("generation-run-button");
+    const resultButton = screen.getByTestId("generation-result-button");
 
     expect(runButton).toBeInTheDocument();
     expect(runButton).toBeEnabled();
@@ -52,13 +93,13 @@ describe("GenerationButtons Component", () => {
     render(<GenerationButtons />);
 
     // Act
-    const runButton = screen.getByTestId("run-button");
+    const runButton = screen.getByTestId("generation-run-button");
     await userEvent.click(runButton);
 
     // Assert
     await waitFor(() => {
       expect(mockGenerate).toHaveBeenCalled();
-      expect(screen.getByTestId("result-button")).toBeEnabled();
+      expect(screen.getByTestId("generation-result-button")).toBeEnabled();
     });
   });
 
@@ -80,7 +121,7 @@ describe("GenerationButtons Component", () => {
     render(<GenerationButtons />);
 
     // Act
-    await userEvent.click(screen.getByTestId("run-button"));
+    await userEvent.click(screen.getByTestId("generation-run-button"));
     await waitFor(() => expect(mockGenerate).toHaveBeenCalled());
 
     const [[, options]] = toastLoadingSpy.mock.calls;
@@ -111,7 +152,7 @@ describe("GenerationButtons Component", () => {
     render(<GenerationButtons />);
 
     // Act
-    await userEvent.click(screen.getByTestId("run-button"));
+    await userEvent.click(screen.getByTestId("generation-run-button"));
 
     // Assert
     await waitFor(() => {
@@ -142,7 +183,7 @@ describe("GenerationButtons Component", () => {
     render(<GenerationButtons />);
 
     // Act
-    await userEvent.click(screen.getByTestId("run-button"));
+    await userEvent.click(screen.getByTestId("generation-run-button"));
     await waitFor(() => expect(mockGenerate).toHaveBeenCalled());
 
     const [[, options]] = toastSuccessSpy.mock.calls;
@@ -170,11 +211,11 @@ describe("GenerationButtons Component", () => {
 
     render(<GenerationButtons />);
 
-    await userEvent.click(screen.getByTestId("run-button"));
-    await waitFor(() => expect(screen.getByTestId("result-button")).toBeEnabled());
+    await userEvent.click(screen.getByTestId("generation-run-button"));
+    await waitFor(() => expect(screen.getByTestId("generation-result-button")).toBeEnabled());
 
     // Act
-    await userEvent.click(screen.getByTestId("result-button"));
+    await userEvent.click(screen.getByTestId("generation-result-button"));
 
     // Assert
     expect(screen.getByRole("dialog")).toBeInTheDocument();
@@ -194,7 +235,7 @@ describe("GenerationButtons Component", () => {
     render(<GenerationButtons />);
 
     // Act
-    await userEvent.click(screen.getByTestId("run-button"));
+    await userEvent.click(screen.getByTestId("generation-run-button"));
 
     // Assert
     await waitFor(() => {
@@ -223,7 +264,7 @@ describe("GenerationButtons Component", () => {
     render(<GenerationButtons />);
 
     // Act
-    await userEvent.click(screen.getByTestId("run-button"));
+    await userEvent.click(screen.getByTestId("generation-run-button"));
 
     // Assert
     await waitFor(() => {
@@ -235,6 +276,79 @@ describe("GenerationButtons Component", () => {
           action: expect.any(Object),
         }),
       );
+    });
+  });
+
+  it("processes nodes array correctly to produce chain sequences", async () => {
+    // Arrange
+    const user = userEvent.setup();
+
+    const mockGenerate = vi.fn().mockResolvedValue({
+      snapshot: {
+        nodes: [
+          {
+            id: "parent-1",
+            type: "parent",
+            data: {},
+            position: { x: 0, y: 0 },
+          },
+          {
+            id: "child-1",
+            parentId: "parent-1",
+            type: "child",
+            data: { sequence: "A", category: "Promoter" },
+            position: { x: 100, y: 0 },
+          },
+          {
+            id: "child-2",
+            parentId: "parent-1",
+            type: "child",
+            data: { sequence: "A", category: "Protein" },
+            position: { x: 200, y: 0 },
+          },
+          {
+            id: "child-3",
+            parentId: "parent-1",
+            type: "child",
+            data: { sequence: "A", category: "Protein" },
+            position: { x: 300, y: 0 },
+          },
+          {
+            id: "child-3",
+            parentId: "parent-1",
+            type: "child",
+            data: { sequence: "A", category: "Terminator" },
+            position: { x: 400, y: 0 },
+          },
+        ],
+        proteinParameters: {
+          "child-2": 10,
+          "child-3": 20,
+        },
+      },
+      response: {
+        protein_generated_sequences: {
+          "child-2": "TT",
+          "child-3": "CC",
+        },
+      },
+    });
+
+    vi.mocked(useGenerator).mockReturnValue({
+      generate: mockGenerate,
+      cancel: vi.fn(),
+      isGenerating: false,
+    });
+
+    // Act
+    render(<GenerationButtons />);
+    await user.click(screen.getByTestId("generation-run-button"));
+    await user.click(screen.getByTestId("generation-result-button"));
+
+    // Assert
+    await waitFor(() => {
+      // Promoter + RBS + Protein + RBS + Protein + Terminator
+      expect(screen.getByTestId("sequence-preview")).toHaveTextContent("ATTACCAA");
     });
   });
 });
