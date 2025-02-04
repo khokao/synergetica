@@ -10,7 +10,7 @@ export const ExportFastaButton = ({ chainSequences }: { chainSequences: Record<s
       .map(([id, sequence]) => {
         return `> ${id}\n${sequence}`;
       })
-      .join("\n\n");
+      .join("\n");
 
     try {
       const path = await save({
