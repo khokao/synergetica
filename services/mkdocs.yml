@@ -11,6 +11,7 @@ nav:
       - Circuit design: guides/circuit-design.md
       - Genetic simulation: guides/genetic-simulation.md
       - Sequence generation: guides/sequence-generation.md
+      - Parts Customization: guides/parts-customization.md
 
 theme:
   name: material
@@ -30,6 +31,11 @@ theme:
     - navigation.footer
     - toc.follow
 
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/khokao/synergetica
+
 extra_css:
   - stylesheets/extra.css
 
@@ -37,9 +43,11 @@ markdown_extensions:
   - admonition
   - attr_list
   - md_in_html
+  - tables
   - pymdownx.magiclink
   - pymdownx.details
   - pymdownx.superfences
+  - pymdownx.keys
   - pymdownx.tabbed:
       alternate_style: true
   - toc:
@@ -48,6 +56,9 @@ markdown_extensions:
   - pymdownx.emoji:
       emoji_index: !!python/name:material.extensions.emoji.twemoji
       emoji_generator: !!python/name:material.extensions.emoji.to_svg
+      options:
+        custom_icons:
+          - docs/assets/overrides/.icons
 
 validation:
   omitted_files: warn

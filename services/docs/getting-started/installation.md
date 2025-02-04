@@ -1,49 +1,43 @@
-To use Synergetica, you have to install both **Backend docker images** and **Desktop app**
+To get started, install both the **backend Docker image** and the **desktop application**.
 
-## Backend docker image
+## Backend Docker image
 
-1. Login to docker hub. (If you already logged in, you can skip.)
+1. Log in to Docker Hub (skip this step if you’re already logged in):
 ```console
 docker login -u <USER_NAME> -p <PASSWORD>
 ```
+Replace `<USER_NAME>` and `<PASSWORD>` with your Docker Hub credentials.
 
-2. Pull the docker image with this command.
+2. Pull the Docker image:
 ```console
-docker pull khokao/Synergetica
+docker pull khokao/synergetica
 ```
 
 
 ## Desktop app
 
-Install desktop app of Synergetica. Choose the appropriate guide for your operating system.
+Download the installer for your operating system:
 
-=== "macOS"
-    Setup on Mac
+<div class="grid cards" markdown>
 
-    !!! warning
-        Since Synergetica has not been notarized by Apple, it cannot be opened without following the steps below.
+- [:material-apple: macOS](https://github.com/khokao/synergetica/releases/download/nightly/Synergetica_0.0.0_aarch64.dmg)
+- [:material-microsoft-windows: Windows](https://github.com/khokao/synergetica/releases/download/nightly/Synergetica_0.0.0_x64-setup.exe)
+- [:material-linux: Linux](https://github.com/khokao/synergetica/releases/download/nightly/Synergetica_0.0.0_amd64.deb)
 
-    !!! Tip
-         Once opened in this way, you can then simply launch it by double-clicking its icon on the desktop.
-
-    1. Download appropriate installer for your architecture and install it.
-       <u>[Download link](https://drive.google.com/drive/folders/1YUu2UI_ASRp4eGSrJu7tiib_UGKfV9hT?usp=sharing)</u>
-    ![](../assets/imgs/installation/desktop_app_google_drive.png)
+</div>
 
 
-    2. In the terminal, run the following command to delete extended attribute of the app file.
+!!! note "Note (macOS Users)"
+    After installing Synergetica, run the following command to launch the app:
     ```sh
     xattr -d com.apple.quarantine /Applications/Synergetica.app
     ```
 
-    3. Double click the icon of Synergetica, after a few seconds, when you see popup saying
-    `Connected to server`, the application will be ready to use.
-    ![](../assets/imgs/installation/connected_server_popup.png)
+!!! note
+    If the Docker engine is running when you open the desktop app, the Docker container will automatically start and the API will launch on port `7007`.
 
+!!! tip
+    Check the :lucide-zap: icon at the bottom-right of the app screen to confirm that you’re connected to the backend API.
 
-=== "Windows"
-
-    Setup on Windows
-
-    1. foo
-    2. bar
+    - :lucide-zap:{ .zap-on } : Connected to the API
+    - :lucide-zap-off:{ .zap-off } : Not connected to the API
