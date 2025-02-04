@@ -1,13 +1,16 @@
 # Introduction
 
-<figure markdown="span">
-  ![Image title](assets/demo_banner.png){ width="80%" }
-  <figcaption>A modern, end-to-end genetic circuit design desktop app</figcaption>
-</figure>
-
-<figure markdown="span">
-  ![Image title](assets/demo_screen.png)
-</figure>
+<h1>
+<p align="center">
+  <img src="assets/banner.svg" alt="Logo" width="80%">
+</h1>
+  <p align="center">
+    A modern, end-to-end genetic circuit design desktop app
+  </p>
+  <p align="center">
+    <img src="assets/demo_screen.png" alt="Screenshot"/>
+  </p>
+</p>
 
 
 
