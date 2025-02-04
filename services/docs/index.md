@@ -1,13 +1,16 @@
 # Introduction
 
-<figure markdown="span">
-  ![Image title](assets/demo_banner.png){ width="80%" }
-  <figcaption>A modern, end-to-end genetic circuit design desktop app</figcaption>
-</figure>
-
-<figure markdown="span">
-  ![Image title](assets/demo_screen.png)
-</figure>
+<h1>
+<p align="center">
+  <img src="assets/banner.svg" alt="Logo" width="80%">
+</h1>
+  <p align="center">
+    A modern, end-to-end genetic circuit design desktop app
+  </p>
+  <p align="center">
+    <img src="assets/demo_screen.png" alt="Screenshot"/>
+  </p>
+</p>
 
 
 
@@ -23,3 +26,4 @@ Synergetica is a powerful desktop application for genetic circuit design. It pro
 * 🤖 Simulate protein expression levels for your circuits interactively
 * 🧬 Generate DNA sequences based on parameters determined through simulation
 * ⚙️ Customize your circuits by adding genetic parts that suit your needs
+* 🔌 Work entirely offline, ensuring complete control and privacy

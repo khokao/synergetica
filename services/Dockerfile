@@ -7,12 +7,13 @@ ENV UV_LINK_MODE=copy \
     UV_PYTHON=python3.12 \
     UV_PROJECT_ENVIRONMENT=/app
 
+COPY . /build
+
 RUN uvx --from "huggingface_hub[cli]" huggingface-cli download \
     khokao/synergetica \
     base.ckpt \
-    --local-dir src/api/generator/checkpoints
+    --local-dir /build/src/api/generator/checkpoints
 
-COPY . /build
 RUN --mount=type=cache,target=/root/.cache \
     cd /build && uv sync --locked --no-dev --no-editable
 

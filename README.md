@@ -1,7 +1,6 @@
 <h1>
 <p align="center">
-  <img src="" alt="Logo" width="128">
-  <br>Synergetica
+  <img src="services/docs/assets/banner.svg" alt="Logo" width="80%">
 </h1>
   <p align="center">
     A modern, end-to-end genetic circuit design desktop app
@@ -25,6 +24,7 @@ Synergetica is a powerful desktop application for genetic circuit design. It pro
 * 🤖 Simulate protein expression levels for your circuits interactively
 * 🧬 Generate DNA sequences based on parameters determined through simulation
 * ⚙️ Customize your circuits by adding genetic parts that suit your needs
+* 🔌 Work entirely offline, ensuring complete control and privacy
 
 
 

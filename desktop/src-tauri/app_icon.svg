@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" viewBox="0 0 255.6 255.6">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: none;
+      }
+
+      .cls-2 {
+        filter: url(#drop-shadow-1);
+      }
+
+      .cls-3, .cls-4 {
+        fill: #379f99;
+      }
+
+      .cls-4 {
+        fill-rule: evenodd;
+      }
+
+      .cls-5 {
+        fill: #f3f4f6;
+      }
+    </style>
+    <filter id="drop-shadow-1" x="50" y="48.6" width="169" height="172" filterUnits="userSpaceOnUse">
+      <feOffset dx="7" dy="7"/>
+      <feGaussianBlur result="blur" stdDeviation="5"/>
+      <feFlood flood-color="#000" flood-opacity=".2"/>
+      <feComposite in2="blur" operator="in"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <!-- Generator: Adobe Illustrator 28.7.1, SVG Export Plug-In . SVG Version: 1.2.0 Build 142)  -->
+  <g>
+    <g id="Layer_2">
+      <g id="Template_-_Icon_-_App_xA0_Image">
+        <g>
+          <rect class="cls-1" width="255.6" height="255.6"/>
+          <rect class="cls-5" x="24.5" y="25.5" width="206" height="206" rx="44.7" ry="44.7"/>
+          <g class="cls-2">
+            <path class="cls-4" d="M58,146.4c34.7-9.3,34.7,60.1,69.4,50.8v-69.4c-34.7,9.3-34.7-60.1-69.4-50.8v69.4h0Z"/>
+            <path class="cls-4" d="M127.5,127.8c34.7-9.3,34.7,60.1,69.4,50.8v-69.4c-34.7,9.3-34.7-60.1-69.4-50.8v69.4Z"/>
+            <rect class="cls-3" x="178.3" y="57.5" width="18.6" height="18.6"/>
+            <rect class="cls-3" x="58" y="179.5" width="18.6" height="18.6"/>
+            <rect class="cls-3" x="58" y="57.5" width="9.3" height="9.3"/>
+          </g>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

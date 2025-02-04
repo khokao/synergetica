@@ -17,7 +17,6 @@ describe("callGeneratorAPI", () => {
 
     const requestData = {
       proteinTargetValues: { "child-1": 10, "child-2": 20 },
-      proteinInitSequences: { "child-1": "AAATTT", "child-2": "CCCGGG" },
     };
 
     // Act

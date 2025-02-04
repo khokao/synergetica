@@ -67,4 +67,12 @@ describe("Header", () => {
       expect(screen.getByRole("tooltip")).toHaveTextContent("GitHub");
     });
   });
+
+  it("renders the banner image", () => {
+    // Arrange & Act
+    render(<Header />);
+
+    // Assert
+    expect(screen.getByAltText("Banner")).toBeInTheDocument();
+  });
 });

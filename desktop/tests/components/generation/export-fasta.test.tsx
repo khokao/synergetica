@@ -34,7 +34,7 @@ describe("ExportButton Component", () => {
     // Assert
     await waitFor(() => {
       expect(save).toHaveBeenCalled();
-      expect(writeTextFile).toHaveBeenCalledWith("/path/to/sequence.fasta", "> parent-1\nAAATTT\n\n> parent-2\nCCCGGG");
+      expect(writeTextFile).toHaveBeenCalledWith("/path/to/sequence.fasta", "> parent-1\nAAATTT\n> parent-2\nCCCGGG");
     });
   });
 

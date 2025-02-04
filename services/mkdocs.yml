@@ -9,14 +9,14 @@ nav:
   - Guides:
       - Terminology: guides/terminology.md
       - Circuit design: guides/circuit-design.md
-      - Customize Parts: guides/customize-parts.md
       - Genetic simulation: guides/genetic-simulation.md
       - Sequence generation: guides/sequence-generation.md
+      - Parts Customization: guides/parts-customization.md
 
 theme:
   name: material
-  logo: assets/demo-logo.svg
-  favicon: assets/demo-logo.svg
+  logo: assets/logo.svg
+  favicon: assets/logo.svg
   palette:
     scheme: default
     primary: custom
@@ -43,6 +43,7 @@ markdown_extensions:
   - admonition
   - attr_list
   - md_in_html
+  - tables
   - pymdownx.magiclink
   - pymdownx.details
   - pymdownx.superfences

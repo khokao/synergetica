@@ -2,7 +2,7 @@ import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, Tabl
 
 export const SequencePreview = ({ chainSequences }: { chainSequences: Record<string, string> }) => {
   return (
-    <Table>
+    <Table data-testid="sequence-preview">
       <TableCaption>Generation Result Table</TableCaption>
       <TableHeader>
         <TableRow>

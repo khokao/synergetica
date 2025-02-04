@@ -180,7 +180,7 @@ describe("EditorTopBar", () => {
     // Assert
     expect(saveMock).toHaveBeenCalledWith({
       filters: [{ name: "YAML", extensions: ["yaml", "yml"] }],
-      defaultPath: "config.yaml",
+      defaultPath: "circuit.yaml",
     });
     expect(writeTextFileMock).toHaveBeenCalledWith("path/to/save.yaml", "Test export content");
     expect(toast.success).toHaveBeenCalled();
