@@ -16,7 +16,7 @@ const getChainSequences = (nodes: Node[], response: GeneratorResponseData) => {
   const updatedNodes = produce(nodes, (draft) => {
     for (const node of draft) {
       if (node.data.category === "Protein") {
-        node.data.sequence = protein_generated_sequences[node.id];
+        node.data.sequence = protein_generated_sequences[node.id] + node.data.sequence; // RBS is located just before the protein
       }
     }
   });
@@ -93,7 +93,7 @@ export const GenerationButtons = () => {
           onClick={handleGenerate}
           disabled={isGenerating}
           className="relative w-24 flex items-center"
-          data-testid="run-button"
+          data-testid="generation-run-button"
         >
           <div className="absolute left-2 w-7 flex justify-center">
             <Play className="w-5" />
@@ -106,7 +106,7 @@ export const GenerationButtons = () => {
           onClick={() => setIsDialogOpen(true)}
           disabled={!generationResult || isGenerating}
           className="relative w-24 flex items-center"
-          data-testid="result-button"
+          data-testid="generation-result-button"
         >
           <div className="absolute left-2 w-7 flex justify-center">
             <Dna className="w-5" />
