@@ -2,7 +2,6 @@ import { invoke } from "@tauri-apps/api/core";
 
 export interface GeneratorRequestData {
   proteinTargetValues: Record<string, number>;
-  proteinInitSequences: Record<string, string>;
 }
 
 // names are not renamed to camelCase ?
@@ -15,7 +14,6 @@ export interface GeneratorResponseData {
 export const callGeneratorAPI = async (data: GeneratorRequestData) => {
   return await invoke<GeneratorResponseData>("call_generator_api", {
     proteinTargetValues: data.proteinTargetValues,
-    proteinInitSequences: data.proteinInitSequences,
   });
 };
 
