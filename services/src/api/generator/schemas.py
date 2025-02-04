@@ -7,7 +7,6 @@ DNASequence = Annotated[str, StringConstraints(pattern=r'^[ATGC]+$')]
 
 class GeneratorInput(BaseModel):
     protein_target_values: dict[str, PositiveFloat] = Field(min_length=1)
-    protein_init_sequences: dict[str, DNASequence] = Field(min_length=1)
 
 
 class GeneratorOutput(BaseModel):
