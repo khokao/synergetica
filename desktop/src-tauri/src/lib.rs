@@ -28,7 +28,6 @@ async fn call_healthcheck() -> Result<String, String> {
 #[tauri::command]
 async fn call_generator_api(
     protein_target_values: HashMap<String, f64>,
-    protein_init_sequences: HashMap<String, String>,
     state: tauri::State<'_, Arc<Mutex<AppState>>>,
 ) -> Result<GeneratorResponseData, String> {
     let cancellation_token = CancellationToken::new();
@@ -36,7 +35,7 @@ async fn call_generator_api(
         let mut locked_state = state.lock().await;
         locked_state.cancellation_token = cancellation_token.clone();
     }
-    let api_call = APIClient::generate(protein_target_values, protein_init_sequences);
+    let api_call = APIClient::generate(protein_target_values);
     tokio::select! {
         result = api_call => result.map_err(|e| e.to_string()),
         _ = cancellation_token.cancelled() => Err("Request was canceled".into()),
