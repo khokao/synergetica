@@ -32,6 +32,7 @@ A chain ID is assigned to each chain and you can see generated sequence for each
 
 You can export generated sequences as `FASTA` format file by pressing `Export FASTA` button.
 
+(example.fa)
 ```FASTA
 > stupid-crabs-allow
 GATTCGTTACCAATTGACAGTTTCTATCGATCTATAGATAATGCTAGCGGACCCCGCCATCAGCTGCATGAAGTATCAGCCAATTATTGAACACCCTAACGGGTGTTTTTTTTTTTTTGGTCTACC
