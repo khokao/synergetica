@@ -28,7 +28,6 @@ async def test_genetic_algorithm():
     # Act
     sequences, rescaled_predictions = await ga(
         target_value=1.0,
-        init_sequence='ATGC',
         population_size=2,
         mutation_rate=0.5,
         num_iterations=1,
@@ -51,13 +50,11 @@ async def test_generate_single_sequence():
     # Arrange
     protein_id = 'test-protein-id'
     target_value = 100
-    init_sequence = 'ATGC'
 
     # Act
     protein_id, sequence = await generate_single_sequence(
         protein_id=protein_id,
         target_value=target_value,
-        init_sequence=init_sequence,
     )
 
     # Assert
@@ -69,12 +66,10 @@ async def test_generate_single_sequence():
 async def test_generate_sequences():
     # Arrange
     protein_target_values = {'protein-1': 100, 'protein-2': 100}
-    protein_init_sequences = {'protein-1': 'ATGC', 'protein-2': 'ATGC'}
 
     # Act
     protein_generated_sequences = await generate_sequences(
         protein_target_values=protein_target_values,
-        protein_init_sequences=protein_init_sequences,
     )
 
     # Assert
