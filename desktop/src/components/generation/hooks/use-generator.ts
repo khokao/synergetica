@@ -38,16 +38,8 @@ export const useGenerator = () => {
         proteinParameters: currentProteinParameters,
       };
 
-      const proteinInitSequences = nodes
-        .filter((node) => node.data.category === "Protein")
-        .reduce((acc, node) => {
-          acc[node.id] = node.data.sequence;
-          return acc;
-        }, {});
-
       const requestData: GeneratorRequestData = {
         proteinTargetValues: currentProteinParameters,
-        proteinInitSequences: proteinInitSequences,
       };
 
       const response = await callGeneratorAPI(requestData);
