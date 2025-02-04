@@ -15,7 +15,6 @@ pub struct GeneratorResponseData {
 #[derive(Debug, Serialize)]
 struct GenerateRequestData {
     protein_target_values: HashMap<String, f64>,
-    protein_init_sequences: HashMap<String, String>,
 }
 
 pub struct APIClient;
@@ -36,14 +35,8 @@ impl APIClient {
         }
     }
 
-    pub async fn generate(
-        protein_target_values: HashMap<String, f64>,
-        protein_init_sequences: HashMap<String, String>,
-    ) -> Result<GeneratorResponseData, String> {
-        let request_data = GenerateRequestData {
-            protein_target_values,
-            protein_init_sequences,
-        };
+    pub async fn generate(protein_target_values: HashMap<String, f64>) -> Result<GeneratorResponseData, String> {
+        let request_data = GenerateRequestData { protein_target_values };
 
         let client = Client::new();
         let response = client
