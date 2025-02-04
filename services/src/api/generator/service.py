@@ -1,4 +1,5 @@
 import asyncio
+import random
 from http import HTTPStatus
 from pathlib import Path
 
@@ -10,7 +11,7 @@ from loguru import logger
 from tqdm import tqdm
 from transformers import PreTrainedTokenizerFast
 
-from .constants import CHECKPOINT_PATH
+from .constants import CHECKPOINT_PATH, RBS_INIT_BASE_SEQUENCES
 from .predictor import LightningSimpleTransformer, SequenceTargetDataModule
 
 
@@ -50,7 +51,6 @@ class GeneticAlgorithm:
     async def __call__(
         self,
         target_value: float,
-        init_sequence: str,
         num_iterations: int,
         population_size: int,
         mutation_rate: float,
@@ -58,7 +58,6 @@ class GeneticAlgorithm:
         """
         Args:
             target_value (float): The optimal value that the genetic algorithm should converge to.
-            init_sequence (str): The initial sequence used for generating the population.
             num_iterations (int): The number of iterations to run the genetic algorithm.
             population_size (int): The number of sequences in the population.
             mutation_rate (float): The probability of mutation occurring at each nucleotide position.
@@ -73,7 +72,7 @@ class GeneticAlgorithm:
         scaled_target_value = (target_value - self.scaler_mean) / self.scaler_scale
 
         # Initialization
-        init_sequences = [init_sequence] * population_size
+        init_sequences = random.choices(RBS_INIT_BASE_SEQUENCES, k=population_size)
         encoded = self.tokenizer(init_sequences, **self.tokenize_kwargs)
         input_ids = encoded['input_ids']
         attention_mask = encoded['attention_mask'].bool()
@@ -147,13 +146,11 @@ def load_ckpt(ckpt_path: Path) -> dict:
 async def generate_single_sequence(
     protein_id: str,
     target_value: float,
-    init_sequence: str,
 ) -> tuple[str, str]:
     """
     Args:
         protein_id (str): The protein node ID.
         target_value (float): The target value for the genetic algorithm.
-        init_sequence (str): The initial sequence used for generating the population.
 
     Returns:
         tuple[str, str]:
@@ -164,7 +161,6 @@ async def generate_single_sequence(
     ga = GeneticAlgorithm(**loaded_items)
     sequences, _ = await ga(
         target_value=target_value,
-        init_sequence=init_sequence,
         num_iterations=5,
         population_size=100,
         mutation_rate=0.5,
@@ -175,12 +171,10 @@ async def generate_single_sequence(
 
 async def generate_sequences(
     protein_target_values: dict[str, float],
-    protein_init_sequences: dict[str, str],
 ) -> dict[str, str]:
     """
     Args:
         protein_target_values (dict[str, float]): A dict containing the protein node ID and target value.
-        protein_init_sequences (dict[str, str]): A dict containing the protein node ID and initial sequence.
 
     Returns:
         protein_generated_sequences (dict[str, str]): A dict containing the protein node ID and generated sequence.
@@ -194,7 +188,6 @@ async def generate_sequences(
                     args=(
                         protein_id,
                         protein_target_values[protein_id],
-                        protein_init_sequences[protein_id],
                     ),
                 )
                 tasks.append(task)
