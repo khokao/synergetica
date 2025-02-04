@@ -158,7 +158,7 @@ describe("Simulation Component", () => {
     // Assert
     expect(screen.getByTestId("chart-card")).toBeInTheDocument();
     expect(screen.getByRole("slider")).toBeInTheDocument();
-    expect(screen.getByTestId("run-button")).toBeInTheDocument();
-    expect(screen.getByTestId("result-button")).toBeInTheDocument();
+    expect(screen.getByTestId("generation-run-button")).toBeInTheDocument();
+    expect(screen.getByTestId("generation-result-button")).toBeInTheDocument();
   });
 });
