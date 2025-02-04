@@ -5,6 +5,7 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 import * as RadixTooltip from "@radix-ui/react-tooltip";
 import { openUrl } from "@tauri-apps/plugin-opener";
 import { BookMarked, Github } from "lucide-react";
+import Image from "next/image";
 
 export const Header = () => {
   const handleOpenUrl = async (url: string) => {
@@ -17,7 +18,9 @@ export const Header = () => {
 
   return (
     <header className="flex items-center justify-between px-6 h-16 bg-gray-100">
-      <div className="flex items-center" />
+      <div className="flex items-center">
+        <Image src="/images/banner.svg" width={200} height={48} alt="Banner" />
+      </div>
 
       <TooltipProvider>
         <div className="flex items-center space-x-2">
