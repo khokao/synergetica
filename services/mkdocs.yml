@@ -7,7 +7,6 @@ nav:
       - Installation: getting-started/installation.md
       - Tutorial: getting-started/tutorial.md
   - Guides:
-      - Terminology: guides/terminology.md
       - Circuit design: guides/circuit-design.md
       - Genetic simulation: guides/genetic-simulation.md
       - Sequence generation: guides/sequence-generation.md
