@@ -10,7 +10,7 @@ nav:
       - Circuit design: guides/circuit-design.md
       - Genetic simulation: guides/genetic-simulation.md
       - Sequence generation: guides/sequence-generation.md
-      - Parts Customization: guides/parts-customization.md
+      - Parts customization: guides/parts-customization.md
 
 theme:
   name: material
