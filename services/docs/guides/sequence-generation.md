@@ -1,66 +1,51 @@
-This page provides an explanation of sequence generation.
+This page explains how to generate sequences and export them in FASTA format.
 
 ## Generating sequences
 
-After designing circuit & adjust desired parameters in simulation, you can generate optimized sequence.
+After you have designed your circuit and adjusted the desired parameters in the simulation section, you can generate optimized DNA sequences based on those parameters.
 
-To start generation, press the `Run` button in the `Generation` section.
+To start the generation process, click the **"Run"** button in the Generation section.
 
 ![](../assets/imgs/guides/sequence-generation/whole_screen_for_generation.png)
 
-During the generation process, a popup like the below will appear. If you want to stop the generation, you can by pressing the "Cancel" button.
+!!! tip
+	During generation, a popup will appear in the bottom-right corner of the screen. If you want to stop the process, click the **"Cancel"** button inside that popup.
 
-![](../assets/imgs/guides/sequence-generation/generating.png){width="300" height="150"}
-
-!!! Info
-	The time required for generation vary depending on the number of chains and the memory status of your Computer.
-
-	(For a detailed explanation of the generation algorithm, please see <u>[this section](#technical-details)</u>.)
+!!! info
+	Generation time may vary depending on the number of proteins in your circuit and your machine’s specifications.
 
 ## Viewing results
 
-Once the generation is complete, the popup will disappear, and the Result button will become clickable.
-
-When you press the Result button, a window like the below will open.
-
-A chain ID is assigned to each chain and you can see generated sequence for each chain separately.
+Once sequence generation is complete, the **"Result"** button becomes available. Clicking it will open a window displaying your results, as shown below.
 
 ![](../assets/imgs/guides/sequence-generation/viewing_result.png)
 
+On the left side of the window, you can see your circuit along with the parameters you specified. On the right side, a table displays the resulting sequences. Each chain is assigned a random ID, which appears in both the circuit and the table.
 
 ## Exporting a FASTA file
 
-You can export generated sequences as `FASTA` format file by pressing `Export FASTA` button.
+To export generated sequences as a FASTA file, click the **"Export FASTA"** button.
 
-(example.fa)
-```FASTA
+In the FASTA file, the names of the sequences are set to their corresponding chain IDs. For example, the exported file may look like this:
+
+``` fasta title="Example FASTA"
 > stupid-crabs-allow
 GATTCGTTACCAATTGACAGTTTCTATCGATCTATAGATAATGCTAGCGGACCCCGCCATCAGCTGCATGAAGTATCAGCCAATTATTGAACACCCTAACGGGTGTTTTTTTTTTTTTGGTCTACC
 > brown-rice-wish
 GATAGTGACAAACTTGACAACTCATCACTTCCTAGGTATAATGCTAGCTGGCTGCCCTGCGCGTGCAAGCCTCGGGATCCCAATTATTGAACACCCTAACGGGTGTTTTTTTTTTTTTGGTCTACC
 ```
 
-
 ## Technical details
 
 ### Generated sequence
 
-- Synergetica generates `RBS` to realizing the parameters specified in the Simulation section.
-
-- The RBS sequence regulates the translation rate of  downstream protein, so inserted immediately before the protein sequence.
+Synergetica generates ribosome binding sites (RBS) sequences according to the parameters specified in the simulation section. Because the RBS sequence regulates the translation rate of each downstream protein, it is inserted directly before the coding region for that protein. As a result, each chain’s final sequence is formed by concatenating all blocks, with an RBS placed immediately before every protein.
 
 ![](../assets/imgs/guides/sequence-generation/generation_sequence_order.png)
 
-- Sequences shown in the `Generation Summary` contain all nodes and inserted RBS sequence in each chain.
-
 ### Generating algorithm
 
-- In Synergetica, sequences are optimize by combining a prediction model with genetic algorithms.
+In Synergetica, RBS sequences are optimized by combining a prediction model with genetic algorithms. The prediction model was trained using a dataset of RBS sequences and observed TIR values published by <u>[A C. Reis & H M. Salis (2020)](https://pubs.acs.org/doi/10.1021/acssynbio.0c00394)</u>.
 
-- The prediction model was trained with the dataset of RBS sequence and obserbed TIR value published by <u>[A C. Reis & H M. Salis (2020)](https://pubs.acs.org/doi/10.1021/acssynbio.0c00394)</u>
-
-!!! Info
-	For the detailed implementation of training prediction model, see <u>[this repository](https://github.com/khokao/synergetica/tree/main/services#43-ml-model-training-and-evaluation)</u>.
-
-
-
+!!! info
+	For more detailed information on training the prediction model, see <u>[the repository's README](https://github.com/khokao/synergetica/tree/main/services#43-ml-model-training-and-evaluation)</u>.
