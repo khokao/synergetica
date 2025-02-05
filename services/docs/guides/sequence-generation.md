@@ -43,7 +43,7 @@ Synergetica generates ribosome binding sites (RBS) sequences according to the pa
 
 ![](../assets/imgs/guides/sequence-generation/generation_sequence_order.png)
 
-### Generating algorithm
+### Generation algorithm
 
 In Synergetica, RBS sequences are optimized by combining a prediction model with genetic algorithms. The prediction model was trained using a dataset of RBS sequences and observed TIR values published by <u>[A C. Reis & H M. Salis (2020)](https://pubs.acs.org/doi/10.1021/acssynbio.0c00394)</u>.
 
