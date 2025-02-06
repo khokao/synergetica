@@ -31,10 +31,42 @@
 
 ## Technical details
 
-- Synergetica simulates time concentration changes of all protein for designed circuits.
+- Synergetica simulates time concentration changes of all protein in designed circuits.
 - When the Start button of the simulation is pressed, a differential formulation is formulated according to the structure of the circuit, and an approximate solution is obtained by Euler's method.
 
 
 ### Formulation
 
 -  In Synergetica, the equations and part parameters are based on [**Cello** (Nielsen, Alec AK, et al. Science, 2016)](https://www.science.org/doi/full/10.1126/science.aac7341), a leading study in genetic circuit design.
+
+
+- For each protein node, differential equations are formulated for the following two events
+
+- Each parameter bar changes the **TIR**(Translation initiation rate) in corresponding equations.
+
+
+	| Biological event   | Equation example                                                     |
+	| ------------ | -------------------------------------------------------------------------- |
+	| Transcription   | $\frac{d[ProtX_m]}{dt} = PCN\cdot \zeta \cdot  \left\{Y_{\min} + \left(Y_{\max} - Y_{\min}\right) \cdot \frac{K^n}{K^n + [ProtX_m]^n}\right\}   - D_{mRNA}\cdot[ProtX_m]$|
+	| Translation  | $\frac{d[ProtX_p]}{dt} = E_{RPU}\cdot \frac{TIR}{TIRb} - D_{ProtX_p}\cdot[ProtX_p]$|
+
+	- [$\cdot$] mean the concentration of "$\cdot$"
+	- [ProtX_m] means concentration of Protein node X as mRNA 
+	- [ProtX_p] means concentration of Protein node X as protein.
+
+	Details of each paramter.
+
+	| Parameter name   | Description                                                   |
+	| ------------ | -------------------------------------------------------------------------- |
+	| $PCN$ | Plasmid copy number. default=15 |
+	| $\zeta$ | Translate coefficient from RPU to mRNA (unit: [mRNA]/(min·RPU)). default=0.025|
+	| $D_{mRNA}$ | Degradation rate of mRNA. Common for all parts.(unit:[1/s]) default=0.025|
+	| $E_{RPU}$ | Translation efficiency coefficient. default=0.02|
+
+
+	!!! Note
+		For other paramters, please see <u>[this section](./parts-customization.md#promoter-specific-parameters)</u>.
+
+
+!!! Tip
+	For more detailed simulation logic, please refer <u>[this code](https://github.com/khokao/synergetica/blob/main/services/src/api/simulator/service.py)</u>.
