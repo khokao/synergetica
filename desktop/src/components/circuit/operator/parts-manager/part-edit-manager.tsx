@@ -71,6 +71,17 @@ const PartEditFormDialog = ({ selectedPartName, setSelectedPartName }) => {
           <ScrollArea className="h-full">
             <form className="flex flex-col space-y-8 px-4" noValidate>
               <InputField
+                label="Description"
+                description="Description of the part (optional)"
+                fieldName="description"
+                form={form}
+                type="text"
+                placeholder="New part description."
+              />
+
+              <Separator />
+
+              <InputField
                 label="DNA Sequence"
                 description="Sequence of nucleotides (A, T, C, G)"
                 fieldName="sequence"

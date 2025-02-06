@@ -65,7 +65,7 @@ const SelectMenu = ({ options, selectedOption, handleSelect }) => {
             {options.map((o) => {
               const isSelected = selectedOption && o.name === selectedOption.name;
               return (
-                <CommandItem key={o.name} value={`${o.name} ${o.description}`} onSelect={() => handleSelect(o)} asChild>
+                <CommandItem key={o.name} value={o.name} onSelect={() => handleSelect(o)} asChild>
                   <div className={`cursor-pointer ${isSelected ? "border-2 border-gray-500 bg-gray-100" : ""}`}>
                     <InformationCard data={o} />
                   </div>
