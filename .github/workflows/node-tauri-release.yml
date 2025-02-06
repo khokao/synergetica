@@ -6,6 +6,7 @@ on:
       - main
     paths:
       - "desktop/**"
+      - "!desktop/README.md"
     tags:
       - "v*"
   workflow_dispatch:
