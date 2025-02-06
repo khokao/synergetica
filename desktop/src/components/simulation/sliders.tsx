@@ -85,7 +85,7 @@ export const Sliders = () => {
     <Card className="h-full border-0 shadow-none pt-4">
       <CardContent className="h-full">
         <ScrollArea className="h-full overflow-x-hidden">
-          <div className=" grid grid-cols-[auto,1fr,auto] items-center gap-x-4 gap-y-2">{sliderList}</div>
+          <div className="grid grid-cols-[auto,1fr,auto] items-center gap-x-4 gap-y-2">{sliderList}</div>
           <ScrollBar />
         </ScrollArea>
       </CardContent>
