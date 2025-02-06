@@ -22,19 +22,19 @@ export const PartsCommandList = ({ onSelect, includeCategories = ["Promoter", "P
 
   return (
     <Command>
-      <CommandInput placeholder="Search parts..." />
+      <CommandInput placeholder="Search..." />
       <CommandList>
         <CommandEmpty>No results found.</CommandEmpty>
         {groups.map(({ category, parts, icon: Icon, iconColor }) => (
           <CommandGroup key={category} heading={category}>
             {Object.keys(parts).map((p) => (
               // Need PopoverPrimitive.Close : https://github.com/shadcn-ui/ui/issues/1625#issuecomment-1785193833
-              <PopoverPrimitive.Close key={p} className="w-full">
-                <CommandItem onSelect={() => onSelect(p)}>
+              <CommandItem key={p} onSelect={() => onSelect(p)}>
+                <PopoverPrimitive.Close key={p} className="flex flex-row justify-center items-center space-x-2">
                   {Icon && <Icon className={iconColor} />}
                   <span>{p}</span>
-                </CommandItem>
-              </PopoverPrimitive.Close>
+                </PopoverPrimitive.Close>
+              </CommandItem>
             ))}
           </CommandGroup>
         ))}
