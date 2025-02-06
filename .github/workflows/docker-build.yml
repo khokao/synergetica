@@ -32,3 +32,4 @@ jobs:
           push: true
           tags: khokao/synergetica:latest
           no-cache: true
+          platforms: linux/amd64,linux/arm64
