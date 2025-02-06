@@ -2,13 +2,14 @@
 
 - After designed your desired circuit, you can simulate it by clicking **"Start"** button in the Simulation section.
 - If the simulation is successful, the right side tab will open and the simulation results section will be displayed.
+- You can reset simulation by clicking  **"Reset"** button.
 
 ![](../assets/imgs/guides/genetic-simulation/simulation_whole.png) 
 
 !!! info "Info (Cirtcuit validtion)"
 	If the designed circuit is invalid, you can't click **"Start"** button. please check [<u>this page</u>](./circuit-design.md#completing-valid-circuits) for about circuit validation.
 
-!!! Tip "Info (API connection)"
+!!! info "Info (API connection)"
     Check the :lucide-zap: icon at the simulation section to confirm that you’re connected to the backend API. If not connected, you can't click **"Start"** button.
 
     - :lucide-zap:{ .zap-on } : Connected to the API
@@ -46,21 +47,20 @@
 
 
 	| Biological event   | Equation example                                                     |
-	| ------------ | -------------------------------------------------------------------------- |
+	| :--------------------------------: | :-------------------------------------------------------------------------- |
 	| Transcription   | $\frac{d[ProtX_m]}{dt} = PCN\cdot \zeta \cdot  \left\{Y_{\min} + \left(Y_{\max} - Y_{\min}\right) \cdot \frac{K^n}{K^n + [ProtX_m]^n}\right\}   - D_{mRNA}\cdot[ProtX_m]$|
 	| Translation  | $\frac{d[ProtX_p]}{dt} = E_{RPU}\cdot \frac{TIR}{TIRb} - D_{ProtX_p}\cdot[ProtX_p]$|
 
-	- [$\cdot$] mean the concentration of "$\cdot$"
-	- [ProtX_m] means concentration of Protein node X as mRNA 
-	- [ProtX_p] means concentration of Protein node X as protein.
+	- [$ProtX_m$] means concentration of Protein node X as mRNA 
+	- [$ProtX_p$] means concentration of Protein node X as protein.
 
 	Details of each paramter.
 
 	| Parameter name   | Description                                                   |
 	| ------------ | -------------------------------------------------------------------------- |
-	| $PCN$ | Plasmid copy number. default=15 |
+	| $PCN$ | Plasmid copy number (unit: copies/cell). default=15 |
 	| $\zeta$ | Translate coefficient from RPU to mRNA (unit: [mRNA]/(min·RPU)). default=0.025|
-	| $D_{mRNA}$ | Degradation rate of mRNA. Common for all parts.(unit:[1/s]) default=0.025|
+	| $D_{mRNA}$ | Degradation rate of mRNA. Common for all parts (unit:[1/s]). default=0.025|
 	| $E_{RPU}$ | Translation efficiency coefficient. default=0.02|
 
 
