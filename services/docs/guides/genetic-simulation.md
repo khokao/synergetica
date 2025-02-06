@@ -54,7 +54,7 @@
 	- [$ProtX_m$] means concentration of Protein node X as mRNA 
 	- [$ProtX_p$] means concentration of Protein node X as protein.
 
-	Details of each paramter.
+	Details of each parameter.
 
 	| Parameter name   | Description                                                   |
 	| ------------ | -------------------------------------------------------------------------- |
@@ -65,7 +65,7 @@
 
 
 	!!! Note
-		For other paramters, please see <u>[this section](./parts-customization.md#promoter-specific-parameters)</u>.
+		For other parameters, please see <u>[this section](./parts-customization.md#promoter-specific-parameters)</u>.
 
 
 !!! Tip
