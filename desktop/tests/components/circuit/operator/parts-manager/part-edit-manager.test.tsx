@@ -128,6 +128,9 @@ describe("PartEditManager Component", () => {
     await user.click(screen.getByTestId("part-edit-button"));
     await user.click(screen.getByText("PromoterA"));
 
+    await user.clear(screen.getByLabelText("Description"));
+    await user.type(screen.getByLabelText("Description"), "New Description");
+
     await user.clear(screen.getByLabelText("DNA Sequence"));
     await user.type(screen.getByLabelText("DNA Sequence"), "GGCC");
 
@@ -135,7 +138,10 @@ describe("PartEditManager Component", () => {
 
     // Assert
     await waitFor(() => {
-      expect(mockEditPart).toHaveBeenCalledWith("PromoterA", expect.objectContaining({ sequence: "GGCC" }));
+      expect(mockEditPart).toHaveBeenCalledWith(
+        "PromoterA",
+        expect.objectContaining({ description: "New Description", sequence: "GGCC" }),
+      );
     });
   });
 
