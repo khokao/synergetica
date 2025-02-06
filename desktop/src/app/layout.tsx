@@ -9,7 +9,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <body className="flex flex-col h-screen w-screen">
         <Header />
-        <main className="flex-grow">{children}</main>
+        <main className="flex-grow min-h-0">{children}</main>
         <Toaster />
       </body>
     </html>
