@@ -24,12 +24,12 @@ export const ParameterPreview = ({
           <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
             {proteins.map(({ id, name, parameter }, index) => (
               <div key={id} className="flex items-center gap-4 pr-4">
-                <Label htmlFor={`slider-${id}`} className="w-40 flex items-center gap-2">
+                <Label htmlFor={`slider-${id}`} className="w-[88px] flex items-center gap-2 flex-shrink-0">
                   <span
-                    className="inline-block w-3 h-3 rounded-full"
+                    className="inline-block w-3 h-3 rounded-full flex-shrink-0"
                     style={{ backgroundColor: `hsl(var(--chart-${(index % 5) + 1}))` }}
                   />
-                  {name}
+                  <span className="text-ellipsis overflow-hidden">{name}</span>
                 </Label>
                 <Slider
                   id={`slider-${id}`}
@@ -38,7 +38,7 @@ export const ParameterPreview = ({
                   step={1}
                   defaultValue={[parameter]}
                   disabled
-                  className="w-full"
+                  className="w-full min-w-6"
                 />
                 <span className="w-24 text-right">{parameter}</span>
               </div>
