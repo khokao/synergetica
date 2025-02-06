@@ -29,7 +29,7 @@ const createMarkers = (issues: ZodIssue[], doc: Document.Parsed, lineCounter: Li
       }
       if (endPos) {
         endLine = endPos.line;
-        endCol = endPos.col + 1;
+        endCol = endPos.col;
       }
     } else {
       // fallback to parent node
@@ -45,7 +45,7 @@ const createMarkers = (issues: ZodIssue[], doc: Document.Parsed, lineCounter: Li
         }
         if (endPos) {
           endLine = endPos.line;
-          endCol = endPos.col + 1;
+          endCol = endPos.col;
         }
       }
     }
