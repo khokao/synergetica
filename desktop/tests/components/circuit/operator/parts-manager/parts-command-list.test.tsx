@@ -78,7 +78,7 @@ describe("PartsCommandList", () => {
     );
 
     // Act
-    await user.type(screen.getByPlaceholderText("Search parts..."), "Unknown");
+    await user.type(screen.getByPlaceholderText("Search..."), "Unknown");
 
     // Assert
     expect(screen.getByText("No results found.")).toBeInTheDocument();
