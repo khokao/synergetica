@@ -96,7 +96,7 @@ The API provides two main features: **simulation** and **generation**. For more 
    ```
 
 > [!NOTE]
-> The pretrained model weights are required for the iterative optimization that uses the predictive model to generate DNA sequences.
+> The pretrained model weights are required for the iterative optimization process, which relies on the prediction model to generate DNA sequences.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -204,7 +204,7 @@ docker run --rm -p 7007:7007 khokao/synergetica:latest
 
 ### 4.3. ML Model Training and Evaluation
 
-The generation feature uses an optimization process that relies on a predictive model trained with the scripts in the [`src/train`](src/train) directory. We currently employ a compact Transformer model to predict the translation initiation rate (TIR) from ribosome binding site (RBS) sequences. Its pretrained weights are available on the [Hugging Face Hub](https://huggingface.co/khokao/synergetica).
+The generation feature uses an optimization process that relies on a prediction model trained with the scripts in the [`src/train`](src/train) directory. We currently employ a compact Transformer model to predict the translation initiation rate (TIR) from ribosome binding site (RBS) sequences. Its pretrained weights are available on the [Hugging Face Hub](https://huggingface.co/khokao/synergetica).
 
 **Train**
 
