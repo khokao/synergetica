@@ -19,9 +19,9 @@
     }
 }
 
-.zap-on {
+.ok {
     color: #43a047;  /* green-600 */
 }
-.zap-off {
+.ng {
     color: #e53935;  /* red-600 */
 }

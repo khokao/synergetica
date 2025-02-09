@@ -37,7 +37,7 @@ Download the installer for your operating system:
     If the Docker engine is running when you open the desktop app, the Docker container will automatically start and the API will launch on port `7007`.
 
 !!! tip
-    Check the :lucide-zap: icon at the bottom-right of the app screen to confirm that you’re connected to the backend API.
+    Check the ::octicons-zap-16: icon at the bottom-right of the app screen to confirm that you’re connected to the backend API.
 
-    - :lucide-zap:{ .zap-on } : Connected to the API
-    - :lucide-zap-off:{ .zap-off } : Not connected to the API
+    - :octicons-zap-16:{ .ok } : Connected to the API
+    - :lucide-zap-off:{ .ng } : Not connected to the API
