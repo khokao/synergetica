@@ -8,6 +8,7 @@ on:
       - "services/**"
       - "!services/docs/**"
       - "!services/mkdocs.yml"
+      - "!services/README.md"
   pull_request:
     types:
       - opened
@@ -16,6 +17,7 @@ on:
       - "services/**"
       - "!services/docs/**"
       - "!services/mkdocs.yml"
+      - "!services/README.md"
 
 permissions:
   contents: read

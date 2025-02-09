@@ -45,7 +45,7 @@ Synergetica generates ribosome binding sites (RBS) sequences according to the pa
 
 ### Generation algorithm
 
-In Synergetica, RBS sequences are optimized by combining a prediction model with genetic algorithms. The prediction model was trained using a dataset of RBS sequences and observed TIR values published by <u>[A C. Reis & H M. Salis (2020)](https://pubs.acs.org/doi/10.1021/acssynbio.0c00394)</u>.
+In Synergetica, RBS sequences are optimized using a genetic algorithm. During optimization, we employ a prediction model that estimates the translation initiation rate (TIR) based on each RBS sequence.
 
 !!! info
 	For more detailed information on training the prediction model, see <u>[the repository's README](https://github.com/khokao/synergetica/tree/main/services#43-ml-model-training-and-evaluation)</u>.

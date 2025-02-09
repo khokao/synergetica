@@ -57,7 +57,8 @@ export const Simulation = () => {
 
   return (
     <div className="flex flex-col w-full h-full">
-      <div className="flex flex-col flex-grow">
+      {/* set min-h-0 to prevent unexpected vertical stretching */}
+      <div className="flex flex-col flex-grow min-h-0">
         <div className="h-[50%]">
           <Chart />
         </div>

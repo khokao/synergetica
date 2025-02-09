@@ -17,7 +17,7 @@ export const Header = () => {
   };
 
   return (
-    <header className="flex items-center justify-between px-6 h-16 bg-gray-100">
+    <header className="flex items-center justify-between px-6 h-16 bg-gray-100 shrink-0">
       <div className="flex items-center">
         <Image src="/images/banner.svg" width={200} height={48} alt="Banner" />
       </div>

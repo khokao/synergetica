@@ -1,12 +1,12 @@
 <h1>
 <p align="center">
-  <img src="services/docs/assets/banner.svg" alt="Logo" width="80%">
+  <img src="services/docs/assets/banner.svg" alt="Banner" width="80%">
 </h1>
   <p align="center">
     A modern, end-to-end genetic circuit design desktop app
   </p>
   <p align="center">
-    <img src="" alt="Screenshot"/>
+    <img src="services/docs/assets/screenshot.png" alt="Screenshot"/>
   </p>
 </p>
 

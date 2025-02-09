@@ -8,6 +8,7 @@ on:
       - "services/**"
       - "!services/docs/**"
       - "!services/mkdocs.yml"
+      - "!services/README.md"
   workflow_dispatch:
 
 jobs:

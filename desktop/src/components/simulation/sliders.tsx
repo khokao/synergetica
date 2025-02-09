@@ -82,10 +82,10 @@ export const Sliders = () => {
   }, [proteinParameters, proteinName2Ids, proteinIdToName, handleSliderChange, handleInputChange]);
 
   return (
-    <Card className="h-full border-0 shadow-none pt-4">
-      <CardContent className="h-full">
-        <ScrollArea className="h-full overflow-x-hidden">
-          <div className=" grid grid-cols-[auto,1fr,auto] items-center gap-x-4 gap-y-2">{sliderList}</div>
+    <Card className="h-full border-0 shadow-none">
+      <CardContent className="h-full p-4 pt-0">
+        <ScrollArea className="h-full">
+          <div className="grid grid-cols-[auto,1fr,auto] items-center gap-x-4 gap-y-2 pt-2 pr-1">{sliderList}</div>
           <ScrollBar />
         </ScrollArea>
       </CardContent>
