@@ -1,59 +1,86 @@
-Through this tutorial, you will be able to build and simulate simple **toggle switch** circuit.
+This tutorial demonstrates the entire workflow for a simple **toggle switch** circuit.
 
 ![](../assets/imgs/tutorial/tutorial_goal.png)
+
+You will learn how to:
+
+- **Design** a circuit using both node-based and code-based methods.
+- **Simulate** the circuit and adjust parameters.
+- **Generate** DNA sequences that match your desired parameters and export them.
 
 ## 1. Designing a circuit
 
 ### Build a single chain
 First, we'll build a single **chain**, a sequence of blocks.
 
-You can place any block by dragging it from the block placement area at the top of the application and dropping it onto the main area.
+#### Drag and drop blocks
 
-!!! Tip
-	See [<u>this page</u>](../guides/circuit-design.md) to understand in more detail what each block means.
+At the top of the application window, you will see a palette containing various colored blocks. Drag a <span style="color: blue">blue block</span> (promoter) and drop it onto the main area.
 
 ![](../assets/imgs/tutorial/dnd_parts.png)
 
+!!! tip
+    See the <u>[guide on circuit design](../guides/circuit-design.md)</u> to understand in more detail what each block means.
 
-By clicking on the block you placed, you can select which biological parts that block represents.
+#### Select a part
 
-Please select `PameR` in this tutorial.
+Click the newly placed blue block to open a selection panel where you can assign a specific biological part. For this tutorial, choose <span style="color: blue">"PameR"</span>.
 
 ![](../assets/imgs/tutorial/select_parts.png)
 
+#### Connect more blocks
+
 When you drag a new block and bring it near an already existing block, the blocks will automatically connect to each other.
-
-In Synergetica, this connected unit of blocks is called a **chain**.
-
-Connect the green block to the blue block to create a chain. In the green block, select `AmtR` as the part.
 
 ![](../assets/imgs/tutorial/dnd_new_parts.png)
 
-Drag a new red block and connect it to the already existing chain. In the red block, select `L3S3P31` as the part.
+- Drag a <span style="color: green">green block</span> (protein) near the <span style="color: blue">blue block</span> and drop it to connect them.
+- Drag a <span style="color: red">red block</span> (terminator) near the <span style="color: green">green block</span> and drop it to connect them.
+- Select <span style="color: green">"AmtR"</span> as the part for the <span style="color: green">green block</span> and <span style="color: red">"L3S3P31"</span> for the <span style="color: red">red block</span>.
 
-As shown, a chain basically consists of <span style="color: blue; ">blue</span>(promoter),  <span style="color: green; ">green</span>(protein), and  <span style="color: red; ">red</span>(terminator) blocks in sequence.
+You have now created a single **chain** of three blocks: a promoter, a protein, and a terminator.
 
 ![](../assets/imgs/tutorial/single_chain.png)
 
+!!! note
+    A **"chain"** is a sequence of <span style="color: blue">promoters</span>, <span style="color: green">proteins</span>, and a <span style="color: red">terminator</span>.
+
 ### Build another chain with DSL
 
-In Synergetica, you can build circuit not only through GUI (via drag-and-drop), but also through **writing DSL code.**.
+Circuits can also be designed using the Synergetica **DSL**.
 
-The coding palette appears by clicking the sidebar toggle button on the left side of the application.
-
-The code to represent the chain you have just constructed is already written in the coding palette.
-!!! Note
-	The code and the graphical representation of the circuit are **always synchronized**
-
+The DSL editor is accessible by clicking the sidebar toggle on the left side of the application.
 
 ![](../assets/imgs/tutorial/dsl_pallete.png)
 
-When you copy the existing code and paste it on the line immediately below, the same chain will appear in the graphical view.
+#### Check existing code
+
+The following code should already be present in the coding palette. It represents the chain that was just constructed.
+
+```yaml title="Circuit YAML"
+- chain:
+  - type: Promoter
+    name: PameR
+  - type: Protein
+    name: AmtR
+  - type: Terminator
+    name: L3S3P31
+```
+
+!!! note
+  	The node-based editor and the code-based editor are always synchronized.
+
+#### Copy and paste
+
+Copy the code of the existing chain and paste it immediately afterward. The same chain will then appear in the graphical view.
 
 ![](../assets/imgs/tutorial/dsl_copy_paste.png)
 
-Then, please change the names of the two parts highlighted in the below code sample `PameR`→`PamtR` and `AmtR`→`AmeR`, respectively.
-```yaml { hl_lines="10 12" }
+#### Rename parts
+
+Change the names of two parts from <span style="color: blue">"PameR"</span> to <span style="color: blue">"PamtR"</span> and from <span style="color: green">"AmtR"</span> to <span style="color: green">"AmeR"</span> (see highlighted lines below):
+
+```yaml hl_lines="10 12" title="Circuit YAML"
 - chain:
   - type: Promoter
     name: PameR
@@ -70,55 +97,65 @@ Then, please change the names of the two parts highlighted in the below code sam
     name: L3S3P31
 ```
 
-After that, the name displayed on the block will change and a blue arrow will appear from the green block.
-
-Now, you completed building toggle switch circuit :raised_hands: .
+After that, the blocks in the graphical view will automatically update, and blue arrows will appear to indicate the interactions between the blocks.
 
 ![](../assets/imgs/tutorial/dsl_name_change.png)
 
+You have now finished building the toggle switch circuit! :raised_hands:
 
 ## 2. Running a simulation
 
-When the circuit construction is complete, press the `Simulate` button in the lower right corner of the application.
+With your toggle switch circuit in place, it’s time to see how it behaves over time.
 
-This will automatically open the simulation sidebar from the right side and display the results.
+### Click the "Start" button
+
+To start the simulation, click the **"Start"** button in the lower right corner of the application. This will automatically open the simulation sidebar from the right side and display the results.
 
 The graph shows how the protein (green block) concentration changes over time in this circuit.
 
-!!! Tip
-	See <u>[this page](../guides/genetic-simulation.md)</u> if you want to know more about what the graphs and slide bars mean biologically.
-
 ![](../assets/imgs/tutorial/simulation_first.png)
 
+!!! tip
+  	See the <u>[guide on genetic simulation](../guides/genetic-simulation.md)</u> to know more about what the graphs and slider values mean biologically.
 
-Two sliders also appear below the graph.
+### Adjust parameters
 
-Each slider corresponds to one of the proteins in the green blocks, allowing you to adjust their translation intensities.
+Two sliders are displayed, each corresponding to a protein in the circuit and allowing you to adjust the translation intensity.
 
-Changing a slider’s value seamlessly updates the graph to reflect the new simulation results.
+Try moving each slider and notice that adjusting one slider affects both curves.
 
 Adjust the parameters to achieve the protein concentration you desire.
 
 ![](../assets/imgs/tutorial/simulation_bar_move.png)
 
-
 ## 3. Generating sequences
 
 Once the parameters have been adjusted, the last step is to generate the specific DNA sequences to realize your chosen parameters.
 
-Press the `Run` button in the `Generation` section at the bottom right of the app, start sequence generation.
+### Start sequence generation
+
+Click the **"Run"** button in the Generation section at the bottom right of the app to start the sequence generation process.
+
+Synergetica will create optimized DNA sequences corresponding to the circuit parameters you set.
 
 ![](../assets/imgs/tutorial/generation_generating.png)
 
-When generation is complete, the result can be viewed by pressing the `Result` button.
+### View the results
+
+Once generation completes, you can view the results by clicking the **"Result"** button.
 
 The generated DNA sequences corresponding to each **chain** will be displayed in the result window.
 
 ![](../assets/imgs/tutorial/generation_result.png)
 
-You can also export generated DNA sequneces as **Fasta** format file by pressing on `Export Fasta` button.
+!!! tip
+    See the <u>[guide on sequence generation](../guides/sequence-generation.md)</u> to understand the generation process in more detail.
 
-```text
+### Export to FASTA
+
+By clicking the **"Export FASTA"** button, you can save these sequences locally in FASTA format.
+
+``` fasta title="Example FASTA"
 > great-coins-check
 GATAGTGACAAACTTGACAACTCATCACTTCCTAGGTATAATGCTAGCCAGCGTGTGTTCCGGGGCCACTTGTTACTGCCCAATTATTGAACACCCTAACGGGTGTTTTTTTTTTTTTGGTCTACC
 
@@ -128,5 +165,10 @@ GATTCGTTACCAATTGACAGTTTCTATCGATCTATAGATAATGCTAGCGTGCCGACTCGATGGAATGTACCATTGGCCCC
 
 ![](../assets/imgs/tutorial/generation_export.png)
 
+---
 
-**Great job finishing the tutorial! Now it’s time to get creative and build your own circuit!**
+**Congratulations!**
+
+You’ve successfully designed, simulated, and generated sequences for a toggle switch using Synergetica. If you’d like to learn more, check out the Guides section.
+
+Happy designing!
