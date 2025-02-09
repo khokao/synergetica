@@ -55,7 +55,7 @@ The table below briefly describes each parameter.
 | $TIR$      | Translation initiation rate. Adjustable via the slider.                             |
 
 !!! note
-	For details on other parameters, see <u>[this section](./parts-customization.md#promoter-specific-parameters)</u>.
+	For details on other parameters, see the <u>[guide on parts customization](./parts-customization.md#promoter-specific-parameters)</u>.
 
 !!! tip
-	For more details on the simulation’s underlying logic, see <u>[this code](https://github.com/khokao/synergetica/blob/main/services/src/api/simulator/service.py)</u>.
+	For more details on the simulation’s underlying logic, see the <u>[implementation code](https://github.com/khokao/synergetica/blob/main/services/src/api/simulator/service.py)</u>.

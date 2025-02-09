@@ -47,7 +47,7 @@ Drag any block from the block placement area at the top of the window and drop i
 There are two ways to delete a block.
 
 1. Select the block and press the ++backspace++ key.
-2. Click the "**:material-dots-horizontal:**" button and select `Delete`.
+2. Click the "**:material-dots-horizontal:**" button and select **"Delete"**.
 
 <div style="clear: both"></div>
 
@@ -133,7 +133,7 @@ Circuits are automatically validated for biological correctness. The validation 
 Here are the basic rules for a valid circuit.
 
 - **Chain rule**: A chain must consist of one or more promoters, followed by one or more proteins, and end with exactly one terminator.
-- **Block rule**: The part name must be included in the list of parts for each block type. (<u>[see details here]()</u>)
+- **Block rule**: The part name must be included in the list of parts for each block type.
 
 ??? Success "Valid circuit examples"
 
