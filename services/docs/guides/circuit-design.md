@@ -1,4 +1,4 @@
-In this guide, you will learn how to create a genetic circuit with Synergetica.
+This page explains how to create a genetic circuit with Synergetica.
 
 ## Block types
 
@@ -27,9 +27,6 @@ A terminator marks the end of transcription and also plays a role in regulating 
 
 !!! info
 	When multiple identical terminators are present, homologous recombination may occur, potentially altering the DNA sequence. To prevent this, Synergetica offers multiple terminator variants.
-
-!!! note
-	For more details about the specific parts within each category, please refer to <u>[this page]()</u>.
 
 ## Building circuits
 
