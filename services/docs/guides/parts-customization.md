@@ -1,4 +1,4 @@
-This section explains how to customize the genetic parts in your database.
+This page explains how to customize the genetic parts in your database.
 
 ![](../assets/imgs/guides/parts-customization/parts_database.png)
 
