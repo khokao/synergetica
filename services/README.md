@@ -96,7 +96,7 @@ The API provides two main features: **simulation** and **generation**. For more 
    ```
 
 > [!NOTE]
-> The pretrained model weights are required for the iterative optimization that uses the predictive model to generate DNA sequences.
+> The pretrained model weights are required for the iterative optimization process, which relies on the prediction model to generate DNA sequences.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -204,15 +204,16 @@ docker run --rm -p 7007:7007 khokao/synergetica:latest
 
 ### 4.3. ML Model Training and Evaluation
 
-The Generation feature relies on an optimization process, supported by a predictive model trained with scripts located in the [`src/train`](src/train) directory.
-
-Currently, a compact Transformer model is used for a translation initiation rate prediction task, and the pretrained model is hosted on [Hugging Face Hub repository](https://huggingface.co/khokao/synergetica).
+The generation feature uses an optimization process that relies on a prediction model trained with the scripts in the [`src/train`](src/train) directory. We currently employ a compact Transformer model to predict the translation initiation rate (TIR) from ribosome binding site (RBS) sequences. Its pretrained weights are available on the [Hugging Face Hub](https://huggingface.co/khokao/synergetica).
 
 **Train**
 
-Training configurations are defined in [`src/train/configs/default.yaml`](src/train/configs/default.yaml). You can edit this file or override settings from the command line using [Hydra](https://hydra.cc/).
+The training configurations are defined in [`src/train/configs/default.yaml`](src/train/configs/default.yaml) and managed using [Hydra](https://hydra.cc/). You can modify these settings by editing the config file directly or by providing command-line overrides in Hydra format when running the training scripts.
 
-Run the following command in the [`src/train`](src/train) directory:
+> [!NOTE]
+> A dummy dataset is provided in [`src/train/datasets`](src/train/datasets) to verify that the training pipeline works correctly. If you prefer to train on your own dataset, prepare it in the same format as the dummy dataset, and then update the config file accordingly.
+
+To start training, run the following command in the [`src/train`](src/train) directory:
 
 ```sh
 uv run python scripts/train.py
@@ -220,17 +221,15 @@ uv run python scripts/train.py
 
 Training outputs (weights, logs, etc.) will be saved under [`src/train/outputs`](src/train/outputs).
 
-Datasets are placed in [`src/train/datasets`](src/train/datasets) and specified in the config file, allowing you to train the model on any dataset of your choice.
-
 **Test**
 
-The dataset is automatically split into train, val, and test sets. After training, you can quantitatively evaluate performance on the test set with:
+The dataset is automatically split into train, val, and test sets. After training, you can evaluate model performance on the test set by running the following command:
 
 ```sh
 uv run python scripts/test.py inference.output_dir=outputs/yy-mm-dd-HH-MM-SS inference.ckpt=outputs/yy-mm-dd-HH-MM-SS/lightning_logs/version_0/checkpoints/last.ckpt
 ```
 
-Replace the directory name and checkpoint file as appropriate.
+Make sure to replace the directory name and checkpoint file as appropriate.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
