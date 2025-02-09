@@ -33,9 +33,10 @@ describe("Sliders Component", () => {
     render(<Sliders />);
 
     // Assert
-    expect(screen.getByText("ProteinA")).toBeInTheDocument();
-    expect(screen.getByText("ProteinB [1]")).toBeInTheDocument();
-    expect(screen.getByText("ProteinB [2]")).toBeInTheDocument();
+    expect(screen.getByTestId("slider-label-ProteinA-1")).toHaveTextContent("ProteinA");
+    expect(screen.getByTestId("slider-label-ProteinA-1")).not.toHaveTextContent("ProteinA[1]");
+    expect(screen.getByTestId("slider-label-ProteinB-1")).toHaveTextContent("ProteinB[1]");
+    expect(screen.getByTestId("slider-label-ProteinB-2")).toHaveTextContent("ProteinB[2]");
   });
 
   it("calls setProteinParameters when slider value changes", async () => {

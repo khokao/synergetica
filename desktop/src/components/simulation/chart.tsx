@@ -74,7 +74,7 @@ export const Chart = () => {
   });
 
   return (
-    <Card className="h-full border-0 shadow-none pt-2" data-testid="chart-card">
+    <Card className="h-full border-0 shadow-none pt-2 tabular-nums" data-testid="chart-card">
       <CardHeader className="flex justify-center items-center p-0 h-[10%]">
         <CardTitle className="text-xl space-x-2 tracking-wide">
           <span>Simulation</span>

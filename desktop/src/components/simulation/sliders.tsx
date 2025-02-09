@@ -5,8 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { Slider } from "@/components/ui/slider";
-import { useCallback, useMemo } from "react";
-import { Fragment } from "react";
+import { Fragment, useCallback, useMemo } from "react";
 
 export const Sliders = () => {
   const { proteinName2Ids, proteinParameters, setProteinParameters } = useSimulator();
@@ -43,16 +42,22 @@ export const Sliders = () => {
     return Object.keys(proteinParameters).map((id, index) => {
       const name = proteinIdToName[id];
       const indexInGroup = proteinName2Ids[name].indexOf(id);
-      const displayName = proteinName2Ids[name].length === 1 ? name : `${name} [${indexInGroup + 1}]`;
 
       return (
         <Fragment key={id}>
-          <Label htmlFor={`slider-${id}`} className="max-w-[88px] flex items-center gap-2">
+          <Label
+            htmlFor={`slider-${id}`}
+            className="max-w-[96px] flex items-center gap-2"
+            data-testid={`slider-label-${name}-${indexInGroup + 1}`}
+          >
             <span
               className="inline-block w-3 h-3 rounded-full flex-shrink-0"
               style={{ backgroundColor: `hsl(var(--chart-${(index % 5) + 1}))` }}
             />
-            <span className="text-ellipsis overflow-hidden">{displayName}</span>
+            <div className="flex items-center overflow-hidden gap-1">
+              <span className="truncate">{name}</span>
+              {proteinName2Ids[name].length > 1 && <span className="tabular-nums">[{indexInGroup + 1}]</span>}
+            </div>
           </Label>
 
           <Slider
@@ -63,7 +68,6 @@ export const Sliders = () => {
             value={[proteinParameters[id]]}
             onValueChange={handleSliderChange(id)}
             className="w-full min-w-6"
-            aria-label={displayName}
           />
 
           <Input
