@@ -13,7 +13,6 @@ Replace `<USER_NAME>` and `<PASSWORD>` with your Docker Hub credentials.
 docker pull khokao/synergetica
 ```
 
-
 ## Desktop app
 
 Download the installer for your operating system:
@@ -25,7 +24,6 @@ Download the installer for your operating system:
 - [:material-linux: Linux](https://github.com/khokao/synergetica/releases/download/nightly/Synergetica_0.0.0_amd64.deb)
 
 </div>
-
 
 !!! note "Note (macOS Users)"
     After installing Synergetica, run the following command to launch the app:

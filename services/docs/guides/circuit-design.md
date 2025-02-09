@@ -116,7 +116,6 @@ To import or export a YAML file, click the :material-arrow-collapse-down: and :m
 !!! tip
 	You can save and share your circuit using a YAML file.
 
-
 ## Completing valid circuits
 
 Circuits are automatically validated for biological correctness. The validation results are displayed at the bottom of the code palette, and an icon indicating the result is shown in the node-based editor.
