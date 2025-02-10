@@ -14,8 +14,8 @@ nav:
 
 theme:
   name: material
-  logo: assets/logo.svg
-  favicon: assets/logo.svg
+  logo: assets/images/logo.svg
+  favicon: assets/images/logo.svg
   palette:
     scheme: default
     primary: custom
