@@ -27,8 +27,8 @@ Download the installer for your operating system:
 
 You can find all available installers on the <u>[releases page](https://github.com/khokao/synergetica/releases)</u>.
 
-!!! note "Note (macOS Users)"
-    After installing Synergetica, run the following command to launch the app:
+!!! warning "Warning (macOS Users)"
+    On macOS, remove the quarantine attribute to allow Synergetica to launch.
     ```sh
     xattr -d com.apple.quarantine /Applications/Synergetica.app
     ```
