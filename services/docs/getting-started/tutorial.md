@@ -13,7 +13,7 @@ You will learn how to:
 ### Build a single chain
 First, we'll build a single **chain**, a sequence of blocks.
 
-#### Drag and drop blocks
+#### Drag and drop a block
 
 At the top of the application window, you will see a palette containing various colored blocks. Drag a <span style="color: blue">blue block</span> (promoter) and drop it onto the main area.
 
@@ -53,7 +53,7 @@ The DSL editor is accessible by clicking the sidebar toggle on the left side of 
 
 ![](../assets/imgs/tutorial/dsl_pallete.png)
 
-#### Check existing code
+#### Check the existing code
 
 The following code should already be present in the coding palette. It represents the chain that was just constructed.
 
@@ -115,7 +115,7 @@ You have now finished building the toggle switch circuit! :raised_hands:
 
 With your toggle switch circuit in place, it’s time to see how it behaves over time.
 
-### Click the "Start" button
+### Start simulation
 
 To start the simulation, click the **"Start"** button in the lower right corner of the application. This will automatically open the simulation sidebar from the right side and display the results.
 
