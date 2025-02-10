@@ -2,14 +2,14 @@ This page explains how to create a genetic circuit with Synergetica.
 
 ## Block types
 
-![Promoter part](../assets/imgs/guides/circuit-design/promoter.png){ align=left width="200" }
+![Promoter part](../assets/images/guides/circuit-design/promoter.png){ align=left width="200" }
 
 ### Promoter
 A promoter controls the timing and strength of transcription for the downstream DNA sequence. Specific proteins can bind to it to either activate or repress transcription.
 
 <div style="clear: both;"></div>
 
-![Protein part](../assets/imgs/guides/circuit-design/protein.png){ align=left width="200" }
+![Protein part](../assets/images/guides/circuit-design/protein.png){ align=left width="200" }
 
 ### Protein
 
@@ -17,7 +17,7 @@ A protein is a functional molecule produced within a cell. In living organisms, 
 
 <div style="clear: both;"></div>
 
-![Terminator part](../assets/imgs/guides/circuit-design/terminator.png){ align=left width="200" }
+![Terminator part](../assets/images/guides/circuit-design/terminator.png){ align=left width="200" }
 
 ### Terminator
 
@@ -38,11 +38,11 @@ Design a circuit using the graphical interface.
 
 Drag any block from the block placement area at the top of the window and drop it onto the main area.
 
-![](../assets/imgs/tutorial/dnd_parts.png)
+![](../assets/images/guides/circuit-design/dnd-promoter.png)
 
 #### Deleting a block
 
-![](../assets/imgs/guides/circuit-design/delete_block.png){ align=right width="300" }
+![](../assets/images/guides/circuit-design/delete-block.png){ align=right width="300" }
 
 There are two ways to delete a block.
 
@@ -55,7 +55,7 @@ There are two ways to delete a block.
 
 When you drag a new block near an existing one, they will automatically connect.
 
-![](../assets/imgs/tutorial/dnd_new_parts.png)
+![](../assets/images/guides/circuit-design/connect-protein.png)
 
 !!! note
 	In Synergetica, this connected unit of blocks is called a **chain**.
@@ -64,11 +64,11 @@ When you drag a new block near an existing one, they will automatically connect.
 
 When you hover the mouse cursor over the edge between blocks, an :octicons-x-circle-16: button will appear. Clicking this button disconnects the blocks.
 
-![](../assets/imgs/guides/circuit-design/disconnection.png){ width="500" height="350" }
+![](../assets/images/guides/circuit-design/disconnect-button.png)
 
 Alternatively, you can also drag the block away from the chain to disconnect it.
 
-![](../assets/imgs/guides/circuit-design/disconnect_drag_out.png){ width="500" height="350"}
+![](../assets/images/guides/circuit-design/disconnect-drag.png)
 
 ### Method 2: Code-based design
 
@@ -105,7 +105,7 @@ Circuits can also be designed using the Synergetica DSL, a custom domain-specifi
 !!! info
 	When the YAML-based circuit is loaded into the node-based editor, each chain is arranged vertically, and the blocks in each chain are arranged from left to right.
 
-![](../assets/imgs/guides/circuit-design/import_export_yaml.png){ align=right width="350"}
+![](../assets/images/guides/circuit-design/import-export-circuit.png){ align=right width="350"}
 
 #### Importing and exporting YAML files
 
@@ -121,10 +121,10 @@ To import or export a YAML file, click the :material-arrow-collapse-down: and :m
 Circuits are automatically validated for biological correctness. The validation results are displayed at the bottom of the code palette, and an icon indicating the result is shown in the node-based editor.
 
 **Valid**
-![](../assets/imgs/guides/circuit-design/valid.png)
+![](../assets/images/guides/circuit-design/with-validation-error.png)
 
 **Invalid**
-![](../assets/imgs/guides/circuit-design/invalid.png)
+![](../assets/images/guides/circuit-design/without-validation-error.png)
 
 !!! Warning
 	If the designed circuit is invalid, you cannot run a simulation.
@@ -137,24 +137,24 @@ Here are the basic rules for a valid circuit.
 ??? Success "Valid circuit examples"
 
 	- **Minimum valid circuit**
-	![](../assets/imgs/guides/circuit-design/valid_circuit1.png)
+	![](../assets/images/guides/circuit-design/valid-circuit-1.png)
 
 	- **Multiple proteins are allowed**
-	![](../assets/imgs/guides/circuit-design/valid_circuit2.png)
+	![](../assets/images/guides/circuit-design/valid-circuit-2.png)
 
 	- **Multiple promoters are allowed**
-	![](../assets/imgs/guides/circuit-design/valid_circuit3.png)
+	![](../assets/images/guides/circuit-design/valid-circuit-3.png)
 
 ??? Failure "Invalid circuit examples"
 
 	- **A chain must start with promoter(s)**
-	![](../assets/imgs/guides/circuit-design/invalid_circuit1.png)
+	![](../assets/images/guides/circuit-design/invalid-circuit-1.png)
 
 	- **Protein(s) must follow promoter(s) before a terminator**
-	![](../assets/imgs/guides/circuit-design/invalid_circuit2.png)
+	![](../assets/images/guides/circuit-design/invalid-circuit-2.png)
 
 	- **Empty blocks are not allowed**
-	![](../assets/imgs/guides/circuit-design/invalid_circuit3.png)
+	![](../assets/images/guides/circuit-design/invalid-circuit-3.png)
 
 	- **Protein(s) must follow promoter(s) before a terminator**
-	![](../assets/imgs/guides/circuit-design/invalid_circuit4.png)
+	![](../assets/images/guides/circuit-design/invalid-circuit-4.png)

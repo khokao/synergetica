@@ -1,6 +1,6 @@
 This tutorial demonstrates the entire workflow for a simple **toggle switch** circuit.
 
-![](../assets/imgs/tutorial/tutorial_goal.png)
+![](../assets/images/getting-started/tutorial/toggle-switch.png)
 
 You will learn how to:
 
@@ -17,7 +17,7 @@ First, we'll build a single **chain**, a sequence of blocks.
 
 At the top of the application window, you will see a palette containing various colored blocks. Drag a <span style="color: blue">blue block</span> (promoter) and drop it onto the main area.
 
-![](../assets/imgs/tutorial/dnd_parts.png)
+![](../assets/images/getting-started/tutorial/dnd-promoter.png)
 
 !!! tip
     See the <u>[guide on circuit design](../guides/circuit-design.md)</u> to understand in more detail what each block means.
@@ -26,13 +26,13 @@ At the top of the application window, you will see a palette containing various 
 
 Click the newly placed blue block to open a selection panel where you can assign a specific biological part. For this tutorial, choose <span style="color: blue">"PameR"</span>.
 
-![](../assets/imgs/tutorial/select_parts.png)
+![](../assets/images/getting-started/tutorial/select-pamer.png)
 
 #### Connect more blocks
 
 When you drag a new block and bring it near an already existing block, the blocks will automatically connect to each other.
 
-![](../assets/imgs/tutorial/dnd_new_parts.png)
+![](../assets/images/getting-started/tutorial/connect-protein.png)
 
 - Drag a <span style="color: green">green block</span> (protein) near the <span style="color: blue">blue block</span> and drop it to connect them.
 - Drag a <span style="color: red">red block</span> (terminator) near the <span style="color: green">green block</span> and drop it to connect them.
@@ -40,7 +40,7 @@ When you drag a new block and bring it near an already existing block, the block
 
 You have now created a single **chain** of three blocks: a promoter, a protein, and a terminator.
 
-![](../assets/imgs/tutorial/single_chain.png)
+![](../assets/images/getting-started/tutorial/single-chain.png)
 
 !!! note
     A **"chain"** is a sequence of <span style="color: blue">promoters</span>, <span style="color: green">proteins</span>, and a <span style="color: red">terminator</span>.
@@ -51,7 +51,7 @@ Circuits can also be designed using the Synergetica **DSL**.
 
 The DSL editor is accessible by clicking the sidebar toggle on the left side of the application.
 
-![](../assets/imgs/tutorial/dsl_pallete.png)
+![](../assets/images/getting-started/tutorial/left-sidebar-toggle.png)
 
 #### Check the existing code
 
@@ -74,7 +74,7 @@ The following code should already be present in the coding palette. It represent
 
 Copy the code of the existing chain and paste it immediately afterward. The same chain will then appear in the graphical view.
 
-![](../assets/imgs/tutorial/dsl_copy_paste.png)
+![](../assets/images/getting-started/tutorial/copy-paste.png)
 
 #### Rename parts
 
@@ -99,7 +99,7 @@ Change the names of two parts from <span style="color: blue">"PameR"</span> to <
 
 After that, the blocks in the graphical view will automatically update, and blue arrows will appear to indicate the interactions between the blocks.
 
-![](../assets/imgs/tutorial/dsl_name_change.png)
+![](../assets/images/getting-started/tutorial/rename-parts.png)
 
 You have now finished building the toggle switch circuit! :raised_hands:
 
@@ -121,7 +121,7 @@ To start the simulation, click the **"Start"** button in the lower right corner 
 
 The graph shows how the protein (green block) concentration changes over time in this circuit.
 
-![](../assets/imgs/tutorial/simulation_first.png)
+![](../assets/images/getting-started/tutorial/start-simulation.png)
 
 !!! tip
   	See the <u>[guide on genetic simulation](../guides/genetic-simulation.md)</u> to know more about what the graphs and slider values mean biologically.
@@ -134,7 +134,7 @@ Try moving each slider and notice that adjusting one slider affects both curves.
 
 Adjust the parameters to achieve the protein concentration you desire.
 
-![](../assets/imgs/tutorial/simulation_bar_move.png)
+![](../assets/images/getting-started/tutorial/adjust-parameters.png)
 
 ## 3. Generating sequences
 
@@ -146,7 +146,7 @@ Click the **"Run"** button in the Generation section at the bottom right of the 
 
 Synergetica will create optimized DNA sequences corresponding to the circuit parameters you set.
 
-![](../assets/imgs/tutorial/generation_generating.png)
+![](../assets/images/getting-started/tutorial/start-generation.png)
 
 ### View the results
 
@@ -154,7 +154,7 @@ Once generation completes, you can view the results by clicking the **"Result"**
 
 The generated DNA sequences corresponding to each **chain** will be displayed in the result window.
 
-![](../assets/imgs/tutorial/generation_result.png)
+![](../assets/images/getting-started/tutorial/view-results.png)
 
 !!! tip
     See the <u>[guide on sequence generation](../guides/sequence-generation.md)</u> to understand the generation process in more detail.
@@ -164,14 +164,13 @@ The generated DNA sequences corresponding to each **chain** will be displayed in
 By clicking the **"Export FASTA"** button, you can save these sequences locally in FASTA format.
 
 ``` fasta title="Example FASTA"
-> great-coins-check
-GATAGTGACAAACTTGACAACTCATCACTTCCTAGGTATAATGCTAGCCAGCGTGTGTTCCGGGGCCACTTGTTACTGCCCAATTATTGAACACCCTAACGGGTGTTTTTTTTTTTTTGGTCTACC
-
-> tangy-parents-dress
-GATTCGTTACCAATTGACAGTTTCTATCGATCTATAGATAATGCTAGCGTGCCGACTCGATGGAATGTACCATTGGCCCCCAATTATTGAACACCCTAACGGGTGTTTTTTTTTTTTTGGTCTACC
+> mighty-bobcats-pay
+GATAGTGACAAACTTGACAACTCATCACTTCCTAGGTATAATGCTAGCACCTCTGAGCGATGTGTGCACGCACCCATGGCAGGCGCAGTTGGTCGTCCGCGTCGTAGTGCACCGCGTCGTGCAGGTAAAAATCCGCGTGAAGAAATTCTGGATGCAAGCGCAGAACTGTTTACCCGTCAGGGTTTTGCAACCACCAGTACCCATCAGATTGCAGATGCAGTTGGTATTCGTCAGGCAAGCCTGTATTATCATTTTCCGAGCAAAACCGAAATCTTTCTGACCCTGCTGAAAAGCACCGTTGAACCGAGCACCGTTCTGGCAGAAGATCTGAGCACCCTGGATGCAGGTCCGGAAATGCGTCTGTGGGCAATTGTTGCAAGCGAAGTTCGTCTGCTGCTGAGCACCAAATGGAATGTTGGTCGTCTGTATCAGCTGCCGATTGTTGGTAGCGAAGAATTTGCAGAATATCATAGCCAGCGTGAAGCACTGACCAATGTTTTTCGTGATCTGGCAACCGAAATTGTTGGTGATGATCCGCGTGCAGAACTGCCGTTTCATATTACCATGAGCGTTATTGAAATGCGTCGCAATGATGGTAAAATTCCGAGTCCGCTGAGCGCAGATAGCCTGCCGGAAACCGCAATTATGCTGGCAGATGCAAGCCTGGCAGTTCTGGGTGCACCGCTGCCTGCAGATCGTGTTGAAAAAACCCTGGAACTGATTAAACAGGCAGATGCAAAATAACCAATTATTGAACACCCTAACGGGTGTTTTTTTTTTTTTGGTCTACC
+> cute-camels-wish
+GATTCGTTACCAATTGACAGTTTCTATCGATCTATAGATAATGCTAGCGAGCCTCTATTCAAGCATTCTACTATCATGAACAAAACCATTGATCAGGTGCGTAAAGGTGATCGTAAAAGCGATCTGCCGGTTCGTCGTCGTCCGCGTCGTAGTGCCGAAGAAACCCGTCGTGATATTCTGGCAAAAGCCGAAGAACTGTTTCGTGAACGTGGTTTTAATGCAGTTGCCATTGCAGATATTGCAAGCGCACTGAATATGAGTCCGGCAAATGTGTTTAAACATTTTAGCAGCAAAAACGCACTGGTTGATGCAATTGGTTTTGGTCAGATTGGTGTTTTTGAACGTCAGATTTGTCCGCTGGATAAAAGCCATGCACCGCTGGATCGTCTGCGTCATCTGGCACGTAATCTGATGGAACAGCATCATCAGGATCATTTCAAACACATACGGGTTTTTATTCAGATCCTGATGACCGCCAAACAGGATATGAAATGTGGCGATTATTACAAAAGCGTGATTGCAAAACTGCTGGCCGAAATTATTCGTGATGGTGTTGAAGCAGGTCTGTATATTGCAACCGATATTCCGGTTCTGGCAGAAACCGTTCTGCATGCACTGACCAGCGTTATTCATCCGGTTCTGATTGCACAAGAAGATATTGGTAATCTGGCAACCCGTTGTGATCAGCTGGTTGATCTGATTGATGCAGGTCTGCGTAATCCGCTGGCAAAATAACCAATTATTGAACACCCTAACGGGTGTTTTTTTTTTTTTGGTCTACC
 ```
 
-![](../assets/imgs/tutorial/generation_export.png)
+![](../assets/images/getting-started/tutorial/export-fasta.png)
 
 ---
 
