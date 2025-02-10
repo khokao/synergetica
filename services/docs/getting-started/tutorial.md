@@ -103,6 +103,14 @@ After that, the blocks in the graphical view will automatically update, and blue
 
 You have now finished building the toggle switch circuit! :raised_hands:
 
+!!! note
+  	If there is an interaction between a promoter and a protein in the circuit, an arrow will automatically appear to illustrate that interaction. The arrow starts at the protein and ends at the promoter.
+
+    - :fontawesome-solid-arrow-up:{ .activation }: **Activation** (the protein increases the expression of the connected promoter)
+    - :fontawesome-solid-t:{ .repression }: **Repression** (the protein decreases the expression of the connected promoter)
+
+    In the part selection screen, you can see which parts interact with each other.
+
 ## 2. Running a simulation
 
 With your toggle switch circuit in place, it’s time to see how it behaves over time.
