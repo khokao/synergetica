@@ -35,3 +35,5 @@ See the [documentation](https://khokao.github.io/synergetica/) on the Synergetic
 
 
 ## License
+
+This code repository is licensed under [the MIT License](LICENSE).
