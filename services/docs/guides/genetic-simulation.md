@@ -4,7 +4,7 @@ This page explains how to start a simulation and adjust its parameters.
 
 After designing a <u>[valid circuit](./circuit-design.md#completing-valid-circuits)</u>, you can begin the simulation by clicking the **"Start"** button in the bottom-right corner. Once the simulation starts, a sidebar opens on the right. It displays a results graph and a set of adjustable sliders.
 
-![](../assets/imgs/guides/genetic-simulation/simulation_whole.png)
+![](../assets/images/guides/genetic-simulation/start-simulation-highlight.png)
 
 !!! note
 	To start the simulation, your circuit must be valid ( :fontawesome-regular-circle-check:{ .ok } ) and the API must be connected ( :octicons-zap-24:{ .ok } ).
@@ -26,7 +26,7 @@ Each slider has a colored dot beside its label. Find the protein block in your c
 
 	If you have multiple blocks of the same protein, they are labeled with a number (e.g., BM3R1 [1], BM3R1 [2]). The graph is drawn using the color assigned to the first block ([1]).
 
-	![](../assets/imgs/guides/genetic-simulation/simulation_multiple_same_protein.png)
+	![](../assets/images/guides/genetic-simulation/multi-same-protein.png)
 
 ## Technical details
 
@@ -55,7 +55,7 @@ The table below briefly describes each parameter.
 | $TIR$      | Translation initiation rate. Adjustable via the slider.                             |
 
 !!! note
-	For details on other parameters, see <u>[this section](./parts-customization.md#promoter-specific-parameters)</u>.
+	For details on other parameters, see the <u>[guide on parts customization](./parts-customization.md#promoter-specific-parameters)</u>.
 
 !!! tip
-	For more details on the simulation’s underlying logic, see <u>[this code](https://github.com/khokao/synergetica/blob/main/services/src/api/simulator/service.py)</u>.
+	For more details on the simulation’s underlying logic, see the <u>[implementation code](https://github.com/khokao/synergetica/blob/main/services/src/api/simulator/service.py)</u>.

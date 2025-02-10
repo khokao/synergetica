@@ -25,3 +25,10 @@
 .ng {
     color: #e53935;  /* red-600 */
 }
+
+.activation {
+    color: #f87171; /* red-400 */
+}
+.repression {
+    color: #818cf8; /* indigo-400 */
+}
