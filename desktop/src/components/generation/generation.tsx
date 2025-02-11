@@ -49,7 +49,7 @@ export const GenerationButtons = () => {
   const handleGenerate = async () => {
     const toastId = toast.loading("Generating...", {
       action: {
-        label: <div className="bg-neutral-900 text-neutral-50 hover:bg-neutral-900/90 rounded-md">Cancel</div>,
+        label: "Cancel",
         onClick: (e) => {
           e.preventDefault(); // prevent the toast from closing
           cancel();
@@ -65,7 +65,7 @@ export const GenerationButtons = () => {
       toast.success("Generation successful", {
         id: toastId,
         action: {
-          label: <div className="bg-neutral-900 text-neutral-50 hover:bg-neutral-900/90 rounded-md">View Result</div>,
+          label: "View Result",
           onClick: () => {
             setIsDialogOpen(true);
           },
