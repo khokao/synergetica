@@ -1,6 +1,9 @@
 site_name: Synergetica
 site_url: https://docs.synergetica/
 
+repo_url: https://github.com/khokao/synergetica
+repo_name: khokao/synergetica
+
 nav:
   - Introduction: index.md
   - Getting Started:
@@ -16,6 +19,8 @@ theme:
   name: material
   logo: assets/images/logo.svg
   favicon: assets/images/logo.svg
+  icon:
+    repo: fontawesome/brands/github
   palette:
     scheme: default
     primary: custom
@@ -34,6 +39,8 @@ extra:
   social:
     - icon: fontawesome/brands/github
       link: https://github.com/khokao/synergetica
+    - icon: fontawesome/brands/docker
+      link: https://hub.docker.com/r/khokao/synergetica
 
 extra_css:
   - stylesheets/extra.css
