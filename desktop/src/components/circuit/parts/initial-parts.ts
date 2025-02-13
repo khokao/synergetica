@@ -18,7 +18,7 @@ import PbetIData from "@/components/circuit/parts/promoter/PbetI.json";
 import Pbm3r1Data from "@/components/circuit/parts/promoter/Pbm3r1.json";
 import PcinData from "@/components/circuit/parts/promoter/Pcin.json";
 import PcymRCData from "@/components/circuit/parts/promoter/PcymRC.json";
-import PhyllRData from "@/components/circuit/parts/promoter/PhyllR.json";
+import PhlyIIRData from "@/components/circuit/parts/promoter/PhlyIIR.json";
 import PlcaRAData from "@/components/circuit/parts/promoter/PlcaRA.json";
 import PlitRData from "@/components/circuit/parts/promoter/PlitR.json";
 import PlmrAData from "@/components/circuit/parts/promoter/PlmrA.json";
@@ -84,7 +84,7 @@ export const initialParts = partsCollectionSchema.parse({
   PamtR: PamtRData,
   PbetI: PbetIData,
   Pbm3r1: Pbm3r1Data,
-  PhyllR: PhyllRData,
+  PhlyIIR: PhlyIIRData,
   PlcaRA: PlcaRAData,
   PlitR: PlitRData,
   PlmrA: PlmrAData,
