@@ -18,7 +18,7 @@ import PbetIData from "@/components/circuit/parts/promoter/PbetI.json";
 import Pbm3r1Data from "@/components/circuit/parts/promoter/Pbm3r1.json";
 import PcinData from "@/components/circuit/parts/promoter/Pcin.json";
 import PcymRCData from "@/components/circuit/parts/promoter/PcymRC.json";
-import PhlyllRData from "@/components/circuit/parts/promoter/PhlyllR.json";
+import PhlyIIRData from "@/components/circuit/parts/promoter/PhlyIIR.json";
 import PlcaRAData from "@/components/circuit/parts/promoter/PlcaRA.json";
 import PlitRData from "@/components/circuit/parts/promoter/PlitR.json";
 import PlmrAData from "@/components/circuit/parts/promoter/PlmrA.json";
@@ -41,7 +41,7 @@ import BM3R1Data from "@/components/circuit/parts/protein/BM3R1.json";
 import BetIData from "@/components/circuit/parts/protein/BetI.json";
 import CinR_AMData from "@/components/circuit/parts/protein/CinR_AM.json";
 import CymR_AMData from "@/components/circuit/parts/protein/CymR_AM.json";
-import HlyllRData from "@/components/circuit/parts/protein/HlyllR.json";
+import HlyIIRData from "@/components/circuit/parts/protein/HlyIIR.json";
 import JR1Data from "@/components/circuit/parts/protein/JR1.json";
 import JR2Data from "@/components/circuit/parts/protein/JR2.json";
 import JR3Data from "@/components/circuit/parts/protein/JR3.json";
@@ -84,7 +84,7 @@ export const initialParts = partsCollectionSchema.parse({
   PamtR: PamtRData,
   PbetI: PbetIData,
   Pbm3r1: Pbm3r1Data,
-  PhlyllR: PhlyllRData,
+  PhlyIIR: PhlyIIRData,
   PlcaRA: PlcaRAData,
   PlitR: PlitRData,
   PlmrA: PlmrAData,
@@ -117,7 +117,7 @@ export const initialParts = partsCollectionSchema.parse({
   AmtR: AmtRData,
   BM3R1: BM3R1Data,
   BetI: BetIData,
-  HlyllR: HlyllRData,
+  HlyIIR: HlyIIRData,
   LcaRA: LcaRAData,
   LitR: LitRData,
   LmrA: LmrAData,
