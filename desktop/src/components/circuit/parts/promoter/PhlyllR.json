@@ -1,11 +1,11 @@
 {
-  "name": "PhyllR",
-  "description": "Regulated promoter repressed by HlyIIR",
+  "name": "PhlyllR",
+  "description": "Regulated promoter repressed by HlyllR",
   "category": "Promoter",
   "sequence": "GATTCGTTACCAATTGACATATTTAAAATTCTTGTTTAAAATGCTAGC",
   "controlBy": [
     {
-      "name": "HlyIIR",
+      "name": "HlyllR",
       "type": "Repression",
       "params": {
         "Ymax": 2.5,
