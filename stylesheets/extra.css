@@ -1,0 +1,34 @@
+:root {
+    --md-primary-fg-color: #171717;  /* neutral-900 */
+    --md-accent-fg-color: #00a39b;  /* icon color */
+}
+
+.md-typeset .grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    text-align: center;
+}
+
+.md-typeset pre>code {
+    max-height: 15rem;
+}
+
+@media (min-width: 640px) { /* sm */
+    .md-typeset .grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+.ok {
+    color: #43a047;  /* green-600 */
+}
+.ng {
+    color: #e53935;  /* red-600 */
+}
+
+.activation {
+    color: #f87171; /* red-400 */
+}
+.repression {
+    color: #818cf8; /* indigo-400 */
+}
