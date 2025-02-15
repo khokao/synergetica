@@ -19,13 +19,13 @@ Download the installer for your operating system:
 
 <div class="grid cards" markdown>
 
-- [:material-apple: macOS](https://github.com/khokao/synergetica/releases/download/nightly/Synergetica_0.0.0_aarch64.dmg)
-- [:material-microsoft-windows: Windows](https://github.com/khokao/synergetica/releases/download/nightly/Synergetica_0.0.0_x64-setup.exe)
-- [:material-linux: Linux](https://github.com/khokao/synergetica/releases/download/nightly/Synergetica_0.0.0_amd64.deb)
+- [:material-apple: macOS](https://github.com/khokao/synergetica/releases/download/nightly/Synergetica_1.0.0_aarch64.dmg)
+- [:material-microsoft-windows: Windows](https://github.com/khokao/synergetica/releases/download/nightly/Synergetica_1.0.0_x64-setup.exe)
+- [:material-linux: Linux](https://github.com/khokao/synergetica/releases/download/nightly/Synergetica_1.0.0_amd64.deb)
 
 </div>
 
-You can find all available installers on the <u>[releases page](https://github.com/khokao/synergetica/releases)</u>.
+These are the primary installers. For all available installers, see the <u>[GitHub Releases](https://github.com/khokao/synergetica/releases)</u> page.
 
 !!! warning "Warning (macOS Users)"
     On macOS, remove the quarantine attribute to allow Synergetica to launch.
