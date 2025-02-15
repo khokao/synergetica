@@ -19,9 +19,9 @@ Download the installer for your operating system:
 
 <div class="grid cards" markdown>
 
-- [:material-apple: macOS](https://github.com/khokao/synergetica/releases/download/nightly/Synergetica_1.0.0_aarch64.dmg)
-- [:material-microsoft-windows: Windows](https://github.com/khokao/synergetica/releases/download/nightly/Synergetica_1.0.0_x64-setup.exe)
-- [:material-linux: Linux](https://github.com/khokao/synergetica/releases/download/nightly/Synergetica_1.0.0_amd64.deb)
+- [:material-apple: macOS](https://github.com/khokao/synergetica/releases/download/v1.0.0/Synergetica_1.0.0_aarch64.dmg)
+- [:material-microsoft-windows: Windows](https://github.com/khokao/synergetica/releases/download/v1.0.0/Synergetica_1.0.0_x64-setup.exe)
+- [:material-linux: Linux](https://github.com/khokao/synergetica/releases/download/v1.0.0/Synergetica_1.0.0_amd64.deb)
 
 </div>
 
