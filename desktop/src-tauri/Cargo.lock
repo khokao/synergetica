@@ -4128,7 +4128,7 @@ dependencies = [
 
 [[package]]
 name = "synergetica"
-version = "0.0.0"
+version = "1.0.0"
 dependencies = [
  "fix-path-env",
  "reqwest 0.11.27",
