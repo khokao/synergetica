@@ -34,6 +34,15 @@ See the [documentation](https://khokao.github.io/synergetica/) on the Synergetic
 
 
 
+## Authors
+
+This project is developed by the following contributors (unordered):
+* @khokao
+* @ok09ra
+* @Thickstem
+
+
+
 ## License
 
 This code repository is licensed under [the MIT License](LICENSE).
