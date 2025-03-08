@@ -37,9 +37,9 @@ See the [documentation](https://khokao.github.io/synergetica/) on the Synergetic
 ## Authors
 
 This project is developed by the following contributors (unordered):
-* @khokao
-* @ok09ra
-* @Thickstem
+* [@khokao](https://github.com/khokao)
+* [@ok09ra](https://github.com/ok09ra)
+* [@Thickstem](https://github.com/Thickstem)
 
 
 
