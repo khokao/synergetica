@@ -43,6 +43,12 @@ This project is developed by the following contributors (unordered):
 
 
 
+## Acknowledgments
+
+The node-connection UI design was inspired by [Genochemy](https://github.com/iGEM-UTokyo/genochemy).
+
+
+
 ## License
 
 This code repository is licensed under [the MIT License](LICENSE).
